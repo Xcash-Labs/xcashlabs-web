@@ -572,9 +572,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      const avail = LwsClient.availableBalance(info);
+      // In watch-only mode we can't verify spends (no spend key to
+      // compute key images), so total_sent is full of false positives
+      // from ring-decoy appearances.  Show total_received only.
+      var avail;
+      if (isWatchOnly) {
+        var totalRecv = BigInt(info.total_received || '0');
+        var locked    = BigInt(info.locked_funds   || '0');
+        avail = totalRecv - locked;
+        if (avail < 0n) avail = 0n;
+      } else {
+        avail = LwsClient.availableBalance(info);
+      }
       const progress = LwsClient.scanProgress(info);
       balEl.textContent = LwsClient.formatXmr(avail);
+
+      // Watch-only: show a note that balance is receive-only
+      if (isWatchOnly) {
+        var woNote = document.getElementById('wo-balance-note');
+        if (!woNote) {
+          woNote = document.createElement('div');
+          woNote.id = 'wo-balance-note';
+          woNote.style.cssText = 'font-size:.68rem;color:var(--text-dim);margin-top:2px;font-style:italic';
+          woNote.textContent = 'Showing received funds only — outgoing transactions require the spend key';
+          balEl.parentNode.insertBefore(woNote, balEl.nextSibling);
+        }
+      }
 
       // Show locked (pending) balance if there is one
       var locked = BigInt(info.locked_funds || '0');
@@ -646,11 +669,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       var txs = (resp && Array.isArray(resp.transactions)) ? resp.transactions : [];
       const chainTip = (resp && resp.blockchain_height) || 0;
 
+      // Watch-only mode: no spend key → can't verify outgoing txs.
+      // Show only incoming transactions (those with total_received > 0).
+      if (isWatchOnly) {
+        txs = txs.filter(function (tx) {
+          return BigInt(tx.total_received || '0') > 0n;
+        });
+      }
+
       // Filter out false-spend transactions using the key_image cache
       // built by pollBalanceOnce(). If every spent_output in a tx has a
       // key_image that doesn't match the computed real key_image, the
       // tx is a false positive from ring-decoy detection — hide it.
-      if (Object.keys(_keyImageCache).length > 0) {
+      if (!isWatchOnly && Object.keys(_keyImageCache).length > 0) {
         txs = txs.filter(function (tx) {
           if (!tx.spent_outputs || tx.spent_outputs.length === 0) return true;
           for (var so of tx.spent_outputs) {
@@ -676,7 +707,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const rows = txs.map(tx => {
         const received = BigInt(tx.total_received || '0');
-        const sent     = BigInt(tx.total_sent     || '0');
+        const sent     = isWatchOnly ? 0n : BigInt(tx.total_sent || '0');
         const net      = received - sent;
         const isIn     = net >= 0n;
         const display  = LwsClient.formatXmr(net < 0n ? -net : net);

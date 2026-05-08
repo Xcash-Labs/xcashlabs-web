@@ -439,6 +439,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       var loginRes = await LwsClient.login(walletKeys.address, walletKeys.privateViewKeyHex, opts);
       lwsRegistered = true;
 
+      // Record this login for the inactive-account tracker (fire-and-forget)
+      LwsClient.pingLogin(walletKeys.address);
+
       // Decide whether to trigger a historical rescan:
       //
       // - new_address=true + freshFlag  → freshly created wallet. LWS

@@ -442,6 +442,25 @@ const LwsClient = (function () {
     return { error: 'mock: unknown path ' + path };
   }
 
+  /**
+   * Notify the login tracker that this address just logged in.
+   * Fire-and-forget — failures are silently ignored so the wallet
+   * still works even if the tracker is down.
+   */
+  async function pingLogin (address) {
+    if (MOCK) return;
+    try {
+      await fetch(BASE_URL + '/admin/ping', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: address }),
+      });
+    } catch (e) {
+      // Non-critical — don't break the login flow
+      console.warn('[lws] login ping failed (non-fatal):', e.message);
+    }
+  }
+
   return {
     login,
     importWalletRequest,
@@ -453,6 +472,7 @@ const LwsClient = (function () {
     availableBalance,
     scanProgress,
     formatXmr,
+    pingLogin,
     setBaseUrl,
     setMockMode,
     isMock,

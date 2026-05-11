@@ -5,7 +5,7 @@
  * Wraps the small set of HTTP endpoints monero-web's dashboard needs to
  * display balance, transaction history, and (eventually) construct send
  * transactions. The actual server lives on our Hetzner VPS at
- *   https://node.monero-web.com/lws/...
+ *   https://monero-proxy.rosawands4.workers.dev/lws/...
  * fronted by nginx + Cloudflare. The wire protocol is the legacy MyMonero
  * light-wallet protocol that monero-lws implements.
  *
@@ -42,7 +42,7 @@ const LwsClient = (function () {
   // Default base URL — same origin pattern as the existing /api/proxy.
   // The /lws/ prefix is mapped by nginx on the VPS to the local
   // monero-lws-daemon listening on 127.0.0.1:8443.
-  let BASE_URL = 'https://node.monero-web.com/lws';
+  let BASE_URL = 'https://monero-proxy.rosawands4.workers.dev/lws';
 
   // Mock mode: if true, every call returns synthetic data instead of
   // hitting the network. Used for UI development before the real

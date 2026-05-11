@@ -85,16 +85,13 @@ const LwsClient = (function () {
     if (MOCK || typeof turnstile === 'undefined') return;
     var el = document.getElementById('turnstile-box');
     if (!el) return;
-    console.log('[lws] Turnstile rendering...');
     turnstile.render(el, {
       sitekey: TURNSTILE_SITE_KEY,
       callback: function (token) {
-        console.log('[lws] Turnstile token received');
         _turnstileToken = token;
         _turnstileReady = true;
       },
       'expired-callback': function () {
-        console.log('[lws] Turnstile token expired, resetting...');
         _turnstileToken = '';
         _turnstileReady = false;
         try { turnstile.reset(el); } catch (e) {}
@@ -167,7 +164,7 @@ const LwsClient = (function () {
       var st = resp.headers.get('X-Session-Token');
       if (st) {
         _sessionToken = st;
-        console.log('[lws] Session established');
+        // session ready
       }
     } catch (e) {
       console.warn('[lws] Session init failed:', e.message);

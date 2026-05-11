@@ -121,9 +121,28 @@ const LwsClient = (function () {
     }
   }
 
+  // ── Wait for Turnstile token ───────────────────────────────────────
+  // Returns immediately if token is ready, otherwise polls every 200ms
+  // for up to 10 seconds. If Turnstile never loads, proceeds without
+  // a token (the Worker will reject, but we don't block forever).
+  function waitForTurnstile () {
+    if (MOCK || _turnstileToken) return Promise.resolve();
+    return new Promise(function (resolve) {
+      var elapsed = 0;
+      var check = setInterval(function () {
+        elapsed += 200;
+        if (_turnstileToken || elapsed >= 10000) {
+          clearInterval(check);
+          resolve();
+        }
+      }, 200);
+    });
+  }
+
   // ── Internal POST helper ──────────────────────────────────────────
   async function post (path, body) {
     if (MOCK) return mockResponse(path, body);
+    await waitForTurnstile();
     const url = BASE_URL + path;
     var headers = { 'Content-Type': 'application/json' };
     if (_turnstileToken) {

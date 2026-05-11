@@ -53,7 +53,7 @@ export default {
 
     // Session-only endpoint: exchange Turnstile token for session token
     const pathname = new URL(request.url).pathname;
-    if (pathname === '/session') {
+    if (pathname === '/session' || pathname === '/lws/session') {
       const newSessionToken = await createSession(secret);
       return new Response(JSON.stringify({ ok: true }), {
         status: 200,

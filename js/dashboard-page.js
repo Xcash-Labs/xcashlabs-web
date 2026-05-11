@@ -436,7 +436,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         try { sessionStorage.removeItem('monero-web-fresh-wallet'); } catch (e) {}
       }
 
-      var loginRes = await LwsClient.login(walletKeys.address, walletKeys.privateViewKeyHex, opts);
+      var loginRes;
+      try {
+        loginRes = await LwsClient.login(walletKeys.address, walletKeys.privateViewKeyHex, opts);
+      } catch (loginErr) {
+        if (loginErr.statusCode === 429 && loginErr.message === 'bot_detected') {
+          showRateLimitModal();
+          return;
+        }
+        throw loginErr;
+      }
       lwsRegistered = true;
 
       // Record this login for the inactive-account tracker (fire-and-forget)
@@ -843,6 +852,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   await connectAndPopulate();
+
+  // ─── RATE LIMIT MODAL ───
+  function showRateLimitModal () {
+    document.getElementById('ratelimit-modal').classList.add('show');
+  }
+  document.getElementById('ratelimit-close').addEventListener('click', () => {
+    document.getElementById('ratelimit-modal').classList.remove('show');
+  });
+  document.getElementById('ratelimit-ok').addEventListener('click', () => {
+    document.getElementById('ratelimit-modal').classList.remove('show');
+  });
+  document.getElementById('ratelimit-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'ratelimit-modal') e.target.classList.remove('show');
+  });
 
   // ─── RECEIVE MODAL ───
   document.getElementById('btn-receive').addEventListener('click', () => {

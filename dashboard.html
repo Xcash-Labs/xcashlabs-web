@@ -350,6 +350,22 @@ footer p{font-size:.65rem;color:var(--text-dim)}
     </div>
   </div>
 
+  <!-- ═══ RATE LIMIT MODAL ═══ -->
+  <div class="modal-overlay" id="ratelimit-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Limit Reached</h2>
+        <button class="modal-close" id="ratelimit-close">✕</button>
+      </div>
+      <div class="modal-body" style="text-align:center">
+        <svg width="48" height="48" fill="none" stroke="var(--xmr)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:12px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p style="font-size:.95rem;margin-bottom:8px;font-weight:600">Daily wallet limit reached</p>
+        <p style="font-size:.8rem;color:var(--text-dim);margin-bottom:20px">Too many new wallets have been registered today. Please try again tomorrow.</p>
+        <button class="btn-primary" id="ratelimit-ok" style="width:100%">OK</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ RECEIVE MODAL ═══ -->
   <div class="modal-overlay" id="receive-modal">
     <div class="modal">

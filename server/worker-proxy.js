@@ -3,7 +3,7 @@
 // Validates Turnstile token before forwarding requests to the VPS.
 // Set these environment variables in the Worker dashboard:
 //   NODE_SECRET    — shared secret for nginx header validation
-//   TURNSTILE_KEY  — Turnstile secret key (0x4AAAAAADD59GZSh3D5i9O0GaB5-L5UKOk)
+//   TURNSTILE_KEY  — Turnstile secret key (set in Cloudflare dashboard)
 
 export default {
   async fetch(request, env) {

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const IDLE_TIMEOUT_MS = 3 * 60 * 60 * 1000; // 3 hours
   let idleTimer = null;
   let scanningActive = false; // true while LWS is still scanning the chain
+  let xmrUsdPrice = 0;       // cached XMR/USD rate
 
   const overlay     = document.getElementById('unlock-overlay');
   const overlayMsg  = document.getElementById('unlock-msg');
@@ -381,6 +382,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // ─── XMR/USD price ───
+  async function fetchXmrPrice () {
+    try {
+      var resp = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=usd');
+      var data = await resp.json();
+      if (data && data.monero && data.monero.usd) {
+        xmrUsdPrice = data.monero.usd;
+      }
+    } catch (e) {
+      // Non-critical — fiat display just stays empty
+    }
+  }
+
+  function updateFiatDisplay (xmrText) {
+    var el = document.getElementById('balance-fiat');
+    if (!el || !xmrUsdPrice) { if (el) el.textContent = ''; return; }
+    var xmr = parseFloat(xmrText);
+    if (isNaN(xmr)) { el.textContent = ''; return; }
+    var usd = (xmr * xmrUsdPrice).toFixed(2);
+    el.textContent = '\u2248 $' + usd.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' USD';
+  }
+
+  // Fetch price now, then refresh every 5 minutes
+  fetchXmrPrice();
+  setInterval(fetchXmrPrice, 300000);
+
   // ─── Light-wallet balance polling ───
   // Polls monero-lws via js/lws-client.js for the wallet's balance, scan
   // progress, and recent transactions. Gracefully handles the LWS being
@@ -598,6 +625,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       const progress = LwsClient.scanProgress(info);
       balEl.textContent = LwsClient.formatXmr(avail);
+      updateFiatDisplay(balEl.textContent);
 
       // Watch-only: show a note that balance is receive-only
       if (isWatchOnly) {

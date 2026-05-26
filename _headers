@@ -25,7 +25,7 @@
   # makes cross-origin fetch() calls to the light-wallet server (monero-lws)
   # through it. Without this, CSP blocks the balance-polling and send-flow
   # requests silently.
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://monero-proxy.rosawands4.workers.dev https://challenges.cloudflare.com; frame-src https://trocador.app https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://monero-proxy.rosawands4.workers.dev https://challenges.cloudflare.com https://api.coingecko.com; frame-src https://trocador.app https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
 
   # Standard hardening
   X-Content-Type-Options: nosniff

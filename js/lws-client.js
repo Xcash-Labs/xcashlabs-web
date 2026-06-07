@@ -39,15 +39,15 @@
 const LwsClient = (function () {
   'use strict';
 
-  // Default base URL — same origin pattern as the existing /api/proxy.
-  // The /lws/ prefix is mapped by nginx on the VPS to the local
-  // monero-lws-daemon listening on 127.0.0.1:8443.
-  let BASE_URL = 'https://monero-proxy.rosawands4.workers.dev/lws';
+  // Public HTTPS endpoint reverse-proxied to xcashklassic-lws on 127.0.0.1:8443.
+  let BASE_URL = 'https://lws.xcashlabs.org';
 
   // Mock mode: if true, every call returns synthetic data instead of
   // hitting the network. Used for UI development before the real
   // backend exists, and for testing.
   let MOCK = false;
+
+  const USE_SESSION_AUTH = false;
 
   // Auto-enable mock mode for local development so we don't need a
   // running monero-lws to iterate on the dashboard. The flag can be
@@ -82,7 +82,7 @@ const LwsClient = (function () {
   var TURNSTILE_SITE_KEY = '0x4AAAAAADD59EiKpnk-yv1E';
 
   function initTurnstile () {
-    if (MOCK || typeof turnstile === 'undefined') return;
+    if (!USE_SESSION_AUTH || MOCK || typeof turnstile === 'undefined') return;
     var el = document.getElementById('turnstile-box');
     if (!el) return;
     turnstile.render(el, {
@@ -103,7 +103,7 @@ const LwsClient = (function () {
   }
 
   // Initialize Turnstile when the script loads
-  if (typeof document !== 'undefined') {
+  if (USE_SESSION_AUTH && typeof document !== 'undefined') {
     if (typeof turnstile !== 'undefined') {
       initTurnstile();
     } else {
@@ -142,6 +142,7 @@ const LwsClient = (function () {
   var _sessionPromise = null;
 
   function ensureSession () {
+    if (!USE_SESSION_AUTH) return Promise.resolve();
     if (MOCK) return Promise.resolve();
     if (_sessionToken) return Promise.resolve();
     if (_sessionPromise) return _sessionPromise;
@@ -302,6 +303,7 @@ const LwsClient = (function () {
    * Exposed at /lws/admin/reactivate via nginx on the VPS.
    */
   async function reactivateAccount (address) {
+    if (!USE_SESSION_AUTH) return true;
     console.log('[lws] reactivating hidden account via admin API');
     await ensureSession();
     var url = BASE_URL + '/admin/reactivate';
@@ -370,7 +372,7 @@ const LwsClient = (function () {
       amount: String(amount || '0'),
       mixin: (typeof mixin === 'number') ? mixin : 15,
       use_dust: !!useDust,
-      dust_threshold: '2000000000',
+      dust_threshold: '2000',
     });
   }
 
@@ -395,7 +397,7 @@ const LwsClient = (function () {
 
   /**
    * Convenience: derive available balance from a get_address_info response.
-   * Returns a BigInt (atomic units / piconero).
+   * Returns a BigInt in XCK atomic units
    */
   function availableBalance (info) {
     if (!info) return 0n;
@@ -425,8 +427,8 @@ const LwsClient = (function () {
   }
 
   /**
-   * Format atomic units (piconero) as a human XMR string with no trailing
-   * zeros. 1 XMR = 1e12 piconero. Accepts BigInt, string, or number.
+   * Format atomic units as a human XCK string with no trailing zeros.
+   * 1 XCK = 1e6 atomic units.
    */
   function formatXmr (atomic) {
     let n;
@@ -435,10 +437,10 @@ const LwsClient = (function () {
     else n = BigInt(Math.round(Number(atomic) || 0));
     const sign = n < 0n ? '-' : '';
     if (n < 0n) n = -n;
-    const whole = n / 1000000000000n;
-    const frac  = n % 1000000000000n;
+    const whole = n / 1000000n;
+    const frac  = n % 1000000n;
     if (frac === 0n) return sign + whole.toString();
-    let fracStr = frac.toString().padStart(12, '0');
+    let fracStr = frac.toString().padStart(6, '0');
     fracStr = fracStr.replace(/0+$/, '');
     return sign + whole.toString() + '.' + fracStr;
   }
@@ -485,10 +487,10 @@ const LwsClient = (function () {
     }
 
     if (path === '/get_address_info') {
-      // Fake balance: 1.234 XMR received, 0 spent
+      // Fake balance: 1.234567 XMR received, 0 spent
       return {
         locked_funds:         '0',
-        total_received:       '1234567890000',
+        total_received:       '1234567',
         total_sent:           '0',
         scanned_height:       scanned,
         scanned_block_height: scanned,
@@ -502,7 +504,7 @@ const LwsClient = (function () {
 
     if (path === '/get_address_txs') {
       return {
-        total_received:    '1234567890000',
+        total_received:    '1234567',
         scanned_height:    scanned,
         blockchain_height: tip,
         transactions: [
@@ -510,7 +512,7 @@ const LwsClient = (function () {
             id: 1,
             hash: 'aaaa1111bbbb2222cccc3333dddd4444eeee5555ffff6666aaaa7777bbbb8888',
             timestamp:      new Date(Date.now() - 86400 * 1000 * 3).toISOString(),
-            total_received: '500000000000',
+            total_received: '500000',
             total_sent:     '0',
             fee:            '0',
             unlock_time:    0,
@@ -525,7 +527,7 @@ const LwsClient = (function () {
             id: 2,
             hash: '11112222333344445555666677778888999900001111222233334444aaaabbbb',
             timestamp:      new Date(Date.now() - 86400 * 1000 * 7).toISOString(),
-            total_received: '734567890000',
+            total_received: '734567',
             total_sent:     '0',
             fee:            '0',
             unlock_time:    0,
@@ -541,7 +543,7 @@ const LwsClient = (function () {
     }
 
     if (path === '/get_unspent_outs') {
-      return { per_kb_fee: '24658', fee_mask: '10000', amount: '1234567890000', outputs: [] };
+      return { per_kb_fee: '24658', fee_mask: '10000', amount: '1234567', outputs: [] };
     }
 
     if (path === '/get_random_outs') {
@@ -561,6 +563,7 @@ const LwsClient = (function () {
    * still works even if the tracker is down.
    */
   async function pingLogin (address) {
+    if (!USE_SESSION_AUTH) return true;
     if (MOCK) return;
     try {
       await ensureSession();

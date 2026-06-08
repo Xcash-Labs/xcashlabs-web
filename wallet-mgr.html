@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>XCash Klassic Wallet Manager</title>
+<meta name="description" content="Create, import, or unlock an XCash Klassic wallet from your browser.">
+<link rel="canonical" href="https://wallet.xcashlabs.org/wallet-mgr.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="/" class="logo">
+        <img src="/assets/xck-logo.png" alt="XCash Klassic" class="logo-icon">
+        <span>XCash Klassic Web Wallet</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/wallet-mgr.html">Open Wallet</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <section class="wallet-card">
+      <div class="status">
+        <img src="/assets/logo32x32.png" alt="XCash Klassic" class="status-logo">
+        Wallets on this device
+      </div>
+
+      <h1>Choose a wallet.</h1>
+
+      <p class="lead">
+        Create a new XCash Klassic wallet, import an existing wallet, or unlock a wallet stored on this device.
+      </p>
+
+      <div class="actions">
+        <a class="button primary" href="/create-wallet.html">Create New Wallet</a>
+        <a class="button secondary" href="/import-wallet.html">Import Wallet</a>
+      </div>
+
+      <div class="notice">
+        <strong>Security reminder:</strong>
+        wallets stored on this device should always be protected with a strong password.
+        Never share your seed phrase or private keys with anyone.
+      </div>
+
+      <div class="saved-wallets">
+        <h2>Saved Wallets</h2>
+
+        <!-- Placeholder wallet entries. Later these will come from IndexedDB. -->
+        <div class="wallet-entry">
+          <div>
+            <div class="wallet-name">Main Wallet</div>
+            <div class="wallet-address">XCA1abc...xyz</div>
+          </div>
+
+          <button class="button primary" type="button">Unlock</button>
+        </div>
+
+        <div class="wallet-entry">
+          <div>
+            <div class="wallet-name">Imported Wallet</div>
+            <div class="wallet-address">XCA1def...uvw</div>
+          </div>
+
+          <button class="button primary" type="button">Unlock</button>
+        </div>
+
+        <!-- Use this later when there are no saved wallets. -->
+        <!--
+        <div class="empty-wallets">
+          No wallets are saved on this device yet. Create or import a wallet to get started.
+        </div>
+        -->
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-meta">
+      wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
+      XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

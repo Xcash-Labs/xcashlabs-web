@@ -1,0 +1,253 @@
+  <style> :root {
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --dim: #94a3b8;
+      --dark: #0b1220;
+      --card: rgba(255, 255, 255, 0.94);
+      --card-text: #111827;
+      --card-muted: #4b5563;
+      --border: rgba(255, 255, 255, 0.18);
+      --light-border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --radius: 18px;
+  }
+
+  * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+  }
+
+  html {
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      background:
+          linear-gradient(rgba(4, 10, 25, 0.38), rgba(4, 10, 25, 0.52)),
+          url("/assets/techbg.png") center / cover no-repeat fixed;
+  }
+
+  a {
+      color: inherit;
+      text-decoration: none;
+  }
+
+  .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 22px;
+  }
+
+  header {
+      border-bottom: 1px solid var(--border);
+  }
+
+  nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+  }
+
+  .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+  }
+
+  .nav-links a:hover {
+      color: #fff;
+  }
+
+  main {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 72px 0;
+  }
+
+  .wallet-card {
+      width: 100%;
+      background: var(--card);
+      color: var(--card-text);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: var(--radius);
+      padding: 42px;
+      box-shadow:
+          0 24px 70px rgba(0, 0, 0, 0.22),
+          0 2px 8px rgba(15, 23, 42, 0.10);
+  }
+
+  .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--card-muted);
+      font-size: 0.86rem;
+      margin-bottom: 22px;
+  }
+
+  .status span {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 14px rgba(37, 99, 235, 0.65);
+  }
+
+  h1 {
+      color: var(--card-text);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+  }
+
+  .lead {
+      max-width: 620px;
+      margin-bottom: 30px;
+      color: var(--card-muted);
+      font-size: 1.05rem;
+  }
+
+  .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+  }
+
+  .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 650;
+      font-size: 0.95rem;
+      transition: 0.18s ease;
+  }
+
+  .button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+  }
+
+  .button.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+  }
+
+  .button.secondary {
+      background: #f8fafc;
+      border-color: var(--light-border);
+      color: #1f2937;
+  }
+
+  .button.secondary:hover {
+      background: #eef2ff;
+      border-color: #c7d2fe;
+  }
+
+  .notice {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 16px 18px;
+      color: var(--card-muted);
+      font-size: 0.92rem;
+  }
+
+  .notice strong {
+      color: var(--card-text);
+  }
+
+  .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+  }
+
+  .info {
+      background: #f8fafc;
+      border: 1px solid var(--light-border);
+      border-radius: 12px;
+      padding: 16px;
+  }
+
+  .info h2 {
+      color: var(--card-text);
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+  }
+
+  .info p {
+      color: var(--card-muted);
+      font-size: 0.86rem;
+  }
+
+  footer {
+      border-top: 1px solid var(--border);
+      color: var(--dim);
+      font-size: 0.84rem;
+      padding: 24px 0;
+  }
+
+  .footer-meta {
+      max-width: 860px;
+  }
+
+  @media (max-width: 720px) {
+      nav {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 18px 0;
+      }
+
+      .nav-links {
+          flex-wrap: wrap;
+          gap: 12px;
+      }
+
+      main {
+          place-items: start;
+          padding: 42px 0;
+      }
+
+      .wallet-card {
+          padding: 28px 22px;
+      }
+
+      .info-grid {
+          grid-template-columns: 1fr;
+      }
+
+      .button {
+          width: 100%;
+      }
+  }
+
+  </style>

@@ -15,10 +15,10 @@
 
 const MoneroKeys = (function () {
   'use strict';
-
-  const MAINNET  = 0x12;  // '4...'
-  const TESTNET  = 0x35;  // '9...' or 'A...'
-  const STAGENET = 0x18;  // '5...'
+  
+  const MAINNET  = 0xbc334;   // XCK mainnet
+  const TESTNET  = 0x1d939c;  // XCK testnet
+  const STAGENET = 0x6609a;   // XCK stagenet
 
   /**
    * Derive all keys from a raw 32-byte seed (private spend key material)
@@ -183,19 +183,35 @@ const MoneroKeys = (function () {
     return result;
   }
 
+  function encodeVarint(value) {
+    const out = [];
+
+    while (value >= 0x80) {
+      out.push((value & 0x7f) | 0x80);
+      value >>= 7;
+    }
+
+    out.push(value);
+    return new Uint8Array(out);
+  }
+
   /**
-   * Encode a standard Monero address
+   * Encode a standard XCash Klassic address
    */
   function encodeAddress(netByte, pubSpend, pubView) {
-    const raw = new Uint8Array(69);
-    raw[0] = netByte;
-    raw.set(pubSpend, 1);
-    raw.set(pubView, 33);
-    const hash = Keccak256.hash(raw.slice(0, 65));
-    raw[65] = hash[0];
-    raw[66] = hash[1];
-    raw[67] = hash[2];
-    raw[68] = hash[3];
+    const prefix = encodeVarint(netByte);
+
+    const data = new Uint8Array(prefix.length + 64);
+    data.set(prefix, 0);
+    data.set(pubSpend, prefix.length);
+    data.set(pubView, prefix.length + 32);
+
+    const hash = Keccak256.hash(data);
+
+    const raw = new Uint8Array(data.length + 4);
+    raw.set(data, 0);
+    raw.set(hash.slice(0, 4), data.length);
+
     return MoneroEd25519.cnBase58Encode(raw);
   }
 

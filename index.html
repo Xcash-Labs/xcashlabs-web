@@ -12,16 +12,18 @@
 
 <style>
 :root {
-  --bg: #0b0b0d;
-  --card: rgba(21, 21, 25, 0.78);
-  --card-solid: #1d1d23;
-  --border: rgba(255, 255, 255, 0.10);
-  --text: #f2f0ec;
-  --muted: #a5a19a;
-  --dim: #77736d;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
-  --radius: 16px;
+  --text: #f8fafc;
+  --muted: #cbd5e1;
+  --dim: #94a3b8;
+  --dark: #0b1220;
+  --card: rgba(255, 255, 255, 0.94);
+  --card-text: #111827;
+  --card-muted: #4b5563;
+  --border: rgba(255, 255, 255, 0.18);
+  --light-border: #e5e7eb;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --radius: 18px;
 }
 
 * {
@@ -41,7 +43,7 @@ body {
   flex-direction: column;
   line-height: 1.5;
   background:
-    linear-gradient(rgba(11, 11, 13, 0.35), rgba(11, 11, 13, 0.55)),
+    linear-gradient(rgba(4, 10, 25, 0.38), rgba(4, 10, 25, 0.52)),
     url("/assets/techbg.png") center / cover no-repeat fixed;
 }
 
@@ -55,11 +57,6 @@ a {
   max-width: 860px;
   margin: 0 auto;
   padding: 0 22px;
-}
-
-header,
-footer {
-  border-color: var(--border);
 }
 
 header {
@@ -82,12 +79,6 @@ nav {
   letter-spacing: -0.02em;
 }
 
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 auto;
-}
-
 .nav-links {
   display: flex;
   gap: 16px;
@@ -97,7 +88,7 @@ nav {
 }
 
 .nav-links a:hover {
-  color: var(--text);
+  color: #fff;
 }
 
 main {
@@ -110,19 +101,20 @@ main {
 .wallet-card {
   width: 100%;
   background: var(--card);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
+  color: var(--card-text);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: var(--radius);
   padding: 42px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.22),
+    0 2px 8px rgba(15, 23, 42, 0.10);
 }
 
 .status {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--muted);
+  color: var(--card-muted);
   font-size: 0.86rem;
   margin-bottom: 22px;
 }
@@ -132,10 +124,11 @@ main {
   height: 8px;
   background: var(--accent);
   border-radius: 999px;
-  box-shadow: 0 0 14px rgba(59, 130, 246, 0.75);
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.65);
 }
 
 h1 {
+  color: var(--card-text);
   font-size: clamp(2rem, 5vw, 3.4rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
@@ -145,7 +138,7 @@ h1 {
 .lead {
   max-width: 620px;
   margin-bottom: 30px;
-  color: var(--muted);
+  color: var(--card-muted);
   font-size: 1.05rem;
 }
 
@@ -162,10 +155,11 @@ h1 {
   justify-content: center;
   min-height: 48px;
   padding: 0 22px;
-  border: 1px solid var(--border);
   border-radius: 12px;
+  border: 1px solid transparent;
   font-weight: 650;
   font-size: 0.95rem;
+  transition: 0.18s ease;
 }
 
 .button.primary {
@@ -176,28 +170,31 @@ h1 {
 
 .button.primary:hover {
   background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .button.secondary {
-  background: var(--card-solid);
-  color: var(--text);
+  background: #f8fafc;
+  border-color: var(--light-border);
+  color: #1f2937;
 }
 
 .button.secondary:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  background: #eef2ff;
+  border-color: #c7d2fe;
 }
 
 .notice {
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.22);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 12px;
   padding: 16px 18px;
-  color: var(--muted);
+  color: var(--card-muted);
   font-size: 0.92rem;
 }
 
 .notice strong {
-  color: var(--text);
+  color: var(--card-text);
 }
 
 .info-grid {
@@ -208,19 +205,20 @@ h1 {
 }
 
 .info {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid var(--border);
+  background: #f8fafc;
+  border: 1px solid var(--light-border);
   border-radius: 12px;
   padding: 16px;
 }
 
 .info h2 {
+  color: var(--card-text);
   font-size: 0.95rem;
   margin-bottom: 6px;
 }
 
 .info p {
-  color: var(--muted);
+  color: var(--card-muted);
   font-size: 0.86rem;
 }
 
@@ -265,7 +263,6 @@ footer {
   }
 }
 </style>
-</head>
 
 <body>
 <header>

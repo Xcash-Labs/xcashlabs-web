@@ -13,9 +13,9 @@
 <style>
 :root {
   --bg: #0b0b0d;
-  --card: #151519;
-  --card2: #1d1d23;
-  --border: rgba(255,255,255,.10);
+  --card: rgba(21, 21, 25, 0.78);
+  --card-solid: #1d1d23;
+  --border: rgba(255, 255, 255, 0.10);
   --text: #f2f0ec;
   --muted: #a5a19a;
   --dim: #77736d;
@@ -40,18 +40,9 @@ body {
   display: flex;
   flex-direction: column;
   line-height: 1.5;
-
-  background-image:
-    linear-gradient(
-      rgba(11, 11, 13, 0.35),
-      rgba(11, 11, 13, 0.55)
-    ),
-    url('/assets/techbg.png');
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background:
+    linear-gradient(rgba(11, 11, 13, 0.35), rgba(11, 11, 13, 0.55)),
+    url("/assets/techbg.png") center / cover no-repeat fixed;
 }
 
 a {
@@ -64,6 +55,11 @@ a {
   max-width: 860px;
   margin: 0 auto;
   padding: 0 22px;
+}
+
+header,
+footer {
+  border-color: var(--border);
 }
 
 header {
@@ -83,10 +79,10 @@ nav {
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
 }
 
-.logo svg {
+.logo-icon {
   width: 32px;
   height: 32px;
   flex: 0 0 auto;
@@ -96,7 +92,7 @@ nav {
   display: flex;
   gap: 16px;
   align-items: center;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 
@@ -113,13 +109,13 @@ main {
 
 .wallet-card {
   width: 100%;
-  background: rgba(21, 21, 25, 0.78);
+  background: var(--card);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 42px;
-  box-shadow: 0 24px 80px rgba(0,0,0,.35);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
 }
 
 .status {
@@ -127,7 +123,7 @@ main {
   align-items: center;
   gap: 8px;
   color: var(--muted);
-  font-size: .86rem;
+  font-size: 0.86rem;
   margin-bottom: 22px;
 }
 
@@ -136,21 +132,21 @@ main {
   height: 8px;
   background: var(--accent);
   border-radius: 999px;
-  box-shadow: 0 0 14px rgba(255,102,0,.75);
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.75);
 }
 
 h1 {
   font-size: clamp(2rem, 5vw, 3.4rem);
   line-height: 1.05;
-  letter-spacing: -.04em;
+  letter-spacing: -0.04em;
   margin-bottom: 16px;
 }
 
 .lead {
-  color: var(--muted);
-  font-size: 1.05rem;
   max-width: 620px;
   margin-bottom: 30px;
+  color: var(--muted);
+  font-size: 1.05rem;
 }
 
 .actions {
@@ -166,16 +162,16 @@ h1 {
   justify-content: center;
   min-height: 48px;
   padding: 0 22px;
-  border-radius: 12px;
   border: 1px solid var(--border);
+  border-radius: 12px;
   font-weight: 650;
-  font-size: .95rem;
+  font-size: 0.95rem;
 }
 
 .button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: white;
+  color: #fff;
 }
 
 .button.primary:hover {
@@ -183,21 +179,21 @@ h1 {
 }
 
 .button.secondary {
-  background: var(--card2);
+  background: var(--card-solid);
   color: var(--text);
 }
 
 .button.secondary:hover {
-  border-color: rgba(255,255,255,.2);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .notice {
-  background: rgba(255,102,0,.08);
-  border: 1px solid rgba(255,102,0,.22);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.22);
   border-radius: 12px;
   padding: 16px 18px;
   color: var(--muted);
-  font-size: .92rem;
+  font-size: 0.92rem;
 }
 
 .notice strong {
@@ -212,48 +208,31 @@ h1 {
 }
 
 .info {
-  background: rgba(255,255,255,.035);
+  background: rgba(255, 255, 255, 0.035);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px;
 }
 
 .info h2 {
-  font-size: .95rem;
+  font-size: 0.95rem;
   margin-bottom: 6px;
 }
 
 .info p {
   color: var(--muted);
-  font-size: .86rem;
+  font-size: 0.86rem;
 }
 
 footer {
   border-top: 1px solid var(--border);
   color: var(--dim);
-  font-size: .84rem;
+  font-size: 0.84rem;
   padding: 24px 0;
 }
 
-.footer-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.footer-links {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.footer-links a {
-  color: var(--muted);
-}
-
-.footer-links a:hover {
-  color: var(--text);
+.footer-meta {
+  max-width: 860px;
 }
 
 @media (max-width: 720px) {
@@ -264,13 +243,13 @@ footer {
   }
 
   .nav-links {
-    gap: 12px;
     flex-wrap: wrap;
+    gap: 12px;
   }
 
   main {
-    padding: 42px 0;
     place-items: start;
+    padding: 42px 0;
   }
 
   .wallet-card {
@@ -350,10 +329,9 @@ footer {
 
 <footer>
   <div class="container">
-    <div class="footer-row">
-      <div class="footer-meta">wallet.xcashlabs.org · MIT Licensed · Powered by open-source software. XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.</div>
-      </div>
-      </div>
+    <div class="footer-meta">
+      wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
+      XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.
     </div>
   </div>
 </footer>

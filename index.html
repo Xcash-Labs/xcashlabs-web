@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +12,16 @@ html
 
 <style>
 :root {
-  --bg: #060607;
-  --card: #111115;
-  --card2: #19191f;
+  --bg: #0b0b0d;
+  --card: #151519;
+  --card2: #1d1d23;
   --border: rgba(255,255,255,.10);
-  --text: #f4f2ee;
-  --muted: #aaa69f;
+  --text: #f2f0ec;
+  --muted: #a5a19a;
   --dim: #77736d;
   --accent: #ff6600;
   --accent-hover: #e85d00;
-  --glow: rgba(255,102,0,.22);
-  --radius: 18px;
+  --radius: 16px;
 }
 
 * {
@@ -43,19 +41,6 @@ body {
   display: flex;
   flex-direction: column;
   line-height: 1.5;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: -20%;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255,102,0,.20), transparent 32%),
-    radial-gradient(circle at 80% 10%, rgba(255,102,0,.12), transparent 28%),
-    radial-gradient(circle at 50% 90%, rgba(255,102,0,.08), transparent 35%);
-  pointer-events: none;
-  z-index: -1;
 }
 
 a {
@@ -65,49 +50,42 @@ a {
 
 .container {
   width: 100%;
-  max-width: 1080px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 22px;
 }
 
 header {
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  background: rgba(6,6,7,.72);
 }
 
 nav {
-  min-height: 78px;
+  min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-weight: 800;
-  letter-spacing: -.03em;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: -.02em;
 }
 
 .logo svg {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   flex: 0 0 auto;
-  filter: drop-shadow(0 0 18px var(--glow));
-}
-
-.logo span {
-  color: var(--accent);
 }
 
 .nav-links {
   display: flex;
-  gap: 18px;
+  gap: 16px;
   align-items: center;
-  font-size: .92rem;
+  font-size: .9rem;
   color: var(--muted);
 }
 
@@ -119,84 +97,76 @@ main {
   flex: 1;
   display: grid;
   place-items: center;
-  padding: 78px 0;
+  padding: 72px 0;
 }
 
 .wallet-card {
   width: 100%;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)),
-    linear-gradient(180deg, var(--card), #0c0c0f);
+  background: linear-gradient(180deg, var(--card), #101013);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 48px;
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.45),
-    0 0 70px rgba(255,102,0,.06);
+  padding: 42px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.35);
 }
 
 .status {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   color: var(--muted);
-  font-size: .88rem;
-  margin-bottom: 24px;
+  font-size: .86rem;
+  margin-bottom: 22px;
 }
 
 .status span {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   background: var(--accent);
   border-radius: 999px;
-  box-shadow: 0 0 16px rgba(255,102,0,.85);
+  box-shadow: 0 0 14px rgba(255,102,0,.75);
 }
 
 h1 {
-  font-size: clamp(2.25rem, 6vw, 4.4rem);
-  line-height: 1.02;
-  letter-spacing: -.055em;
-  margin-bottom: 18px;
-  max-width: 820px;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -.04em;
+  margin-bottom: 16px;
 }
 
 .lead {
   color: var(--muted);
-  font-size: 1.08rem;
-  max-width: 660px;
-  margin-bottom: 34px;
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin-bottom: 30px;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 32px;
+  gap: 12px;
+  margin-bottom: 30px;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
-  padding: 0 24px;
-  border-radius: 13px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  font-weight: 700;
-  font-size: .96rem;
-  transition: .18s ease;
+  font-weight: 650;
+  font-size: .95rem;
 }
 
 .button.primary {
   background: var(--accent);
   border-color: var(--accent);
   color: white;
-  box-shadow: 0 0 28px rgba(255,102,0,.20);
 }
 
 .button.primary:hover {
   background: var(--accent-hover);
-  transform: translateY(-1px);
 }
 
 .button.secondary {
@@ -205,17 +175,16 @@ h1 {
 }
 
 .button.secondary:hover {
-  border-color: rgba(255,255,255,.24);
-  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.2);
 }
 
 .notice {
   background: rgba(255,102,0,.08);
-  border: 1px solid rgba(255,102,0,.24);
-  border-radius: 14px;
-  padding: 17px 19px;
+  border: 1px solid rgba(255,102,0,.22);
+  border-radius: 12px;
+  padding: 16px 18px;
   color: var(--muted);
-  font-size: .93rem;
+  font-size: .92rem;
 }
 
 .notice strong {
@@ -225,39 +194,38 @@ h1 {
 .info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 24px;
+  gap: 14px;
+  margin-top: 22px;
 }
 
 .info {
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,.035);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px;
+  border-radius: 12px;
+  padding: 16px;
 }
 
 .info h2 {
-  font-size: .98rem;
-  margin-bottom: 7px;
+  font-size: .95rem;
+  margin-bottom: 6px;
 }
 
 .info p {
   color: var(--muted);
-  font-size: .88rem;
+  font-size: .86rem;
 }
 
 footer {
   border-top: 1px solid var(--border);
   color: var(--dim);
   font-size: .84rem;
-  padding: 26px 0;
-  background: rgba(6,6,7,.7);
+  padding: 24px 0;
 }
 
 .footer-row {
   display: flex;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -275,11 +243,7 @@ footer {
   color: var(--text);
 }
 
-.footer-meta {
-  max-width: 720px;
-}
-
-@media (max-width: 760px) {
+@media (max-width: 720px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
@@ -297,7 +261,7 @@ footer {
   }
 
   .wallet-card {
-    padding: 30px 22px;
+    padding: 28px 22px;
   }
 
   .info-grid {
@@ -307,25 +271,20 @@ footer {
   .button {
     width: 100%;
   }
-
-  .footer-row {
-    flex-direction: column;
-  }
 }
 </style>
 </head>
 
 <body>
-
 <header>
   <div class="container">
     <nav>
-      <a href="/" class="logo" aria-label="XCash Klassic Web Wallet">
+      <a href="/" class="logo">
         <svg viewBox="0 0 256 256" aria-hidden="true">
           <circle cx="128" cy="128" r="128" fill="#ff6600"/>
           <path d="M61 78h38l29 34 29-34h38l-48 56 52 60h-39l-32-38-32 38H57l52-60-48-56z" fill="#fff"/>
         </svg>
-        <div>XCash <span>Klassic</span></div>
+        <span>XCash Klassic Web Wallet</span>
       </a>
 
       <div class="nav-links">
@@ -345,8 +304,7 @@ footer {
       <h1>Access your XCash Klassic wallet.</h1>
 
       <p class="lead">
-        A simple browser wallet for XCash Klassic. Open your wallet, check your XCK,
-        and send or receive transactions from a clean web interface.
+        A simple browser wallet for XCash Klassic. Open your wallet, check your XCK, and send or receive transactions.
       </p>
 
       <div class="actions">
@@ -363,17 +321,17 @@ footer {
       <div class="info-grid">
         <div class="info">
           <h2>Non-custodial</h2>
-          <p>You control your wallet keys, seed phrase, and backup.</p>
+          <p>You control your wallet keys and backup.</p>
         </div>
 
         <div class="info">
           <h2>No install</h2>
-          <p>Use the wallet directly from a modern browser.</p>
+          <p>Use the wallet from a modern browser.</p>
         </div>
 
         <div class="info">
           <h2>Built for XCK</h2>
-          <p>Designed specifically for XCash Klassic wallet access.</p>
+          <p>Designed for XCash Klassic wallet access.</p>
         </div>
       </div>
     </section>
@@ -383,19 +341,11 @@ footer {
 <footer>
   <div class="container">
     <div class="footer-row">
-      <div class="footer-meta">
-        wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
-        XCash Klassic is an independent project and is not affiliated with The Monero Project or monero-web.com.
+      <div class="footer-meta">wallet.xcashlabs.org · MIT Licensed · Powered by open-source software. XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.</div>
       </div>
-
-      <div class="footer-links">
-        <a href="/privacy.html">Privacy</a>
-        <a href="https://xcashlabs.org" target="_blank" rel="noopener">XCash Labs</a>
-        <a href="https://github.com/Xcash-Labs" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </div>
 </footer>
-
 </body>
 </html>

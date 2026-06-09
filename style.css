@@ -545,3 +545,8 @@ footer {
   border-color: var(--accent);
   color: #fff;
 }
+
+.small-details {
+    display: flex;
+    margin-top: 16px;
+}

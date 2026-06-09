@@ -97,6 +97,41 @@
             0 2px 8px rgba(15, 23, 42, 0.10);
     }
 
+    .wallet-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        padding: 16px;
+        margin-bottom: 12px;
+
+        border: 1px solid var(--light-border);
+        border-radius: 12px;
+
+        background: #f8fafc;
+
+        cursor: pointer;
+
+        transition:
+            border-color 0.18s ease,
+            background-color 0.18s ease,
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    .wallet-entry:hover {
+        background: #eef2ff;
+        border-color: #93c5fd;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+    }
+
+    .wallet-entry.selected {
+        background: #dbeafe;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+    }
+
     .status {
         display: inline-flex;
         align-items: center;

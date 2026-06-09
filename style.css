@@ -545,3 +545,9 @@ footer {
   border-color: var(--accent);
   color: #fff;
 }
+
+.advanced-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}

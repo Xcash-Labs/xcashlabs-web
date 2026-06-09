@@ -514,3 +514,34 @@ footer {
   border-color: var(--accent);
   color: var(--accent);
 }
+
+.wallet-age-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.wallet-age-btn {
+  padding: 10px 14px;
+  border: 1px solid var(--light-border);
+  border-radius: 10px;
+  background: #f8fafc;
+  color: var(--card-text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.wallet-age-btn:hover {
+  background: #eef2ff;
+  border-color: #93c5fd;
+}
+
+.wallet-age-btn.selected,
+.wallet-age-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}

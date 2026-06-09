@@ -12,7 +12,7 @@
 const LwsClient = (function () {
   'use strict';
 
-  // Caddy should reverse proxy /lws/* to xcashklassic-lws.
+  // Public HTTPS endpoint reverse-proxied to xcashklassic-lws.
   let BASE_URL = 'https://lws.xcashlabs.org';
 
   let MOCK = false;

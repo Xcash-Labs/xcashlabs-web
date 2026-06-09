@@ -43,15 +43,6 @@
         Everything runs locally in your browser.
       </p>
 
-      <div class="input-group">
-        <label for="network-select">Network</label>
-        <select id="network-select">
-          <option value="mainnet">Mainnet</option>
-          <option value="stagenet">Stagenet</option>
-          <option value="testnet">Testnet</option>
-        </select>
-      </div>
-
       <details class="advanced-settings">
         <summary>Advanced · use your own XCash Klassic node</summary>
         <div class="advanced-settings-body">
@@ -136,11 +127,6 @@
             <span class="hint">64-character hex</span>
           </label>
           <input type="text" id="spend-key-input" placeholder="Enter 64-character hex spend key..." spellcheck="false" autocomplete="off" maxlength="64">
-        </div>
-
-        <div class="notice">
-          <strong>Client-side:</strong>
-          your private key never leaves this device.
         </div>
 
         <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
@@ -265,6 +251,16 @@
       </div>
     </section>
   </div>
+  
+      <div class="input-group">
+        <label for="network-select">Network</label>
+        <select id="network-select">
+          <option value="mainnet">Mainnet</option>
+          <option value="stagenet">Stagenet</option>
+          <option value="testnet">Testnet</option>
+        </select>
+      </div>
+
 </main>
 
 <footer>

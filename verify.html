@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<title>Open XCash Klassic Wallet</title>
+<meta name="description" content="Create, restore, or open an XCash Klassic wallet from your browser.">
+<link rel="canonical" href="https://wallet.xcashlabs.org/verify.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="/" class="logo">
+        <img src="/assets/xck-logo.png" alt="XCash Klassic" class="logo-icon">
+        <span>XCash Klassic Web Wallet</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/wallet-mgr.html">Open Wallet</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <section class="wallet-card verify-card">
+      <div class="status">
+        <img src="/assets/logo32x32.png" alt="XCash Klassic" class="status-logo">
+        Open XCK wallet
+      </div>
+
+      <h1>Access your XCash Klassic wallet.</h1>
+
+      <p class="lead">
+        Create a new wallet, restore from a seed phrase, import a private spend key, or open a watch-only wallet.
+        Everything runs locally in your browser.
+      </p>
+
+      <div class="input-group">
+        <label for="network-select">Network</label>
+        <select id="network-select">
+          <option value="mainnet">Mainnet</option>
+          <option value="stagenet">Stagenet</option>
+          <option value="testnet">Testnet</option>
+        </select>
+      </div>
+
+      <details class="advanced-settings">
+        <summary>Advanced · use your own XCash Klassic node</summary>
+        <div class="advanced-settings-body">
+          <p>
+            Point the wallet at a node you control. Leave this at the default unless you are running your own compatible node or LWS service.
+          </p>
+          <input id="adv-node-url" type="text" placeholder="https://my-node.example:18289" autocomplete="off" spellcheck="false">
+          <div class="advanced-actions">
+            <button id="adv-node-save" type="button" class="button secondary">Save</button>
+            <button id="adv-node-reset" type="button" class="button secondary">Reset to default</button>
+          </div>
+          <div id="adv-node-msg" class="form-note"></div>
+        </div>
+      </details>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="seed" type="button">Seed Phrase</button>
+        <button class="tab" data-tab="keys" type="button">Private Spend Key</button>
+        <button class="tab" data-tab="watch" type="button">Watch-Only</button>
+        <button class="tab" data-tab="create" type="button">Create New</button>
+      </div>
+
+      <!-- SEED TAB -->
+      <div class="form-section active" id="tab-seed">
+        <div class="input-group">
+          <label for="seed-input">
+            Mnemonic Seed
+            <span class="hint">12 · 13 · 16 · 25 words</span>
+          </label>
+          <textarea id="seed-input" placeholder="Enter your seed phrase separated by spaces..." spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+
+          <div class="seed-status-row">
+            <div class="word-count" id="word-counter"><span class="count" id="wc-num">0</span> words</div>
+            <div class="seed-format-badge" id="seed-format" style="display:none"></div>
+          </div>
+        </div>
+
+        <div class="input-group" id="bip39-pass-group" style="display:none">
+          <label for="bip39-pass">
+            BIP-39 Passphrase
+            <span class="hint">Optional · only for 12-word seeds</span>
+          </label>
+          <input type="password" id="bip39-pass" placeholder="Leave empty if you did not set one" autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="input-group" id="restore-height-group">
+          <label>When was this wallet created?</label>
+
+          <div id="wallet-age-buttons" class="wallet-age-buttons">
+            <button type="button" class="wallet-age-btn" data-age="week">This week</button>
+            <button type="button" class="wallet-age-btn" data-age="month">This month</button>
+            <button type="button" class="wallet-age-btn" data-age="3months">~3 months</button>
+            <button type="button" class="wallet-age-btn" data-age="6months">~6 months</button>
+            <button type="button" class="wallet-age-btn" data-age="year">~1 year</button>
+            <button type="button" class="wallet-age-btn" data-age="2years">~2 years</button>
+            <button type="button" class="wallet-age-btn" data-age="unknown">I don't know</button>
+          </div>
+
+          <div id="restore-height-selected" class="form-note" style="display:none"></div>
+
+          <details class="small-details">
+            <summary>Advanced: enter exact block height</summary>
+            <input type="text" id="restore-height" inputmode="numeric" placeholder="e.g. 3500000" autocomplete="off" spellcheck="false">
+          </details>
+        </div>
+
+        <div class="notice">
+          <strong>Client-side:</strong>
+          your seed phrase is processed locally in your browser.
+        </div>
+
+        <button class="button primary full-width" id="btn-derive-seed" type="button" disabled>
+          Derive Keys
+        </button>
+      </div>
+
+      <!-- KEYS TAB -->
+      <div class="form-section" id="tab-keys">
+        <div class="input-group">
+          <label for="spend-key-input">
+            Private Spend Key
+            <span class="hint">64-character hex</span>
+          </label>
+          <input type="text" id="spend-key-input" placeholder="Enter 64-character hex spend key..." spellcheck="false" autocomplete="off" maxlength="64">
+        </div>
+
+        <div class="notice">
+          <strong>Client-side:</strong>
+          your private key never leaves this device.
+        </div>
+
+        <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
+          Derive Keys
+        </button>
+      </div>
+
+      <!-- WATCH-ONLY TAB -->
+      <div class="form-section" id="tab-watch">
+        <div class="input-group">
+          <label for="watch-addr">Wallet Address</label>
+          <input type="text" id="watch-addr" placeholder="XCK address..." spellcheck="false" autocomplete="off">
+        </div>
+
+        <div class="input-group">
+          <label for="watch-view">
+            Private View Key
+            <span class="hint">64-character hex</span>
+          </label>
+          <input type="text" id="watch-view" placeholder="64-character hex view key..." spellcheck="false" autocomplete="off" maxlength="64">
+        </div>
+
+        <div class="notice">
+          <strong>Watch-only mode:</strong>
+          the view key can scan for incoming payments but cannot spend funds.
+        </div>
+
+        <button class="button primary full-width" id="btn-derive-watch" type="button" disabled>
+          Open Watch-Only Wallet
+        </button>
+      </div>
+
+      <!-- CREATE TAB -->
+      <div class="form-section" id="tab-create">
+        <div class="input-group">
+          <label for="create-lang">Seed Language</label>
+          <select id="create-lang">
+            <option value="english">English</option>
+            <option value="chinese_simplified">简体中文 (Chinese simplified)</option>
+            <option value="dutch">Nederlands (Dutch)</option>
+            <option value="esperanto">Esperanto</option>
+            <option value="french">Français (French)</option>
+            <option value="german">Deutsch (German)</option>
+            <option value="italian">Italiano (Italian)</option>
+            <option value="japanese">日本語 (Japanese)</option>
+            <option value="lojban">Lojban</option>
+            <option value="portuguese">Português (Portuguese)</option>
+            <option value="russian">Русский (Russian)</option>
+            <option value="spanish">Español (Spanish)</option>
+          </select>
+        </div>
+
+        <div class="notice">
+          <strong>This creates a brand new XCash Klassic wallet.</strong>
+          Write down your seed phrase and store it safely. It is the only way to recover your wallet.
+        </div>
+
+        <button class="button primary full-width" id="btn-create" type="button">
+          Generate New Wallet
+        </button>
+
+        <div id="create-result" class="results">
+          <div class="result-match info">New wallet created — write down your seed phrase.</div>
+
+          <div class="result-card important-result">
+            <div class="result-label">Your Seed Phrase <button class="copy-btn" data-target="create-mnemonic" type="button">Copy</button></div>
+            <div class="result-value" id="create-mnemonic"></div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">XCash Klassic Address <button class="copy-btn" data-target="create-address" type="button">Copy</button></div>
+            <div class="result-value address" id="create-address"></div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">Private Spend Key <button class="copy-btn" data-target="create-spend" type="button">Copy</button></div>
+            <div class="result-value" id="create-spend"></div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">Private View Key <button class="copy-btn" data-target="create-view" type="button">Copy</button></div>
+            <div class="result-value" id="create-view"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-msg" id="error-msg"></div>
+
+      <div class="results" id="results">
+        <div class="result-match info" id="result-format"></div>
+
+        <div class="result-card important-result" id="res-mnemonic-card" style="display:none">
+          <div class="result-label">Recovered 25-word Mnemonic <button class="copy-btn" data-target="res-mnemonic" type="button">Copy</button></div>
+          <div class="result-value" id="res-mnemonic"></div>
+          <div class="form-note">The 25-word phrase is a reversible encoding of your spend key. Write this down for backup.</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-label">XCash Klassic Address <button class="copy-btn" data-target="res-address" type="button">Copy</button></div>
+          <div class="result-value address" id="res-address"></div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-label">Private Spend Key <button class="copy-btn" data-target="res-spend" type="button">Copy</button></div>
+          <div class="result-value" id="res-spend"></div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-label">Private View Key <button class="copy-btn" data-target="res-view" type="button">Copy</button></div>
+          <div class="result-value" id="res-view"></div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-label">Public Spend Key <button class="copy-btn" data-target="res-pub-spend" type="button">Copy</button></div>
+          <div class="result-value" id="res-pub-spend"></div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-label">Public View Key <button class="copy-btn" data-target="res-pub-view" type="button">Copy</button></div>
+          <div class="result-value" id="res-pub-view"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-meta">
+      wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
+      XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.
+    </div>
+  </div>
+</footer>
+
+<!-- Crypto engine (order matters) -->
+<script src="js/keccak256.js"></script>
+<script src="js/monero-ed25519.js"></script>
+<script src="js/monero-wordlist.js"></script>
+<script src="js/bip39-wordlist.js"></script>
+<script src="js/bip39.js"></script>
+<script src="js/polyseed.js"></script>
+<script src="js/monero-keys.js"></script>
+<script src="js/wallet-vault.js"></script>
+<script src="js/lws-client.js"></script>
+<script src="js/monero-english-wordlist.js"></script>
+<script src="js/monero-wordlists-all.js"></script>
+<script src="js/verify-page.js"></script>
+</body>
+</html>

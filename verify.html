@@ -109,9 +109,13 @@
           </details>
         </div>
 
-        <div class="notice">
-          <strong>Client-side:</strong>
-          your seed phrase is processed locally in your browser.
+        <div class="input-group">
+          <label for="network-select">Network</label>
+          <select id="network-select">
+            <option value="mainnet">Mainnet</option>
+            <option value="stagenet">Stagenet</option>
+            <option value="testnet">Testnet</option>
+          </select>
         </div>
 
         <button class="button primary full-width" id="btn-derive-seed" type="button" disabled>
@@ -251,16 +255,6 @@
       </div>
     </section>
   </div>
-  
-      <div class="input-group">
-        <label for="network-select">Network</label>
-        <select id="network-select">
-          <option value="mainnet">Mainnet</option>
-          <option value="stagenet">Stagenet</option>
-          <option value="testnet">Testnet</option>
-        </select>
-      </div>
-
 </main>
 
 <footer>

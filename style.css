@@ -669,6 +669,22 @@ footer {
   background: var(--accent-hover);
 }
 
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.actions .action-btn {
+  flex: 1;
+}
+
+.action-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .network-card,
 .key-card,
 .info-card {

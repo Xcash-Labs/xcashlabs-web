@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const IDLE_TIMEOUT_MS = 3 * 60 * 60 * 1000; // 3 hours
   let idleTimer = null;
   let scanningActive = false; // true while LWS is still scanning the chain
-  let xmrUsdPrice = 0;       // cached XMR/USD rate
+  let xckUsdPrice = 0;       // cached XCK/USD rate
 
   const overlay     = document.getElementById('unlock-overlay');
   const overlayMsg  = document.getElementById('unlock-msg');
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <svg width="48" height="48" fill="none" stroke="var(--text-dim)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:12px;opacity:.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         <p style="color:var(--text);font-size:.95rem;font-weight:500;margin-bottom:6px">No wallet connected</p>
         <p style="color:var(--text-dim);font-size:.8rem;margin-bottom:20px">Enter your seed phrase or private key to access your wallet</p>
-        <a href="/verify" style="display:inline-block;padding:12px 28px;background:var(--xmr);color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:.85rem;box-shadow:0 4px 24px rgba(255,102,0,0.2)">Open Wallet →</a>
+        <a href="/verify" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:.85rem;box-shadow:0 4px 24px rgba(255,102,0,0.2)">Open Wallet →</a>
       </div>
     `;
     return;
@@ -141,10 +141,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── Seed phrase recovery ───
   // For 25-word standard seeds, the mnemonic is a reversible encoding of
   // the spend key. Reconstruct it so users can see/backup their seed.
-  // For BIP-39, polyseed, and MyMonero seeds this isn't possible (one-way KDFs).
+  // For BIP-39, polyseed, and XCash Klassic seeds this isn't possible (one-way KDFs).
   (function showMnemonic () {
     if (isWatchOnly || !walletKeys.privateSpendKeyHex) return;
-    // Only show for 25-word standard seeds. BIP-39, polyseed, and MyMonero
+    // Only show for 25-word standard seeds. BIP-39, polyseed, and XCash Klassic
     // seeds use one-way KDFs — reconstructing a mnemonic from the spend key
     // would produce a DIFFERENT (wrong) 25-word seed.
     var fmt = walletKeys.seedFormat;
@@ -372,31 +372,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (connInfo) connInfo.textContent = message;
   }
 
-  // ─── XMR/USD price ───
-  async function fetchXmrPrice () {
-    try {
-      var resp = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=usd');
-      var data = await resp.json();
-      if (data && data.monero && data.monero.usd) {
-        xmrUsdPrice = data.monero.usd;
-      }
-    } catch (e) {
-      // Non-critical — fiat display just stays empty
-    }
+  // ─── XCK/USD price ───
+  // TODO: Add XCash Klassic price source.
+  // Currently disabled because CoinGecko does not provide XCK pricing.
+  async function  fetchXckPrice () {
+    return;
+  //  try {
+  //    var resp = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=usd');
+  //    var data = await resp.json();
+  //    if (data && data.monero && data.monero.usd) {
+  //      xckUsdPrice = data.monero.usd;
+  //    }
+  //  } catch (e) {
+  //    // Non-critical — fiat display just stays empty
+  //  }
   }
 
-  function updateFiatDisplay (xmrText) {
-    var el = document.getElementById('balance-fiat');
-    if (!el || !xmrUsdPrice) { if (el) el.textContent = ''; return; }
-    var xmr = parseFloat(xmrText);
-    if (isNaN(xmr)) { el.textContent = ''; return; }
-    var usd = (xmr * xmrUsdPrice).toFixed(2);
-    el.textContent = '\u2248 $' + usd.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' USD';
+  function updateFiatDisplay (xckText) {
+// Pricing currently disabled
+//    var el = document.getElementById('balance-fiat');
+//    if (!el || !xckUsdPrice) { if (el) el.textContent = ''; return; }
+//    var xmr = parseFloat(xckText);
+//    if (isNaN(xmr)) { el.textContent = ''; return; }
+//    var usd = (xmr * xckUsdPrice).toFixed(2);
+//    el.textContent = '\u2248 $' + usd.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' USD';
   }
 
+  //TODO fix
   // Fetch price now, then refresh every 5 minutes
-  fetchXmrPrice();
-  setInterval(fetchXmrPrice, 300000);
+  // fetchXckPrice();
+  //setInterval( fetchXckPrice, 300000);
 
   // ─── Light-wallet balance polling ───
   // Polls monero-lws via js/lws-client.js for the wallet's balance, scan
@@ -464,6 +469,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         throw loginErr;
       }
       lwsRegistered = true;
+      setLwsStatus('connected', 'Connected to XCash Klassic LWS');
 
       // Record this login for the inactive-account tracker (fire-and-forget)
       LwsClient.pingLogin(walletKeys.address);
@@ -639,7 +645,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           lockedEl.style.cssText = 'font-size:.72rem;color:var(--warning);margin-top:2px;font-family:"JetBrains Mono",monospace';
           balEl.parentNode.insertBefore(lockedEl, balEl.nextSibling);
         }
-        lockedEl.textContent = '+ ' + LwsClient.formatXmr(locked) + ' XMR locked (confirming)';
+        lockedEl.textContent = '+ ' + LwsClient.formatXmr(locked) + ' XCK locked (confirming)';
         lockedEl.style.display = 'block';
       } else if (lockedEl) {
         lockedEl.style.display = 'none';
@@ -761,8 +767,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0;white-space:nowrap">Transaction ID</td><td style="padding:4px 0;word-break:break-all"><span class="tx-detail-copy" data-copy="' + escapeHtml(fullHash) + '" style="cursor:pointer" title="Click to copy">' + escapeHtml(fullHash) + '</span></td></tr>';
         detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Date</td><td style="padding:4px 0">' + escapeHtml(when) + '</td></tr>';
         detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Height</td><td style="padding:4px 0">' + (tx.height ? tx.height.toLocaleString() : 'mempool') + '</td></tr>';
-        detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Amount</td><td style="padding:4px 0;font-weight:600;color:' + arrowCol + '">' + (isIn ? '+' : '−') + display + ' XMR</td></tr>';
-        detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Fee</td><td style="padding:4px 0">' + feeDisplay + (feeDisplay !== '—' ? ' XMR' : '') + '</td></tr>';
+        detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Amount</td><td style="padding:4px 0;font-weight:600;color:' + arrowCol + '">' + (isIn ? '+' : '−') + display + ' XCK</td></tr>';
+        detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Fee</td><td style="padding:4px 0">' + feeDisplay + (feeDisplay !== '—' ? ' XCK' : '') + '</td></tr>';
         detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Confirmations</td><td style="padding:4px 0">' + (tx.mempool ? 'unconfirmed' : confirms.toLocaleString()) + '</td></tr>';
         if (paymentId) {
           detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Payment ID</td><td style="padding:4px 0;word-break:break-all">' + escapeHtml(paymentId) + '</td></tr>';
@@ -817,24 +823,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Wraps the network connect + populate flow so it can be called both on
-  // initial load and from any in-page retry button without reloading.
-  async function connectAndPopulate () {
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-
-    setLwsStatus('connected', 'Connected to XCash Klassic LWS');
-
-    document.getElementById('net-node').textContent = 'XCash Klassic LWS';
-    document.getElementById('net-height').textContent = '—';
-    document.getElementById('net-latency').textContent = '—';
-    document.getElementById('net-pool').textContent = '—';
-    document.getElementById('net-fee').textContent = 'Handled by LWS';
-
-    startBalancePolling();
-  }
-
-  await connectAndPopulate();
+  // ─── Start dashboard LWS polling ───
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  setLwsStatus('connected', 'Connecting to XCash Klassic LWS');
+  startBalancePolling();
 
   // ─── RATE LIMIT MODAL ───
   function showRateLimitModal () {
@@ -984,14 +977,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendReviewBtn.textContent = 'Estimating…';
     try {
       const toAddress = (sendToEl.value || '').trim();
-      const xmrAmount = (sendAmountEl.value || '').trim();
-      sendPreview = await MoneroSend.estimateFee(walletKeys, toAddress, xmrAmount, sendPriority);
+      const xckAmount = (sendAmountEl.value || '').trim();
+      sendPreview = await MoneroSend.estimateFee(walletKeys, toAddress, xckAmount, sendPriority);
 
       document.getElementById('confirm-to').textContent = toAddress;
-      document.getElementById('confirm-amount').textContent = xmrAmount + ' XMR';
-      document.getElementById('confirm-fee').textContent = sendPreview.fee_xmr + ' XMR';
-      const total = (Number(xmrAmount) + Number(sendPreview.fee_xmr)).toString();
-      document.getElementById('confirm-total').textContent = total + ' XMR';
+      document.getElementById('confirm-amount').textContent = xckAmount + ' XCK';
+      document.getElementById('confirm-fee').textContent = sendPreview.fee_xmr + ' XCK';
+      const total = (Number(xckAmount) + Number(sendPreview.fee_xmr)).toString();
+      document.getElementById('confirm-total').textContent = total + ' XCK';
 
       sendShowStep('confirm');
     } catch (e) {
@@ -1013,9 +1006,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendShowResultState('pending');
     try {
       const toAddress = (sendToEl.value || '').trim();
-      const xmrAmount = (sendAmountEl.value || '').trim();
+      const xckAmount = (sendAmountEl.value || '').trim();
       const paymentId = (document.getElementById('send-pid').value || '').trim();
-      const result = await MoneroSend.send(walletKeys, toAddress, xmrAmount, sendPriority, paymentId, sendPreview);
+      const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview);
       document.getElementById('send-result-hash').textContent = result.tx_hash;
       sendShowResultState('success');
       // Trigger a balance refresh so the new pending tx shows up
@@ -1049,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       // typeNumber=0 → auto-pick the smallest version that fits, EC level "M"
       const qr = qrcode(0, 'M');
-      qr.addData('monero:' + text);
+      qr.addData('xcash klassic:' + text);
       qr.make();
       const count = qr.getModuleCount();
       const size  = 220;       // pixel size of the rendered SVG
@@ -1113,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── Export wallet (JSON) ───
   document.getElementById('btn-export').addEventListener('click', () => {
     const dump = {
-      format: 'monero-web-wallet-backup',
+      format: 'xcashklassic-web-wallet-backup',
       version: 1,
       exportedAt: new Date().toISOString(),
       network: walletKeys.network || 'mainnet',
@@ -1128,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const url  = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'monero-web-' + walletKeys.address.slice(0, 8) + '.json';
+    a.download = 'xcashklassic-web-' + walletKeys.address.slice(0, 8) + '.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

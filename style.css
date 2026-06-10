@@ -546,15 +546,6 @@ footer {
   color: #fff;
 }
 
-
-
-
-
-
-
-
-
-
 .dashboard-card {
   max-width: 860px;
 }
@@ -747,7 +738,87 @@ footer {
   to { transform: rotate(360deg); }
 }
 
+/* Wallet header */
+.wallet-header {
+  padding: 24px 0 16px;
+  text-align: center;
+}
 
+.wallet-address {
+  position: relative;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid var(--light-border);
+  border-radius: 12px;
+  color: var(--card-muted);
+  font-family: monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  word-break: break-all;
+  user-select: all;
+  cursor: pointer;
+}
+
+.wallet-address:hover {
+  background: #eef2ff;
+  border-color: #93c5fd;
+}
+
+.wallet-address .copy-toast {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 650;
+  padding: 4px 12px;
+  border-radius: 999px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.wallet-address .copy-toast.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.balance-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.balance-label {
+  margin-bottom: 4px;
+  color: var(--card-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.balance-value {
+  color: var(--card-text);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.balance-value .xmr-symbol {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.balance-note {
+  margin-top: 4px;
+  color: var(--card-muted);
+  font-size: 0.76rem;
+}
 
 
 

@@ -694,7 +694,6 @@ footer {
 }
 
 .network-card,
-.key-card,
 .info-card {
     background: #f8fafc;
     border: 1px solid var(--light-border);

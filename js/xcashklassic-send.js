@@ -19,7 +19,7 @@
 const MoneroSend = (function () {
   'use strict';
 
-  const ATOMIC_PER_XMR = 1000000n;
+  const ATOMIC_PER_XCK = 1000000n;
   const DEFAULT_MIXIN = 15;
 
   // ── Address validation (no WASM needed) ───────────────────────────

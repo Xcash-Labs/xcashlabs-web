@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       if (txs.length === 0) {
-        listEl.innerHTML = '<div class="key-card" style="text-align:center;color:var(--text-dim);font-size:.75rem;padding:18px">No transactions yet. Receive some XMR and it\'ll show up here.</div>';
+        listEl.innerHTML = '<div class="key-card" style="text-align:center;color:var(--text-dim);font-size:.75rem;padding:18px">No transactions yet. Receive some XCK and it\'ll show up here.</div>';
         return;
       }
 

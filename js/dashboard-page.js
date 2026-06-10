@@ -363,24 +363,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // ─── Connect to node ───
+  // ─── LWS connection status ───
   const connDot = document.getElementById('conn-dot');
   const connInfo = document.getElementById('conn-info');
 
-  MoneroRPC.onConnectionChange((state) => {
-    connDot.className = 'conn-dot ' + state.status;
-    if (state.status === 'connected') {
-      connInfo.innerHTML = '<span>' + escapeHtml(state.node) + '</span> · <span class="conn-height">' + (state.height ? state.height.toLocaleString() : '—') + '</span>';
-    } else if (state.status === 'connecting') {
-      connInfo.textContent = state.message || 'Connecting…';
-    } else {
-      // Disconnected — surface a retry link inline so the user doesn't have
-      // to reload the whole page to recover from a transient proxy outage.
-      connInfo.innerHTML = '<span style="color:#f87171">' + escapeHtml(state.message || 'Disconnected') + '</span> · <a href="#" id="conn-retry" style="color:var(--xmr);text-decoration:underline;cursor:pointer">retry</a>';
-      const r = document.getElementById('conn-retry');
-      if (r) r.addEventListener('click', (e) => { e.preventDefault(); connectAndPopulate(); });
-    }
-  });
+  function setLwsStatus(status, message) {
+    if (connDot) connDot.className = 'conn-dot ' + status;
+    if (connInfo) connInfo.textContent = message;
+  }
 
   // ─── XMR/USD price ───
   async function fetchXmrPrice () {
@@ -830,53 +820,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Wraps the network connect + populate flow so it can be called both on
   // initial load and from any in-page retry button without reloading.
   async function connectAndPopulate () {
-    document.getElementById('loading-state').style.display = 'block';
-    document.getElementById('loading-state').innerHTML =
-      '<div class="spinner"></div><p>Connecting to Monero network…</p>';
-    try {
-      const node = await MoneroRPC.connect();
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
 
-      document.getElementById('loading-state').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
+    setLwsStatus('connecting', 'Connecting to XCash Klassic LWS…');
 
-      document.getElementById('net-node').textContent     = node.name;
-      document.getElementById('net-height').textContent   = node.height ? node.height.toLocaleString() : '—';
-      document.getElementById('net-latency').textContent  = node.latency + 'ms';
-      document.getElementById('net-pool').textContent     = node.txPoolSize || '0';
+    document.getElementById('net-node').textContent = 'XCash Klassic LWS';
+    document.getElementById('net-height').textContent = '—';
+    document.getElementById('net-latency').textContent = '—';
+    document.getElementById('net-pool').textContent = '—';
+    document.getElementById('net-fee').textContent = 'Handled by LWS';
 
-      try {
-        const fee = await MoneroRPC.getFeeEstimate();
-        document.getElementById('net-fee').textContent = MoneroRPC.formatXMR(fee.feePerByte) + ' XMR/byte';
-      } catch (e) {
-        document.getElementById('net-fee').textContent = 'unavailable';
-      }
-
-      // Kick off the light-wallet scan via monero-lws. The actual UI updates
-      // are driven by startBalancePolling() below — this just registers the
-      // wallet on first load. If the LWS is unreachable (still building, sync
-      // not done, etc.) the UI shows an explanatory message and falls back
-      // to "balance unknown — scanning unavailable" rather than breaking the
-      // dashboard.
-      startBalancePolling();
-    } catch (e) {
-      // Build a structured error block with two recovery options.
-      const ls = document.getElementById('loading-state');
-      ls.style.display = 'block';
-      ls.innerHTML =
-        '<div style="text-align:center;max-width:380px;margin:0 auto">' +
-          '<svg width="40" height="40" fill="none" stroke="#f87171" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 14px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
-          '<p style="color:#f87171;font-size:.92rem;font-weight:600;margin-bottom:6px">Could not reach a Monero node</p>' +
-          '<p style="color:var(--text-dim);font-size:.78rem;line-height:1.55;margin-bottom:4px">' + escapeHtml(e.message) + '</p>' +
-          '<p style="color:var(--text-dim);font-size:.72rem;line-height:1.55;margin-bottom:18px">This usually means the proxy is rate-limited, the upstream nodes are temporarily down, or your network is blocking the request. Your wallet keys are unaffected.</p>' +
-          '<button id="err-retry" class="action-btn" style="padding:10px 22px;font-size:.82rem;width:auto;display:inline-flex;margin-right:8px">Retry</button>' +
-          '<button id="err-disconnect" class="action-btn" style="padding:10px 22px;font-size:.82rem;width:auto;display:inline-flex;background:transparent">Disconnect</button>' +
-        '</div>';
-      document.getElementById('err-retry').addEventListener('click', () => connectAndPopulate());
-      document.getElementById('err-disconnect').addEventListener('click', () => {
-        WalletVault.clear();
-        window.location.href = '/';
-      });
-    }
+    startBalancePolling();
   }
 
   await connectAndPopulate();
@@ -1125,33 +1080,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── Disconnect ───
   document.getElementById('btn-disconnect').addEventListener('click', () => {
     WalletVault.clear();
-    MoneroRPC.disconnect();
     window.location.href = '/';
-  });
-
-  // ─── Custom node settings ───
-  const customNodeInput = document.getElementById('custom-node');
-  const nodeMsg = document.getElementById('node-msg');
-  customNodeInput.value = MoneroRPC.getCustomNode();
-  if (customNodeInput.value) {
-    nodeMsg.textContent = 'Using custom node — proxy bypassed.';
-  }
-  document.getElementById('btn-node-save').addEventListener('click', () => {
-    const v = customNodeInput.value.trim();
-    if (v && !/^https?:\/\//.test(v)) {
-      nodeMsg.textContent = 'URL must start with http:// or https://';
-      nodeMsg.style.color = '#f87171';
-      return;
-    }
-    MoneroRPC.setCustomNode(v);
-    nodeMsg.style.color = 'var(--success)';
-    nodeMsg.textContent = v ? 'Saved. Reload to reconnect.' : 'Cleared.';
-  });
-  document.getElementById('btn-node-clear').addEventListener('click', () => {
-    MoneroRPC.setCustomNode('');
-    customNodeInput.value = '';
-    nodeMsg.style.color = 'var(--text-dim)';
-    nodeMsg.textContent = 'Reverted to monero-web proxy. Reload to reconnect.';
   });
 
   // ─── QR scanner ───
@@ -1206,13 +1135,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
 
-  // ─── Auto-refresh height every 30s ───
-  setInterval(async () => {
-    try {
-      const height = await MoneroRPC.getHeight();
-      document.getElementById('net-height').textContent = height.toLocaleString();
-      connInfo.innerHTML = `<span>${MoneroRPC.getConnectionState().node}</span> · <span class="conn-height">${height.toLocaleString()}</span>`;
-    } catch(e) {}
-  }, 30000);
   } // end populateWallet
 });

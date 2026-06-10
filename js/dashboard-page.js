@@ -520,10 +520,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Tight first poll to surface initial state quickly, then 30s cadence.
+    // Tight first poll to surface initial state quickly, then 60s cadence.
     if (balancePollTimer) clearInterval(balancePollTimer);
     pollBalanceOnce();
-    balancePollTimer = setInterval(pollBalanceOnce, 30000);
+    balancePollTimer = setInterval(pollBalanceOnce, 60000);
   }
 
   async function pollBalanceOnce () {
@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             var correctedSent = BigInt(info.total_sent || '0') - falseSpendTotal;
             if (correctedSent < 0n) correctedSent = 0n;
             info.total_sent = correctedSent.toString();
-            console.log('[lws] filtered ' + falseSpendTotal.toString() + ' piconero of false spends');
+            console.log('[lws] filtered ' + falseSpendTotal.toString() + ' xcash klassic of false spends');
           }
         } catch (e) {
           // WASM failed to load — use heuristic fallbacks

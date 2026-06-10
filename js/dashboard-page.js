@@ -464,7 +464,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         throw loginErr;
       }
       lwsRegistered = true;
-      setLwsStatus('connected', 'Connected to XCash Klassic LWS');
 
       // Record this login for the inactive-account tracker (fire-and-forget)
       LwsClient.pingLogin(walletKeys.address);
@@ -824,7 +823,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
 
-    setLwsStatus('connecting', 'Connecting to XCash Klassic LWS…');
+    setLwsStatus('connected', 'Connected to XCash Klassic LWS');
 
     document.getElementById('net-node').textContent = 'XCash Klassic LWS';
     document.getElementById('net-height').textContent = '—';

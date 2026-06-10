@@ -838,17 +838,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ─── RATE LIMIT MODAL ───
   function showRateLimitModal () {
-    document.getElementById('ratelimit-modal').classList.add('show');
+    const modal = document.getElementById('ratelimit-modal');
+    if (modal) modal.classList.add('show');
   }
-  document.getElementById('ratelimit-close').addEventListener('click', () => {
-    document.getElementById('ratelimit-modal').classList.remove('show');
-  });
-  document.getElementById('ratelimit-ok').addEventListener('click', () => {
-    document.getElementById('ratelimit-modal').classList.remove('show');
-  });
-  document.getElementById('ratelimit-modal').addEventListener('click', (e) => {
-    if (e.target.id === 'ratelimit-modal') e.target.classList.remove('show');
-  });
+
+  const rateLimitClose = document.getElementById('ratelimit-close');
+  const rateLimitOk = document.getElementById('ratelimit-ok');
+  const rateLimitModal = document.getElementById('ratelimit-modal');
+
+  if (rateLimitClose && rateLimitModal) {
+    rateLimitClose.addEventListener('click', () => {
+      rateLimitModal.classList.remove('show');
+    });
+  }
+
+  if (rateLimitOk && rateLimitModal) {
+    rateLimitOk.addEventListener('click', () => {
+      rateLimitModal.classList.remove('show');
+    });
+  }
+
+  if (rateLimitModal) {
+    rateLimitModal.addEventListener('click', (e) => {
+      if (e.target.id === 'ratelimit-modal') {
+        rateLimitModal.classList.remove('show');
+      }
+    });
+  }
 
   // ─── RECEIVE MODAL ───
   document.getElementById('btn-receive').addEventListener('click', () => {

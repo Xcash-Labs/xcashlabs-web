@@ -838,71 +838,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ─── RATE LIMIT MODAL ───
   function showRateLimitModal () {
-    const modal = document.getElementById('ratelimit-modal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('ratelimit-modal').classList.add('show');
   }
-
-  const rateLimitClose = document.getElementById('ratelimit-close');
-  const rateLimitOk = document.getElementById('ratelimit-ok');
-  const rateLimitModal = document.getElementById('ratelimit-modal');
-
-  if (rateLimitClose && rateLimitModal) {
-    rateLimitClose.addEventListener('click', () => {
-      rateLimitModal.classList.remove('show');
-    });
-  }
-
-  if (rateLimitOk && rateLimitModal) {
-    rateLimitOk.addEventListener('click', () => {
-      rateLimitModal.classList.remove('show');
-    });
-  }
-
-  if (rateLimitModal) {
-    rateLimitModal.addEventListener('click', (e) => {
-      if (e.target.id === 'ratelimit-modal') {
-        rateLimitModal.classList.remove('show');
-      }
-    });
-  }
+  document.getElementById('ratelimit-close').addEventListener('click', () => {
+    document.getElementById('ratelimit-modal').classList.remove('show');
+  });
+  document.getElementById('ratelimit-ok').addEventListener('click', () => {
+    document.getElementById('ratelimit-modal').classList.remove('show');
+  });
+  document.getElementById('ratelimit-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'ratelimit-modal') e.target.classList.remove('show');
+  });
 
   // ─── RECEIVE MODAL ───
-  const receiveBtn = document.getElementById('btn-receive');
-  const receiveModal = document.getElementById('receive-modal');
-  const receiveClose = document.getElementById('receive-close');
-  const receiveCopy = document.getElementById('receive-copy');
+  document.getElementById('btn-receive').addEventListener('click', () => {
+    document.getElementById('receive-modal').classList.add('show');
+    // Generate QR code as SVG using a simple QR library inline
+    generateQR(walletKeys.address);
+  });
 
-  if (receiveBtn && receiveModal) {
-    receiveBtn.addEventListener('click', () => {
-      receiveModal.classList.add('show');
-      generateQR(walletKeys.address);
-    });
-  }
+  document.getElementById('receive-close').addEventListener('click', () => {
+    document.getElementById('receive-modal').classList.remove('show');
+  });
 
-  if (receiveClose && receiveModal) {
-    receiveClose.addEventListener('click', () => {
-      receiveModal.classList.remove('show');
+  document.getElementById('receive-copy').addEventListener('click', () => {
+    navigator.clipboard.writeText(walletKeys.address).then(() => {
+      const btn = document.getElementById('receive-copy');
+      btn.textContent = 'Copied!';
+      btn.style.borderColor = 'rgba(34,197,94,0.3)';
+      btn.style.color = '#4ade80';
+      setTimeout(() => { btn.textContent = 'Copy Address'; btn.style.borderColor = ''; btn.style.color = ''; }, 2000);
     });
-  }
-
-  if (receiveCopy) {
-    receiveCopy.addEventListener('click', () => {
-      navigator.clipboard.writeText(walletKeys.address).then(() => {
-        receiveCopy.textContent = 'Copied!';
-        setTimeout(() => {
-          receiveCopy.textContent = 'Copy Address';
-        }, 2000);
-      });
-    });
-  }
-
-  if (receiveModal) {
-    receiveModal.addEventListener('click', (e) => {
-      if (e.target.id === 'receive-modal') {
-        receiveModal.classList.remove('show');
-      }
-    });
-  }
+  });
 
   // Close modal on backdrop click
   document.getElementById('receive-modal').addEventListener('click', (e) => {

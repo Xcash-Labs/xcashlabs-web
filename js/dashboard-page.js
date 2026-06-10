@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const subLabel  = document.getElementById('sub-label');
   const subMajor  = document.getElementById('sub-major');
   const subMinor  = document.getElementById('sub-minor');
-  const subBookKey = 'monero-web-subaddrs-' + walletKeys.address.slice(0, 12);
+  const subBookKey = 'xcashklassic-subaddrs-' + walletKeys.address.slice(0, 12);
 
   function loadSubBook () {
     try {
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.warn('[lws] register failed:', e);
       balEl.textContent = '—';
       noteEl.innerHTML = 'Balance scanning unavailable — ' +
-        '<a href="#" id="bal-retry" style="color:var(--xmr);text-decoration:underline">retry</a>';
+        '<a href="#" id="bal-retry" style="color:var(--accent);text-decoration:underline">retry</a>';
       const r = document.getElementById('bal-retry');
       if (r) r.addEventListener('click', (ev) => { ev.preventDefault(); startBalancePolling(); });
       return;
@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         avail = LwsClient.availableBalance(info);
       }
       const progress = LwsClient.scanProgress(info);
-      balEl.textContent = LwsClient.formatXmr(avail);
+      balEl.textContent = LwsClient.formatXck(avail);
       updateFiatDisplay(balEl.textContent);
 
       // Watch-only: show a note that balance is receive-only
@@ -645,7 +645,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           lockedEl.style.cssText = 'font-size:.72rem;color:var(--warning);margin-top:2px;font-family:"JetBrains Mono",monospace';
           balEl.parentNode.insertBefore(lockedEl, balEl.nextSibling);
         }
-        lockedEl.textContent = '+ ' + LwsClient.formatXmr(locked) + ' XCK locked (confirming)';
+        lockedEl.textContent = '+ ' + LwsClient.formatXck(locked) + ' XCK locked (confirming)';
         lockedEl.style.display = 'block';
       } else if (lockedEl) {
         lockedEl.style.display = 'none';
@@ -746,7 +746,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const sent     = isWatchOnly ? 0n : BigInt(tx.total_sent || '0');
         const net      = received - sent;
         const isIn     = net >= 0n;
-        const display  = LwsClient.formatXmr(net < 0n ? -net : net);
+        const display  = LwsClient.formatXck(net < 0n ? -net : net);
         const confirms = tx.mempool ? 0 : Math.max(0, chainTip - (tx.height || 0));
         const when     = tx.timestamp ? new Date(tx.timestamp).toLocaleString() : '—';
         const status   = tx.mempool
@@ -755,10 +755,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             ? '<span style="color:var(--warning)">' + confirms + ' / 10 confs</span>'
             : '<span style="color:var(--success)">confirmed</span>');
         const arrow    = isIn ? '↓' : '↑';
-        const arrowCol = isIn ? 'var(--success)' : 'var(--xmr)';
+        const arrowCol = isIn ? 'var(--success)' : 'var(--accent)';
         const hash     = (tx.hash || '').slice(0, 16) + '…';
         const fullHash = tx.hash || '';
-        const feeDisplay = tx.fee && tx.fee !== '0' ? LwsClient.formatXmr(tx.fee) : '—';
+        const feeDisplay = tx.fee && tx.fee !== '0' ? LwsClient.formatXck(tx.fee) : '—';
         const paymentId  = tx.payment_id && tx.payment_id !== '0000000000000000' ? tx.payment_id : '';
         const explorerUrl = 'https://www.exploremonero.com/transaction/' + encodeURIComponent(fullHash);
 
@@ -774,14 +774,14 @@ document.addEventListener('DOMContentLoaded', async () => {
           detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Payment ID</td><td style="padding:4px 0;word-break:break-all">' + escapeHtml(paymentId) + '</td></tr>';
         }
         detailRows += '<tr><td style="color:var(--text-dim);padding:4px 12px 4px 0">Direction</td><td style="padding:4px 0">' + (isIn ? 'Received' : 'Sent') + '</td></tr>';
-        detailRows += '<tr><td colspan="2" style="padding:8px 0 0 0"><a href="' + escapeHtml(explorerUrl) + '" target="_blank" rel="noopener noreferrer" style="color:var(--xmr);font-size:.72rem;text-decoration:none">View on block explorer ↗</a></td></tr>';
+        detailRows += '<tr><td colspan="2" style="padding:8px 0 0 0"><a href="' + escapeHtml(explorerUrl) + '" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-size:.72rem;text-decoration:none">View on block explorer ↗</a></td></tr>';
 
         return '<div class="key-card" style="margin-bottom:6px;padding:0;overflow:hidden">' +
           '<div class="tx-row" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;cursor:pointer">' +
             '<div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1">' +
               '<span style="font-size:1.1rem;color:' + arrowCol + ';font-weight:700;flex-shrink:0">' + arrow + '</span>' +
               '<div style="min-width:0">' +
-                '<div style="font-size:.82rem;font-weight:600;color:var(--text);font-family:\'JetBrains Mono\',monospace">' + (isIn ? '+' : '−') + display + ' <span style="color:var(--text-dim);font-size:.7rem;font-weight:400">XMR</span></div>' +
+                '<div style="font-size:.82rem;font-weight:600;color:var(--text);font-family:\'JetBrains Mono\',monospace">' + (isIn ? '+' : '−') + display + ' <span style="color:var(--text-dim);font-size:.7rem;font-weight:400">XCK</span></div>' +
                 '<div style="font-size:.65rem;color:var(--text-dim);margin-top:2px">' + escapeHtml(when) + ' · ' + status + '</div>' +
               '</div>' +
             '</div>' +
@@ -826,7 +826,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── Start dashboard LWS polling ───
   document.getElementById('loading-state').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  setLwsStatus('connected', 'Connecting to XCash Klassic LWS');
+  setLwsStatus('connecting', 'Connecting to XCash Klassic LWS');
   startBalancePolling();
 
   // ─── RATE LIMIT MODAL ───
@@ -1042,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       // typeNumber=0 → auto-pick the smallest version that fits, EC level "M"
       const qr = qrcode(0, 'M');
-      qr.addData('xcash klassic:' + text);
+      qr.addData('xcashklassic:' + text);
       qr.make();
       const count = qr.getModuleCount();
       const size  = 220;       // pixel size of the rendered SVG
@@ -1084,7 +1084,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       onResult: (parsed) => {
         const lines = [];
         if (parsed.address)     lines.push('<div><span style="color:var(--text-dim)">addr:</span> ' + escapeHtml(parsed.address) + '</div>');
-        if (parsed.amount)      lines.push('<div><span style="color:var(--text-dim)">amount:</span> ' + escapeHtml(parsed.amount) + ' XMR</div>');
+        if (parsed.amount)      lines.push('<div><span style="color:var(--text-dim)">amount:</span> ' + escapeHtml(parsed.amount) + ' XCK</div>');
         if (parsed.recipient)   lines.push('<div><span style="color:var(--text-dim)">recipient:</span> ' + escapeHtml(parsed.recipient) + '</div>');
         if (parsed.description) lines.push('<div><span style="color:var(--text-dim)">memo:</span> ' + escapeHtml(parsed.description) + '</div>');
         if (parsed.paymentId)   lines.push('<div><span style="color:var(--text-dim)">payment id:</span> ' + escapeHtml(parsed.paymentId) + '</div>');
@@ -1106,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── Export wallet (JSON) ───
   document.getElementById('btn-export').addEventListener('click', () => {
     const dump = {
-      format: 'xcashklassic-web-wallet-backup',
+      format: 'xcash-klassic-web-wallet-backup',
       version: 1,
       exportedAt: new Date().toISOString(),
       network: walletKeys.network || 'mainnet',
@@ -1121,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const url  = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'xcashklassic-web-' + walletKeys.address.slice(0, 8) + '.json';
+    a.download = 'xcash-klassic-wallet-' + walletKeys.address.slice(0, 8) + '.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -196,7 +196,7 @@ const LwsClient = (function () {
     return Math.max(0, Math.min(1, (cur - start) / (tip - start)));
   }
 
-  function formatXmr(atomic) {
+  function formatXck(atomic) {
     let n;
 
     if (typeof atomic === 'bigint') {
@@ -323,7 +323,7 @@ const LwsClient = (function () {
     submitRawTx,
     availableBalance,
     scanProgress,
-    formatXmr,
+    formatXck,
     pingLogin,
     setBaseUrl,
     setMockMode,

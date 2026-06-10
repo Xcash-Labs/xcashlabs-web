@@ -88,7 +88,7 @@ const MoneroSend = (function () {
 
     return {
       fee_atomic: feeAtomic.toString(),
-      fee_xmr: LwsClient.formatXmr(feeAtomic),
+      fee_xmr: LwsClient.formatXck(feeAtomic),
       per_byte: (perKbFee / 1024n).toString(),
       _unspentResp: outs,
     };

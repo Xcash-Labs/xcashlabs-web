@@ -760,7 +760,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const fullHash = tx.hash || '';
         const feeDisplay = tx.fee && tx.fee !== '0' ? LwsClient.formatXck(tx.fee) : '—';
         const paymentId  = tx.payment_id && tx.payment_id !== '0000000000000000' ? tx.payment_id : '';
-        const explorerUrl = 'https://www.exploremonero.com/transaction/' + encodeURIComponent(fullHash);
+        const explorerUrl = 'https://explorer.xcashlabs.org/tx/' + encodeURIComponent(fullHash);
 
         // Detail panel (hidden by default, toggled on click)
         var detailRows = '';

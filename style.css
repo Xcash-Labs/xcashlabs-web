@@ -895,6 +895,15 @@ footer {
     font-size: 0.76rem;
 }
 
+/* Send priority tier buttons */
+.send-prio-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);font-family:'Outfit',sans-serif;font-size:.72rem;padding:8px 4px;border-radius:6px;cursor:pointer;transition:all .2s}
+.send-prio-btn:hover{color:var(--text);border-color:var(--border-strong)}
+.send-prio-btn.active{background:var(--xmr-dim);border-color:rgba(255,102,0,0.3);color:var(--xmr);font-weight:600}
+.send-options{text-align:left;margin:12px 0}
+.send-option{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px}
+.send-option strong{display:block;font-size:.78rem;color:var(--text);margin-bottom:2px}
+.send-option span{font-size:.72rem;color:var(--text-dim);line-height:1.5}
+
 .mt-16 {
     margin-top: 16px;
 }

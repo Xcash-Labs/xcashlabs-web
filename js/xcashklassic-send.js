@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * monero-send.js — Send-transaction module for monero-web
+ * xcashklassic-send.js — Send-transaction module for monero-web
  *
  * Uses MoneroCore (mymonero-loader.js) for address validation and tx signing.
  * Output selection and fee calculation are done in pure JS to avoid the
@@ -19,46 +19,65 @@
 const MoneroSend = (function () {
   'use strict';
 
-  const ATOMIC_PER_XMR = 1000000000000n;
+  const ATOMIC_PER_XMR = 1000000n;
   const DEFAULT_MIXIN = 15;
 
   // ── Address validation (no WASM needed) ───────────────────────────
 
-  function validateAddress (addr) {
+  function validateAddress(addr) {
     if (!addr || typeof addr !== 'string') {
       return { valid: false, reason: 'empty' };
     }
+
     addr = addr.trim();
-    if (!/^[1-9A-HJ-NP-Za-km-z]{95,106}$/.test(addr)) {
-      return { valid: false, reason: 'wrong length or character set' };
+
+    const base58 = '1-9A-HJ-NP-Za-km-z';
+
+    const isPublic =
+      addr.startsWith('XCK') &&
+      addr.length === 98 &&
+      new RegExp('^XCK[' + base58 + ']{95}$').test(addr);
+
+    const isIntegrated =
+      addr.startsWith('XCB') &&
+      addr.length === 110 &&
+      new RegExp('^XCB[' + base58 + ']{107}$').test(addr);
+
+    const isSubaddress =
+      addr.startsWith('8') &&
+      addr.length === 95 &&
+      new RegExp('^8[' + base58 + ']{94}$').test(addr);
+
+    if (!isPublic && !isIntegrated && !isSubaddress) {
+      return { valid: false, reason: 'wrong prefix, length, or character set' };
     }
-    var subaddress = false, integrated = false;
-    if (addr.length === 106) {
-      integrated = true;
-    } else if (addr[0] === '8') {
-      subaddress = true;
-    }
-    return { valid: true, subaddress: subaddress, integrated: integrated, raw: addr };
+
+    return {
+      valid: true,
+      subaddress: isSubaddress,
+      integrated: isIntegrated,
+      raw: addr
+    };
   }
 
   // ── Amount helpers ────────────────────────────────────────────────
 
-  function xmrToAtomic (xmrStr) {
-    var s = String(xmrStr).trim().replace(',', '.'); // accept comma as decimal separator
+  function xckToAtomic(xckStr) {
+    var s = String(xckStr).trim().replace(',', '.');
     if (!s) return '0';
-    if (!/^[0-9]+(\.[0-9]+)?$/.test(s)) throw new Error('Invalid XMR amount');
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(s)) throw new Error('Invalid XCK amount');
     var parts = s.split('.');
     var whole = parts[0] || '0';
-    var frac = (parts[1] || '').padEnd(12, '0').substring(0, 12);
-    return (BigInt(whole) * ATOMIC_PER_XMR + BigInt(frac)).toString();
+    var frac = (parts[1] || '').padEnd(6, '0').substring(0, 6);
+    return (BigInt(whole) * ATOMIC_PER_XCK + BigInt(frac)).toString();
   }
 
-  function atomicToXmr (atomic) {
+  function atomicToXck(atomic) {
     var n = BigInt(String(atomic || '0'));
-    var whole = n / ATOMIC_PER_XMR;
-    var frac = n % ATOMIC_PER_XMR;
+    var whole = n / ATOMIC_PER_XCK;
+    var frac = n % ATOMIC_PER_XCK;
     if (frac === 0n) return whole.toString();
-    var fracStr = frac.toString().padStart(12, '0').replace(/0+$/, '');
+    var fracStr = frac.toString().padStart(6, '0').replace(/0+$/, '');
     return whole.toString() + '.' + fracStr;
   }
 
@@ -67,7 +86,7 @@ const MoneroSend = (function () {
   var PRIO_MULT = { 1: 1, 2: 4, 3: 20, 4: 166 };
   var TYPICAL_TX_BYTES = 2000;
 
-  async function estimateFee (walletKeys, toAddress, xmrAmount, priority) {
+  async function estimateFee (walletKeys, toAddress, xckAmount, priority) {
     // mixin=0: fetch ALL outputs regardless of their historical ring size.
     // Old RingCT outputs received in low-mixin txs (2019-2021 era) are perfectly
     // spendable in modern transactions — LWS's mixin filter incorrectly hides them.
@@ -92,18 +111,19 @@ const MoneroSend = (function () {
       per_byte: (perKbFee / 1024n).toString(),
       _unspentResp: outs,
     };
+
   }
 
   // ── Send transaction ──────────────────────────────────────────────
 
-  async function send (walletKeys, toAddress, xmrAmount, priority, paymentId, preview) {
+  async function send (walletKeys, toAddress, xckAmount, priority, paymentId, preview) {
     try {
       await MoneroCore.load();
     } catch (e) {
       throw new Error('Transaction signing requires a component that could not load. Try disabling ad blockers or use a different browser.');
     }
 
-    var amountAtomic = BigInt(xmrToAtomic(xmrAmount));
+    var amountAtomic = BigInt(xckToAtomic(xckAmount));
 
     // 1. Always fetch fresh unspent outputs (never use cached preview —
     // the LWS state can change between Review and Confirm steps).
@@ -188,8 +208,8 @@ const MoneroSend = (function () {
 
     if (totalAvailable < amountAtomic + BigInt(estFee)) {
       throw new Error('Insufficient funds: need ' +
-        atomicToXmr((amountAtomic + BigInt(estFee)).toString()) +
-        ' XMR but only have ' + atomicToXmr(totalAvailable.toString()) + ' XMR');
+        atomicToXck((amountAtomic + BigInt(estFee)).toString()) +
+        ' XCK but only have ' + atomicToXck(totalAvailable.toString()) + ' XCK');
     }
 
     var feeAmount = BigInt(estFee);

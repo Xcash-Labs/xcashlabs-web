@@ -464,6 +464,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         throw loginErr;
       }
       lwsRegistered = true;
+      setLwsStatus('connected', 'Connected to XCash Klassic LWS');
 
       // Record this login for the inactive-account tracker (fire-and-forget)
       LwsClient.pingLogin(walletKeys.address);

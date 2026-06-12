@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   const formats = {
-    12: { name:'BIP-39',          cls:'mymonero', icon:'◇' },
-    13: { name:'MyMonero Legacy', cls:'mymonero', icon:'◈' },
-    16: { name:'Polyseed',        cls:'mymonero', icon:'◉' },
-    25: { name:'Monero Standard', cls:'standard', icon:'◆' },
+    12: { name:'BIP-39',   cls:'mymonero', icon:'◇' },
+    13: { name:'Legacy',   cls:'mymonero', icon:'◈' },
+    16: { name:'Polyseed', cls:'mymonero', icon:'◉' },
+    25: { name:'Standard', cls:'standard', icon:'◆' },
   };
 
   // ─── Advanced: custom Monero node URL ───

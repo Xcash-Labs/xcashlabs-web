@@ -921,29 +921,67 @@ footer {
     margin-top: 16px;
 }
 
-.session-password {
-  width: 100%;
-  background: var(--surface-2);
+/* Session password block */
+
+.session-box {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  border-radius: var(--radius);
+}
+
+.session-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.session-label span {
+  color: var(--text-dim);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.session-password {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+
   margin-bottom: 12px;
+  padding: 12px 14px;
 
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
+  background: #111827 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 8px;
 
-  font-size: 0.9rem;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+
+  font-size: 1rem;
   font-family: inherit;
+  line-height: 1.4;
 }
 
 .session-password::placeholder {
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.45) !important;
+  -webkit-text-fill-color: rgba(255,255,255,0.45) !important;
 }
 
 .session-password:focus {
-  border-color: var(--xmr);
-  box-shadow: 0 0 0 3px rgba(255,102,0,0.15);
   outline: none;
+  border-color: var(--xmr) !important;
+  box-shadow: 0 0 0 3px rgba(255,102,0,0.16);
+}
+
+.session-password:hover {
+  border-color: rgba(255,255,255,0.30) !important;
 }
 
 .fade-in{animation:fadeIn .4s ease-out}

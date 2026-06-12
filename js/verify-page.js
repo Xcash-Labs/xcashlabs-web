@@ -212,57 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnKey.disabled = !/^[0-9a-fA-F]{64}$/.test(spendKeyInput.value.trim());
   });
 
-  // ─── WATCH-ONLY INPUT ───
-  const watchAddr = document.getElementById('watch-addr');
-  const watchView = document.getElementById('watch-view');
-  const btnWatch  = document.getElementById('btn-derive-watch');
-  function refreshWatchBtn() {
-    const addrOk = /^[1-9A-HJ-NP-Za-km-z]{95,106}$/.test(watchAddr.value.trim());
-    const viewOk = /^[0-9a-fA-F]{64}$/.test(watchView.value.trim());
-    btnWatch.disabled = !(addrOk && viewOk);
-  }
-  watchAddr.addEventListener('input', refreshWatchBtn);
-  watchView.addEventListener('input', refreshWatchBtn);
-
-  btnWatch.addEventListener('click', () => {
-    const errorEl = document.getElementById('error-msg');
-    const resultsEl = document.getElementById('results');
-    errorEl.classList.remove('show');
-    resultsEl.classList.remove('show');
-    btnWatch.disabled = true;
-    btnWatch.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg> Loading...';
-
-    setTimeout(() => {
-      try {
-        const addr     = (watchAddr && watchAddr.value || '').trim();
-        const viewHex  = (watchView && watchView.value || '').trim().toLowerCase();
-        // Derive the public view key from the supplied private view key so the
-        // dashboard can still verify itself locally. We do NOT have the public
-        // spend key here (would require base58 address decoding), so the
-        // watch-only blob omits it — the dashboard hides spend-key-dependent
-        // features (subaddress generator, send) when this is the case.
-        const viewBytes = MoneroKeys.hexToBytes(viewHex);
-        const reduced   = MoneroEd25519.sc_reduce32(viewBytes);
-        const pubView   = MoneroEd25519.scalarmultBase(reduced);
-        const keys = {
-          address:            addr,
-          network:            $val('network-select') || 'mainnet',
-          privateSpendKeyHex: '',
-          privateViewKeyHex:  MoneroKeys.bytesToHex(reduced),
-          publicSpendKeyHex:  '',
-          publicViewKeyHex:   MoneroKeys.bytesToHex(pubView),
-          watchOnly:          true
-        };
-        showResults(keys);
-      } catch (e) {
-        errorEl.textContent = 'Error: ' + e.message;
-        errorEl.classList.add('show');
-      }
-      btnWatch.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg> Open Watch-Only Wallet';
-      refreshWatchBtn();
-    }, 60);
-  });
-
   // ─── DERIVE FROM SEED ───
   btnSeed.addEventListener('click', () => {
     const errorEl = document.getElementById('error-msg');

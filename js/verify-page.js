@@ -308,8 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
       openBlock.innerHTML =
         '<label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">' +
         'Session password <span style="text-transform:none;letter-spacing:0;color:var(--text-dim)">(optional · encrypts in-tab storage)</span></label>' +
-        '<input id="session-pw" type="password" autocomplete="new-password" placeholder="Leave empty for no encryption" ' +
-        'style="width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-family:\'JetBrains Mono\',monospace;font-size:.78rem;color:var(--text);outline:none;margin-bottom:10px">' +
+        '<input id="session-pw" class="session-password" type="password" autocomplete="new-password" placeholder="Leave empty for no encryption">' +
         '<button id="btn-open-wallet" class="btn-primary" style="background:#22c55e;box-shadow:0 4px 24px rgba(34,197,94,0.2)">' +
         '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Open Wallet Dashboard</button>';
       document.getElementById('results').appendChild(openBlock);
@@ -354,5 +353,5 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-  
+
 });

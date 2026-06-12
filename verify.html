@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 <title>Open XCash Klassic Wallet</title>
-<meta name="description" content="Create, restore, or open an XCash Klassic wallet from your browser.">
+<meta name="description" content="Restore r open an XCash Klassic wallet from your browser.">
 <link rel="canonical" href="https://wallet.xcashlabs.org/verify.html">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/style.css">
@@ -17,11 +17,11 @@
     <nav>
       <a href="/" class="logo">
         <img src="/assets/xck-logo.png" alt="XCash Klassic" class="logo-icon">
-        <span>XCash Klassic Web Wallet</span>
+        <span>XCash Klassic Bridge</span>
       </a>
 
       <div class="nav-links">
-        <a href="/wallet-mgr">Open Wallet</a>
+        <a href="/wallet-mgr">Wallet Manager</a>
         <a href="/privacy">Privacy</a>
       </div>
     </nav>
@@ -33,20 +33,18 @@
     <section class="wallet-card verify-card">
       <div class="status">
         <img src="/assets/logo32x32.png" alt="XCash Klassic" class="status-logo">
-        Open XCK wallet
+        XCK Wallet Access
       </div>
 
-      <h1>Access your XCash Klassic wallet.</h1>
+      <h1>Access Your XCash Klassic Wallet.</h1>
 
       <p class="lead">
-        RRestore from a seed phrase or import a private spend key.Everything runs locally in your browser.
+        Restore from a seed phrase or import a private spend key. Everything runs locally in your browser.
       </p>
 
       <div class="tabs">
         <button class="tab active" data-tab="seed" type="button">Seed Phrase</button>
         <button class="tab" data-tab="keys" type="button">Private Spend Key</button>
-        <button class="tab" data-tab="watch" type="button">Watch-Only</button>
-        <button class="tab" data-tab="create" type="button">Create New</button>
       </div>
 
       <!-- SEED TAB -->
@@ -120,85 +118,6 @@
         <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
           Derive Keys
         </button>
-      </div>
-
-      <!-- WATCH-ONLY TAB -->
-      <div class="form-section" id="tab-watch">
-        <div class="input-group">
-          <label for="watch-addr">Wallet Address</label>
-          <input type="text" id="watch-addr" placeholder="XCK address..." spellcheck="false" autocomplete="off">
-        </div>
-
-        <div class="input-group">
-          <label for="watch-view">
-            Private View Key
-            <span class="hint">64-character hex</span>
-          </label>
-          <input type="text" id="watch-view" placeholder="64-character hex view key..." spellcheck="false" autocomplete="off" maxlength="64">
-        </div>
-
-        <div class="notice">
-          <strong>Watch-only mode:</strong>
-          the view key can scan for incoming payments but cannot spend funds.
-        </div>
-
-        <button class="button primary full-width mt-16" id="btn-derive-watch" type="button" disabled>
-          Open Watch-Only Wallet
-        </button>
-      </div>
-
-      <!-- CREATE TAB -->
-      <div class="form-section" id="tab-create">
-        <div class="input-group">
-          <label for="create-lang">Seed Language</label>
-          <select id="create-lang">
-            <option value="english">English</option>
-            <option value="chinese_simplified">简体中文 (Chinese simplified)</option>
-            <option value="dutch">Nederlands (Dutch)</option>
-            <option value="esperanto">Esperanto</option>
-            <option value="french">Français (French)</option>
-            <option value="german">Deutsch (German)</option>
-            <option value="italian">Italiano (Italian)</option>
-            <option value="japanese">日本語 (Japanese)</option>
-            <option value="lojban">Lojban</option>
-            <option value="portuguese">Português (Portuguese)</option>
-            <option value="russian">Русский (Russian)</option>
-            <option value="spanish">Español (Spanish)</option>
-          </select>
-        </div>
-
-        <div class="notice">
-          <strong>This creates a brand new XCash Klassic wallet.</strong>
-          Write down your seed phrase and store it safely. It is the only way to recover your wallet.
-        </div>
-
-        <button class="button primary full-width mt-16" id="btn-create" type="button">
-          Generate New Wallet
-        </button>
-
-        <div id="create-result" class="results">
-          <div class="result-match info">New wallet created — write down your seed phrase.</div>
-
-          <div class="result-card important-result">
-            <div class="result-label">Your Seed Phrase <button class="copy-btn" data-target="create-mnemonic" type="button">Copy</button></div>
-            <div class="result-value" id="create-mnemonic"></div>
-          </div>
-
-          <div class="result-card">
-            <div class="result-label">XCash Klassic Address <button class="copy-btn" data-target="create-address" type="button">Copy</button></div>
-            <div class="result-value address" id="create-address"></div>
-          </div>
-
-          <div class="result-card">
-            <div class="result-label">Private Spend Key <button class="copy-btn" data-target="create-spend" type="button">Copy</button></div>
-            <div class="result-value" id="create-spend"></div>
-          </div>
-
-          <div class="result-card">
-            <div class="result-label">Private View Key <button class="copy-btn" data-target="create-view" type="button">Copy</button></div>
-            <div class="result-value" id="create-view"></div>
-          </div>
-        </div>
       </div>
 
       <div class="error-msg" id="error-msg"></div>

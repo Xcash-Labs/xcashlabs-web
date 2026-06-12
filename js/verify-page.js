@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   const formats = {
-    12: { name:'BIP-39',          cls:'mymonero', icon:'◇' },
-    13: { name:'MyMonero Legacy', cls:'mymonero', icon:'◈' },
-    16: { name:'Polyseed',        cls:'mymonero', icon:'◉' },
-    25: { name:'Monero Standard', cls:'standard', icon:'◆' },
+    12: { name:'BIP-39',   cls:'mymonero', icon:'◇' },
+    13: { name:'Legacy',   cls:'mymonero', icon:'◈' },
+    16: { name:'Polyseed', cls:'mymonero', icon:'◉' },
+    25: { name:'Standard', cls:'standard', icon:'◆' },
   };
 
   // ─── Advanced: custom Monero node URL ───
@@ -124,32 +124,31 @@ document.addEventListener('DOMContentLoaded', () => {
   seedInput.addEventListener('input', refreshDeriveBtn);
 
   // ─── WALLET AGE BUTTONS → restore height ───
-  // Each button computes an approximate block height based on how old the
-  // wallet is. Monero blocks are ~2 min apart → 720/day → ~5,040/week.
-  //
-  // We use a known checkpoint to estimate the current tip accurately,
-  // then subtract blocks for the chosen time period. Computing from
-  // genesis forward is inaccurate because Monero's average block time
-  // over 12 years drifts from the target 120s.
-  const CHECKPOINT_HEIGHT = 3651000;
-  const CHECKPOINT_TS = Date.UTC(2026, 3, 13) / 1000; // April 13, 2026
-  const SECS_PER_BLOCK = 120;
-  const BLOCKS_PER_DAY = 720;
+  // XCash Klassic targets ~60 second blocks.
+  // Use a recent known checkpoint to account for real-world drift.
+  const CHECKPOINT_HEIGHT = 211636;
+  const CHECKPOINT_TS = Date.now() / 1000; // Current known height at page update time
+  const SECS_PER_BLOCK = 60;
+  const BLOCKS_PER_DAY = 1440;
 
   function estimatedCurrentHeight() {
     var secsSinceCheckpoint = Date.now() / 1000 - CHECKPOINT_TS;
-    return Math.max(CHECKPOINT_HEIGHT, CHECKPOINT_HEIGHT + Math.floor(secsSinceCheckpoint / SECS_PER_BLOCK));
+    return Math.max(
+      CHECKPOINT_HEIGHT,
+      CHECKPOINT_HEIGHT + Math.floor(secsSinceCheckpoint / SECS_PER_BLOCK)
+    );
   }
 
   function ageToHeight(age) {
     var tip = estimatedCurrentHeight();
+
     switch (age) {
       case 'week':    return Math.max(0, tip - 7 * BLOCKS_PER_DAY);
       case 'month':   return Math.max(0, tip - 30 * BLOCKS_PER_DAY);
       case '3months': return Math.max(0, tip - 91 * BLOCKS_PER_DAY);
       case '6months': return Math.max(0, tip - 182 * BLOCKS_PER_DAY);
       case 'year':    return Math.max(0, tip - 365 * BLOCKS_PER_DAY);
-      case '2years':  return Math.max(0, tip - 730 * BLOCKS_PER_DAY);
+      case '2years':  return 0; // XCK genesis was Jan 10, 2026
       case 'unknown': return 0;
       default:        return 0;
     }
@@ -355,128 +354,5 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-
-  // ─── CREATE NEW WALLET ───
-  const btnCreate = document.getElementById('btn-create');
-  if (btnCreate) {
-    btnCreate.addEventListener('click', () => {
-      btnCreate.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg> Generating...';
-      btnCreate.disabled = true;
-
-      setTimeout(() => {
-        try {
-          const wallet = MoneroKeys.generateWallet(
-            $val('create-lang') || 'english',
-            $val('network-select') || 'mainnet'
-          );
-
-          document.getElementById('create-mnemonic').textContent = wallet.mnemonic;
-          document.getElementById('create-address').textContent = wallet.address;
-          document.getElementById('create-spend').textContent = wallet.privateSpendKeyHex;
-          document.getElementById('create-view').textContent = wallet.privateViewKeyHex;
-          document.getElementById('create-result').style.display = 'block';
-
-          // Store for Open Wallet button — mark as freshly created so
-          // the dashboard skips historical scanning regardless of which
-          // "Open Wallet" button the user clicks.
-          wallet.createdAtCurrentTip = true;
-          window._derivedKeys = wallet;
-
-          // Add Open Wallet block (password + button) if not exists
-          let openBlock = document.getElementById('open-block-create');
-          if (!openBlock) {
-            openBlock = document.createElement('div');
-            openBlock.id = 'open-block-create';
-            openBlock.style.marginTop = '12px';
-            openBlock.innerHTML =
-              '<label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">' +
-              'Session password <span style="text-transform:none;letter-spacing:0;color:var(--text-dim)">(optional · encrypts in-tab storage)</span></label>' +
-              '<input id="session-pw-create" type="password" autocomplete="new-password" placeholder="Leave empty for no encryption" ' +
-              'style="width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-family:\'JetBrains Mono\',monospace;font-size:.78rem;color:var(--text);outline:none;margin-bottom:10px">' +
-              '<button id="btn-open-wallet-create" class="btn-primary" style="background:var(--xmr)">' +
-              '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Open Wallet Dashboard</button>';
-            document.getElementById('create-result').appendChild(openBlock);
-            document.getElementById('btn-open-wallet-create').addEventListener('click', async () => {
-              if (!window._derivedKeys) return;
-              const k = window._derivedKeys;
-              const pw = $val('session-pw-create');
-              await WalletVault.store({
-                address: k.address,
-                network: k.network,
-                privateSpendKeyHex: k.privateSpendKeyHex,
-                privateViewKeyHex:  k.privateViewKeyHex,
-                publicSpendKeyHex:  k.publicSpendKeyHex,
-                publicViewKeyHex:   k.publicViewKeyHex,
-                seedFormat:         k.seedFormat || null,
-                birthday:           (typeof k.birthday === 'number') ? k.birthday : null,
-                createdAtCurrentTip: true,
-              }, pw);
-              // Signal the dashboard that this is a freshly-created wallet
-              // so it skips historical scanning. Two signals for redundancy:
-              // vault has createdAtCurrentTip=true, sessionStorage has this flag.
-              try { sessionStorage.setItem('monero-web-fresh-wallet', '1'); } catch (e) {}
-              // Pre-register the wallet on the LWS with generated_locally=true
-              // BEFORE redirecting to the dashboard. This ensures the LWS
-              // creates the account starting from the current chain tip (no
-              // historical scan needed). The dashboard will see the account
-              // already exists and is "up to date" immediately.
-              try {
-                await LwsClient.login(k.address, k.privateViewKeyHex, { generatedLocally: true });
-              } catch (e) {
-                console.warn('[verify] pre-register on LWS failed (non-fatal):', e);
-              }
-              window.location.href = '/dashboard';
-            });
-          }
-
-          // Download JSON backup button
-          if (!document.getElementById('btn-download-wallet')) {
-            var dlBtn = document.createElement('button');
-            dlBtn.id = 'btn-download-wallet';
-            dlBtn.className = 'btn-primary';
-            dlBtn.style.cssText = 'background:var(--surface-2);color:var(--text);border:1px solid var(--border);margin-top:10px;width:100%';
-            dlBtn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download Wallet Backup (JSON)';
-            dlBtn.addEventListener('click', function () {
-              var data = {
-                address: wallet.address,
-                mnemonic: wallet.mnemonic,
-                privateSpendKey: wallet.privateSpendKeyHex,
-                privateViewKey: wallet.privateViewKeyHex,
-                publicSpendKey: wallet.publicSpendKeyHex,
-                publicViewKey: wallet.publicViewKeyHex,
-                network: wallet.network || 'mainnet',
-                createdAt: new Date().toISOString(),
-              };
-              var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-              var url = URL.createObjectURL(blob);
-              var a = document.createElement('a');
-              a.href = url;
-              a.download = 'monero-wallet-' + wallet.address.slice(0, 8) + '.json';
-              a.click();
-              URL.revokeObjectURL(url);
-            });
-            document.getElementById('create-result').appendChild(dlBtn);
-          }
-
-          // Re-bind copy buttons for new elements
-          document.querySelectorAll('#create-result .copy-btn').forEach(btn => {
-            btn.onclick = () => {
-              const target = document.getElementById(btn.dataset.target);
-              navigator.clipboard.writeText(target.textContent).then(() => {
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-              });
-            };
-          });
-
-        } catch(e) {
-          document.getElementById('error-msg').textContent = 'Error: ' + e.message;
-          document.getElementById('error-msg').classList.add('show');
-        }
-        btnCreate.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Generate New Wallet';
-        btnCreate.disabled = false;
-      }, 100);
-    });
-  }
+  
 });

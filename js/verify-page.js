@@ -321,10 +321,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!window._derivedKeys) return;
         const k = window._derivedKeys;
         const pw = $val('session-pw');
-        if (!pw || pw.trim().length < 8) {
-          alert('Please create a wallet password with at least 8 characters.');
-          return;
-        }
+
+const pwError = document.getElementById('wallet-pw-error');
+
+if (!pw || pw.trim().length < 8) {
+  if (pwError) {
+    pwError.textContent = 'Password must be at least 8 characters.';
+    pwError.style.display = 'block';
+  }
+  document.getElementById('session-pw').focus();
+  return;
+}
+
+if (pwError) {
+  pwError.textContent = '';
+  pwError.style.display = 'none';
+}
         var vaultData = {
           address: k.address,
           network: k.network,

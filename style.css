@@ -985,9 +985,9 @@ footer {
 
 .field-error {
   display: none;
-  margin: -4px 0 12px;
+  margin: 8px 0 12px;
   color: #dc2626;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 

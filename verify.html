@@ -1,74 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<title>Open XCash Klassic Wallet</title>
-<meta name="description" content="Restore or open an XCash Klassic wallet from your browser.">
-<link rel="canonical" href="https://wallet.xcashlabs.org/verify.html">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="/style.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Open XCash Klassic Wallet</title>
+  <meta name="description" content="Restore or open an XCash Klassic wallet from your browser.">
+  <link rel="canonical" href="https://wallet.xcashlabs.org/verify.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-<header>
-  <div class="container">
-    <nav>
-      <a href="/" class="logo">
-        <img src="/assets/xck-logo.png" alt="XCash Klassic" class="logo-icon">
-        <span>XCash Klassic Bridge</span>
-      </a>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">
+          <img src="/assets/xck-logo.png" alt="XCash Klassic" class="logo-icon">
+          <span>XCash Klassic Bridge</span>
+        </a>
 
-      <div class="nav-links">
-        <a href="/wallet-mgr">Wallet Manager</a>
-        <a href="/privacy">Privacy</a>
-      </div>
-    </nav>
-  </div>
-</header>
+        <div class="nav-links">
+          <a href="/wallet-mgr">Wallet Manager</a>
+          <a href="/privacy">Privacy</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<main>
-  <div class="container">
-    <section class="wallet-card verify-card">
-      <div class="status">
-        <img src="/assets/logo32x32.png" alt="XCash Klassic" class="status-logo">
-        XCK Wallet Access
-      </div>
+  <main>
+    <div class="container">
+      <section class="wallet-card verify-card">
+        <div class="status">
+          <img src="/assets/logo32x32.png" alt="XCash Klassic" class="status-logo">
+          XCK Wallet Access
+        </div>
 
-      <h1>Access Your XCash Klassic Wallet.</h1>
+        <h1>Access Your XCash Klassic Wallet.</h1>
 
-      <p class="lead">
-        Restore from a seed phrase or import a private spend key. Everything runs locally in your browser.
-      </p>
+        <p class="lead">
+          Restore from a seed phrase or import a private spend key. Everything runs locally in your browser.
+        </p>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="seed" type="button">Seed Phrase</button>
-        <button class="tab" data-tab="keys" type="button">Private Spend Key</button>
-      </div>
+        <div class="tabs">
+          <button class="tab active" data-tab="seed" type="button">Seed Phrase</button>
+          <button class="tab" data-tab="keys" type="button">Private Spend Key</button>
+        </div>
 
-      <!-- SEED TAB -->
-      <div class="form-section active" id="tab-seed">
-        <div class="input-group">
-          <label for="seed-input">
-            Mnemonic Seed
-            <span class="hint">12 · 13 · 16 · 25 words</span>
-          </label>
-          <textarea id="seed-input" placeholder="Enter your seed phrase separated by spaces..." spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+        <!-- SEED TAB -->
+        <div class="form-section active" id="tab-seed">
+          <div class="input-group">
+            <label for="seed-input">
+              Mnemonic Seed
+              <span class="hint">12 · 13 · 16 · 25 words</span>
+            </label>
+            <textarea id="seed-input" placeholder="Enter your seed phrase separated by spaces..." spellcheck="false"
+              autocomplete="off" autocapitalize="off"></textarea>
 
-          <div class="seed-status-row">
-            <div class="word-count" id="word-counter"><span class="count" id="wc-num">0</span> words</div>
-            <div class="seed-format-badge" id="seed-format" style="display:none"></div>
+            <div class="seed-status-row">
+              <div class="word-count" id="word-counter"><span class="count" id="wc-num">0</span> words</div>
+              <div class="seed-format-badge" id="seed-format" style="display:none"></div>
+            </div>
           </div>
+
+          <div class="input-group" id="bip39-pass-group" style="display:none">
+            <label for="bip39-pass">
+              BIP-39 Passphrase
+              <span class="hint">Optional · only for 12-word seeds</span>
+            </label>
+            <input type="password" id="bip39-pass" placeholder="Leave empty if you did not set one" autocomplete="off"
+              spellcheck="false">
+          </div>
+
+          <div class="input-group">
+            <label for="network-select">Network</label>
+            <select id="network-select">
+              <option value="mainnet">Mainnet</option>
+              <option value="stagenet">Stagenet</option>
+              <option value="testnet">Testnet</option>
+            </select>
+          </div>
+
+          <button class="button primary full-width" id="btn-derive-seed" type="button" disabled>
+            Derive Keys
+          </button>
         </div>
 
-        <div class="input-group" id="bip39-pass-group" style="display:none">
-          <label for="bip39-pass">
-            BIP-39 Passphrase
-            <span class="hint">Optional · only for 12-word seeds</span>
-          </label>
-          <input type="password" id="bip39-pass" placeholder="Leave empty if you did not set one" autocomplete="off" spellcheck="false">
+        <!-- KEYS TAB -->
+        <div class="form-section" id="tab-keys">
+          <div class="input-group">
+            <label for="spend-key-input">
+              Private Spend Key
+              <span class="hint">64-character hex</span>
+            </label>
+            <input type="text" id="spend-key-input" placeholder="Enter 64-character hex spend key..." spellcheck="false"
+              autocomplete="off" maxlength="64">
+          </div>
+
+          <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
+            Derive Keys
+          </button>
         </div>
+
+        <div class="error-msg" id="error-msg"></div>
 
         <div class="input-group" id="restore-height-group">
           <label>When was this wallet created?</label>
@@ -87,103 +122,80 @@
 
           <details class="mt-16">
             <summary>Advanced: enter exact block height</summary>
-            <input type="text" id="restore-height" inputmode="numeric" placeholder="e.g. 3500000" autocomplete="off" spellcheck="false">
+            <input type="text" id="restore-height" inputmode="numeric" placeholder="e.g. 3500000" autocomplete="off"
+              spellcheck="false">
           </details>
         </div>
 
-        <div class="input-group">
-          <label for="network-select">Network</label>
-          <select id="network-select">
-            <option value="mainnet">Mainnet</option>
-            <option value="stagenet">Stagenet</option>
-            <option value="testnet">Testnet</option>
-          </select>
+        <div class="results" id="results">
+          <details class="wallet-details">
+            <summary>Show Wallet Details</summary>
+
+            <div class="result-match info" id="result-format"></div>
+
+            <div class="result-card important-result" id="res-mnemonic-card" style="display:none">
+              <div class="result-label">Recovered 25-word Mnemonic <button class="copy-btn" data-target="res-mnemonic"
+                  type="button">Copy</button></div>
+              <div class="result-value" id="res-mnemonic"></div>
+            </div>
+
+            <div class="result-card">
+              <div class="result-label">XCash Klassic Address <button class="copy-btn" data-target="res-address"
+                  type="button">Copy</button></div>
+              <div class="result-value address" id="res-address"></div>
+            </div>
+
+            <div class="result-card">
+              <div class="result-label">Private Spend Key <button class="copy-btn" data-target="res-spend"
+                  type="button">Copy</button></div>
+              <div class="result-value" id="res-spend"></div>
+            </div>
+
+            <div class="result-card">
+              <div class="result-label">Private View Key <button class="copy-btn" data-target="res-view"
+                  type="button">Copy</button></div>
+              <div class="result-value" id="res-view"></div>
+            </div>
+
+            <div class="result-card">
+              <div class="result-label">Public Spend Key <button class="copy-btn" data-target="res-pub-spend"
+                  type="button">Copy</button></div>
+              <div class="result-value" id="res-pub-spend"></div>
+            </div>
+
+            <div class="result-card">
+              <div class="result-label">Public View Key <button class="copy-btn" data-target="res-pub-view"
+                  type="button">Copy</button></div>
+              <div class="result-value" id="res-pub-view"></div>
+            </div>
+          </details>
         </div>
-
-        <button class="button primary full-width" id="btn-derive-seed" type="button" disabled>
-          Derive Keys
-        </button>
-      </div>
-
-      <!-- KEYS TAB -->
-      <div class="form-section" id="tab-keys">
-        <div class="input-group">
-          <label for="spend-key-input">
-            Private Spend Key
-            <span class="hint">64-character hex</span>
-          </label>
-          <input type="text" id="spend-key-input" placeholder="Enter 64-character hex spend key..." spellcheck="false" autocomplete="off" maxlength="64">
-        </div>
-
-        <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
-          Derive Keys
-        </button>
-      </div>
-
-      <div class="error-msg" id="error-msg"></div>
-
-      <div class="results" id="results">
-      <details class="wallet-details">
-        <summary>Show Wallet Details</summary>
-
-        <div class="result-match info" id="result-format"></div>
-
-        <div class="result-card important-result" id="res-mnemonic-card" style="display:none">
-          <div class="result-label">Recovered 25-word Mnemonic <button class="copy-btn" data-target="res-mnemonic" type="button">Copy</button></div>
-          <div class="result-value" id="res-mnemonic"></div>
-        </div>
-
-        <div class="result-card">
-          <div class="result-label">XCash Klassic Address <button class="copy-btn" data-target="res-address" type="button">Copy</button></div>
-          <div class="result-value address" id="res-address"></div>
-        </div>
-
-        <div class="result-card">
-          <div class="result-label">Private Spend Key <button class="copy-btn" data-target="res-spend" type="button">Copy</button></div>
-          <div class="result-value" id="res-spend"></div>
-        </div>
-
-        <div class="result-card">
-          <div class="result-label">Private View Key <button class="copy-btn" data-target="res-view" type="button">Copy</button></div>
-          <div class="result-value" id="res-view"></div>
-        </div>
-
-        <div class="result-card">
-          <div class="result-label">Public Spend Key <button class="copy-btn" data-target="res-pub-spend" type="button">Copy</button></div>
-          <div class="result-value" id="res-pub-spend"></div>
-        </div>
-
-        <div class="result-card">
-          <div class="result-label">Public View Key <button class="copy-btn" data-target="res-pub-view" type="button">Copy</button></div>
-          <div class="result-value" id="res-pub-view"></div>
-        </div>
-      </details>
-      </div>
-    </section>
-  </div>
-</main>
-
-<footer>
-  <div class="container">
-    <div class="footer-meta">
-      wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
-      XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.
+      </section>
     </div>
-  </div>
-</footer>
+  </main>
 
-<!-- Crypto engine (order matters) -->
-<script src="js/keccak256.js"></script>
-<script src="js/monero-ed25519.js"></script>
-<script src="js/monero-wordlist.js"></script>
-<script src="js/bip39-wordlist.js"></script>
-<script src="js/bip39.js"></script>
-<script src="js/polyseed.js"></script>
-<script src="js/monero-keys.js"></script>
-<script src="js/wallet-vault.js"></script>
-<script src="js/lws-client.js"></script>
-<script src="js/monero-english-wordlist.js"></script>
-<script src="js/monero-wordlists-all.js"></script>
-<script src="js/verify-page.js"></script>
+  <footer>
+    <div class="container">
+      <div class="footer-meta">
+        wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
+        XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Crypto engine (order matters) -->
+  <script src="js/keccak256.js"></script>
+  <script src="js/monero-ed25519.js"></script>
+  <script src="js/monero-wordlist.js"></script>
+  <script src="js/bip39-wordlist.js"></script>
+  <script src="js/bip39.js"></script>
+  <script src="js/polyseed.js"></script>
+  <script src="js/monero-keys.js"></script>
+  <script src="js/wallet-vault.js"></script>
+  <script src="js/lws-client.js"></script>
+  <script src="js/monero-english-wordlist.js"></script>
+  <script src="js/monero-wordlists-all.js"></script>
+  <script src="js/verify-page.js"></script>
 </body>
+
 </html>

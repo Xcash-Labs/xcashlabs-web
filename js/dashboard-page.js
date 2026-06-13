@@ -293,6 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const opts = {};
 
+      
       // Compute the best restore height from available sources.
       // Currently informational only (LWS ignores it), but sent in
       // /login for forward-compatibility with future LWS versions.

@@ -983,6 +983,14 @@ footer {
   border-color: var(--accent) !important;
 }
 
+.field-error {
+  display: none;
+  margin: -4px 0 12px;
+  color: #dc2626;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
 .fade-in{animation:fadeIn .4s ease-out}
 
 /* ─── Modals ─── */

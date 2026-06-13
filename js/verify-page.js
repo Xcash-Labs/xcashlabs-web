@@ -321,9 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const k = window._derivedKeys;
         const pw = $val('session-pw');
         if (!pw || pw.trim().length < 8) {
-          document.getElementById('error-msg').textContent =
-            'Please create a wallet password with at least 8 characters.';
-          document.getElementById('error-msg').classList.add('show');
+          alert('Please create a wallet password with at least 8 characters.');
           return;
         }
         var vaultData = {

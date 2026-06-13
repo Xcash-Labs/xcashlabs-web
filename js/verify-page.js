@@ -308,11 +308,11 @@ document.addEventListener('DOMContentLoaded', () => {
       openBlock.innerHTML =
         '<div class="session-box">' +
           '<label class="session-label">' +
-            'Session password <span>(optional · encrypts in-tab storage)</span>' +
+            'Wallet Password <span>(required · unlocks this wallet on this browser)</span>' +
           '</label>' +
-          '<input id="session-pw" class="session-password" type="password" autocomplete="new-password" placeholder="Leave empty for no encryption">' +
+          '<input id="session-pw" class="session-password" type="password" autocomplete="new-password" placeholder="Choose a wallet password">' +
           '<button id="btn-open-wallet" class="button primary full-width">' +
-            '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Open Wallet Dashboard' +
+            '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>&nbsp;Save and Open Wallet' +
           '</button>' +
         '</div>';
       document.getElementById('results').appendChild(openBlock);
@@ -320,6 +320,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!window._derivedKeys) return;
         const k = window._derivedKeys;
         const pw = $val('session-pw');
+        if (!pw || pw.trim().length < 8) {
+          alert('Please create a wallet password with at least 8 characters.');
+          return;
+        }
         var vaultData = {
           address: k.address,
           network: k.network,

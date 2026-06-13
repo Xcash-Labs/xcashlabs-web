@@ -321,22 +321,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!window._derivedKeys) return;
         const k = window._derivedKeys;
         const pw = $val('session-pw');
-
-const pwError = document.getElementById('wallet-pw-error');
-
-if (!pw || pw.trim().length < 8) {
-  if (pwError) {
-    pwError.textContent = 'Password must be at least 8 characters.';
-    pwError.style.display = 'block';
-  }
-  document.getElementById('session-pw').focus();
-  return;
-}
-
-if (pwError) {
-  pwError.textContent = '';
-  pwError.style.display = 'none';
-}
+        const pwError = document.getElementById('wallet-pw-error');
+        if (!pw || pw.trim().length < 8) {
+          if (pwError) {
+            pwError.textContent = 'Password must be at least 8 characters.';
+            pwError.style.display = 'block';
+          }
+          document.getElementById('session-pw').focus();
+          return;
+        }
+        if (pwError) {
+          pwError.textContent = '';
+          pwError.style.display = 'none';
+        }
         var vaultData = {
           address: k.address,
           network: k.network,
@@ -352,9 +349,10 @@ if (pwError) {
         // Preserve the freshly-created flag if set (from Generate New flow)
         if (k.createdAtCurrentTip) {
           vaultData.createdAtCurrentTip = true;
-          try { sessionStorage.setItem('monero-web-fresh-wallet', '1'); } catch (e) {}
+          try { sessionStorage.setItem('xck-fresh-wallet', '1'); } catch (e) {}
         }
         await WalletVault.store(vaultData, pw);
+        sessionStorage.setItem('xck-active-wallet', vaultData.address);
         window.location.href = '/dashboard';
       });
     }

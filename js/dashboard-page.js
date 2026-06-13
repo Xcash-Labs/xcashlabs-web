@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ─── Wallet load (vault-aware) ───
   // The verify page hands us the keys via WalletVault, which may be plaintext
-  // or AES-GCM encrypted with a session password. The unlock overlay handles
+  // or AES-GCM encrypted with a wallet password. The unlock overlay handles
   // both initial unlock and re-unlock after idle auto-lock.
   let walletKeys = null;
   const IDLE_TIMEOUT_MS = 3 * 60 * 60 * 1000; // 3 hours
@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   overlayForget.addEventListener('click', () => {
-    WalletVault.clear();
+    sessionStorage.removeItem('xck-active-wallet');
     walletKeys = null;
-    window.location.href = '/verify';
+    window.location.href = '/wallet-mgr.html';
   });
 
   overlayBtn.addEventListener('click', tryUnlock);
@@ -44,12 +44,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     overlayErr.style.display = 'none';
     overlayBtn.disabled = true;
     overlayBtn.textContent = 'Unlocking…';
+
     try {
-      walletKeys = await WalletVault.unlock(overlayPw.value);
+      const activeAddress =
+        sessionStorage.getItem('xck-active-wallet');
+
+      if (!activeAddress) {
+        throw new Error('No wallet selected');
+      }
+
+      walletKeys = await WalletVault.unlock(
+        activeAddress,
+        overlayPw.value
+      );
+
       hideUnlock();
       initDashboard();
+
     } catch (e) {
-      overlayErr.textContent = e.message || 'Unlock failed';
+      overlayErr.textContent =
+        e.message || 'Unlock failed';
       overlayErr.style.display = 'block';
     } finally {
       overlayBtn.disabled = false;
@@ -57,30 +71,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // No vault at all → bounce to verify
-  if (!WalletVault.hasBlob()) {
-    document.getElementById('loading-state').innerHTML = `
-      <div style="text-align:center">
-        <svg width="48" height="48" fill="none" stroke="var(--text-dim)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:12px;opacity:.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <p style="color:var(--text);font-size:.95rem;font-weight:500;margin-bottom:6px">No wallet connected</p>
-        <p style="color:var(--text-dim);font-size:.8rem;margin-bottom:20px">Enter your seed phrase or private key to access your wallet</p>
-        <a href="/verify" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:.85rem;box-shadow:0 4px 24px rgba(255,102,0,0.2)">Open Wallet →</a>
-      </div>
-    `;
+  const activeAddress = sessionStorage.getItem('xck-active-wallet');
+
+  if (!activeAddress || !WalletVault.getBlob(activeAddress)) {
+    sessionStorage.removeItem('xck-active-wallet');
+    window.location.href = '/wallet-mgr.html';
     return;
   }
 
-  // Encrypted → prompt; plaintext → load directly
-  if (WalletVault.isLocked()) {
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'none';
-    showUnlock('Enter your session password to unlock this wallet.');
-    return; // initDashboard() will run after successful unlock
-  } else {
-    walletKeys = WalletVault.readPlain();
-    initDashboard();
-    return;
-  }
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'none';
+
+  showUnlock('Enter your wallet password to unlock this wallet.');
+  return;
 
   // ─── Auto-lock plumbing ─────────────────────────────────────────────
   function resetIdleTimer() {
@@ -93,19 +96,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   function resetIdleIfScanning() {
     if (scanningActive) resetIdleTimer();
   }
+
   function autoLock() {
-    // Drop the in-memory keys and reload the page. For an encrypted vault
-    // the ciphertext persists in sessionStorage across the reload, so the
-    // user can re-enter their password without re-deriving from a seed.
-    // For a plaintext vault we wipe and bounce to verify.
     walletKeys = null;
-    if (WalletVault.isLocked()) {
-      window.location.reload();
-    } else {
-      WalletVault.clear();
-      window.location.href = '/verify';
-    }
+    window.location.reload();
   }
+
   function installIdleListeners() {
     ['mousemove','keydown','click','touchstart','scroll'].forEach(ev => {
       document.addEventListener(ev, resetIdleTimer, { passive: true });
@@ -449,13 +445,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       // 1. sessionStorage flag written by verify-page.js Create flow
       // 2. Vault flag createdAtCurrentTip (survives page refresh)
       var freshFlag = false;
-      try { freshFlag = sessionStorage.getItem('monero-web-fresh-wallet') === '1'; } catch (e) {}
+      try { freshFlag = sessionStorage.getItem('xck-fresh-wallet') === '1'; } catch (e) {}
       if (!freshFlag && walletKeys.createdAtCurrentTip === true) {
         freshFlag = true;
       }
       if (freshFlag) {
         opts.generatedLocally = true;
-        try { sessionStorage.removeItem('monero-web-fresh-wallet'); } catch (e) {}
+        try { sessionStorage.removeItem('xck-fresh-wallet'); } catch (e) {}
       }
 
       var loginRes;
@@ -1072,8 +1068,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ─── Disconnect ───
   document.getElementById('btn-disconnect').addEventListener('click', () => {
-    WalletVault.clear();
-    window.location.href = '/';
+    sessionStorage.removeItem('xck-active-wallet');
+    window.location.href = '/wallet-mgr.html';
   });
 
   // ─── QR scanner ───

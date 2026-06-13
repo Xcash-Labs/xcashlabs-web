@@ -1,33 +1,16 @@
 // SPDX-License-Identifier: MIT
 /**
- * wallet-vault.js — encrypted sessionStorage for derived wallet keys
+ * wallet-vault.js — encrypted localStorage wallet vault for XCK wallets
  *
- * Two storage modes:
- *   • Plaintext   — { encrypted: false, keys: {...} }
- *   • Encrypted   — { encrypted: true, salt, iv, ciphertext } where
- *                   ciphertext = AES-GCM(
- *                     key   = PBKDF2-SHA256(password, salt, 250000, 32 bytes),
- *                     iv    = 12 random bytes,
- *                     plain = JSON.stringify(keys)
- *                   )
- *
- * The vault never holds the password — only the user does. If the user
- * supplies an empty password we fall back to plaintext (the same threat
- * model as the original implementation).
- *
- * Stored keys object shape (matches what verify.html / dashboard.html
- * already use):
- *   {
- *     address, network,
- *     privateSpendKeyHex, privateViewKeyHex,
- *     publicSpendKeyHex,  publicViewKeyHex
- *   }
+ * Stores multiple encrypted wallets under one localStorage key.
+ * Passwords are never stored.
  */
 
 const WalletVault = (function () {
   'use strict';
 
-  const STORAGE_KEY = 'monero-web-wallet';
+  const STORAGE_KEY = 'xck-wallets';
+  const FRESH_WALLET_KEY = 'xck-fresh-wallet';
   const PBKDF2_ITERATIONS = 250000;
 
   function b64(bytes) {
@@ -35,6 +18,7 @@ const WalletVault = (function () {
     for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
     return btoa(s);
   }
+
   function unb64(str) {
     const s = atob(str);
     const out = new Uint8Array(s.length);
@@ -44,9 +28,13 @@ const WalletVault = (function () {
 
   async function deriveKey(password, salt, iterations) {
     const baseKey = await crypto.subtle.importKey(
-      'raw', new TextEncoder().encode(password),
-      { name: 'PBKDF2' }, false, ['deriveKey']
+      'raw',
+      new TextEncoder().encode(password),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveKey']
     );
+
     return crypto.subtle.deriveKey(
       { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' },
       baseKey,
@@ -56,87 +44,146 @@ const WalletVault = (function () {
     );
   }
 
-  /**
-   * Store wallet keys. If password is empty/falsy the keys are stored
-   * in plaintext (encrypted:false). Otherwise they are AES-GCM encrypted.
-   */
+  function readAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+
+    try {
+      return JSON.parse(raw) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function writeAll(wallets) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(wallets || {}));
+  }
+
   async function store(keys, password) {
-    // If this is a freshly-created wallet, set the sessionStorage flag
-    // here so it's impossible to miss regardless of which UI button
-    // triggers the store.
-    if (keys && keys.createdAtCurrentTip) {
-      try { sessionStorage.setItem('monero-web-fresh-wallet', '1'); } catch (e) {}
+    if (!keys || !keys.address) {
+      throw new Error('Wallet address is required');
     }
-    if (!password) {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
-        encrypted: false,
-        keys
-      }));
-      return;
+
+    if (!password || password.trim().length < 8) {
+      throw new Error('Wallet password is required');
     }
+
+    if (keys.createdAtCurrentTip) {
+      try {
+        sessionStorage.setItem(FRESH_WALLET_KEY, '1');
+      } catch (e) {}
+    }
+
     const salt = crypto.getRandomValues(new Uint8Array(16));
-    const iv   = crypto.getRandomValues(new Uint8Array(12));
-    const key  = await deriveKey(password, salt, PBKDF2_ITERATIONS);
-    const ct   = new Uint8Array(await crypto.subtle.encrypt(
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt, PBKDF2_ITERATIONS);
+
+    const ciphertext = new Uint8Array(await crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
       key,
       new TextEncoder().encode(JSON.stringify(keys))
     ));
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
-      encrypted:  true,
-      version:    1,
+
+    const wallets = readAll();
+
+    wallets[keys.address] = {
+      address: keys.address,
+      network: keys.network || 'mainnet',
+      label: keys.label || keys.address.slice(0, 10) + '...',
+      encrypted: true,
+      version: 1,
       iterations: PBKDF2_ITERATIONS,
-      salt:       b64(salt),
-      iv:         b64(iv),
-      ciphertext: b64(ct)
+      salt: b64(salt),
+      iv: b64(iv),
+      ciphertext: b64(ciphertext),
+      updatedAt: new Date().toISOString()
+    };
+
+    writeAll(wallets);
+  }
+
+  function list() {
+    return Object.values(readAll()).map(wallet => ({
+      address: wallet.address,
+      network: wallet.network,
+      label: wallet.label,
+      updatedAt: wallet.updatedAt,
+      encrypted: !!wallet.encrypted
     }));
   }
 
-  function readBlob() {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    try { return JSON.parse(raw); } catch (e) { return null; }
+  function hasWallets() {
+    return list().length > 0;
   }
 
-  function hasBlob()    { return readBlob() !== null; }
-  function isLocked()   { const b = readBlob(); return !!(b && b.encrypted); }
-
-  /**
-   * Read plaintext keys directly. Returns null if no blob, or if the
-   * blob is encrypted (in which case the caller must call unlock()).
-   */
-  function readPlain() {
-    const b = readBlob();
-    if (!b || b.encrypted) return null;
-    return b.keys;
+  function getBlob(address) {
+    if (!address) return null;
+    return readAll()[address] || null;
   }
 
-  /**
-   * Decrypt an encrypted blob with the supplied password.
-   * Throws on wrong password / corrupted ciphertext.
-   */
-  async function unlock(password) {
-    const b = readBlob();
-    if (!b || !b.encrypted) throw new Error('No encrypted vault to unlock');
-    const salt       = unb64(b.salt);
-    const iv         = unb64(b.iv);
-    const ct         = unb64(b.ciphertext);
-    const iterations = (typeof b.iterations === 'number') ? b.iterations : PBKDF2_ITERATIONS;
-    const key        = await deriveKey(password, salt, iterations);
+  async function unlock(address, password) {
+    if (!address) {
+      throw new Error('Wallet address is required');
+    }
+
+    if (!password) {
+      throw new Error('Wallet password is required');
+    }
+
+    const blob = getBlob(address);
+
+    if (!blob || !blob.encrypted) {
+      throw new Error('No encrypted wallet found');
+    }
+
+    const salt = unb64(blob.salt);
+    const iv = unb64(blob.iv);
+    const ciphertext = unb64(blob.ciphertext);
+    const iterations =
+      typeof blob.iterations === 'number'
+        ? blob.iterations
+        : PBKDF2_ITERATIONS;
+
+    const key = await deriveKey(password, salt, iterations);
+
     let plain;
+
     try {
-      plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+      plain = await crypto.subtle.decrypt(
+        { name: 'AES-GCM', iv },
+        key,
+        ciphertext
+      );
     } catch (e) {
       throw new Error('Wrong password');
     }
+
     return JSON.parse(new TextDecoder().decode(plain));
   }
 
-  function clear() {
-    sessionStorage.removeItem(STORAGE_KEY);
+  function remove(address) {
+    if (!address) return;
+
+    const wallets = readAll();
+    delete wallets[address];
+    writeAll(wallets);
   }
 
-  return { store, hasBlob, isLocked, readPlain, unlock, clear };
+  function clear() {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
+  return {
+    store,
+    list,
+    hasWallets,
+    getBlob,
+    unlock,
+    remove,
+    clear
+  };
 })();
 
-if (typeof module !== 'undefined' && module.exports) module.exports = WalletVault;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = WalletVault;
+}

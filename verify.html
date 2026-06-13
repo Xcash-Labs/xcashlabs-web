@@ -101,7 +101,7 @@
         </div>
 
         <button class="button primary full-width" id="btn-derive-seed" type="button" disabled>
-          &nbsp;Derive Keys
+          Derive Keys
         </button>
       </div>
 
@@ -116,15 +116,15 @@
         </div>
 
         <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
-          &nbsp;Derive Keys
+          Derive Keys
         </button>
       </div>
 
       <div class="error-msg" id="error-msg"></div>
 
       <div class="results" id="results">
-
-        <summary>Wallet Keys & Backup</summary>
+      <details class="wallet-details">
+        <summary>Show Wallet Details</summary>
 
         <div class="result-match info" id="result-format"></div>
 
@@ -157,6 +157,7 @@
           <div class="result-label">Public View Key <button class="copy-btn" data-target="res-pub-view" type="button">Copy</button></div>
           <div class="result-value" id="res-pub-view"></div>
         </div>
+      </details>
       </div>
     </section>
   </div>

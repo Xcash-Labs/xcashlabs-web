@@ -922,7 +922,6 @@ footer {
 }
 
 /* Session password block */
-
 .session-box {
   margin-top: 16px;
   padding: 16px;
@@ -955,8 +954,7 @@ footer {
 
   margin-bottom: 12px;
   padding: 12px 14px;
-
-  background: #111827 !important;
+  background: #f8fafc !important;
   border: 1px solid #374151 !important;
   border-radius: 8px;
 

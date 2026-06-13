@@ -922,26 +922,26 @@ footer {
 }
 
 /* Session password block */
+/* Session password block */
+
 .session-box {
   margin-top: 16px;
   padding: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: transparent;
 }
 
 .session-label {
   display: block;
   margin-bottom: 8px;
-  color: var(--text);
-  font-size: 0.72rem;
+  color: var(--card-muted);
+  font-size: 0.74rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .session-label span {
-  color: var(--text-dim);
+  color: var(--card-muted);
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
@@ -953,33 +953,34 @@ footer {
   box-sizing: border-box;
 
   margin-bottom: 12px;
-  padding: 12px 14px;
-  background: #f8fafc !important;
-  border: 1px solid #374151 !important;
-  border-radius: 8px;
+  padding: 14px;
 
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  background: #f8fafc;
+  border: 1px solid var(--light-border);
+  border-radius: 12px;
+
+  color: var(--card-text) !important;
+  -webkit-text-fill-color: var(--card-text) !important;
   opacity: 1 !important;
 
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   line-height: 1.4;
 }
 
 .session-password::placeholder {
-  color: rgba(255,255,255,0.45) !important;
-  -webkit-text-fill-color: rgba(255,255,255,0.45) !important;
+  color: var(--card-muted) !important;
+  -webkit-text-fill-color: var(--card-muted) !important;
 }
 
 .session-password:focus {
   outline: none;
-  border-color: var(--xmr) !important;
-  box-shadow: 0 0 0 3px rgba(255,102,0,0.16);
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
 }
 
 .session-password:hover {
-  border-color: rgba(255,255,255,0.30) !important;
+  border-color: var(--accent) !important;
 }
 
 .fade-in{animation:fadeIn .4s ease-out}

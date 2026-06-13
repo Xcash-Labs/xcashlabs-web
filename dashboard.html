@@ -131,22 +131,6 @@
         </div>
       </div>
 
-      <!-- Subaddresses -->
-      <div class="keys-section fade-in">
-        <div class="section-title">Subaddresses</div>
-        <div class="key-card">
-          <div class="key-label" style="margin-bottom:8px">Generate a labeled subaddress</div>
-          <input id="sub-label" type="text" placeholder="Label (optional, e.g. Donations)" maxlength="40" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.78rem;outline:none;margin-bottom:8px">
-          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:10px">
-            <input id="sub-major" type="number" min="0" value="0" title="account index" placeholder="account" style="min-width:0;width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;outline:none">
-            <input id="sub-minor" type="number" min="1" value="1" title="address index (auto-fills)" placeholder="index" style="min-width:0;width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;outline:none">
-            <button id="btn-sub-gen" class="action-btn" style="flex:0 0 auto;padding:8px 14px;font-size:.78rem;white-space:nowrap">Generate</button>
-          </div>
-          <div id="sub-error" style="display:none;color:#f87171;font-size:.72rem;margin-top:6px"></div>
-          <div id="sub-list"></div>
-        </div>
-      </div>
-
       <div class="key-card" style="margin-top:8px">
         <div class="key-label" style="margin-bottom:8px">Scan QR code</div>
         <button id="btn-scan-qr" class="action-btn" style="width:100%;padding:10px;font-size:.78rem">Open camera scanner</button>

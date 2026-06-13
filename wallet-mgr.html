@@ -6,6 +6,7 @@
 
 <title>XCash Klassic Wallet Manager</title>
 <meta name="description" content="Create, import, or unlock an XCash Klassic wallet from your browser.">
+
 <link rel="canonical" href="https://wallet.xcashlabs.org/wallet-mgr">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="style.css">
@@ -36,7 +37,7 @@
         Wallets on this device
       </div>
 
-      <h1>Choose a wallet:</h1>
+      <h1>Choose a Wallet</h1>
 
       <p class="lead">
         Create a new XCash Klassic wallet, import an existing wallet, or access one of your saved wallets.
@@ -50,29 +51,9 @@
       <div class="saved-wallets">
         <h2>Saved Wallets</h2>
 
-        <!-- Placeholder wallet entries. Later these will come from IndexedDB. -->
-        <div class="wallet-entry">
-          <div>
-            <div class="wallet-address">XCK...xyz</div>
-          </div>
-
-          <button class="button primary" type="button">Unlock</button>
+        <div id="wallet-list">
+          <div class="empty-wallets">Loading saved wallets...</div>
         </div>
-
-        <div class="wallet-entry">
-          <div>
-            <div class="wallet-address">XCK...uvw</div>
-          </div>
-
-          <button class="button primary" type="button">Unlock</button>
-        </div>
-
-        <!-- Use this later when there are no saved wallets. -->
-        <!--
-        <div class="empty-wallets">
-          No wallets are saved on this device yet. Create or import a wallet to get started.
-        </div>
-        -->
       </div>
     </section>
   </div>
@@ -86,17 +67,92 @@
     </div>
   </div>
 </footer>
-<script>
-document.querySelectorAll('.wallet-entry').forEach(wallet => {
-  wallet.addEventListener('click', () => {
 
-    document.querySelectorAll('.wallet-entry').forEach(w => {
-      w.classList.remove('selected');
+<script src="js/wallet-vault.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  const walletList = document.getElementById('wallet-list');
+
+  function shortAddress(address) {
+    if (!address) return 'Unknown wallet';
+    if (address.length <= 30) return address;
+    return address.slice(0, 12) + '...' + address.slice(-12);
+  }
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, function (char) {
+      return {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[char];
+    });
+  }
+
+  function renderEmpty(message) {
+    walletList.innerHTML =
+      '<div class="empty-wallets">' + escapeHtml(message) + '</div>';
+  }
+
+  function createWalletEntry(wallet) {
+    const address = wallet.address || '';
+    const label = wallet.label || wallet.network || 'Saved Wallet';
+
+    const entry = document.createElement('div');
+    entry.className = 'wallet-entry';
+
+    entry.innerHTML =
+      '<div>' +
+        '<div class="wallet-address">' + escapeHtml(shortAddress(address)) + '</div>' +
+        '<div class="form-note">' + escapeHtml(label) + '</div>' +
+      '</div>' +
+      '<button class="button primary" type="button">Unlock</button>';
+
+    entry.querySelector('button').addEventListener('click', function (e) {
+      e.stopPropagation();
+      sessionStorage.setItem('xck-active-wallet', address);
+      window.location.href = '/dashboard';
     });
 
-    wallet.classList.add('selected');
-  });
-});
-</script
+    return entry;
+  }
+
+  function renderWallets() {
+    if (!walletList) return;
+
+    let wallets = [];
+
+    try {
+      if (!window.WalletVault || typeof WalletVault.list !== 'function') {
+        throw new Error('WalletVault is not loaded');
+      }
+
+      wallets = WalletVault.list();
+    } catch (err) {
+      console.error('Failed to load wallets:', err);
+      renderEmpty('Could not load saved wallets.');
+      return;
+    }
+
+    walletList.innerHTML = '';
+
+    if (!wallets || wallets.length === 0) {
+      renderEmpty('No wallets are saved on this device yet. Create or import a wallet to get started.');
+      return;
+    }
+
+    wallets.forEach(function (wallet) {
+      walletList.appendChild(createWalletEntry(wallet));
+    });
+  }
+
+  renderWallets();
+})();
+</script>
 </body>
 </html>

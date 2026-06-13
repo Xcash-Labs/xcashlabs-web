@@ -2,10 +2,11 @@
 // dashboard-page.js — moved inline so the CSP can drop 'unsafe-inline' for scripts
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // ─── Wallet load (vault-aware) ───
-  // The verify page hands us the keys via WalletVault, which may be plaintext
-  // or AES-GCM encrypted with a wallet password. The unlock overlay handles
-  // both initial unlock and re-unlock after idle auto-lock.
+// ─── Wallet load (vault-aware) ───
+// The currently selected wallet is identified by xck-active-wallet.
+// Wallet data is stored encrypted in WalletVault and unlocked with the
+// user's wallet password. The unlock overlay handles both initial
+// unlock and re-unlock after idle auto-lock.
   let walletKeys = null;
   const IDLE_TIMEOUT_MS = 3 * 60 * 60 * 1000; // 3 hours
   let idleTimer = null;
@@ -124,14 +125,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function populateWallet() {
 
-  const isWatchOnly = !!walletKeys.watchOnly;
-
   // ─── Populate wallet info ───
   document.getElementById('wallet-address').insertAdjacentText('afterbegin', walletKeys.address);
   document.getElementById('receive-addr').textContent = walletKeys.address;
-  document.getElementById('key-spend').textContent = walletKeys.privateSpendKeyHex || '— not available (watch-only) —';
+  document.getElementById('key-spend').textContent = walletKeys.privateSpendKeyHex || '—';
   document.getElementById('key-view').textContent = walletKeys.privateViewKeyHex;
-  document.getElementById('key-pub-spend').textContent = walletKeys.publicSpendKeyHex || '— not available (watch-only) —';
+  document.getElementById('key-pub-spend').textContent = walletKeys.publicSpendKeyHex || '—';
   document.getElementById('key-pub-view').textContent = walletKeys.publicViewKeyHex;
 
   // ─── Seed phrase recovery ───
@@ -139,7 +138,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   // the spend key. Reconstruct it so users can see/backup their seed.
   // For BIP-39, polyseed, and XCash Klassic seeds this isn't possible (one-way KDFs).
   (function showMnemonic () {
-    if (isWatchOnly || !walletKeys.privateSpendKeyHex) return;
     // Only show for 25-word standard seeds. BIP-39, polyseed, and XCash Klassic
     // seeds use one-way KDFs — reconstructing a mnemonic from the spend key
     // would produce a DIFFERENT (wrong) 25-word seed.
@@ -191,53 +189,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.wallet-header').appendChild(info);
   })();
 
-  // Watch-only: hide spend-key-dependent UI
-  if (isWatchOnly) {
-    const sendBtn = document.getElementById('btn-send');
-    if (sendBtn) { sendBtn.disabled = true; sendBtn.style.opacity = '0.4'; sendBtn.title = 'Watch-only wallet'; }
-    const subSection = document.getElementById('btn-sub-gen');
-    if (subSection) subSection.closest('.keys-section').style.display = 'none';
-    // Add a watch-only badge under the address
-    const badge = document.createElement('div');
-    badge.style.cssText = 'display:inline-flex;align-items:center;gap:6px;margin:8px 0;padding:4px 12px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:100px;font-size:.7rem;font-weight:600;color:#22c55e;text-transform:uppercase;letter-spacing:.06em';
-    badge.innerHTML = '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg> Watch-only';
-    document.querySelector('.wallet-header').appendChild(badge);
-  }
-
-  // ─── Subaddress generator (full-mode only) ───
-  // Reconstruct the raw byte buffers we need from the hex strings stored in
-  // sessionStorage. The dashboard never sees the seed phrase — only the keys.
-  const subKeys = isWatchOnly ? null : {
-    privateViewKey: MoneroKeys.hexToBytes(walletKeys.privateViewKeyHex),
-    publicSpendKey: MoneroKeys.hexToBytes(walletKeys.publicSpendKeyHex)
-  };
-  // ─── Subaddress book (persistent metadata + on-demand address derivation) ──
-  // We persist {major, minor, label, createdAt} per wallet in localStorage so
-  // the user's labeled subaddress book survives across sessions. The actual
-  // subaddress strings are NOT stored — they're recomputed from the keys
-  // every render. localStorage only ever holds index pairs and labels.
-  const subList   = document.getElementById('sub-list');
-  const subError  = document.getElementById('sub-error');
-  const subLabel  = document.getElementById('sub-label');
-  const subMajor  = document.getElementById('sub-major');
-  const subMinor  = document.getElementById('sub-minor');
-  const subBookKey = 'xcashklassic-subaddrs-' + walletKeys.address.slice(0, 12);
-
-  function loadSubBook () {
-    try {
-      const raw = localStorage.getItem(subBookKey);
-      if (!raw) return [];
-      const list = JSON.parse(raw);
-      return Array.isArray(list) ? list : [];
-    } catch (e) { return []; }
-  }
-  function saveSubBook (list) {
-    try { localStorage.setItem(subBookKey, JSON.stringify(list)); } catch (e) {}
-  }
-  function nextMinor (list, major) {
-    const used = list.filter(e => e.major === major).map(e => e.minor);
-    return used.length ? Math.max.apply(null, used) + 1 : 1;
-  }
   function copyToClipboard (text, el) {
     navigator.clipboard.writeText(text).then(() => {
       if (el) {
@@ -248,96 +199,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  function renderSubBook () {
-    const list = loadSubBook();
-    subList.innerHTML = '';
-    if (list.length === 0) {
-      subList.innerHTML = '<div style="font-size:.7rem;color:var(--text-dim);text-align:center;padding:14px 0">No subaddresses yet.</div>';
-    }
-    // newest first
-    list.slice().reverse().forEach((entry, displayIdx) => {
-      const realIdx = list.length - 1 - displayIdx;
-      let address = '— locked —';
-      try {
-        if (subKeys) address = MoneroSubaddress.generate(subKeys, entry.major, entry.minor).address;
-      } catch (e) { address = '(error)'; }
-
-      const row = document.createElement('div');
-      row.style.cssText = 'margin-top:10px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px';
-      row.innerHTML =
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px">' +
-          '<div style="font-size:.78rem;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
-            (entry.label ? escapeHtml(entry.label) : '<span style="color:var(--text-dim);font-weight:400">unlabeled</span>') +
-          '</div>' +
-          '<div style="display:flex;gap:6px;flex-shrink:0">' +
-            '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.62rem;color:var(--text-dim);padding:2px 8px;background:var(--surface);border-radius:100px">' + entry.major + '/' + entry.minor + '</span>' +
-            '<button class="sub-del" data-idx="' + realIdx + '" title="Delete" style="background:transparent;border:0;color:var(--text-dim);cursor:pointer;font-size:.85rem;padding:0 4px;line-height:1">✕</button>' +
-          '</div>' +
-        '</div>' +
-        '<div class="sub-addr" style="font-family:\'JetBrains Mono\',monospace;font-size:.62rem;color:var(--text-mid);word-break:break-all;line-height:1.5;cursor:pointer" title="Click to copy">' +
-          escapeHtml(address) +
-        '</div>';
-      row.querySelector('.sub-addr').addEventListener('click', (e) => copyToClipboard(address, e.currentTarget));
-      row.querySelector('.sub-del').addEventListener('click', (e) => {
-        e.stopPropagation();
-        const idx = parseInt(e.currentTarget.dataset.idx, 10);
-        const updated = loadSubBook();
-        updated.splice(idx, 1);
-        saveSubBook(updated);
-        renderSubBook();
-        autoFillNextMinor();
-      });
-      subList.appendChild(row);
-    });
-  }
-
   function escapeHtml (s) {
     return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
   }
-
-  function autoFillNextMinor () {
-    const list = loadSubBook();
-    const major = parseInt(subMajor.value, 10) || 0;
-    subMinor.value = nextMinor(list, major);
-  }
-  subMajor.addEventListener('input', autoFillNextMinor);
-  autoFillNextMinor();
-
-  document.getElementById('btn-sub-gen').addEventListener('click', () => {
-    subError.style.display = 'none';
-    if (!subKeys) {
-      subError.textContent = 'Watch-only wallets cannot generate subaddresses (the spend key is required).';
-      subError.style.display = 'block';
-      return;
-    }
-    try {
-      const major = parseInt(subMajor.value, 10) || 0;
-      const minor = parseInt(subMinor.value, 10) || 0;
-      if (major === 0 && minor === 0) throw new Error('Index (0,0) is your primary address — cannot be a subaddress');
-      // Validate by actually deriving
-      MoneroSubaddress.generate(subKeys, major, minor);
-      const list = loadSubBook();
-      // Don't allow exact duplicates of (major, minor)
-      if (list.some(e => e.major === major && e.minor === minor)) {
-        throw new Error('That (account, index) is already in your address book.');
-      }
-      list.push({
-        major,
-        minor,
-        label: (subLabel.value || '').trim(),
-        createdAt: new Date().toISOString(),
-      });
-      saveSubBook(list);
-      subLabel.value = '';
-      renderSubBook();
-      autoFillNextMinor();
-    } catch (e) {
-      subError.textContent = e.message;
-      subError.style.display = 'block';
-    }
-  });
-
-  renderSubBook();
 
   // ─── Copy address on click ───
   document.getElementById('wallet-address').addEventListener('click', () => {
@@ -537,7 +401,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // only count spends where the key_image matches. Mismatches are
       // false positives from ring-decoy appearances.
       if (info && Array.isArray(info.spent_outputs) && info.spent_outputs.length > 0
-          && walletKeys.privateSpendKeyHex && !walletKeys.watchOnly) {
+          && walletKeys.privateSpendKeyHex) {
         var falseSpendTotal = 0n;
         try {
           if (!MoneroCore.isLoaded()) await MoneroCore.load();
@@ -603,33 +467,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      // In watch-only mode we can't verify spends (no spend key to
-      // compute key images), so total_sent is full of false positives
-      // from ring-decoy appearances.  Show total_received only.
       var avail;
-      if (isWatchOnly) {
-        var totalRecv = BigInt(info.total_received || '0');
-        var locked    = BigInt(info.locked_funds   || '0');
-        avail = totalRecv - locked;
-        if (avail < 0n) avail = 0n;
-      } else {
-        avail = LwsClient.availableBalance(info);
-      }
+      avail = LwsClient.availableBalance(info);
       const progress = LwsClient.scanProgress(info);
       balEl.textContent = LwsClient.formatXck(avail);
       updateFiatDisplay(balEl.textContent);
-
-      // Watch-only: show a note that balance is receive-only
-      if (isWatchOnly) {
-        var woNote = document.getElementById('wo-balance-note');
-        if (!woNote) {
-          woNote = document.createElement('div');
-          woNote.id = 'wo-balance-note';
-          woNote.style.cssText = 'font-size:.68rem;color:var(--text-dim);margin-top:2px;font-style:italic';
-          woNote.textContent = 'Showing received funds only — outgoing transactions require the spend key';
-          balEl.parentNode.insertBefore(woNote, balEl.nextSibling);
-        }
-      }
 
       // Show locked (pending) balance if there is one
       var locked = BigInt(info.locked_funds || '0');
@@ -701,19 +543,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       var txs = (resp && Array.isArray(resp.transactions)) ? resp.transactions : [];
       const chainTip = (resp && resp.blockchain_height) || 0;
 
-      // Watch-only mode: no spend key → can't verify outgoing txs.
-      // Show only incoming transactions (those with total_received > 0).
-      if (isWatchOnly) {
-        txs = txs.filter(function (tx) {
-          return BigInt(tx.total_received || '0') > 0n;
-        });
-      }
-
       // Filter out false-spend transactions using the key_image cache
       // built by pollBalanceOnce(). If every spent_output in a tx has a
       // key_image that doesn't match the computed real key_image, the
       // tx is a false positive from ring-decoy detection — hide it.
-      if (!isWatchOnly && Object.keys(_keyImageCache).length > 0) {
+      if (Object.keys(_keyImageCache).length > 0) {
         txs = txs.filter(function (tx) {
           if (!tx.spent_outputs || tx.spent_outputs.length === 0) return true;
           for (var so of tx.spent_outputs) {
@@ -739,7 +573,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const rows = txs.map(tx => {
         const received = BigInt(tx.total_received || '0');
-        const sent     = isWatchOnly ? 0n : BigInt(tx.total_sent || '0');
+        const sent = BigInt(tx.total_sent || '0');
         const net      = received - sent;
         const isIn     = net >= 0n;
         const display  = LwsClient.formatXck(net < 0n ? -net : net);
@@ -891,10 +725,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   document.getElementById('btn-send').addEventListener('click', () => {
-    if (isWatchOnly) {
-      alert('Watch-only wallets cannot send — the spend key is required.');
-      return;
-    }
     sendResetForm();
     document.getElementById('send-modal').classList.add('show');
     // Update "Available" from the latest LWS poll
@@ -925,29 +755,45 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sendToHintEl = document.getElementById('send-to-hint');
   const sendAmountEl = document.getElementById('send-amount');
   const sendReviewBtn = document.getElementById('send-review');
-  function refreshSendReviewState () {
+
+  function refreshSendReviewState() {
     const addr = (sendToEl.value || '').trim();
-    const amt  = (sendAmountEl.value || '').trim();
+    const amt = (sendAmountEl.value || '').trim();
+
     const v = MoneroSend.validateAddress(addr);
+
     if (addr.length === 0) {
       sendToHintEl.textContent = '';
+      sendToHintEl.style.color = '';
     } else if (!v.valid) {
-      sendToHintEl.textContent = 'Address doesn\'t look valid (' + v.reason + ')';
+      sendToHintEl.textContent = 'Address does not look valid (' + v.reason + ')';
       sendToHintEl.style.color = '#f87171';
+    } else if (v.integrated) {
+      sendToHintEl.textContent = '✓ Integrated address';
+      sendToHintEl.style.color = '#22c55e';
     } else {
-      let label = 'Primary address';
-      if (v.integrated) label = 'Integrated address (with payment ID baked in)';
-      else if (v.subaddress) label = 'Subaddress';
-      sendToHintEl.textContent = '✓ ' + label;
+      sendToHintEl.textContent = '✓ Valid XCK address';
       sendToHintEl.style.color = '#22c55e';
     }
-    var amtNorm = amt.replace(',', '.'); // accept comma as decimal separator
-    const amtOk = amtNorm.length > 0 && /^\d+(\.\d+)?$/.test(amtNorm) && Number(amtNorm) > 0;
+
+    const amtNorm = amt.replace(',', '.');
+    const amtOk =
+      amtNorm.length > 0 &&
+      /^\d+(\.\d+)?$/.test(amtNorm) &&
+      Number(amtNorm) > 0;
+
     sendReviewBtn.disabled = !(v.valid && amtOk);
-    // Show/hide payment ID field for primary addresses only
+
     const pidGroup = document.getElementById('send-pid-group');
-    if (pidGroup) pidGroup.style.display = (v.valid && !v.subaddress && !v.integrated) ? '' : 'none';
+
+    // Payment ID only applies to normal primary addresses.
+    // Integrated addresses already include one.
+    if (pidGroup) {
+      pidGroup.style.display =
+        v.valid && !v.integrated ? '' : 'none';
+    }
   }
+
   sendToEl.addEventListener('input', refreshSendReviewState);
   sendAmountEl.addEventListener('input', refreshSendReviewState);
 
@@ -1106,7 +952,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       version: 1,
       exportedAt: new Date().toISOString(),
       network: walletKeys.network || 'mainnet',
-      watchOnly: !!walletKeys.watchOnly,
       address: walletKeys.address,
       privateSpendKeyHex: walletKeys.privateSpendKeyHex || null,
       privateViewKeyHex:  walletKeys.privateViewKeyHex,

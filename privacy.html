@@ -1,4 +1,3 @@
-<html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Privacy — XCash Klassic Web Wallet</title>
-
 <meta name="description" content="XCash Klassic Web Wallet privacy statement.">
+
 <meta property="og:title" content="Privacy — XCash Klassic Web Wallet">
 <meta property="og:description" content="How the XCash Klassic Web Wallet handles your data and privacy.">
 <meta property="og:type" content="website">
@@ -15,269 +14,186 @@
 
 <link rel="canonical" href="https://wallet.xcashlabs.org/privacy">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="/fonts/fonts.css">
-
-<style>
-:root{
-  --bg:#0a0a0a;
-  --surface:#111113;
-  --surface-2:#17171b;
-  --border:rgba(255,255,255,0.06);
-  --text:#eae8e4;
-  --text-mid:#9a9894;
-  --text-dim:#6e6c6a;
-  --accent:#f7931a;
-  --radius:14px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Outfit',sans-serif;
-  line-height:1.65;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-}
-.container{
-  width:100%;
-  max-width:760px;
-  margin:0 auto;
-  padding:0 24px;
-}
-a{
-  color:var(--accent);
-  text-decoration:none;
-}
-nav{
-  padding:20px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid var(--border);
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:white;
-  text-decoration:none;
-}
-.logo-text{
-  font-weight:700;
-}
-.logo-text span{
-  color:var(--accent);
-}
-.nav-links{
-  display:flex;
-  gap:12px;
-}
-.nav-links a{
-  color:var(--text-mid);
-}
-.nav-links a:hover{
-  color:white;
-}
-main{
-  flex:1;
-  padding:60px 0;
-}
-h1{
-  font-size:3rem;
-  margin-bottom:24px;
-}
-h2{
-  margin-top:40px;
-  margin-bottom:12px;
-}
-h3{
-  margin-top:24px;
-  margin-bottom:8px;
-}
-p{
-  color:var(--text-mid);
-  margin-bottom:14px;
-}
-ul{
-  padding-left:22px;
-  color:var(--text-mid);
-}
-li{
-  margin-bottom:8px;
-}
-.callout{
-  background:var(--surface);
-  border-left:3px solid var(--accent);
-  border-radius:10px;
-  padding:20px;
-  margin:24px 0;
-}
-footer{
-  border-top:1px solid var(--border);
-  padding:30px 0;
-  text-align:center;
-  color:var(--text-dim);
-  font-size:.85rem;
-}
-.footer-row{
-  display:flex;
-  gap:24px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-
 <header>
-<div class="container">
-<nav>
-<a href="/" class="logo">
-<div class="logo-text">XCash <span>Klassic</span></div>
-</a>
+  <div class="container">
+    <nav>
+      <a href="/" class="logo">
+        <img src="/assets/xck-logo.png" alt="XCash Klassic" class="logo-icon">
+        <span>XCash Klassic Web Wallet</span>
+      </a>
 
-<div class="nav-links">
-<a href="/">Home</a>
-<a href="/verify">Open Wallet</a>
-<a href="https://github.com/Xcash-Labs" target="_blank" rel="noopener">GitHub</a>
-</div>
-</nav>
-</div>
+      <div class="nav-links">
+        <a href="/verify">Load Wallet</a>
+        <a href="/wallet-mgr">Wallet Manager</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <main>
-<div class="container">
+  <div class="container">
+    <section class="wallet-card">
 
-<h1>Privacy</h1>
+      <div class="status">
+        <img src="/assets/logo32x32.png" alt="XCash Klassic" class="status-logo">
+        Privacy
+      </div>
 
-<p>
-XCash Klassic Web Wallet is a non-custodial wallet. We do not store your funds,
-seed phrase, or private spend key.
-</p>
+      <h1>Privacy</h1>
 
-<div class="callout">
-<strong>Short version:</strong>
-Your seed phrase and private spend key remain in your browser.
-The wallet server cannot spend your funds.
-</div>
+      <p class="lead">
+        XCash Klassic Web Wallet is a non-custodial wallet. We do not store your funds,
+        seed phrase, private spend key, or wallet password.
+      </p>
 
-<h2>What We Do Not Collect</h2>
+      <div class="key-card mt-16">
+        <div class="key-label">Short Version</div>
+        <p>
+          Your seed phrase and private spend key remain in your browser.
+          The wallet server cannot spend your funds.
+        </p>
+      </div>
 
-<ul>
-<li><strong>Seed phrases</strong> — never transmitted or stored by us.</li>
-<li><strong>Private spend keys</strong> — remain in your browser and are used locally to sign transactions.</li>
-<li><strong>Wallet passwords</strong> — never transmitted.</li>
-<li><strong>User accounts</strong> — there are no registrations or login accounts.</li>
-<li><strong>Marketing data</strong> — no newsletters, advertising profiles, or tracking systems.</li>
-</ul>
+      <div class="keys-section mt-16">
+        <div class="section-title">What We Do Not Collect</div>
 
-<h2>What The Wallet Sends</h2>
+        <div class="key-card">
+          <ul>
+            <li><strong>Seed phrases</strong> — never transmitted or stored by us.</li>
+            <li><strong>Private spend keys</strong> — remain in your browser.</li>
+            <li><strong>Wallet passwords</strong> — never transmitted.</li>
+            <li><strong>User accounts</strong> — there are no registrations or login accounts.</li>
+            <li><strong>Marketing data</strong> — no newsletters, advertising profiles, or tracking systems.</li>
+          </ul>
+        </div>
+      </div>
 
-<h3>Blockchain Queries</h3>
+      <div class="keys-section mt-16">
+        <div class="section-title">What The Wallet Sends</div>
 
-<p>
-The wallet performs blockchain lookups to retrieve balances,
-transaction history, network status, and fee estimates.
-</p>
+        <div class="key-card">
+          <div class="key-label">Blockchain Queries</div>
+          <p>
+            The wallet performs blockchain lookups to retrieve balances,
+            transaction history, network status, and fee estimates.
+          </p>
+        </div>
 
-<h3>Light Wallet Service</h3>
+        <div class="key-card">
+          <div class="key-label">Light Wallet Service</div>
+          <p>
+            When using the XCash Klassic Light Wallet Server, your wallet address
+            and private view key may be transmitted so the server can scan the
+            blockchain for incoming transactions.
+          </p>
+        </div>
+      </div>
 
-<p>
-When using the XCash Klassic Light Wallet Server (LWS),
-your wallet address and private view key may be transmitted
-to the server so it can scan the blockchain for incoming transactions.
-</p>
+      <div class="keys-section mt-16">
+        <div class="section-title">What The Server Can See</div>
 
-<div class="callout">
-<strong>The server can see:</strong>
+        <div class="key-card">
+          <ul>
+            <li>Your public wallet address</li>
+            <li>Your private view key</li>
+            <li>Signed transactions submitted for broadcast</li>
+          </ul>
+        </div>
+      </div>
 
-<ul>
-<li>Your public wallet address</li>
-<li>Your private view key</li>
-<li>Signed transactions submitted for broadcast</li>
-</ul>
-</div>
+      <div class="keys-section mt-16">
+        <div class="section-title">What The Server Cannot See</div>
 
-<div class="callout">
-<strong>The server cannot see:</strong>
+        <div class="key-card">
+          <ul>
+            <li>Your seed phrase</li>
+            <li>Your private spend key</li>
+            <li>Your wallet password</li>
+            <li>Anything that would allow spending your funds</li>
+          </ul>
+        </div>
+      </div>
 
-<ul>
-<li>Your seed phrase</li>
-<li>Your private spend key</li>
-<li>Your wallet password</li>
-<li>Any information that would allow spending your funds</li>
-</ul>
-</div>
+      <div class="keys-section mt-16">
+        <div class="section-title">Hosting Infrastructure</div>
 
-<h2>Hosting Infrastructure</h2>
+        <div class="key-card">
+          <p>
+            wallet.xcashlabs.org is operated by XCash Labs. Like any website,
+            standard web requests are processed to deliver the application and
+            provide wallet functionality.
+          </p>
 
-<p>
-wallet.xcashlabs.org is operated by XCash Labs.
-Like any website, standard web requests are processed
-to deliver the application and provide wallet functionality.
-</p>
+          <p>
+            We do not intentionally collect or retain wallet secrets, private spend
+            keys, or seed phrases.
+          </p>
+        </div>
+      </div>
 
-<p>
-We do not intentionally collect or retain wallet secrets,
-private spend keys, or seed phrases.
-</p>
+      <div class="keys-section mt-16">
+        <div class="section-title">Browser Storage</div>
 
-<h2>Browser Storage</h2>
+        <div class="key-card">
+          <p>
+            Wallet information may be stored locally in your browser to allow
+            saved wallets to be reopened on this device. Clearing browser data may
+            remove saved wallet information.
+          </p>
+        </div>
+      </div>
 
-<p>
-Wallet information may be temporarily stored in your browser session
-to allow the wallet to remain unlocked while you use it.
-Closing your browser session or clearing browser data may remove this information.
-</p>
+      <div class="keys-section mt-16">
+        <div class="section-title">Third-Party Services</div>
 
-<h2>Third-Party Services</h2>
+        <div class="key-card">
+          <p>
+            The wallet is designed to minimize reliance on third-party services.
+            No analytics platforms, advertising networks, or tracking scripts are
+            required for normal wallet operation.
+          </p>
+        </div>
+      </div>
 
-<p>
-The wallet is designed to minimize reliance on third-party services.
-No analytics platforms, advertising networks, or tracking scripts
-are required for normal wallet operation.
-</p>
+      <div class="keys-section mt-16">
+        <div class="section-title">Open Source</div>
 
-<h2>Open Source</h2>
+        <div class="key-card">
+          <p>
+            The XCash Klassic Web Wallet is open source. Users are encouraged to
+            review the source code, audit the software, or self-host the wallet
+            infrastructure.
+          </p>
+        </div>
+      </div>
 
-<p>
-The XCash Klassic Web Wallet is open source.
-Users are encouraged to review the source code,
-audit the software, or self-host the wallet infrastructure.
-</p>
+      <div class="keys-section mt-16">
+        <div class="section-title">Changes To This Policy</div>
 
-<h2>Changes To This Policy</h2>
+        <div class="key-card">
+          <p>
+            Any changes to this privacy policy will be reflected in the public
+            source repository.
+          </p>
+        </div>
+      </div>
 
-<p>
-Any changes to this privacy policy will be reflected in the public source repository.
-</p>
-
-</div>
+    </section>
+  </div>
 </main>
 
 <footer>
-<div class="container">
-
-<div class="footer-row">
-<a href="/">Home</a>
-<a href="/verify">Open Wallet</a>
-<a href="https://github.com/Xcash-Labs" target="_blank" rel="noopener">GitHub</a>
-</div>
-
-<div>
-wallet.xcashlabs.org · Open Source · Powered by XCash Klassic
-</div>
-
-<div style="margin-top:8px;font-size:.75rem;">
-Based on the open-source Monero Web project.
-Not affiliated with The Monero Project or monero-web.com.
-</div>
-
-</div>
+  <div class="container">
+    <div class="footer-meta">
+      wallet.xcashlabs.org · MIT Licensed · Powered by open-source software.
+      XCash Klassic is an independent project and is not affiliated with The Monero Project or Monero-Web.com.
+    </div>
+  </div>
 </footer>
-
 </body>
 </html>

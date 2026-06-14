@@ -699,6 +699,182 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'receive-modal') e.target.classList.remove('show');
   });
 
+  // ─── SEND MODAL ───
+  // Multi-step: form → confirm → result. All three steps live inside
+  // #send-modal; we toggle their visibility on transition.
+  let sendPreview = null;      // cached fee estimate from Review step
+  let sendPriority = 2;
+
+  function sendShowStep (step) {
+    ['form', 'confirm', 'result'].forEach(s => {
+      const el = document.getElementById('send-step-' + s);
+      if (el) el.style.display = (s === step) ? '' : 'none';
+    });
+  }
+  function sendShowResultState (state) {
+    ['pending', 'success', 'error'].forEach(s => {
+      const el = document.getElementById('send-result-' + s);
+      if (el) el.style.display = (s === state) ? '' : 'none';
+    });
+  }
+  function sendResetForm () {
+    sendPreview = null;
+    const errEl = document.getElementById('send-error');
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+    sendShowStep('form');
+  }
+
+  document.getElementById('btn-send').addEventListener('click', () => {
+    sendResetForm();
+    document.getElementById('send-modal').classList.add('show');
+    // Update "Available" from the latest LWS poll
+    const balText = document.getElementById('balance-xmr').textContent;
+    const availEl = document.getElementById('send-available');
+    if (availEl) availEl.textContent = balText;
+  });
+
+  document.getElementById('send-close').addEventListener('click', () => {
+    document.getElementById('send-modal').classList.remove('show');
+  });
+
+  document.getElementById('send-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'send-modal') e.target.classList.remove('show');
+  });
+
+  // Priority buttons
+  document.querySelectorAll('.send-prio-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.send-prio-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sendPriority = parseInt(btn.dataset.priority, 10) || 2;
+    });
+  });
+
+  // Recipient address live validation + hint
+  const sendToEl = document.getElementById('send-to');
+  const sendToHintEl = document.getElementById('send-to-hint');
+  const sendAmountEl = document.getElementById('send-amount');
+  const sendReviewBtn = document.getElementById('send-review');
+
+  function refreshSendReviewState() {
+    const addr = (sendToEl.value || '').trim();
+    const amt = (sendAmountEl.value || '').trim();
+
+    const v = MoneroSend.validateAddress(addr);
+
+    if (addr.length === 0) {
+      sendToHintEl.textContent = '';
+      sendToHintEl.style.color = '';
+    } else if (!v.valid) {
+      sendToHintEl.textContent = 'Address does not look valid (' + v.reason + ')';
+      sendToHintEl.style.color = '#f87171';
+    } else if (v.integrated) {
+      sendToHintEl.textContent = '✓ Integrated address';
+      sendToHintEl.style.color = '#22c55e';
+    } else {
+      sendToHintEl.textContent = '✓ Valid XCK address';
+      sendToHintEl.style.color = '#22c55e';
+    }
+
+    const amtNorm = amt.replace(',', '.');
+    const amtOk =
+      amtNorm.length > 0 &&
+      /^\d+(\.\d+)?$/.test(amtNorm) &&
+      Number(amtNorm) > 0;
+
+    sendReviewBtn.disabled = !(v.valid && amtOk);
+
+    const pidGroup = document.getElementById('send-pid-group');
+
+    // Payment ID only applies to normal primary addresses.
+    // Integrated addresses already include one.
+    if (pidGroup) {
+      pidGroup.style.display =
+        v.valid && !v.integrated ? '' : 'none';
+    }
+  }
+
+  sendToEl.addEventListener('input', refreshSendReviewState);
+  sendAmountEl.addEventListener('input', refreshSendReviewState);
+
+  // Send max — fills amount with the current balance
+  document.getElementById('send-max').addEventListener('click', () => {
+    const bal = document.getElementById('balance-xmr').textContent;
+    if (bal && bal !== '—') {
+      sendAmountEl.value = bal;
+      refreshSendReviewState();
+    }
+  });
+
+  // Cancel
+  document.getElementById('send-cancel').addEventListener('click', () => {
+    document.getElementById('send-modal').classList.remove('show');
+  });
+
+  // Review → fetch fee estimate
+  sendReviewBtn.addEventListener('click', async () => {
+    const errEl = document.getElementById('send-error');
+    errEl.style.display = 'none';
+    sendReviewBtn.disabled = true;
+    sendReviewBtn.textContent = 'Estimating…';
+    try {
+      const toAddress = (sendToEl.value || '').trim();
+      const xckAmount = (sendAmountEl.value || '').trim();
+      sendPreview = await MoneroSend.estimateFee(walletKeys, toAddress, xckAmount, sendPriority);
+
+      document.getElementById('confirm-to').textContent = toAddress;
+      document.getElementById('confirm-amount').textContent = xckAmount + ' XCK';
+      document.getElementById('confirm-fee').textContent = sendPreview.fee_xmr + ' XCK';
+      const total = (Number(xckAmount) + Number(sendPreview.fee_xmr)).toString();
+      document.getElementById('confirm-total').textContent = total + ' XCK';
+
+      sendShowStep('confirm');
+    } catch (e) {
+      errEl.textContent = e.message || 'Estimate failed';
+      errEl.style.display = 'block';
+    }
+    sendReviewBtn.disabled = false;
+    sendReviewBtn.textContent = 'Review →';
+  });
+
+  // Back from confirm → form
+  document.getElementById('send-back').addEventListener('click', () => {
+    sendShowStep('form');
+  });
+
+  // Confirm → actually send
+  document.getElementById('send-confirm').addEventListener('click', async () => {
+    sendShowStep('result');
+    sendShowResultState('pending');
+    try {
+      const toAddress = (sendToEl.value || '').trim();
+      const xckAmount = (sendAmountEl.value || '').trim();
+      const paymentId = (document.getElementById('send-pid').value || '').trim();
+      const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview);
+      document.getElementById('send-result-hash').textContent = result.tx_hash;
+      sendShowResultState('success');
+      // Trigger a balance refresh so the new pending tx shows up
+      if (typeof pollBalanceOnce === 'function') setTimeout(pollBalanceOnce, 2000);
+    } catch (e) {
+      console.error('[dashboard] send failed:', e);
+      document.getElementById('send-result-error-msg').textContent = e.message || 'Unknown error';
+      sendShowResultState('error');
+    }
+  });
+
+  // Result: Done → close modal
+  document.getElementById('send-done').addEventListener('click', () => {
+    document.getElementById('send-modal').classList.remove('show');
+    sendResetForm();
+    sendToEl.value = '';
+    sendAmountEl.value = '';
+  });
+
+  // Result: Retry → back to form with values intact
+  document.getElementById('send-retry').addEventListener('click', () => {
+    sendShowStep('form');
+  });
+
   // ─── QR CODE GENERATOR (simple version using canvas→dataURL) ───
   function generateQR(text) {
     // Render the QR code locally with the vendored qrcodegen.js encoder.

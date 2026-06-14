@@ -165,14 +165,17 @@ document.addEventListener('DOMContentLoaded', () => {
     var tip = estimatedCurrentHeight();
 
     switch (age) {
-      case 'week':    return Math.max(0, tip - 7 * BLOCKS_PER_DAY);
-      case 'month':   return Math.max(0, tip - 30 * BLOCKS_PER_DAY);
-      case '3months': return Math.max(0, tip - 91 * BLOCKS_PER_DAY);
-      case '6months': return Math.max(0, tip - 182 * BLOCKS_PER_DAY);
-      case 'year':    return Math.max(0, tip - 365 * BLOCKS_PER_DAY);
-      case '2years':  return 0; // XCK genesis was Jan 10, 2026
-      case 'unknown': return 0;
-      default:        return 0;
+      case 'week':
+        return Math.max(0, tip - 7 * BLOCKS_PER_DAY);
+      case 'month':
+        return Math.max(0, tip - 30 * BLOCKS_PER_DAY);
+      case 'year':
+        return Math.max(0, tip - 365 * BLOCKS_PER_DAY);
+      case '2years':
+      case 'unknown':
+        return 0;
+      default:
+        return 0;
     }
   }
 

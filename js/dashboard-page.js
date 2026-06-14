@@ -918,33 +918,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.href = '/wallet-mgr.html';
   });
 
-  // ─── QR scanner ───
-  document.getElementById('btn-scan-qr').addEventListener('click', () => {
-    const resultEl = document.getElementById('scan-result');
-    resultEl.style.display = 'none';
-    QrScanner.open({
-      onResult: (parsed) => {
-        const lines = [];
-        if (parsed.address)     lines.push('<div><span style="color:var(--text-dim)">addr:</span> ' + escapeHtml(parsed.address) + '</div>');
-        if (parsed.amount)      lines.push('<div><span style="color:var(--text-dim)">amount:</span> ' + escapeHtml(parsed.amount) + ' XCK</div>');
-        if (parsed.recipient)   lines.push('<div><span style="color:var(--text-dim)">recipient:</span> ' + escapeHtml(parsed.recipient) + '</div>');
-        if (parsed.description) lines.push('<div><span style="color:var(--text-dim)">memo:</span> ' + escapeHtml(parsed.description) + '</div>');
-        if (parsed.paymentId)   lines.push('<div><span style="color:var(--text-dim)">payment id:</span> ' + escapeHtml(parsed.paymentId) + '</div>');
-        if (lines.length === 0) lines.push('<div style="color:var(--text-dim)">' + escapeHtml(parsed.raw) + '</div>');
-        lines.push('<button id="scan-copy" class="action-btn" style="margin-top:10px;padding:6px 12px;font-size:.7rem;width:auto">Copy address</button>');
-        resultEl.innerHTML = lines.join('');
-        resultEl.style.display = 'block';
-        const copyBtn = document.getElementById('scan-copy');
-        if (copyBtn && parsed.address) {
-          copyBtn.addEventListener('click', () => copyToClipboard(parsed.address, copyBtn));
-        }
-      },
-      onError: (err) => {
-        alert('Scanner error: ' + err.message);
-      },
-    });
-  });
-
   // ─── Export wallet (JSON) ───
   document.getElementById('btn-export').addEventListener('click', () => {
     const dump = {

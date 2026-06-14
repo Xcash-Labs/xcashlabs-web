@@ -123,7 +123,7 @@
     let wallets = [];
 
     try {
-      if (!window.WalletVault || typeof WalletVault.list !== 'function') {
+      if (typeof WalletVault === 'undefined' || typeof WalletVault.list !== 'function') {
         throw new Error('WalletVault is not loaded');
       }
 

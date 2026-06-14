@@ -97,21 +97,43 @@
   function createWalletEntry(wallet) {
     const address = wallet.address || '';
     const label = wallet.label || wallet.network || 'Saved Wallet';
-
     const entry = document.createElement('div');
     entry.className = 'wallet-entry';
-
     entry.innerHTML =
       '<div>' +
         '<div class="wallet-address">' + escapeHtml(shortAddress(address)) + '</div>' +
       '</div>' +
-      '<button class="button primary" type="button">Unlock</button>';
+      '<div class="wallet-actions">' +
+        '<button class="button primary unlock-btn" type="button">Unlock</button>' +
+        '<button class="button secondary delete-btn" type="button">Remove</button>' +
+      '</div>';
 
-    entry.querySelector('button').addEventListener('click', function (e) {
-      e.stopPropagation();
-      sessionStorage.setItem('xck-active-wallet', address);
-      window.location.href = '/dashboard';
-    });
+      const unlockBtn = entry.querySelector('.unlock-btn');
+      const deleteBtn = entry.querySelector('.delete-btn');
+
+      unlockBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        sessionStorage.setItem('xck-active-wallet', address);
+        window.location.href = '/dashboard';
+      });
+
+      deleteBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        if (!confirm('Remove this wallet from this device?')) {
+          return;
+        }
+
+        WalletVault.remove(address);
+
+        // Remove from the page immediately
+        entry.remove();
+
+        // If no wallets remain, refresh the list
+        if (walletList.children.length === 0) {
+          renderEmpty('No wallets are saved on this device yet. Create or import a wallet to get started.');
+        }
+      });
 
     return entry;
   }

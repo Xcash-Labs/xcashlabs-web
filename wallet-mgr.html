@@ -22,7 +22,8 @@
       </a>
 
       <div class="nav-links">
-        <a href="/wallet-mgr">Open Wallet</a>
+        <a href="/verify">Load New Wallet</a>
+        <a href="/wallet-mgr">Wallet Manager</a>
         <a href="/privacy">Privacy</a>
       </div>
     </nav>
@@ -154,6 +155,7 @@
         if (walletList.children.length === 0) {
           renderEmpty('No wallets are saved on this device yet. Create or import a wallet to get started.');
         }
+        
       });
 
     return entry;

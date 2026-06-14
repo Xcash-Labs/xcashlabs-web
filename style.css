@@ -151,7 +151,7 @@ main {
 
 h1 {
     color: var(--card-text);
-    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-size: clamp(1.8rem, 4vw, 3rem);
     line-height: 1.05;
     letter-spacing: -0.04em;
     margin-bottom: 16px;

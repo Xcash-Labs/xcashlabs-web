@@ -80,10 +80,6 @@
 
       <!-- Action buttons -->
       <div class="actions fade-in">
-        <button class="action-btn primary" id="btn-send">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-          Send
-        </button>
         <button class="action-btn" id="btn-receive">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Receive
@@ -184,105 +180,8 @@
     </div>
   </div>
 
-  <!-- ═══ SEND MODAL ═══ -->
-  <div class="modal-overlay" id="send-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2>Send XCK</h2>
-        <button class="modal-close" id="send-close">✕</button>
-      </div>
-      <div class="modal-body">
 
-        <!-- ── STEP 1: Form ── -->
-        <div id="send-step-form">
-          <div style="margin-bottom:14px">
-            <label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Recipient address</label>
-            <textarea id="send-to" placeholder="XCK..., XCB..., or integrated (106 chars)" spellcheck="false" autocomplete="off" style="width:100%;min-height:64px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.68rem;line-height:1.5;resize:none;outline:none"></textarea>
-            <div id="send-to-hint" style="font-size:.68rem;color:var(--text-dim);margin-top:6px;min-height:14px"></div>
-          </div>
 
-          <div style="margin-bottom:14px">
-            <label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Amount (XCK)</label>
-            <input id="send-amount" type="text" inputmode="decimal" placeholder="0.0" autocomplete="off" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.95rem;outline:none">
-            <div style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--text-dim);margin-top:6px">
-              <span>Available: <span id="send-available">—</span> XCK</span>
-              <button type="button" id="send-max" style="background:transparent;border:0;color:var(--xmr);font-size:.68rem;cursor:pointer;padding:0">Send max</button>
-            </div>
-          </div>
-
-          <div style="margin-bottom:14px">
-            <label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Priority</label>
-            <div id="send-priority" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">
-              <button type="button" data-priority="1" class="send-prio-btn">Slow</button>
-              <button type="button" data-priority="2" class="send-prio-btn active">Normal</button>
-              <button type="button" data-priority="3" class="send-prio-btn">Fast</button>
-              <button type="button" data-priority="4" class="send-prio-btn">Fastest</button>
-            </div>
-          </div>
-
-          <div style="margin-bottom:14px;display:none" id="send-pid-group">
-            <label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Payment ID <span style="text-transform:none;letter-spacing:0">(if the recipient asked for one)</span></label>
-            <input id="send-pid" type="text" placeholder="16-char hex" autocomplete="off" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.75rem;outline:none">
-          </div>
-
-          <div id="send-error" style="display:none;color:#f87171;font-size:.72rem;margin-bottom:10px;padding:10px 12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);border-radius:8px"></div>
-
-          <div style="display:flex;gap:8px">
-            <button id="send-cancel" class="action-btn" style="flex:1;background:transparent">Cancel</button>
-            <button id="send-review" class="action-btn primary" style="flex:2" disabled>Review →</button>
-          </div>
-        </div>
-
-        <!-- ── STEP 2: Confirm ── -->
-        <div id="send-step-confirm" style="display:none">
-          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-            <div style="font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Sending to</div>
-            <div id="confirm-to" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;word-break:break-all;color:var(--text);line-height:1.5"></div>
-          </div>
-
-          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:.82rem">
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="color:var(--text-dim)">Amount</span><span id="confirm-amount" style="color:var(--text);font-weight:500">—</span></div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="color:var(--text-dim)">Fee</span><span id="confirm-fee" style="color:var(--text-mid)">—</span></div>
-            <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border)"><span style="color:var(--text-dim)">Total</span><span id="confirm-total" style="color:var(--xmr);font-weight:600">—</span></div>
-          </div>
-
-          <div style="font-size:.7rem;color:var(--text-dim);line-height:1.5;margin-bottom:14px;padding:10px 12px;background:rgba(255,102,0,0.06);border:1px solid rgba(255,102,0,0.15);border-radius:8px">
-            <strong style="color:var(--xmr)">This is irreversible.</strong> Once broadcast, the transaction cannot be cancelled. Your spend key is used locally in this tab to sign the transaction; it is not sent to any server.
-          </div>
-
-          <div style="display:flex;gap:8px">
-            <button id="send-back" class="action-btn" style="flex:1;background:transparent">← Back</button>
-            <button id="send-confirm" class="action-btn primary" style="flex:2">Send</button>
-          </div>
-        </div>
-
-        <!-- ── STEP 3: Result ── -->
-        <div id="send-step-result" style="display:none;text-align:center;padding:8px 0">
-          <div id="send-result-pending" style="display:none">
-            <div class="spinner" style="margin:0 auto 14px;width:40px;height:40px"></div>
-            <h3 style="font-size:1rem;font-weight:600;margin-bottom:6px">Sending…</h3>
-            <p style="font-size:.72rem;color:var(--text-dim);line-height:1.5">Building and broadcasting your transaction. This takes a few seconds.</p>
-          </div>
-          <div id="send-result-success" style="display:none">
-            <svg width="48" height="48" fill="none" stroke="#22c55e" stroke-width="1.8" viewBox="0 0 24 24" style="margin:0 auto 12px"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-            <h3 style="font-size:1rem;font-weight:600;margin-bottom:6px;color:#22c55e">Sent!</h3>
-            <p style="font-size:.72rem;color:var(--text-dim);line-height:1.5;margin-bottom:12px">Your transaction has been broadcast to the XCash Klassic network. It will appear in your history after ~2 minutes of confirmations.</p>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text-mid);word-break:break-all;padding:10px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;margin-bottom:14px" id="send-result-hash"></div>
-            <button id="send-done" class="action-btn primary" style="width:100%">Done</button>
-          </div>
-          <div id="send-result-error" style="display:none">
-            <svg width="48" height="48" fill="none" stroke="#f87171" stroke-width="1.8" viewBox="0 0 24 24" style="margin:0 auto 12px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <h3 style="font-size:1rem;font-weight:600;margin-bottom:6px;color:#f87171">Send failed</h3>
-            <p id="send-result-error-msg" style="font-size:.72rem;color:var(--text-dim);line-height:1.5;margin-bottom:14px"></p>
-            <button id="send-retry" class="action-btn" style="width:100%">Back to form</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-    </section>
-  </div>
 </main>
 
 <footer>
@@ -321,7 +220,6 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <div id="turnstile-box"></div>
 <script src="js/lws-client.js"></script>
-<script src="js/mymonero-core/MyMoneroCoreCpp_WASM.js"></script>
 <script src="js/mymonero-loader.js"></script>
 <script src="js/xcashklassic-send.js"></script>
 <script src="js/monero-english-wordlist.js"></script>

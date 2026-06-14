@@ -101,7 +101,9 @@
     entry.className = 'wallet-entry';
     entry.innerHTML =
       '<div>' +
-        '<div class="wallet-address">' + escapeHtml(shortAddress(address)) + '</div>' +
+        '<div class="wallet-address copy-address" title="Click to copy full address">' +
+          escapeHtml(shortAddress(address)) +
+        '</div>' +
       '</div>' +
       '<div class="wallet-actions">' +
         '<button class="button primary unlock-btn" type="button">Unlock</button>' +
@@ -110,6 +112,25 @@
 
       const unlockBtn = entry.querySelector('.unlock-btn');
       const deleteBtn = entry.querySelector('.delete-btn');
+      const addressElement = entry.querySelector('.copy-address');
+
+      addressElement.addEventListener('click', async function (e) {
+        e.stopPropagation();
+
+        try {
+          await navigator.clipboard.writeText(address);
+
+          const original = addressElement.textContent;
+
+          addressElement.textContent = 'Copied!';
+
+          setTimeout(() => {
+            addressElement.textContent = original;
+          }, 1500);
+        } catch (err) {
+          console.error('Failed to copy address:', err);
+        }
+      });
 
       unlockBtn.addEventListener('click', function (e) {
         e.stopPropagation();

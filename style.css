@@ -993,6 +993,23 @@ footer {
 
 .fade-in{animation:fadeIn .4s ease-out}
 
+.copy-address {
+  cursor: pointer;
+}
+
+.copy-address:hover {
+  text-decoration: underline;
+}
+
+.wallet-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.delete-btn {
+  background: transparent;
+}
+
 /* ─── Modals ─── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}

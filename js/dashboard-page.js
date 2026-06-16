@@ -708,11 +708,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
-  document.getElementById('bridge-modal').addEventListener('click', (e) => {
-    if (e.target.id === 'bridge-modal') {
-      document.getElementById('bridge-modal').classList.remove('show');
-    }
-  });   
+  document.getElementById('bridge-start').addEventListener('click', () => {
+    window.open('https://bridge.xcashlabs.org', '_blank');
+  });
 
   // ─── SEND MODAL ───
   // Multi-step: form → confirm → result. All three steps live inside

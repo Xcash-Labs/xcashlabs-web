@@ -673,11 +673,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'ratelimit-modal') e.target.classList.remove('show');
   });
 
-  // ─── BRIDGE MODAL ───
-  document.getElementById('btn-bridge').addEventListener('click', () => {
-    alert('Bridge coming soon');
-  });
-
   // ─── RECEIVE MODAL ───
   document.getElementById('btn-receive').addEventListener('click', () => {
     document.getElementById('receive-modal').classList.add('show');
@@ -703,6 +698,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('receive-modal').addEventListener('click', (e) => {
     if (e.target.id === 'receive-modal') e.target.classList.remove('show');
   });
+
+  // ─── BRIDGE MODAL ───
+  document.getElementById('btn-bridge').addEventListener('click', () => {
+    document.getElementById('bridge-modal').classList.add('show');
+  });
+
+  document.getElementById('bridge-close').addEventListener('click', () => {
+    document.getElementById('bridge-modal').classList.remove('show');
+  });
+
+  document.getElementById('bridge-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'bridge-modal') {
+      document.getElementById('bridge-modal').classList.remove('show');
+    }
+  });   
 
   // ─── SEND MODAL ───
   // Multi-step: form → confirm → result. All three steps live inside

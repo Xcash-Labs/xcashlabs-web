@@ -90,7 +90,7 @@
           Receive
         </button>
         <button id="btn-bridge" class="action-btn" style="flex:1">
-        Bridge
+          Bridge
         </button>
       </div>
 
@@ -183,6 +183,46 @@
         <div class="receive-warning">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           Only send XCash Klassic (XCK) to this address
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BRIDGE MODAL ═══ -->
+  <div class="modal-overlay" id="bridge-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Bridge XCK</h2>
+        <button class="modal-close" id="bridge-close">✕</button>
+      </div>
+
+      <div class="modal-body" style="text-align:center">
+        <div style="margin:16px auto;width:220px;min-height:220px;background:var(--surface-2);border-radius:12px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M7 7h10M17 7l-3-3M17 7l-3 3"/>
+            <path d="M17 17H7M7 17l3-3M7 17l3 3"/>
+          </svg>
+
+          <p style="font-size:.85rem;color:var(--text);margin:0">
+            Bridge XCash Klassic between supported networks.
+          </p>
+        </div>
+
+        <p style="font-size:.7rem;color:var(--text-dim);margin-bottom:12px">
+          Select the bridge option below to continue
+        </p>
+
+        <button class="btn-outline" id="bridge-start">
+          Open Bridge
+        </button>
+
+        <div class="receive-warning">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Make sure you are using the correct network before bridging
         </div>
       </div>
     </div>

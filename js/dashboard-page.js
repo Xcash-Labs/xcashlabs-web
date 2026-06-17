@@ -755,9 +755,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'send-modal') e.target.classList.remove('show');
   });
 
-  document.querySelectorAll('.send-privacy-btn').forEach(btn => {
+  document.querySelectorAll('.send-priv-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.send-privacy-btn')
+      document.querySelectorAll('.send-priv-btn')
         .forEach(b => b.classList.remove('active'));
 
       btn.classList.add('active');

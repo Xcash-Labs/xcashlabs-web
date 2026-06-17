@@ -716,6 +716,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Multi-step: form → confirm → result. All three steps live inside
   // #send-modal; we toggle their visibility on transition.
   let sendPreview = null;      // cached fee estimate from Review step
+  let sendPrivacy = 'private';
   let sendPriority = 2;
 
   function sendShowStep (step) {
@@ -754,7 +755,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'send-modal') e.target.classList.remove('show');
   });
 
-  // Priority buttons
+  document.querySelectorAll('.send-privacy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.send-privacy-btn')
+        .forEach(b => b.classList.remove('active'));
+
+      btn.classList.add('active');
+      sendPrivacy = btn.dataset.privacy || 'private';
+    });
+  });
+
+// Priority buttons
   document.querySelectorAll('.send-prio-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.send-prio-btn').forEach(b => b.classList.remove('active'));
@@ -863,7 +874,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const toAddress = (sendToEl.value || '').trim();
       const xckAmount = (sendAmountEl.value || '').trim();
       const paymentId = (document.getElementById('send-pid').value || '').trim();
-      const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview);
+      const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview, sendPrivacy);
       document.getElementById('send-result-hash').textContent = result.tx_hash;
       sendShowResultState('success');
       // Trigger a balance refresh so the new pending tx shows up

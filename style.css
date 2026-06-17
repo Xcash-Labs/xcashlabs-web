@@ -895,6 +895,28 @@ footer {
     font-size: 0.76rem;
 }
 
+.send-priv-btn {
+    padding: 10px 8px;
+    border: 1px solid var(--light-border);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--card-text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.send-priv-btn:hover {
+    border-color: var(--accent);
+}
+
+.send-priv-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
 .send-prio-btn {
     padding: 10px 8px;
     border: 1px solid var(--light-border);

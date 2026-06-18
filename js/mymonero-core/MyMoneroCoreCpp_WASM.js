@@ -1,21 +1,6886 @@
 
-var MyMoneroClient = (function() {
+var MyMoneroClient = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
+  if (typeof __filename !== 'undefined') _scriptDir = _scriptDir || __filename;
   return (
 function(MyMoneroClient) {
   MyMoneroClient = MyMoneroClient || {};
 
-var Module=typeof MyMoneroClient!=="undefined"?MyMoneroClient:{};var moduleOverrides={};var key;for(key in Module){if(Module.hasOwnProperty(key)){moduleOverrides[key]=Module[key]}}var arguments_=[];var thisProgram="./this.program";var quit_=function(status,toThrow){throw toThrow};var ENVIRONMENT_IS_WEB=true;var ENVIRONMENT_IS_WORKER=false;if(Module["ENVIRONMENT"]){throw new Error("Module.ENVIRONMENT has been deprecated. To force the environment, use the ENVIRONMENT compile-time option (for example, -s ENVIRONMENT=web or -s ENVIRONMENT=node)")}var scriptDirectory="";function locateFile(path){if(Module["locateFile"]){return Module["locateFile"](path,scriptDirectory)}return scriptDirectory+path}var read_,readAsync,readBinary,setWindowTitle;if(ENVIRONMENT_IS_WEB||ENVIRONMENT_IS_WORKER){if(ENVIRONMENT_IS_WORKER){scriptDirectory=self.location.href}else if(document.currentScript){scriptDirectory=document.currentScript.src}if(_scriptDir){scriptDirectory=_scriptDir}if(scriptDirectory.indexOf("blob:")!==0){scriptDirectory=scriptDirectory.substr(0,scriptDirectory.lastIndexOf("/")+1)}else{scriptDirectory=""}if(!(typeof window==="object"||typeof importScripts==="function"))throw new Error("not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)");read_=function shell_read(url){var xhr=new XMLHttpRequest;xhr.open("GET",url,false);xhr.send(null);return xhr.responseText};if(ENVIRONMENT_IS_WORKER){readBinary=function readBinary(url){var xhr=new XMLHttpRequest;xhr.open("GET",url,false);xhr.responseType="arraybuffer";xhr.send(null);return new Uint8Array(xhr.response)}}readAsync=function readAsync(url,onload,onerror){var xhr=new XMLHttpRequest;xhr.open("GET",url,true);xhr.responseType="arraybuffer";xhr.onload=function xhr_onload(){if(xhr.status==200||xhr.status==0&&xhr.response){onload(xhr.response);return}onerror()};xhr.onerror=onerror;xhr.send(null)};setWindowTitle=function(title){document.title=title}}else{throw new Error("environment detection error")}var out=Module["print"]||console.log.bind(console);var err=Module["printErr"]||console.warn.bind(console);for(key in moduleOverrides){if(moduleOverrides.hasOwnProperty(key)){Module[key]=moduleOverrides[key]}}moduleOverrides=null;if(Module["arguments"])arguments_=Module["arguments"];if(!Object.getOwnPropertyDescriptor(Module,"arguments"))Object.defineProperty(Module,"arguments",{configurable:true,get:function(){abort("Module.arguments has been replaced with plain arguments_")}});if(Module["thisProgram"])thisProgram=Module["thisProgram"];if(!Object.getOwnPropertyDescriptor(Module,"thisProgram"))Object.defineProperty(Module,"thisProgram",{configurable:true,get:function(){abort("Module.thisProgram has been replaced with plain thisProgram")}});if(Module["quit"])quit_=Module["quit"];if(!Object.getOwnPropertyDescriptor(Module,"quit"))Object.defineProperty(Module,"quit",{configurable:true,get:function(){abort("Module.quit has been replaced with plain quit_")}});assert(typeof Module["memoryInitializerPrefixURL"]==="undefined","Module.memoryInitializerPrefixURL option was removed, use Module.locateFile instead");assert(typeof Module["pthreadMainPrefixURL"]==="undefined","Module.pthreadMainPrefixURL option was removed, use Module.locateFile instead");assert(typeof Module["cdInitializerPrefixURL"]==="undefined","Module.cdInitializerPrefixURL option was removed, use Module.locateFile instead");assert(typeof Module["filePackagePrefixURL"]==="undefined","Module.filePackagePrefixURL option was removed, use Module.locateFile instead");assert(typeof Module["read"]==="undefined","Module.read option was removed (modify read_ in JS)");assert(typeof Module["readAsync"]==="undefined","Module.readAsync option was removed (modify readAsync in JS)");assert(typeof Module["readBinary"]==="undefined","Module.readBinary option was removed (modify readBinary in JS)");assert(typeof Module["setWindowTitle"]==="undefined","Module.setWindowTitle option was removed (modify setWindowTitle in JS)");if(!Object.getOwnPropertyDescriptor(Module,"read"))Object.defineProperty(Module,"read",{configurable:true,get:function(){abort("Module.read has been replaced with plain read_")}});if(!Object.getOwnPropertyDescriptor(Module,"readAsync"))Object.defineProperty(Module,"readAsync",{configurable:true,get:function(){abort("Module.readAsync has been replaced with plain readAsync")}});if(!Object.getOwnPropertyDescriptor(Module,"readBinary"))Object.defineProperty(Module,"readBinary",{configurable:true,get:function(){abort("Module.readBinary has been replaced with plain readBinary")}});stackSave=stackRestore=stackAlloc=function(){abort("cannot use the stack before compiled code is ready to run, and has provided stack access")};function dynamicAlloc(size){assert(DYNAMICTOP_PTR);var ret=HEAP32[DYNAMICTOP_PTR>>2];var end=ret+size+15&-16;if(end>_emscripten_get_heap_size()){abort("failure to dynamicAlloc - memory growth etc. is not supported there, call malloc/sbrk directly")}HEAP32[DYNAMICTOP_PTR>>2]=end;return ret}function getNativeTypeSize(type){switch(type){case"i1":case"i8":return 1;case"i16":return 2;case"i32":return 4;case"i64":return 8;case"float":return 4;case"double":return 8;default:{if(type[type.length-1]==="*"){return 4}else if(type[0]==="i"){var bits=parseInt(type.substr(1));assert(bits%8===0,"getNativeTypeSize invalid bits "+bits+", type "+type);return bits/8}else{return 0}}}}function warnOnce(text){if(!warnOnce.shown)warnOnce.shown={};if(!warnOnce.shown[text]){warnOnce.shown[text]=1;err(text)}}var asm2wasmImports={"f64-rem":function(x,y){return x%y},"debugger":function(){debugger}};var functionPointers=new Array(0);var tempRet0=0;var setTempRet0=function(value){tempRet0=value};var getTempRet0=function(){return tempRet0};var wasmBinary;if(Module["wasmBinary"])wasmBinary=Module["wasmBinary"];if(!Object.getOwnPropertyDescriptor(Module,"wasmBinary"))Object.defineProperty(Module,"wasmBinary",{configurable:true,get:function(){abort("Module.wasmBinary has been replaced with plain wasmBinary")}});var noExitRuntime;if(Module["noExitRuntime"])noExitRuntime=Module["noExitRuntime"];if(!Object.getOwnPropertyDescriptor(Module,"noExitRuntime"))Object.defineProperty(Module,"noExitRuntime",{configurable:true,get:function(){abort("Module.noExitRuntime has been replaced with plain noExitRuntime")}});if(typeof WebAssembly!=="object"){abort("No WebAssembly support found. Build with -s WASM=0 to target JavaScript instead.")}function setValue(ptr,value,type,noSafe){type=type||"i8";if(type.charAt(type.length-1)==="*")type="i32";switch(type){case"i1":HEAP8[ptr>>0]=value;break;case"i8":HEAP8[ptr>>0]=value;break;case"i16":HEAP16[ptr>>1]=value;break;case"i32":HEAP32[ptr>>2]=value;break;case"i64":tempI64=[value>>>0,(tempDouble=value,+Math_abs(tempDouble)>=1?tempDouble>0?(Math_min(+Math_floor(tempDouble/4294967296),4294967295)|0)>>>0:~~+Math_ceil((tempDouble-+(~~tempDouble>>>0))/4294967296)>>>0:0)],HEAP32[ptr>>2]=tempI64[0],HEAP32[ptr+4>>2]=tempI64[1];break;case"float":HEAPF32[ptr>>2]=value;break;case"double":HEAPF64[ptr>>3]=value;break;default:abort("invalid type for setValue: "+type)}}var wasmMemory;var wasmTable=new WebAssembly.Table({"initial":3572,"maximum":3572,"element":"anyfunc"});var ABORT=false;var EXITSTATUS=0;function assert(condition,text){if(!condition){abort("Assertion failed: "+text)}}var ALLOC_NORMAL=0;var ALLOC_NONE=3;function allocate(slab,types,allocator,ptr){var zeroinit,size;if(typeof slab==="number"){zeroinit=true;size=slab}else{zeroinit=false;size=slab.length}var singleType=typeof types==="string"?types:null;var ret;if(allocator==ALLOC_NONE){ret=ptr}else{ret=[_malloc,stackAlloc,dynamicAlloc][allocator](Math.max(size,singleType?1:types.length))}if(zeroinit){var stop;ptr=ret;assert((ret&3)==0);stop=ret+(size&~3);for(;ptr<stop;ptr+=4){HEAP32[ptr>>2]=0}stop=ret+size;while(ptr<stop){HEAP8[ptr++>>0]=0}return ret}if(singleType==="i8"){if(slab.subarray||slab.slice){HEAPU8.set(slab,ret)}else{HEAPU8.set(new Uint8Array(slab),ret)}return ret}var i=0,type,typeSize,previousType;while(i<size){var curr=slab[i];type=singleType||types[i];if(type===0){i++;continue}assert(type,"Must know what type to store in allocate!");if(type=="i64")type="i32";setValue(ret+i,curr,type);if(previousType!==type){typeSize=getNativeTypeSize(type);previousType=type}i+=typeSize}return ret}function getMemory(size){if(!runtimeInitialized)return dynamicAlloc(size);return _malloc(size)}var UTF8Decoder=typeof TextDecoder!=="undefined"?new TextDecoder("utf8"):undefined;function UTF8ArrayToString(u8Array,idx,maxBytesToRead){var endIdx=idx+maxBytesToRead;var endPtr=idx;while(u8Array[endPtr]&&!(endPtr>=endIdx))++endPtr;if(endPtr-idx>16&&u8Array.subarray&&UTF8Decoder){return UTF8Decoder.decode(u8Array.subarray(idx,endPtr))}else{var str="";while(idx<endPtr){var u0=u8Array[idx++];if(!(u0&128)){str+=String.fromCharCode(u0);continue}var u1=u8Array[idx++]&63;if((u0&224)==192){str+=String.fromCharCode((u0&31)<<6|u1);continue}var u2=u8Array[idx++]&63;if((u0&240)==224){u0=(u0&15)<<12|u1<<6|u2}else{if((u0&248)!=240)warnOnce("Invalid UTF-8 leading byte 0x"+u0.toString(16)+" encountered when deserializing a UTF-8 string on the asm.js/wasm heap to a JS string!");u0=(u0&7)<<18|u1<<12|u2<<6|u8Array[idx++]&63}if(u0<65536){str+=String.fromCharCode(u0)}else{var ch=u0-65536;str+=String.fromCharCode(55296|ch>>10,56320|ch&1023)}}}return str}function UTF8ToString(ptr,maxBytesToRead){return ptr?UTF8ArrayToString(HEAPU8,ptr,maxBytesToRead):""}function stringToUTF8Array(str,outU8Array,outIdx,maxBytesToWrite){if(!(maxBytesToWrite>0))return 0;var startIdx=outIdx;var endIdx=outIdx+maxBytesToWrite-1;for(var i=0;i<str.length;++i){var u=str.charCodeAt(i);if(u>=55296&&u<=57343){var u1=str.charCodeAt(++i);u=65536+((u&1023)<<10)|u1&1023}if(u<=127){if(outIdx>=endIdx)break;outU8Array[outIdx++]=u}else if(u<=2047){if(outIdx+1>=endIdx)break;outU8Array[outIdx++]=192|u>>6;outU8Array[outIdx++]=128|u&63}else if(u<=65535){if(outIdx+2>=endIdx)break;outU8Array[outIdx++]=224|u>>12;outU8Array[outIdx++]=128|u>>6&63;outU8Array[outIdx++]=128|u&63}else{if(outIdx+3>=endIdx)break;if(u>=2097152)warnOnce("Invalid Unicode code point 0x"+u.toString(16)+" encountered when serializing a JS string to an UTF-8 string on the asm.js/wasm heap! (Valid unicode code points should be in range 0-0x1FFFFF).");outU8Array[outIdx++]=240|u>>18;outU8Array[outIdx++]=128|u>>12&63;outU8Array[outIdx++]=128|u>>6&63;outU8Array[outIdx++]=128|u&63}}outU8Array[outIdx]=0;return outIdx-startIdx}function stringToUTF8(str,outPtr,maxBytesToWrite){assert(typeof maxBytesToWrite=="number","stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!");return stringToUTF8Array(str,HEAPU8,outPtr,maxBytesToWrite)}function lengthBytesUTF8(str){var len=0;for(var i=0;i<str.length;++i){var u=str.charCodeAt(i);if(u>=55296&&u<=57343)u=65536+((u&1023)<<10)|str.charCodeAt(++i)&1023;if(u<=127)++len;else if(u<=2047)len+=2;else if(u<=65535)len+=3;else len+=4}return len}var UTF16Decoder=typeof TextDecoder!=="undefined"?new TextDecoder("utf-16le"):undefined;function allocateUTF8(str){var size=lengthBytesUTF8(str)+1;var ret=_malloc(size);if(ret)stringToUTF8Array(str,HEAP8,ret,size);return ret}function allocateUTF8OnStack(str){var size=lengthBytesUTF8(str)+1;var ret=stackAlloc(size);stringToUTF8Array(str,HEAP8,ret,size);return ret}function writeArrayToMemory(array,buffer){assert(array.length>=0,"writeArrayToMemory array must have a length (should be an array or typed array)");HEAP8.set(array,buffer)}function writeAsciiToMemory(str,buffer,dontAddNull){for(var i=0;i<str.length;++i){assert(str.charCodeAt(i)===str.charCodeAt(i)&255);HEAP8[buffer++>>0]=str.charCodeAt(i)}if(!dontAddNull)HEAP8[buffer>>0]=0}var WASM_PAGE_SIZE=65536;function alignUp(x,multiple){if(x%multiple>0){x+=multiple-x%multiple}return x}var buffer,HEAP8,HEAPU8,HEAP16,HEAPU16,HEAP32,HEAPU32,HEAPF32,HEAPF64;function updateGlobalBufferAndViews(buf){buffer=buf;Module["HEAP8"]=HEAP8=new Int8Array(buf);Module["HEAP16"]=HEAP16=new Int16Array(buf);Module["HEAP32"]=HEAP32=new Int32Array(buf);Module["HEAPU8"]=HEAPU8=new Uint8Array(buf);Module["HEAPU16"]=HEAPU16=new Uint16Array(buf);Module["HEAPU32"]=HEAPU32=new Uint32Array(buf);Module["HEAPF32"]=HEAPF32=new Float32Array(buf);Module["HEAPF64"]=HEAPF64=new Float64Array(buf)}var STACK_BASE=1028464,STACK_MAX=6271344,DYNAMIC_BASE=6271344,DYNAMICTOP_PTR=1028240;assert(STACK_BASE%16===0,"stack must start aligned");assert(DYNAMIC_BASE%16===0,"heap must start aligned");var TOTAL_STACK=5242880;if(Module["TOTAL_STACK"])assert(TOTAL_STACK===Module["TOTAL_STACK"],"the stack size can no longer be determined at runtime");var INITIAL_TOTAL_MEMORY=Module["TOTAL_MEMORY"]||16777216;if(!Object.getOwnPropertyDescriptor(Module,"TOTAL_MEMORY"))Object.defineProperty(Module,"TOTAL_MEMORY",{configurable:true,get:function(){abort("Module.TOTAL_MEMORY has been replaced with plain INITIAL_TOTAL_MEMORY")}});assert(INITIAL_TOTAL_MEMORY>=TOTAL_STACK,"TOTAL_MEMORY should be larger than TOTAL_STACK, was "+INITIAL_TOTAL_MEMORY+"! (TOTAL_STACK="+TOTAL_STACK+")");assert(typeof Int32Array!=="undefined"&&typeof Float64Array!=="undefined"&&Int32Array.prototype.subarray!==undefined&&Int32Array.prototype.set!==undefined,"JS engine does not provide full typed array support");if(Module["wasmMemory"]){wasmMemory=Module["wasmMemory"]}else{wasmMemory=new WebAssembly.Memory({"initial":INITIAL_TOTAL_MEMORY/WASM_PAGE_SIZE})}if(wasmMemory){buffer=wasmMemory.buffer}INITIAL_TOTAL_MEMORY=buffer.byteLength;assert(INITIAL_TOTAL_MEMORY%WASM_PAGE_SIZE===0);updateGlobalBufferAndViews(buffer);HEAP32[DYNAMICTOP_PTR>>2]=DYNAMIC_BASE;function writeStackCookie(){assert((STACK_MAX&3)==0);HEAPU32[(STACK_MAX>>2)-1]=34821223;HEAPU32[(STACK_MAX>>2)-2]=2310721022;HEAP32[0]=1668509029}function checkStackCookie(){var cookie1=HEAPU32[(STACK_MAX>>2)-1];var cookie2=HEAPU32[(STACK_MAX>>2)-2];if(cookie1!=34821223||cookie2!=2310721022){abort("Stack overflow! Stack cookie has been overwritten, expected hex dwords 0x89BACDFE and 0x02135467, but received 0x"+cookie2.toString(16)+" "+cookie1.toString(16))}if(HEAP32[0]!==1668509029)abort("Runtime error: The application has corrupted its heap memory area (address zero)!")}function abortStackOverflow(allocSize){abort("Stack overflow! Attempted to allocate "+allocSize+" bytes on the stack, but stack has only "+(STACK_MAX-stackSave()+allocSize)+" bytes available!")}(function(){var h16=new Int16Array(1);var h8=new Int8Array(h16.buffer);h16[0]=25459;if(h8[0]!==115||h8[1]!==99)throw"Runtime error: expected the system to be little-endian!"})();function abortFnPtrError(ptr,sig){var possibleSig="";for(var x in debug_tables){var tbl=debug_tables[x];if(tbl[ptr]){possibleSig+='as sig "'+x+'" pointing to function '+tbl[ptr]+", "}}abort("Invalid function pointer "+ptr+" called with signature '"+sig+"'. Perhaps this is an invalid value (e.g. caused by calling a virtual method on a NULL pointer)? Or calling a function with an incorrect type, which will fail? (it is worth building your source files with -Werror (warnings are errors), as warnings can indicate undefined behavior which can cause this). This pointer might make sense in another type signature: "+possibleSig)}function callRuntimeCallbacks(callbacks){while(callbacks.length>0){var callback=callbacks.shift();if(typeof callback=="function"){callback();continue}var func=callback.func;if(typeof func==="number"){if(callback.arg===undefined){Module["dynCall_v"](func)}else{Module["dynCall_vi"](func,callback.arg)}}else{func(callback.arg===undefined?null:callback.arg)}}}var __ATPRERUN__=[];var __ATINIT__=[];var __ATMAIN__=[];var __ATEXIT__=[];var __ATPOSTRUN__=[];var runtimeInitialized=false;var runtimeExited=false;function preRun(){if(Module["preRun"]){if(typeof Module["preRun"]=="function")Module["preRun"]=[Module["preRun"]];while(Module["preRun"].length){addOnPreRun(Module["preRun"].shift())}}callRuntimeCallbacks(__ATPRERUN__)}function initRuntime(){checkStackCookie();assert(!runtimeInitialized);runtimeInitialized=true;if(!Module["noFSInit"]&&!FS.init.initialized)FS.init();TTY.init();callRuntimeCallbacks(__ATINIT__)}function preMain(){checkStackCookie();FS.ignorePermissions=false;callRuntimeCallbacks(__ATMAIN__)}function exitRuntime(){checkStackCookie();runtimeExited=true}function postRun(){checkStackCookie();if(Module["postRun"]){if(typeof Module["postRun"]=="function")Module["postRun"]=[Module["postRun"]];while(Module["postRun"].length){addOnPostRun(Module["postRun"].shift())}}callRuntimeCallbacks(__ATPOSTRUN__)}function addOnPreRun(cb){__ATPRERUN__.unshift(cb)}function addOnPostRun(cb){__ATPOSTRUN__.unshift(cb)}assert(Math.imul,"This browser does not support Math.imul(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill");assert(Math.fround,"This browser does not support Math.fround(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill");assert(Math.clz32,"This browser does not support Math.clz32(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill");assert(Math.trunc,"This browser does not support Math.trunc(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill");var Math_abs=Math.abs;var Math_ceil=Math.ceil;var Math_floor=Math.floor;var Math_min=Math.min;var runDependencies=0;var runDependencyWatcher=null;var dependenciesFulfilled=null;var runDependencyTracking={};function getUniqueRunDependency(id){var orig=id;while(1){if(!runDependencyTracking[id])return id;id=orig+Math.random()}return id}function addRunDependency(id){runDependencies++;if(Module["monitorRunDependencies"]){Module["monitorRunDependencies"](runDependencies)}if(id){assert(!runDependencyTracking[id]);runDependencyTracking[id]=1;if(runDependencyWatcher===null&&typeof setInterval!=="undefined"){runDependencyWatcher=setInterval(function(){if(ABORT){clearInterval(runDependencyWatcher);runDependencyWatcher=null;return}var shown=false;for(var dep in runDependencyTracking){if(!shown){shown=true;err("still waiting on run dependencies:")}err("dependency: "+dep)}if(shown){err("(end of list)")}},1e4)}}else{err("warning: run dependency added without ID")}}function removeRunDependency(id){runDependencies--;if(Module["monitorRunDependencies"]){Module["monitorRunDependencies"](runDependencies)}if(id){assert(runDependencyTracking[id]);delete runDependencyTracking[id]}else{err("warning: run dependency removed without ID")}if(runDependencies==0){if(runDependencyWatcher!==null){clearInterval(runDependencyWatcher);runDependencyWatcher=null}if(dependenciesFulfilled){var callback=dependenciesFulfilled;dependenciesFulfilled=null;callback()}}}Module["preloadedImages"]={};Module["preloadedAudios"]={};function abort(what){if(Module["onAbort"]){Module["onAbort"](what)}what+="";out(what);err(what);ABORT=true;EXITSTATUS=1;var extra="";var output="abort("+what+") at "+stackTrace()+extra;throw output}var dataURIPrefix="data:application/octet-stream;base64,";function isDataURI(filename){return String.prototype.startsWith?filename.startsWith(dataURIPrefix):filename.indexOf(dataURIPrefix)===0}var wasmBinaryFile="MyMoneroCoreCpp_WASM.wasm";if(!isDataURI(wasmBinaryFile)){wasmBinaryFile=locateFile(wasmBinaryFile)}function getBinary(){try{if(wasmBinary){return new Uint8Array(wasmBinary)}if(readBinary){return readBinary(wasmBinaryFile)}else{throw"both async and sync fetching of the wasm failed"}}catch(err){abort(err)}}function getBinaryPromise(){if(!wasmBinary&&(ENVIRONMENT_IS_WEB||ENVIRONMENT_IS_WORKER)&&typeof fetch==="function"){return fetch(wasmBinaryFile,{credentials:"same-origin"}).then(function(response){if(!response["ok"]){throw"failed to load wasm binary file at '"+wasmBinaryFile+"'"}return response["arrayBuffer"]()}).catch(function(){return getBinary()})}return new Promise(function(resolve,reject){resolve(getBinary())})}function createWasm(){var info={"env":asmLibraryArg,"wasi_unstable":asmLibraryArg,"global":{"NaN":NaN,Infinity:Infinity},"global.Math":Math,"asm2wasm":asm2wasmImports};function receiveInstance(instance,module){var exports=instance.exports;Module["asm"]=exports;removeRunDependency("wasm-instantiate")}addRunDependency("wasm-instantiate");var trueModule=Module;function receiveInstantiatedSource(output){assert(Module===trueModule,"the Module object should not be replaced during async compilation - perhaps the order of HTML elements is wrong?");trueModule=null;receiveInstance(output["instance"])}function instantiateArrayBuffer(receiver){return getBinaryPromise().then(function(binary){return WebAssembly.instantiate(binary,info)}).then(receiver,function(reason){err("failed to asynchronously prepare wasm: "+reason);abort(reason)})}function instantiateAsync(){if(!wasmBinary&&typeof WebAssembly.instantiateStreaming==="function"&&!isDataURI(wasmBinaryFile)&&typeof fetch==="function"){fetch(wasmBinaryFile,{credentials:"same-origin"}).then(function(response){var result=WebAssembly.instantiateStreaming(response,info);return result.then(receiveInstantiatedSource,function(reason){err("wasm streaming compile failed: "+reason);err("falling back to ArrayBuffer instantiation");instantiateArrayBuffer(receiveInstantiatedSource)})})}else{return instantiateArrayBuffer(receiveInstantiatedSource)}}if(Module["instantiateWasm"]){try{var exports=Module["instantiateWasm"](info,receiveInstance);return exports}catch(e){err("Module.instantiateWasm callback failed with error: "+e);return false}}instantiateAsync();return{}}Module["asm"]=createWasm;var tempDouble;var tempI64;var ASM_CONSTS=[function($0,$1){const JS__task_id=Module.UTF8ToString($0);const JS__req_params_string=Module.UTF8ToString($1);const JS__req_params=JSON.parse(JS__req_params_string);Module.fromCpp__send_funds__error(JS__task_id,JS__req_params)},function($0,$1){const JS__task_id=Module.UTF8ToString($0);const JS__req_params_string=Module.UTF8ToString($1);const JS__req_params=JSON.parse(JS__req_params_string);Module.fromCpp__send_funds__success(JS__task_id,JS__req_params)},function($0,$1){const JS__task_id=Module.UTF8ToString($0);const JS__req_params_string=Module.UTF8ToString($1);const JS__req_params=JSON.parse(JS__req_params_string);Module.fromCpp__send_funds__get_unspent_outs(JS__task_id,JS__req_params)},function($0,$1){const JS__task_id=Module.UTF8ToString($0);const JS__req_params_string=Module.UTF8ToString($1);const JS__req_params=JSON.parse(JS__req_params_string);Module.fromCpp__send_funds__status_update(JS__task_id,JS__req_params)},function($0,$1){const JS__task_id=Module.UTF8ToString($0);const JS__req_params_string=Module.UTF8ToString($1);const JS__req_params=JSON.parse(JS__req_params_string);Module.fromCpp__send_funds__get_random_outs(JS__task_id,JS__req_params)},function($0,$1){const JS__task_id=Module.UTF8ToString($0);const JS__req_params_string=Module.UTF8ToString($1);const JS__req_params=JSON.parse(JS__req_params_string);Module.fromCpp__send_funds__submit_raw_tx(JS__task_id,JS__req_params)}];function _emscripten_asm_const_iii(code,a0,a1){return ASM_CONSTS[code](a0,a1)}function _wasm_random_bytes(buf,len){var out=HEAPU8.subarray(buf,buf+len);if(typeof globalThis!=="undefined"&&globalThis.crypto&&globalThis.crypto.getRandomValues){globalThis.crypto.getRandomValues(out);return}if(typeof require==="function"){require("crypto").randomFillSync(out);return}throw"No secure random source available"}__ATINIT__.push({func:function(){globalCtors()}});var tempDoublePtr=1028448;assert(tempDoublePtr%8==0);function demangle(func){var __cxa_demangle_func=Module["___cxa_demangle"]||Module["__cxa_demangle"];assert(__cxa_demangle_func);try{var s=func;if(s.startsWith("__Z"))s=s.substr(1);var len=lengthBytesUTF8(s)+1;var buf=_malloc(len);stringToUTF8(s,buf,len);var status=_malloc(4);var ret=__cxa_demangle_func(buf,0,0,status);if(HEAP32[status>>2]===0&&ret){return UTF8ToString(ret)}}catch(e){}finally{if(buf)_free(buf);if(status)_free(status);if(ret)_free(ret)}return func}function demangleAll(text){var regex=/\b__Z[\w\d_]+/g;return text.replace(regex,function(x){var y=demangle(x);return x===y?x:y+" ["+x+"]"})}function jsStackTrace(){var err=new Error;if(!err.stack){try{throw new Error(0)}catch(e){err=e}if(!err.stack){return"(no stack trace available)"}}return err.stack.toString()}function stackTrace(){var js=jsStackTrace();if(Module["extraStackTrace"])js+="\n"+Module["extraStackTrace"]();return demangleAll(js)}function ___assert_fail(condition,filename,line,func){abort("Assertion failed: "+UTF8ToString(condition)+", at: "+[filename?UTF8ToString(filename):"unknown filename",line,func?UTF8ToString(func):"unknown function"])}function ___atomic_fetch_add_8(ptr,vall,valh,memmodel){var l=HEAP32[ptr>>2];var h=HEAP32[ptr+4>>2];HEAP32[ptr>>2]=_i64Add(l,h,vall,valh);HEAP32[ptr+4>>2]=getTempRet0();return(setTempRet0(h),l)|0}var ENV={};function ___buildEnvironment(environ){var MAX_ENV_VALUES=64;var TOTAL_ENV_SIZE=1024;var poolPtr;var envPtr;if(!___buildEnvironment.called){___buildEnvironment.called=true;ENV["USER"]="web_user";ENV["LOGNAME"]="web_user";ENV["PATH"]="/";ENV["PWD"]="/";ENV["HOME"]="/home/web_user";ENV["LANG"]=(typeof navigator==="object"&&navigator.languages&&navigator.languages[0]||"C").replace("-","_")+".UTF-8";ENV["_"]=thisProgram;poolPtr=getMemory(TOTAL_ENV_SIZE);envPtr=getMemory(MAX_ENV_VALUES*4);HEAP32[envPtr>>2]=poolPtr;HEAP32[environ>>2]=envPtr}else{envPtr=HEAP32[environ>>2];poolPtr=HEAP32[envPtr>>2]}var strings=[];var totalSize=0;for(var key in ENV){if(typeof ENV[key]==="string"){var line=key+"="+ENV[key];strings.push(line);totalSize+=line.length}}if(totalSize>TOTAL_ENV_SIZE){throw new Error("Environment size exceeded TOTAL_ENV_SIZE!")}var ptrSize=4;for(var i=0;i<strings.length;i++){var line=strings[i];writeAsciiToMemory(line,poolPtr);HEAP32[envPtr+i*ptrSize>>2]=poolPtr;poolPtr+=line.length+1}HEAP32[envPtr+strings.length*ptrSize>>2]=0}function ___cxa_allocate_exception(size){return _malloc(size)}var ___exception_infos={};var ___exception_caught=[];function ___exception_addRef(ptr){if(!ptr)return;var info=___exception_infos[ptr];info.refcount++}function ___exception_deAdjust(adjusted){if(!adjusted||___exception_infos[adjusted])return adjusted;for(var key in ___exception_infos){var ptr=+key;var adj=___exception_infos[ptr].adjusted;var len=adj.length;for(var i=0;i<len;i++){if(adj[i]===adjusted){return ptr}}}return adjusted}function ___cxa_begin_catch(ptr){var info=___exception_infos[ptr];if(info&&!info.caught){info.caught=true;__ZSt18uncaught_exceptionv.uncaught_exceptions--}if(info)info.rethrown=false;___exception_caught.push(ptr);___exception_addRef(___exception_deAdjust(ptr));return ptr}var ___exception_last=0;function ___cxa_free_exception(ptr){try{return _free(ptr)}catch(e){err("exception during cxa_free_exception: "+e)}}function ___exception_decRef(ptr){if(!ptr)return;var info=___exception_infos[ptr];assert(info.refcount>0);info.refcount--;if(info.refcount===0&&!info.rethrown){if(info.destructor){Module["dynCall_vi"](info.destructor,ptr)}delete ___exception_infos[ptr];___cxa_free_exception(ptr)}}function ___cxa_end_catch(){_setThrew(0);var ptr=___exception_caught.pop();if(ptr){___exception_decRef(___exception_deAdjust(ptr));___exception_last=0}}function ___resumeException(ptr){if(!___exception_last){___exception_last=ptr}throw ptr}function ___cxa_find_matching_catch(){var thrown=___exception_last;if(!thrown){return(setTempRet0(0),0)|0}var info=___exception_infos[thrown];var throwntype=info.type;if(!throwntype){return(setTempRet0(0),thrown)|0}var typeArray=Array.prototype.slice.call(arguments);var pointer=___cxa_is_pointer_type(throwntype);var buffer=1028432;HEAP32[buffer>>2]=thrown;thrown=buffer;for(var i=0;i<typeArray.length;i++){if(typeArray[i]&&___cxa_can_catch(typeArray[i],throwntype,thrown)){thrown=HEAP32[thrown>>2];info.adjusted.push(thrown);return(setTempRet0(typeArray[i]),thrown)|0}}thrown=HEAP32[thrown>>2];return(setTempRet0(throwntype),thrown)|0}Module["___cxa_find_matching_catch"]=___cxa_find_matching_catch;function ___cxa_find_matching_catch_2(a0,a1){return ___cxa_find_matching_catch(a0,a1)}function ___cxa_find_matching_catch_3(a0,a1,a2){return ___cxa_find_matching_catch(a0,a1,a2)}function ___cxa_rethrow(){var ptr=___exception_caught.pop();ptr=___exception_deAdjust(ptr);if(!___exception_infos[ptr].rethrown){___exception_caught.push(ptr);___exception_infos[ptr].rethrown=true}___exception_last=ptr;throw ptr}function ___cxa_throw(ptr,type,destructor){___exception_infos[ptr]={ptr:ptr,adjusted:[ptr],type:type,destructor:destructor,refcount:0,caught:false,rethrown:false};___exception_last=ptr;if(!("uncaught_exception"in __ZSt18uncaught_exceptionv)){__ZSt18uncaught_exceptionv.uncaught_exceptions=1}else{__ZSt18uncaught_exceptionv.uncaught_exceptions++}throw ptr}function ___cxa_uncaught_exceptions(){return __ZSt18uncaught_exceptionv.uncaught_exceptions}function ___lock(){}function ___setErrNo(value){if(Module["___errno_location"])HEAP32[Module["___errno_location"]()>>2]=value;else err("failed to set errno from JS");return value}function ___map_file(pathname,size){___setErrNo(63);return-1}var PATH={splitPath:function(filename){var splitPathRe=/^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;return splitPathRe.exec(filename).slice(1)},normalizeArray:function(parts,allowAboveRoot){var up=0;for(var i=parts.length-1;i>=0;i--){var last=parts[i];if(last==="."){parts.splice(i,1)}else if(last===".."){parts.splice(i,1);up++}else if(up){parts.splice(i,1);up--}}if(allowAboveRoot){for(;up;up--){parts.unshift("..")}}return parts},normalize:function(path){var isAbsolute=path.charAt(0)==="/",trailingSlash=path.substr(-1)==="/";path=PATH.normalizeArray(path.split("/").filter(function(p){return!!p}),!isAbsolute).join("/");if(!path&&!isAbsolute){path="."}if(path&&trailingSlash){path+="/"}return(isAbsolute?"/":"")+path},dirname:function(path){var result=PATH.splitPath(path),root=result[0],dir=result[1];if(!root&&!dir){return"."}if(dir){dir=dir.substr(0,dir.length-1)}return root+dir},basename:function(path){if(path==="/")return"/";var lastSlash=path.lastIndexOf("/");if(lastSlash===-1)return path;return path.substr(lastSlash+1)},extname:function(path){return PATH.splitPath(path)[3]},join:function(){var paths=Array.prototype.slice.call(arguments,0);return PATH.normalize(paths.join("/"))},join2:function(l,r){return PATH.normalize(l+"/"+r)}};var PATH_FS={resolve:function(){var resolvedPath="",resolvedAbsolute=false;for(var i=arguments.length-1;i>=-1&&!resolvedAbsolute;i--){var path=i>=0?arguments[i]:FS.cwd();if(typeof path!=="string"){throw new TypeError("Arguments to path.resolve must be strings")}else if(!path){return""}resolvedPath=path+"/"+resolvedPath;resolvedAbsolute=path.charAt(0)==="/"}resolvedPath=PATH.normalizeArray(resolvedPath.split("/").filter(function(p){return!!p}),!resolvedAbsolute).join("/");return(resolvedAbsolute?"/":"")+resolvedPath||"."},relative:function(from,to){from=PATH_FS.resolve(from).substr(1);to=PATH_FS.resolve(to).substr(1);function trim(arr){var start=0;for(;start<arr.length;start++){if(arr[start]!=="")break}var end=arr.length-1;for(;end>=0;end--){if(arr[end]!=="")break}if(start>end)return[];return arr.slice(start,end-start+1)}var fromParts=trim(from.split("/"));var toParts=trim(to.split("/"));var length=Math.min(fromParts.length,toParts.length);var samePartsLength=length;for(var i=0;i<length;i++){if(fromParts[i]!==toParts[i]){samePartsLength=i;break}}var outputParts=[];for(var i=samePartsLength;i<fromParts.length;i++){outputParts.push("..")}outputParts=outputParts.concat(toParts.slice(samePartsLength));return outputParts.join("/")}};var TTY={ttys:[],init:function(){},shutdown:function(){},register:function(dev,ops){TTY.ttys[dev]={input:[],output:[],ops:ops};FS.registerDevice(dev,TTY.stream_ops)},stream_ops:{open:function(stream){var tty=TTY.ttys[stream.node.rdev];if(!tty){throw new FS.ErrnoError(43)}stream.tty=tty;stream.seekable=false},close:function(stream){stream.tty.ops.flush(stream.tty)},flush:function(stream){stream.tty.ops.flush(stream.tty)},read:function(stream,buffer,offset,length,pos){if(!stream.tty||!stream.tty.ops.get_char){throw new FS.ErrnoError(60)}var bytesRead=0;for(var i=0;i<length;i++){var result;try{result=stream.tty.ops.get_char(stream.tty)}catch(e){throw new FS.ErrnoError(29)}if(result===undefined&&bytesRead===0){throw new FS.ErrnoError(6)}if(result===null||result===undefined)break;bytesRead++;buffer[offset+i]=result}if(bytesRead){stream.node.timestamp=Date.now()}return bytesRead},write:function(stream,buffer,offset,length,pos){if(!stream.tty||!stream.tty.ops.put_char){throw new FS.ErrnoError(60)}try{for(var i=0;i<length;i++){stream.tty.ops.put_char(stream.tty,buffer[offset+i])}}catch(e){throw new FS.ErrnoError(29)}if(length){stream.node.timestamp=Date.now()}return i}},default_tty_ops:{get_char:function(tty){if(!tty.input.length){var result=null;if(typeof window!="undefined"&&typeof window.prompt=="function"){result=window.prompt("Input: ");if(result!==null){result+="\n"}}else if(typeof readline=="function"){result=readline();if(result!==null){result+="\n"}}if(!result){return null}tty.input=intArrayFromString(result,true)}return tty.input.shift()},put_char:function(tty,val){if(val===null||val===10){out(UTF8ArrayToString(tty.output,0));tty.output=[]}else{if(val!=0)tty.output.push(val)}},flush:function(tty){if(tty.output&&tty.output.length>0){out(UTF8ArrayToString(tty.output,0));tty.output=[]}}},default_tty1_ops:{put_char:function(tty,val){if(val===null||val===10){err(UTF8ArrayToString(tty.output,0));tty.output=[]}else{if(val!=0)tty.output.push(val)}},flush:function(tty){if(tty.output&&tty.output.length>0){err(UTF8ArrayToString(tty.output,0));tty.output=[]}}}};var MEMFS={ops_table:null,mount:function(mount){return MEMFS.createNode(null,"/",16384|511,0)},createNode:function(parent,name,mode,dev){if(FS.isBlkdev(mode)||FS.isFIFO(mode)){throw new FS.ErrnoError(63)}if(!MEMFS.ops_table){MEMFS.ops_table={dir:{node:{getattr:MEMFS.node_ops.getattr,setattr:MEMFS.node_ops.setattr,lookup:MEMFS.node_ops.lookup,mknod:MEMFS.node_ops.mknod,rename:MEMFS.node_ops.rename,unlink:MEMFS.node_ops.unlink,rmdir:MEMFS.node_ops.rmdir,readdir:MEMFS.node_ops.readdir,symlink:MEMFS.node_ops.symlink},stream:{llseek:MEMFS.stream_ops.llseek}},file:{node:{getattr:MEMFS.node_ops.getattr,setattr:MEMFS.node_ops.setattr},stream:{llseek:MEMFS.stream_ops.llseek,read:MEMFS.stream_ops.read,write:MEMFS.stream_ops.write,allocate:MEMFS.stream_ops.allocate,mmap:MEMFS.stream_ops.mmap,msync:MEMFS.stream_ops.msync}},link:{node:{getattr:MEMFS.node_ops.getattr,setattr:MEMFS.node_ops.setattr,readlink:MEMFS.node_ops.readlink},stream:{}},chrdev:{node:{getattr:MEMFS.node_ops.getattr,setattr:MEMFS.node_ops.setattr},stream:FS.chrdev_stream_ops}}}var node=FS.createNode(parent,name,mode,dev);if(FS.isDir(node.mode)){node.node_ops=MEMFS.ops_table.dir.node;node.stream_ops=MEMFS.ops_table.dir.stream;node.contents={}}else if(FS.isFile(node.mode)){node.node_ops=MEMFS.ops_table.file.node;node.stream_ops=MEMFS.ops_table.file.stream;node.usedBytes=0;node.contents=null}else if(FS.isLink(node.mode)){node.node_ops=MEMFS.ops_table.link.node;node.stream_ops=MEMFS.ops_table.link.stream}else if(FS.isChrdev(node.mode)){node.node_ops=MEMFS.ops_table.chrdev.node;node.stream_ops=MEMFS.ops_table.chrdev.stream}node.timestamp=Date.now();if(parent){parent.contents[name]=node}return node},getFileDataAsRegularArray:function(node){if(node.contents&&node.contents.subarray){var arr=[];for(var i=0;i<node.usedBytes;++i)arr.push(node.contents[i]);return arr}return node.contents},getFileDataAsTypedArray:function(node){if(!node.contents)return new Uint8Array;if(node.contents.subarray)return node.contents.subarray(0,node.usedBytes);return new Uint8Array(node.contents)},expandFileStorage:function(node,newCapacity){var prevCapacity=node.contents?node.contents.length:0;if(prevCapacity>=newCapacity)return;var CAPACITY_DOUBLING_MAX=1024*1024;newCapacity=Math.max(newCapacity,prevCapacity*(prevCapacity<CAPACITY_DOUBLING_MAX?2:1.125)|0);if(prevCapacity!=0)newCapacity=Math.max(newCapacity,256);var oldContents=node.contents;node.contents=new Uint8Array(newCapacity);if(node.usedBytes>0)node.contents.set(oldContents.subarray(0,node.usedBytes),0);return},resizeFileStorage:function(node,newSize){if(node.usedBytes==newSize)return;if(newSize==0){node.contents=null;node.usedBytes=0;return}if(!node.contents||node.contents.subarray){var oldContents=node.contents;node.contents=new Uint8Array(new ArrayBuffer(newSize));if(oldContents){node.contents.set(oldContents.subarray(0,Math.min(newSize,node.usedBytes)))}node.usedBytes=newSize;return}if(!node.contents)node.contents=[];if(node.contents.length>newSize)node.contents.length=newSize;else while(node.contents.length<newSize)node.contents.push(0);node.usedBytes=newSize},node_ops:{getattr:function(node){var attr={};attr.dev=FS.isChrdev(node.mode)?node.id:1;attr.ino=node.id;attr.mode=node.mode;attr.nlink=1;attr.uid=0;attr.gid=0;attr.rdev=node.rdev;if(FS.isDir(node.mode)){attr.size=4096}else if(FS.isFile(node.mode)){attr.size=node.usedBytes}else if(FS.isLink(node.mode)){attr.size=node.link.length}else{attr.size=0}attr.atime=new Date(node.timestamp);attr.mtime=new Date(node.timestamp);attr.ctime=new Date(node.timestamp);attr.blksize=4096;attr.blocks=Math.ceil(attr.size/attr.blksize);return attr},setattr:function(node,attr){if(attr.mode!==undefined){node.mode=attr.mode}if(attr.timestamp!==undefined){node.timestamp=attr.timestamp}if(attr.size!==undefined){MEMFS.resizeFileStorage(node,attr.size)}},lookup:function(parent,name){throw FS.genericErrors[44]},mknod:function(parent,name,mode,dev){return MEMFS.createNode(parent,name,mode,dev)},rename:function(old_node,new_dir,new_name){if(FS.isDir(old_node.mode)){var new_node;try{new_node=FS.lookupNode(new_dir,new_name)}catch(e){}if(new_node){for(var i in new_node.contents){throw new FS.ErrnoError(55)}}}delete old_node.parent.contents[old_node.name];old_node.name=new_name;new_dir.contents[new_name]=old_node;old_node.parent=new_dir},unlink:function(parent,name){delete parent.contents[name]},rmdir:function(parent,name){var node=FS.lookupNode(parent,name);for(var i in node.contents){throw new FS.ErrnoError(55)}delete parent.contents[name]},readdir:function(node){var entries=[".",".."];for(var key in node.contents){if(!node.contents.hasOwnProperty(key)){continue}entries.push(key)}return entries},symlink:function(parent,newname,oldpath){var node=MEMFS.createNode(parent,newname,511|40960,0);node.link=oldpath;return node},readlink:function(node){if(!FS.isLink(node.mode)){throw new FS.ErrnoError(28)}return node.link}},stream_ops:{read:function(stream,buffer,offset,length,position){var contents=stream.node.contents;if(position>=stream.node.usedBytes)return 0;var size=Math.min(stream.node.usedBytes-position,length);assert(size>=0);if(size>8&&contents.subarray){buffer.set(contents.subarray(position,position+size),offset)}else{for(var i=0;i<size;i++)buffer[offset+i]=contents[position+i]}return size},write:function(stream,buffer,offset,length,position,canOwn){if(canOwn){warnOnce("file packager has copied file data into memory, but in memory growth we are forced to copy it again (see --no-heap-copy)")}canOwn=false;if(!length)return 0;var node=stream.node;node.timestamp=Date.now();if(buffer.subarray&&(!node.contents||node.contents.subarray)){if(canOwn){assert(position===0,"canOwn must imply no weird position inside the file");node.contents=buffer.subarray(offset,offset+length);node.usedBytes=length;return length}else if(node.usedBytes===0&&position===0){node.contents=new Uint8Array(buffer.subarray(offset,offset+length));node.usedBytes=length;return length}else if(position+length<=node.usedBytes){node.contents.set(buffer.subarray(offset,offset+length),position);return length}}MEMFS.expandFileStorage(node,position+length);if(node.contents.subarray&&buffer.subarray)node.contents.set(buffer.subarray(offset,offset+length),position);else{for(var i=0;i<length;i++){node.contents[position+i]=buffer[offset+i]}}node.usedBytes=Math.max(node.usedBytes,position+length);return length},llseek:function(stream,offset,whence){var position=offset;if(whence===1){position+=stream.position}else if(whence===2){if(FS.isFile(stream.node.mode)){position+=stream.node.usedBytes}}if(position<0){throw new FS.ErrnoError(28)}return position},allocate:function(stream,offset,length){MEMFS.expandFileStorage(stream.node,offset+length);stream.node.usedBytes=Math.max(stream.node.usedBytes,offset+length)},mmap:function(stream,buffer,offset,length,position,prot,flags){if(!FS.isFile(stream.node.mode)){throw new FS.ErrnoError(43)}var ptr;var allocated;var contents=stream.node.contents;if(!(flags&2)&&(contents.buffer===buffer||contents.buffer===buffer.buffer)){allocated=false;ptr=contents.byteOffset}else{if(position>0||position+length<stream.node.usedBytes){if(contents.subarray){contents=contents.subarray(position,position+length)}else{contents=Array.prototype.slice.call(contents,position,position+length)}}allocated=true;var fromHeap=buffer.buffer==HEAP8.buffer;ptr=_malloc(length);if(!ptr){throw new FS.ErrnoError(48)}(fromHeap?HEAP8:buffer).set(contents,ptr)}return{ptr:ptr,allocated:allocated}},msync:function(stream,buffer,offset,length,mmapFlags){if(!FS.isFile(stream.node.mode)){throw new FS.ErrnoError(43)}if(mmapFlags&2){return 0}var bytesWritten=MEMFS.stream_ops.write(stream,buffer,0,length,offset,false);return 0}}};var IDBFS={dbs:{},indexedDB:function(){if(typeof indexedDB!=="undefined")return indexedDB;var ret=null;if(typeof window==="object")ret=window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB;assert(ret,"IDBFS used, but indexedDB not supported");return ret},DB_VERSION:21,DB_STORE_NAME:"FILE_DATA",mount:function(mount){return MEMFS.mount.apply(null,arguments)},syncfs:function(mount,populate,callback){IDBFS.getLocalSet(mount,function(err,local){if(err)return callback(err);IDBFS.getRemoteSet(mount,function(err,remote){if(err)return callback(err);var src=populate?remote:local;var dst=populate?local:remote;IDBFS.reconcile(src,dst,callback)})})},getDB:function(name,callback){var db=IDBFS.dbs[name];if(db){return callback(null,db)}var req;try{req=IDBFS.indexedDB().open(name,IDBFS.DB_VERSION)}catch(e){return callback(e)}if(!req){return callback("Unable to connect to IndexedDB")}req.onupgradeneeded=function(e){var db=e.target.result;var transaction=e.target.transaction;var fileStore;if(db.objectStoreNames.contains(IDBFS.DB_STORE_NAME)){fileStore=transaction.objectStore(IDBFS.DB_STORE_NAME)}else{fileStore=db.createObjectStore(IDBFS.DB_STORE_NAME)}if(!fileStore.indexNames.contains("timestamp")){fileStore.createIndex("timestamp","timestamp",{unique:false})}};req.onsuccess=function(){db=req.result;IDBFS.dbs[name]=db;callback(null,db)};req.onerror=function(e){callback(this.error);e.preventDefault()}},getLocalSet:function(mount,callback){var entries={};function isRealDir(p){return p!=="."&&p!==".."}function toAbsolute(root){return function(p){return PATH.join2(root,p)}}var check=FS.readdir(mount.mountpoint).filter(isRealDir).map(toAbsolute(mount.mountpoint));while(check.length){var path=check.pop();var stat;try{stat=FS.stat(path)}catch(e){return callback(e)}if(FS.isDir(stat.mode)){check.push.apply(check,FS.readdir(path).filter(isRealDir).map(toAbsolute(path)))}entries[path]={timestamp:stat.mtime}}return callback(null,{type:"local",entries:entries})},getRemoteSet:function(mount,callback){var entries={};IDBFS.getDB(mount.mountpoint,function(err,db){if(err)return callback(err);try{var transaction=db.transaction([IDBFS.DB_STORE_NAME],"readonly");transaction.onerror=function(e){callback(this.error);e.preventDefault()};var store=transaction.objectStore(IDBFS.DB_STORE_NAME);var index=store.index("timestamp");index.openKeyCursor().onsuccess=function(event){var cursor=event.target.result;if(!cursor){return callback(null,{type:"remote",db:db,entries:entries})}entries[cursor.primaryKey]={timestamp:cursor.key};cursor.continue()}}catch(e){return callback(e)}})},loadLocalEntry:function(path,callback){var stat,node;try{var lookup=FS.lookupPath(path);node=lookup.node;stat=FS.stat(path)}catch(e){return callback(e)}if(FS.isDir(stat.mode)){return callback(null,{timestamp:stat.mtime,mode:stat.mode})}else if(FS.isFile(stat.mode)){node.contents=MEMFS.getFileDataAsTypedArray(node);return callback(null,{timestamp:stat.mtime,mode:stat.mode,contents:node.contents})}else{return callback(new Error("node type not supported"))}},storeLocalEntry:function(path,entry,callback){try{if(FS.isDir(entry.mode)){FS.mkdir(path,entry.mode)}else if(FS.isFile(entry.mode)){FS.writeFile(path,entry.contents,{canOwn:true})}else{return callback(new Error("node type not supported"))}FS.chmod(path,entry.mode);FS.utime(path,entry.timestamp,entry.timestamp)}catch(e){return callback(e)}callback(null)},removeLocalEntry:function(path,callback){try{var lookup=FS.lookupPath(path);var stat=FS.stat(path);if(FS.isDir(stat.mode)){FS.rmdir(path)}else if(FS.isFile(stat.mode)){FS.unlink(path)}}catch(e){return callback(e)}callback(null)},loadRemoteEntry:function(store,path,callback){var req=store.get(path);req.onsuccess=function(event){callback(null,event.target.result)};req.onerror=function(e){callback(this.error);e.preventDefault()}},storeRemoteEntry:function(store,path,entry,callback){var req=store.put(entry,path);req.onsuccess=function(){callback(null)};req.onerror=function(e){callback(this.error);e.preventDefault()}},removeRemoteEntry:function(store,path,callback){var req=store.delete(path);req.onsuccess=function(){callback(null)};req.onerror=function(e){callback(this.error);e.preventDefault()}},reconcile:function(src,dst,callback){var total=0;var create=[];Object.keys(src.entries).forEach(function(key){var e=src.entries[key];var e2=dst.entries[key];if(!e2||e.timestamp>e2.timestamp){create.push(key);total++}});var remove=[];Object.keys(dst.entries).forEach(function(key){var e=dst.entries[key];var e2=src.entries[key];if(!e2){remove.push(key);total++}});if(!total){return callback(null)}var errored=false;var db=src.type==="remote"?src.db:dst.db;var transaction=db.transaction([IDBFS.DB_STORE_NAME],"readwrite");var store=transaction.objectStore(IDBFS.DB_STORE_NAME);function done(err){if(err&&!errored){errored=true;return callback(err)}}transaction.onerror=function(e){done(this.error);e.preventDefault()};transaction.oncomplete=function(e){if(!errored){callback(null)}};create.sort().forEach(function(path){if(dst.type==="local"){IDBFS.loadRemoteEntry(store,path,function(err,entry){if(err)return done(err);IDBFS.storeLocalEntry(path,entry,done)})}else{IDBFS.loadLocalEntry(path,function(err,entry){if(err)return done(err);IDBFS.storeRemoteEntry(store,path,entry,done)})}});remove.sort().reverse().forEach(function(path){if(dst.type==="local"){IDBFS.removeLocalEntry(path,done)}else{IDBFS.removeRemoteEntry(store,path,done)}})}};var WORKERFS={DIR_MODE:16895,FILE_MODE:33279,reader:null,mount:function(mount){assert(ENVIRONMENT_IS_WORKER);if(!WORKERFS.reader)WORKERFS.reader=new FileReaderSync;var root=WORKERFS.createNode(null,"/",WORKERFS.DIR_MODE,0);var createdParents={};function ensureParent(path){var parts=path.split("/");var parent=root;for(var i=0;i<parts.length-1;i++){var curr=parts.slice(0,i+1).join("/");if(!createdParents[curr]){createdParents[curr]=WORKERFS.createNode(parent,parts[i],WORKERFS.DIR_MODE,0)}parent=createdParents[curr]}return parent}function base(path){var parts=path.split("/");return parts[parts.length-1]}Array.prototype.forEach.call(mount.opts["files"]||[],function(file){WORKERFS.createNode(ensureParent(file.name),base(file.name),WORKERFS.FILE_MODE,0,file,file.lastModifiedDate)});(mount.opts["blobs"]||[]).forEach(function(obj){WORKERFS.createNode(ensureParent(obj["name"]),base(obj["name"]),WORKERFS.FILE_MODE,0,obj["data"])});(mount.opts["packages"]||[]).forEach(function(pack){pack["metadata"].files.forEach(function(file){var name=file.filename.substr(1);WORKERFS.createNode(ensureParent(name),base(name),WORKERFS.FILE_MODE,0,pack["blob"].slice(file.start,file.end))})});return root},createNode:function(parent,name,mode,dev,contents,mtime){var node=FS.createNode(parent,name,mode);node.mode=mode;node.node_ops=WORKERFS.node_ops;node.stream_ops=WORKERFS.stream_ops;node.timestamp=(mtime||new Date).getTime();assert(WORKERFS.FILE_MODE!==WORKERFS.DIR_MODE);if(mode===WORKERFS.FILE_MODE){node.size=contents.size;node.contents=contents}else{node.size=4096;node.contents={}}if(parent){parent.contents[name]=node}return node},node_ops:{getattr:function(node){return{dev:1,ino:undefined,mode:node.mode,nlink:1,uid:0,gid:0,rdev:undefined,size:node.size,atime:new Date(node.timestamp),mtime:new Date(node.timestamp),ctime:new Date(node.timestamp),blksize:4096,blocks:Math.ceil(node.size/4096)}},setattr:function(node,attr){if(attr.mode!==undefined){node.mode=attr.mode}if(attr.timestamp!==undefined){node.timestamp=attr.timestamp}},lookup:function(parent,name){throw new FS.ErrnoError(44)},mknod:function(parent,name,mode,dev){throw new FS.ErrnoError(63)},rename:function(oldNode,newDir,newName){throw new FS.ErrnoError(63)},unlink:function(parent,name){throw new FS.ErrnoError(63)},rmdir:function(parent,name){throw new FS.ErrnoError(63)},readdir:function(node){var entries=[".",".."];for(var key in node.contents){if(!node.contents.hasOwnProperty(key)){continue}entries.push(key)}return entries},symlink:function(parent,newName,oldPath){throw new FS.ErrnoError(63)},readlink:function(node){throw new FS.ErrnoError(63)}},stream_ops:{read:function(stream,buffer,offset,length,position){if(position>=stream.node.size)return 0;var chunk=stream.node.contents.slice(position,position+length);var ab=WORKERFS.reader.readAsArrayBuffer(chunk);buffer.set(new Uint8Array(ab),offset);return chunk.size},write:function(stream,buffer,offset,length,position){throw new FS.ErrnoError(29)},llseek:function(stream,offset,whence){var position=offset;if(whence===1){position+=stream.position}else if(whence===2){if(FS.isFile(stream.node.mode)){position+=stream.node.size}}if(position<0){throw new FS.ErrnoError(28)}return position}}};var ERRNO_MESSAGES={0:"Success",1:"Arg list too long",2:"Permission denied",3:"Address already in use",4:"Address not available",5:"Address family not supported by protocol family",6:"No more processes",7:"Socket already connected",8:"Bad file number",9:"Trying to read unreadable message",10:"Mount device busy",11:"Operation canceled",12:"No children",13:"Connection aborted",14:"Connection refused",15:"Connection reset by peer",16:"File locking deadlock error",17:"Destination address required",18:"Math arg out of domain of func",19:"Quota exceeded",20:"File exists",21:"Bad address",22:"File too large",23:"Host is unreachable",24:"Identifier removed",25:"Illegal byte sequence",26:"Connection already in progress",27:"Interrupted system call",28:"Invalid argument",29:"I/O error",30:"Socket is already connected",31:"Is a directory",32:"Too many symbolic links",33:"Too many open files",34:"Too many links",35:"Message too long",36:"Multihop attempted",37:"File or path name too long",38:"Network interface is not configured",39:"Connection reset by network",40:"Network is unreachable",41:"Too many open files in system",42:"No buffer space available",43:"No such device",44:"No such file or directory",45:"Exec format error",46:"No record locks available",47:"The link has been severed",48:"Not enough core",49:"No message of desired type",50:"Protocol not available",51:"No space left on device",52:"Function not implemented",53:"Socket is not connected",54:"Not a directory",55:"Directory not empty",56:"State not recoverable",57:"Socket operation on non-socket",59:"Not a typewriter",60:"No such device or address",61:"Value too large for defined data type",62:"Previous owner died",63:"Not super-user",64:"Broken pipe",65:"Protocol error",66:"Unknown protocol",67:"Protocol wrong type for socket",68:"Math result not representable",69:"Read only file system",70:"Illegal seek",71:"No such process",72:"Stale file handle",73:"Connection timed out",74:"Text file busy",75:"Cross-device link",100:"Device not a stream",101:"Bad font file fmt",102:"Invalid slot",103:"Invalid request code",104:"No anode",105:"Block device required",106:"Channel number out of range",107:"Level 3 halted",108:"Level 3 reset",109:"Link number out of range",110:"Protocol driver not attached",111:"No CSI structure available",112:"Level 2 halted",113:"Invalid exchange",114:"Invalid request descriptor",115:"Exchange full",116:"No data (for no delay io)",117:"Timer expired",118:"Out of streams resources",119:"Machine is not on the network",120:"Package not installed",121:"The object is remote",122:"Advertise error",123:"Srmount error",124:"Communication error on send",125:"Cross mount point (not really error)",126:"Given log. name not unique",127:"f.d. invalid for this operation",128:"Remote address changed",129:"Can   access a needed shared lib",130:"Accessing a corrupted shared lib",131:".lib section in a.out corrupted",132:"Attempting to link in too many libs",133:"Attempting to exec a shared library",135:"Streams pipe error",136:"Too many users",137:"Socket type not supported",138:"Not supported",139:"Protocol family not supported",140:"Can't send after socket shutdown",141:"Too many references",142:"Host is down",148:"No medium (in tape drive)",156:"Level 2 not synchronized"};var ERRNO_CODES={EPERM:63,ENOENT:44,ESRCH:71,EINTR:27,EIO:29,ENXIO:60,E2BIG:1,ENOEXEC:45,EBADF:8,ECHILD:12,EAGAIN:6,EWOULDBLOCK:6,ENOMEM:48,EACCES:2,EFAULT:21,ENOTBLK:105,EBUSY:10,EEXIST:20,EXDEV:75,ENODEV:43,ENOTDIR:54,EISDIR:31,EINVAL:28,ENFILE:41,EMFILE:33,ENOTTY:59,ETXTBSY:74,EFBIG:22,ENOSPC:51,ESPIPE:70,EROFS:69,EMLINK:34,EPIPE:64,EDOM:18,ERANGE:68,ENOMSG:49,EIDRM:24,ECHRNG:106,EL2NSYNC:156,EL3HLT:107,EL3RST:108,ELNRNG:109,EUNATCH:110,ENOCSI:111,EL2HLT:112,EDEADLK:16,ENOLCK:46,EBADE:113,EBADR:114,EXFULL:115,ENOANO:104,EBADRQC:103,EBADSLT:102,EDEADLOCK:16,EBFONT:101,ENOSTR:100,ENODATA:116,ETIME:117,ENOSR:118,ENONET:119,ENOPKG:120,EREMOTE:121,ENOLINK:47,EADV:122,ESRMNT:123,ECOMM:124,EPROTO:65,EMULTIHOP:36,EDOTDOT:125,EBADMSG:9,ENOTUNIQ:126,EBADFD:127,EREMCHG:128,ELIBACC:129,ELIBBAD:130,ELIBSCN:131,ELIBMAX:132,ELIBEXEC:133,ENOSYS:52,ENOTEMPTY:55,ENAMETOOLONG:37,ELOOP:32,EOPNOTSUPP:138,EPFNOSUPPORT:139,ECONNRESET:15,ENOBUFS:42,EAFNOSUPPORT:5,EPROTOTYPE:67,ENOTSOCK:57,ENOPROTOOPT:50,ESHUTDOWN:140,ECONNREFUSED:14,EADDRINUSE:3,ECONNABORTED:13,ENETUNREACH:40,ENETDOWN:38,ETIMEDOUT:73,EHOSTDOWN:142,EHOSTUNREACH:23,EINPROGRESS:26,EALREADY:7,EDESTADDRREQ:17,EMSGSIZE:35,EPROTONOSUPPORT:66,ESOCKTNOSUPPORT:137,EADDRNOTAVAIL:4,ENETRESET:39,EISCONN:30,ENOTCONN:53,ETOOMANYREFS:141,EUSERS:136,EDQUOT:19,ESTALE:72,ENOTSUP:138,ENOMEDIUM:148,EILSEQ:25,EOVERFLOW:61,ECANCELED:11,ENOTRECOVERABLE:56,EOWNERDEAD:62,ESTRPIPE:135};var FS={root:null,mounts:[],devices:{},streams:[],nextInode:1,nameTable:null,currentPath:"/",initialized:false,ignorePermissions:true,trackingDelegate:{},tracking:{openFlags:{READ:1,WRITE:2}},ErrnoError:null,genericErrors:{},filesystems:null,syncFSRequests:0,handleFSError:function(e){if(!(e instanceof FS.ErrnoError))throw e+" : "+stackTrace();return ___setErrNo(e.errno)},lookupPath:function(path,opts){path=PATH_FS.resolve(FS.cwd(),path);opts=opts||{};if(!path)return{path:"",node:null};var defaults={follow_mount:true,recurse_count:0};for(var key in defaults){if(opts[key]===undefined){opts[key]=defaults[key]}}if(opts.recurse_count>8){throw new FS.ErrnoError(32)}var parts=PATH.normalizeArray(path.split("/").filter(function(p){return!!p}),false);var current=FS.root;var current_path="/";for(var i=0;i<parts.length;i++){var islast=i===parts.length-1;if(islast&&opts.parent){break}current=FS.lookupNode(current,parts[i]);current_path=PATH.join2(current_path,parts[i]);if(FS.isMountpoint(current)){if(!islast||islast&&opts.follow_mount){current=current.mounted.root}}if(!islast||opts.follow){var count=0;while(FS.isLink(current.mode)){var link=FS.readlink(current_path);current_path=PATH_FS.resolve(PATH.dirname(current_path),link);var lookup=FS.lookupPath(current_path,{recurse_count:opts.recurse_count});current=lookup.node;if(count++>40){throw new FS.ErrnoError(32)}}}}return{path:current_path,node:current}},getPath:function(node){var path;while(true){if(FS.isRoot(node)){var mount=node.mount.mountpoint;if(!path)return mount;return mount[mount.length-1]!=="/"?mount+"/"+path:mount+path}path=path?node.name+"/"+path:node.name;node=node.parent}},hashName:function(parentid,name){var hash=0;for(var i=0;i<name.length;i++){hash=(hash<<5)-hash+name.charCodeAt(i)|0}return(parentid+hash>>>0)%FS.nameTable.length},hashAddNode:function(node){var hash=FS.hashName(node.parent.id,node.name);node.name_next=FS.nameTable[hash];FS.nameTable[hash]=node},hashRemoveNode:function(node){var hash=FS.hashName(node.parent.id,node.name);if(FS.nameTable[hash]===node){FS.nameTable[hash]=node.name_next}else{var current=FS.nameTable[hash];while(current){if(current.name_next===node){current.name_next=node.name_next;break}current=current.name_next}}},lookupNode:function(parent,name){var err=FS.mayLookup(parent);if(err){throw new FS.ErrnoError(err,parent)}var hash=FS.hashName(parent.id,name);for(var node=FS.nameTable[hash];node;node=node.name_next){var nodeName=node.name;if(node.parent.id===parent.id&&nodeName===name){return node}}return FS.lookup(parent,name)},createNode:function(parent,name,mode,rdev){if(!FS.FSNode){FS.FSNode=function(parent,name,mode,rdev){if(!parent){parent=this}this.parent=parent;this.mount=parent.mount;this.mounted=null;this.id=FS.nextInode++;this.name=name;this.mode=mode;this.node_ops={};this.stream_ops={};this.rdev=rdev};FS.FSNode.prototype={};var readMode=292|73;var writeMode=146;Object.defineProperties(FS.FSNode.prototype,{read:{get:function(){return(this.mode&readMode)===readMode},set:function(val){val?this.mode|=readMode:this.mode&=~readMode}},write:{get:function(){return(this.mode&writeMode)===writeMode},set:function(val){val?this.mode|=writeMode:this.mode&=~writeMode}},isFolder:{get:function(){return FS.isDir(this.mode)}},isDevice:{get:function(){return FS.isChrdev(this.mode)}}})}var node=new FS.FSNode(parent,name,mode,rdev);FS.hashAddNode(node);return node},destroyNode:function(node){FS.hashRemoveNode(node)},isRoot:function(node){return node===node.parent},isMountpoint:function(node){return!!node.mounted},isFile:function(mode){return(mode&61440)===32768},isDir:function(mode){return(mode&61440)===16384},isLink:function(mode){return(mode&61440)===40960},isChrdev:function(mode){return(mode&61440)===8192},isBlkdev:function(mode){return(mode&61440)===24576},isFIFO:function(mode){return(mode&61440)===4096},isSocket:function(mode){return(mode&49152)===49152},flagModes:{"r":0,"rs":1052672,"r+":2,"w":577,"wx":705,"xw":705,"w+":578,"wx+":706,"xw+":706,"a":1089,"ax":1217,"xa":1217,"a+":1090,"ax+":1218,"xa+":1218},modeStringToFlags:function(str){var flags=FS.flagModes[str];if(typeof flags==="undefined"){throw new Error("Unknown file open mode: "+str)}return flags},flagsToPermissionString:function(flag){var perms=["r","w","rw"][flag&3];if(flag&512){perms+="w"}return perms},nodePermissions:function(node,perms){if(FS.ignorePermissions){return 0}if(perms.indexOf("r")!==-1&&!(node.mode&292)){return 2}else if(perms.indexOf("w")!==-1&&!(node.mode&146)){return 2}else if(perms.indexOf("x")!==-1&&!(node.mode&73)){return 2}return 0},mayLookup:function(dir){var err=FS.nodePermissions(dir,"x");if(err)return err;if(!dir.node_ops.lookup)return 2;return 0},mayCreate:function(dir,name){try{var node=FS.lookupNode(dir,name);return 20}catch(e){}return FS.nodePermissions(dir,"wx")},mayDelete:function(dir,name,isdir){var node;try{node=FS.lookupNode(dir,name)}catch(e){return e.errno}var err=FS.nodePermissions(dir,"wx");if(err){return err}if(isdir){if(!FS.isDir(node.mode)){return 54}if(FS.isRoot(node)||FS.getPath(node)===FS.cwd()){return 10}}else{if(FS.isDir(node.mode)){return 31}}return 0},mayOpen:function(node,flags){if(!node){return 44}if(FS.isLink(node.mode)){return 32}else if(FS.isDir(node.mode)){if(FS.flagsToPermissionString(flags)!=="r"||flags&512){return 31}}return FS.nodePermissions(node,FS.flagsToPermissionString(flags))},MAX_OPEN_FDS:4096,nextfd:function(fd_start,fd_end){fd_start=fd_start||0;fd_end=fd_end||FS.MAX_OPEN_FDS;for(var fd=fd_start;fd<=fd_end;fd++){if(!FS.streams[fd]){return fd}}throw new FS.ErrnoError(33)},getStream:function(fd){return FS.streams[fd]},createStream:function(stream,fd_start,fd_end){if(!FS.FSStream){FS.FSStream=function(){};FS.FSStream.prototype={};Object.defineProperties(FS.FSStream.prototype,{object:{get:function(){return this.node},set:function(val){this.node=val}},isRead:{get:function(){return(this.flags&2097155)!==1}},isWrite:{get:function(){return(this.flags&2097155)!==0}},isAppend:{get:function(){return this.flags&1024}}})}var newStream=new FS.FSStream;for(var p in stream){newStream[p]=stream[p]}stream=newStream;var fd=FS.nextfd(fd_start,fd_end);stream.fd=fd;FS.streams[fd]=stream;return stream},closeStream:function(fd){FS.streams[fd]=null},chrdev_stream_ops:{open:function(stream){var device=FS.getDevice(stream.node.rdev);stream.stream_ops=device.stream_ops;if(stream.stream_ops.open){stream.stream_ops.open(stream)}},llseek:function(){throw new FS.ErrnoError(70)}},major:function(dev){return dev>>8},minor:function(dev){return dev&255},makedev:function(ma,mi){return ma<<8|mi},registerDevice:function(dev,ops){FS.devices[dev]={stream_ops:ops}},getDevice:function(dev){return FS.devices[dev]},getMounts:function(mount){var mounts=[];var check=[mount];while(check.length){var m=check.pop();mounts.push(m);check.push.apply(check,m.mounts)}return mounts},syncfs:function(populate,callback){if(typeof populate==="function"){callback=populate;populate=false}FS.syncFSRequests++;if(FS.syncFSRequests>1){console.log("warning: "+FS.syncFSRequests+" FS.syncfs operations in flight at once, probably just doing extra work")}var mounts=FS.getMounts(FS.root.mount);var completed=0;function doCallback(err){assert(FS.syncFSRequests>0);FS.syncFSRequests--;return callback(err)}function done(err){if(err){if(!done.errored){done.errored=true;return doCallback(err)}return}if(++completed>=mounts.length){doCallback(null)}}mounts.forEach(function(mount){if(!mount.type.syncfs){return done(null)}mount.type.syncfs(mount,populate,done)})},mount:function(type,opts,mountpoint){var root=mountpoint==="/";var pseudo=!mountpoint;var node;if(root&&FS.root){throw new FS.ErrnoError(10)}else if(!root&&!pseudo){var lookup=FS.lookupPath(mountpoint,{follow_mount:false});mountpoint=lookup.path;node=lookup.node;if(FS.isMountpoint(node)){throw new FS.ErrnoError(10)}if(!FS.isDir(node.mode)){throw new FS.ErrnoError(54)}}var mount={type:type,opts:opts,mountpoint:mountpoint,mounts:[]};var mountRoot=type.mount(mount);mountRoot.mount=mount;mount.root=mountRoot;if(root){FS.root=mountRoot}else if(node){node.mounted=mount;if(node.mount){node.mount.mounts.push(mount)}}return mountRoot},unmount:function(mountpoint){var lookup=FS.lookupPath(mountpoint,{follow_mount:false});if(!FS.isMountpoint(lookup.node)){throw new FS.ErrnoError(28)}var node=lookup.node;var mount=node.mounted;var mounts=FS.getMounts(mount);Object.keys(FS.nameTable).forEach(function(hash){var current=FS.nameTable[hash];while(current){var next=current.name_next;if(mounts.indexOf(current.mount)!==-1){FS.destroyNode(current)}current=next}});node.mounted=null;var idx=node.mount.mounts.indexOf(mount);assert(idx!==-1);node.mount.mounts.splice(idx,1)},lookup:function(parent,name){return parent.node_ops.lookup(parent,name)},mknod:function(path,mode,dev){var lookup=FS.lookupPath(path,{parent:true});var parent=lookup.node;var name=PATH.basename(path);if(!name||name==="."||name===".."){throw new FS.ErrnoError(28)}var err=FS.mayCreate(parent,name);if(err){throw new FS.ErrnoError(err)}if(!parent.node_ops.mknod){throw new FS.ErrnoError(63)}return parent.node_ops.mknod(parent,name,mode,dev)},create:function(path,mode){mode=mode!==undefined?mode:438;mode&=4095;mode|=32768;return FS.mknod(path,mode,0)},mkdir:function(path,mode){mode=mode!==undefined?mode:511;mode&=511|512;mode|=16384;return FS.mknod(path,mode,0)},mkdirTree:function(path,mode){var dirs=path.split("/");var d="";for(var i=0;i<dirs.length;++i){if(!dirs[i])continue;d+="/"+dirs[i];try{FS.mkdir(d,mode)}catch(e){if(e.errno!=20)throw e}}},mkdev:function(path,mode,dev){if(typeof dev==="undefined"){dev=mode;mode=438}mode|=8192;return FS.mknod(path,mode,dev)},symlink:function(oldpath,newpath){if(!PATH_FS.resolve(oldpath)){throw new FS.ErrnoError(44)}var lookup=FS.lookupPath(newpath,{parent:true});var parent=lookup.node;if(!parent){throw new FS.ErrnoError(44)}var newname=PATH.basename(newpath);var err=FS.mayCreate(parent,newname);if(err){throw new FS.ErrnoError(err)}if(!parent.node_ops.symlink){throw new FS.ErrnoError(63)}return parent.node_ops.symlink(parent,newname,oldpath)},rename:function(old_path,new_path){var old_dirname=PATH.dirname(old_path);var new_dirname=PATH.dirname(new_path);var old_name=PATH.basename(old_path);var new_name=PATH.basename(new_path);var lookup,old_dir,new_dir;try{lookup=FS.lookupPath(old_path,{parent:true});old_dir=lookup.node;lookup=FS.lookupPath(new_path,{parent:true});new_dir=lookup.node}catch(e){throw new FS.ErrnoError(10)}if(!old_dir||!new_dir)throw new FS.ErrnoError(44);if(old_dir.mount!==new_dir.mount){throw new FS.ErrnoError(75)}var old_node=FS.lookupNode(old_dir,old_name);var relative=PATH_FS.relative(old_path,new_dirname);if(relative.charAt(0)!=="."){throw new FS.ErrnoError(28)}relative=PATH_FS.relative(new_path,old_dirname);if(relative.charAt(0)!=="."){throw new FS.ErrnoError(55)}var new_node;try{new_node=FS.lookupNode(new_dir,new_name)}catch(e){}if(old_node===new_node){return}var isdir=FS.isDir(old_node.mode);var err=FS.mayDelete(old_dir,old_name,isdir);if(err){throw new FS.ErrnoError(err)}err=new_node?FS.mayDelete(new_dir,new_name,isdir):FS.mayCreate(new_dir,new_name);if(err){throw new FS.ErrnoError(err)}if(!old_dir.node_ops.rename){throw new FS.ErrnoError(63)}if(FS.isMountpoint(old_node)||new_node&&FS.isMountpoint(new_node)){throw new FS.ErrnoError(10)}if(new_dir!==old_dir){err=FS.nodePermissions(old_dir,"w");if(err){throw new FS.ErrnoError(err)}}try{if(FS.trackingDelegate["willMovePath"]){FS.trackingDelegate["willMovePath"](old_path,new_path)}}catch(e){console.log("FS.trackingDelegate['willMovePath']('"+old_path+"', '"+new_path+"') threw an exception: "+e.message)}FS.hashRemoveNode(old_node);try{old_dir.node_ops.rename(old_node,new_dir,new_name)}catch(e){throw e}finally{FS.hashAddNode(old_node)}try{if(FS.trackingDelegate["onMovePath"])FS.trackingDelegate["onMovePath"](old_path,new_path)}catch(e){console.log("FS.trackingDelegate['onMovePath']('"+old_path+"', '"+new_path+"') threw an exception: "+e.message)}},rmdir:function(path){var lookup=FS.lookupPath(path,{parent:true});var parent=lookup.node;var name=PATH.basename(path);var node=FS.lookupNode(parent,name);var err=FS.mayDelete(parent,name,true);if(err){throw new FS.ErrnoError(err)}if(!parent.node_ops.rmdir){throw new FS.ErrnoError(63)}if(FS.isMountpoint(node)){throw new FS.ErrnoError(10)}try{if(FS.trackingDelegate["willDeletePath"]){FS.trackingDelegate["willDeletePath"](path)}}catch(e){console.log("FS.trackingDelegate['willDeletePath']('"+path+"') threw an exception: "+e.message)}parent.node_ops.rmdir(parent,name);FS.destroyNode(node);try{if(FS.trackingDelegate["onDeletePath"])FS.trackingDelegate["onDeletePath"](path)}catch(e){console.log("FS.trackingDelegate['onDeletePath']('"+path+"') threw an exception: "+e.message)}},readdir:function(path){var lookup=FS.lookupPath(path,{follow:true});var node=lookup.node;if(!node.node_ops.readdir){throw new FS.ErrnoError(54)}return node.node_ops.readdir(node)},unlink:function(path){var lookup=FS.lookupPath(path,{parent:true});var parent=lookup.node;var name=PATH.basename(path);var node=FS.lookupNode(parent,name);var err=FS.mayDelete(parent,name,false);if(err){throw new FS.ErrnoError(err)}if(!parent.node_ops.unlink){throw new FS.ErrnoError(63)}if(FS.isMountpoint(node)){throw new FS.ErrnoError(10)}try{if(FS.trackingDelegate["willDeletePath"]){FS.trackingDelegate["willDeletePath"](path)}}catch(e){console.log("FS.trackingDelegate['willDeletePath']('"+path+"') threw an exception: "+e.message)}parent.node_ops.unlink(parent,name);FS.destroyNode(node);try{if(FS.trackingDelegate["onDeletePath"])FS.trackingDelegate["onDeletePath"](path)}catch(e){console.log("FS.trackingDelegate['onDeletePath']('"+path+"') threw an exception: "+e.message)}},readlink:function(path){var lookup=FS.lookupPath(path);var link=lookup.node;if(!link){throw new FS.ErrnoError(44)}if(!link.node_ops.readlink){throw new FS.ErrnoError(28)}return PATH_FS.resolve(FS.getPath(link.parent),link.node_ops.readlink(link))},stat:function(path,dontFollow){var lookup=FS.lookupPath(path,{follow:!dontFollow});var node=lookup.node;if(!node){throw new FS.ErrnoError(44)}if(!node.node_ops.getattr){throw new FS.ErrnoError(63)}return node.node_ops.getattr(node)},lstat:function(path){return FS.stat(path,true)},chmod:function(path,mode,dontFollow){var node;if(typeof path==="string"){var lookup=FS.lookupPath(path,{follow:!dontFollow});node=lookup.node}else{node=path}if(!node.node_ops.setattr){throw new FS.ErrnoError(63)}node.node_ops.setattr(node,{mode:mode&4095|node.mode&~4095,timestamp:Date.now()})},lchmod:function(path,mode){FS.chmod(path,mode,true)},fchmod:function(fd,mode){var stream=FS.getStream(fd);if(!stream){throw new FS.ErrnoError(8)}FS.chmod(stream.node,mode)},chown:function(path,uid,gid,dontFollow){var node;if(typeof path==="string"){var lookup=FS.lookupPath(path,{follow:!dontFollow});node=lookup.node}else{node=path}if(!node.node_ops.setattr){throw new FS.ErrnoError(63)}node.node_ops.setattr(node,{timestamp:Date.now()})},lchown:function(path,uid,gid){FS.chown(path,uid,gid,true)},fchown:function(fd,uid,gid){var stream=FS.getStream(fd);if(!stream){throw new FS.ErrnoError(8)}FS.chown(stream.node,uid,gid)},truncate:function(path,len){if(len<0){throw new FS.ErrnoError(28)}var node;if(typeof path==="string"){var lookup=FS.lookupPath(path,{follow:true});node=lookup.node}else{node=path}if(!node.node_ops.setattr){throw new FS.ErrnoError(63)}if(FS.isDir(node.mode)){throw new FS.ErrnoError(31)}if(!FS.isFile(node.mode)){throw new FS.ErrnoError(28)}var err=FS.nodePermissions(node,"w");if(err){throw new FS.ErrnoError(err)}node.node_ops.setattr(node,{size:len,timestamp:Date.now()})},ftruncate:function(fd,len){var stream=FS.getStream(fd);if(!stream){throw new FS.ErrnoError(8)}if((stream.flags&2097155)===0){throw new FS.ErrnoError(28)}FS.truncate(stream.node,len)},utime:function(path,atime,mtime){var lookup=FS.lookupPath(path,{follow:true});var node=lookup.node;node.node_ops.setattr(node,{timestamp:Math.max(atime,mtime)})},open:function(path,flags,mode,fd_start,fd_end){if(path===""){throw new FS.ErrnoError(44)}flags=typeof flags==="string"?FS.modeStringToFlags(flags):flags;mode=typeof mode==="undefined"?438:mode;if(flags&64){mode=mode&4095|32768}else{mode=0}var node;if(typeof path==="object"){node=path}else{path=PATH.normalize(path);try{var lookup=FS.lookupPath(path,{follow:!(flags&131072)});node=lookup.node}catch(e){}}var created=false;if(flags&64){if(node){if(flags&128){throw new FS.ErrnoError(20)}}else{node=FS.mknod(path,mode,0);created=true}}if(!node){throw new FS.ErrnoError(44)}if(FS.isChrdev(node.mode)){flags&=~512}if(flags&65536&&!FS.isDir(node.mode)){throw new FS.ErrnoError(54)}if(!created){var err=FS.mayOpen(node,flags);if(err){throw new FS.ErrnoError(err)}}if(flags&512){FS.truncate(node,0)}flags&=~(128|512);var stream=FS.createStream({node:node,path:FS.getPath(node),flags:flags,seekable:true,position:0,stream_ops:node.stream_ops,ungotten:[],error:false},fd_start,fd_end);if(stream.stream_ops.open){stream.stream_ops.open(stream)}if(Module["logReadFiles"]&&!(flags&1)){if(!FS.readFiles)FS.readFiles={};if(!(path in FS.readFiles)){FS.readFiles[path]=1;console.log("FS.trackingDelegate error on read file: "+path)}}try{if(FS.trackingDelegate["onOpenFile"]){var trackingFlags=0;if((flags&2097155)!==1){trackingFlags|=FS.tracking.openFlags.READ}if((flags&2097155)!==0){trackingFlags|=FS.tracking.openFlags.WRITE}FS.trackingDelegate["onOpenFile"](path,trackingFlags)}}catch(e){console.log("FS.trackingDelegate['onOpenFile']('"+path+"', flags) threw an exception: "+e.message)}return stream},close:function(stream){if(FS.isClosed(stream)){throw new FS.ErrnoError(8)}if(stream.getdents)stream.getdents=null;try{if(stream.stream_ops.close){stream.stream_ops.close(stream)}}catch(e){throw e}finally{FS.closeStream(stream.fd)}stream.fd=null},isClosed:function(stream){return stream.fd===null},llseek:function(stream,offset,whence){if(FS.isClosed(stream)){throw new FS.ErrnoError(8)}if(!stream.seekable||!stream.stream_ops.llseek){throw new FS.ErrnoError(70)}if(whence!=0&&whence!=1&&whence!=2){throw new FS.ErrnoError(28)}stream.position=stream.stream_ops.llseek(stream,offset,whence);stream.ungotten=[];return stream.position},read:function(stream,buffer,offset,length,position){if(length<0||position<0){throw new FS.ErrnoError(28)}if(FS.isClosed(stream)){throw new FS.ErrnoError(8)}if((stream.flags&2097155)===1){throw new FS.ErrnoError(8)}if(FS.isDir(stream.node.mode)){throw new FS.ErrnoError(31)}if(!stream.stream_ops.read){throw new FS.ErrnoError(28)}var seeking=typeof position!=="undefined";if(!seeking){position=stream.position}else if(!stream.seekable){throw new FS.ErrnoError(70)}var bytesRead=stream.stream_ops.read(stream,buffer,offset,length,position);if(!seeking)stream.position+=bytesRead;return bytesRead},write:function(stream,buffer,offset,length,position,canOwn){if(length<0||position<0){throw new FS.ErrnoError(28)}if(FS.isClosed(stream)){throw new FS.ErrnoError(8)}if((stream.flags&2097155)===0){throw new FS.ErrnoError(8)}if(FS.isDir(stream.node.mode)){throw new FS.ErrnoError(31)}if(!stream.stream_ops.write){throw new FS.ErrnoError(28)}if(stream.flags&1024){FS.llseek(stream,0,2)}var seeking=typeof position!=="undefined";if(!seeking){position=stream.position}else if(!stream.seekable){throw new FS.ErrnoError(70)}var bytesWritten=stream.stream_ops.write(stream,buffer,offset,length,position,canOwn);if(!seeking)stream.position+=bytesWritten;try{if(stream.path&&FS.trackingDelegate["onWriteToFile"])FS.trackingDelegate["onWriteToFile"](stream.path)}catch(e){console.log("FS.trackingDelegate['onWriteToFile']('"+stream.path+"') threw an exception: "+e.message)}return bytesWritten},allocate:function(stream,offset,length){if(FS.isClosed(stream)){throw new FS.ErrnoError(8)}if(offset<0||length<=0){throw new FS.ErrnoError(28)}if((stream.flags&2097155)===0){throw new FS.ErrnoError(8)}if(!FS.isFile(stream.node.mode)&&!FS.isDir(stream.node.mode)){throw new FS.ErrnoError(43)}if(!stream.stream_ops.allocate){throw new FS.ErrnoError(138)}stream.stream_ops.allocate(stream,offset,length)},mmap:function(stream,buffer,offset,length,position,prot,flags){if((prot&2)!==0&&(flags&2)===0&&(stream.flags&2097155)!==2){throw new FS.ErrnoError(2)}if((stream.flags&2097155)===1){throw new FS.ErrnoError(2)}if(!stream.stream_ops.mmap){throw new FS.ErrnoError(43)}return stream.stream_ops.mmap(stream,buffer,offset,length,position,prot,flags)},msync:function(stream,buffer,offset,length,mmapFlags){if(!stream||!stream.stream_ops.msync){return 0}return stream.stream_ops.msync(stream,buffer,offset,length,mmapFlags)},munmap:function(stream){return 0},ioctl:function(stream,cmd,arg){if(!stream.stream_ops.ioctl){throw new FS.ErrnoError(59)}return stream.stream_ops.ioctl(stream,cmd,arg)},readFile:function(path,opts){opts=opts||{};opts.flags=opts.flags||"r";opts.encoding=opts.encoding||"binary";if(opts.encoding!=="utf8"&&opts.encoding!=="binary"){throw new Error('Invalid encoding type "'+opts.encoding+'"')}var ret;var stream=FS.open(path,opts.flags);var stat=FS.stat(path);var length=stat.size;var buf=new Uint8Array(length);FS.read(stream,buf,0,length,0);if(opts.encoding==="utf8"){ret=UTF8ArrayToString(buf,0)}else if(opts.encoding==="binary"){ret=buf}FS.close(stream);return ret},writeFile:function(path,data,opts){opts=opts||{};opts.flags=opts.flags||"w";var stream=FS.open(path,opts.flags,opts.mode);if(typeof data==="string"){var buf=new Uint8Array(lengthBytesUTF8(data)+1);var actualNumBytes=stringToUTF8Array(data,buf,0,buf.length);FS.write(stream,buf,0,actualNumBytes,undefined,opts.canOwn)}else if(ArrayBuffer.isView(data)){FS.write(stream,data,0,data.byteLength,undefined,opts.canOwn)}else{throw new Error("Unsupported data type")}FS.close(stream)},cwd:function(){return FS.currentPath},chdir:function(path){var lookup=FS.lookupPath(path,{follow:true});if(lookup.node===null){throw new FS.ErrnoError(44)}if(!FS.isDir(lookup.node.mode)){throw new FS.ErrnoError(54)}var err=FS.nodePermissions(lookup.node,"x");if(err){throw new FS.ErrnoError(err)}FS.currentPath=lookup.path},createDefaultDirectories:function(){FS.mkdir("/tmp");FS.mkdir("/home");FS.mkdir("/home/web_user")},createDefaultDevices:function(){FS.mkdir("/dev");FS.registerDevice(FS.makedev(1,3),{read:function(){return 0},write:function(stream,buffer,offset,length,pos){return length}});FS.mkdev("/dev/null",FS.makedev(1,3));TTY.register(FS.makedev(5,0),TTY.default_tty_ops);TTY.register(FS.makedev(6,0),TTY.default_tty1_ops);FS.mkdev("/dev/tty",FS.makedev(5,0));FS.mkdev("/dev/tty1",FS.makedev(6,0));var random_device;if(typeof crypto==="object"&&typeof crypto["getRandomValues"]==="function"){var randomBuffer=new Uint8Array(1);random_device=function(){crypto.getRandomValues(randomBuffer);return randomBuffer[0]}}else{}if(!random_device){random_device=function(){abort("no cryptographic support found for random_device. consider polyfilling it if you want to use something insecure like Math.random(), e.g. put this in a --pre-js: var crypto = { getRandomValues: function(array) { for (var i = 0; i < array.length; i++) array[i] = (Math.random()*256)|0 } };")}}FS.createDevice("/dev","random",random_device);FS.createDevice("/dev","urandom",random_device);FS.mkdir("/dev/shm");FS.mkdir("/dev/shm/tmp")},createSpecialDirectories:function(){FS.mkdir("/proc");FS.mkdir("/proc/self");FS.mkdir("/proc/self/fd");FS.mount({mount:function(){var node=FS.createNode("/proc/self","fd",16384|511,73);node.node_ops={lookup:function(parent,name){var fd=+name;var stream=FS.getStream(fd);if(!stream)throw new FS.ErrnoError(8);var ret={parent:null,mount:{mountpoint:"fake"},node_ops:{readlink:function(){return stream.path}}};ret.parent=ret;return ret}};return node}},{},"/proc/self/fd")},createStandardStreams:function(){if(Module["stdin"]){FS.createDevice("/dev","stdin",Module["stdin"])}else{FS.symlink("/dev/tty","/dev/stdin")}if(Module["stdout"]){FS.createDevice("/dev","stdout",null,Module["stdout"])}else{FS.symlink("/dev/tty","/dev/stdout")}if(Module["stderr"]){FS.createDevice("/dev","stderr",null,Module["stderr"])}else{FS.symlink("/dev/tty1","/dev/stderr")}var stdin=FS.open("/dev/stdin","r");var stdout=FS.open("/dev/stdout","w");var stderr=FS.open("/dev/stderr","w");assert(stdin.fd===0,"invalid handle for stdin ("+stdin.fd+")");assert(stdout.fd===1,"invalid handle for stdout ("+stdout.fd+")");assert(stderr.fd===2,"invalid handle for stderr ("+stderr.fd+")")},ensureErrnoError:function(){if(FS.ErrnoError)return;FS.ErrnoError=function ErrnoError(errno,node){this.node=node;this.setErrno=function(errno){this.errno=errno;for(var key in ERRNO_CODES){if(ERRNO_CODES[key]===errno){this.code=key;break}}};this.setErrno(errno);this.message=ERRNO_MESSAGES[errno];if(this.stack){Object.defineProperty(this,"stack",{value:(new Error).stack,writable:true});this.stack=demangleAll(this.stack)}};FS.ErrnoError.prototype=new Error;FS.ErrnoError.prototype.constructor=FS.ErrnoError;[44].forEach(function(code){FS.genericErrors[code]=new FS.ErrnoError(code);FS.genericErrors[code].stack="<generic error, no stack>"})},staticInit:function(){FS.ensureErrnoError();FS.nameTable=new Array(4096);FS.mount(MEMFS,{},"/");FS.createDefaultDirectories();FS.createDefaultDevices();FS.createSpecialDirectories();FS.filesystems={"MEMFS":MEMFS,"IDBFS":IDBFS,"WORKERFS":WORKERFS}},init:function(input,output,error){assert(!FS.init.initialized,"FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)");FS.init.initialized=true;FS.ensureErrnoError();Module["stdin"]=input||Module["stdin"];Module["stdout"]=output||Module["stdout"];Module["stderr"]=error||Module["stderr"];FS.createStandardStreams()},quit:function(){FS.init.initialized=false;var fflush=Module["_fflush"];if(fflush)fflush(0);for(var i=0;i<FS.streams.length;i++){var stream=FS.streams[i];if(!stream){continue}FS.close(stream)}},getMode:function(canRead,canWrite){var mode=0;if(canRead)mode|=292|73;if(canWrite)mode|=146;return mode},joinPath:function(parts,forceRelative){var path=PATH.join.apply(null,parts);if(forceRelative&&path[0]=="/")path=path.substr(1);return path},absolutePath:function(relative,base){return PATH_FS.resolve(base,relative)},standardizePath:function(path){return PATH.normalize(path)},findObject:function(path,dontResolveLastLink){var ret=FS.analyzePath(path,dontResolveLastLink);if(ret.exists){return ret.object}else{___setErrNo(ret.error);return null}},analyzePath:function(path,dontResolveLastLink){try{var lookup=FS.lookupPath(path,{follow:!dontResolveLastLink});path=lookup.path}catch(e){}var ret={isRoot:false,exists:false,error:0,name:null,path:null,object:null,parentExists:false,parentPath:null,parentObject:null};try{var lookup=FS.lookupPath(path,{parent:true});ret.parentExists=true;ret.parentPath=lookup.path;ret.parentObject=lookup.node;ret.name=PATH.basename(path);lookup=FS.lookupPath(path,{follow:!dontResolveLastLink});ret.exists=true;ret.path=lookup.path;ret.object=lookup.node;ret.name=lookup.node.name;ret.isRoot=lookup.path==="/"}catch(e){ret.error=e.errno}return ret},createFolder:function(parent,name,canRead,canWrite){var path=PATH.join2(typeof parent==="string"?parent:FS.getPath(parent),name);var mode=FS.getMode(canRead,canWrite);return FS.mkdir(path,mode)},createPath:function(parent,path,canRead,canWrite){parent=typeof parent==="string"?parent:FS.getPath(parent);var parts=path.split("/").reverse();while(parts.length){var part=parts.pop();if(!part)continue;var current=PATH.join2(parent,part);try{FS.mkdir(current)}catch(e){}parent=current}return current},createFile:function(parent,name,properties,canRead,canWrite){var path=PATH.join2(typeof parent==="string"?parent:FS.getPath(parent),name);var mode=FS.getMode(canRead,canWrite);return FS.create(path,mode)},createDataFile:function(parent,name,data,canRead,canWrite,canOwn){var path=name?PATH.join2(typeof parent==="string"?parent:FS.getPath(parent),name):parent;var mode=FS.getMode(canRead,canWrite);var node=FS.create(path,mode);if(data){if(typeof data==="string"){var arr=new Array(data.length);for(var i=0,len=data.length;i<len;++i)arr[i]=data.charCodeAt(i);data=arr}FS.chmod(node,mode|146);var stream=FS.open(node,"w");FS.write(stream,data,0,data.length,0,canOwn);FS.close(stream);FS.chmod(node,mode)}return node},createDevice:function(parent,name,input,output){var path=PATH.join2(typeof parent==="string"?parent:FS.getPath(parent),name);var mode=FS.getMode(!!input,!!output);if(!FS.createDevice.major)FS.createDevice.major=64;var dev=FS.makedev(FS.createDevice.major++,0);FS.registerDevice(dev,{open:function(stream){stream.seekable=false},close:function(stream){if(output&&output.buffer&&output.buffer.length){output(10)}},read:function(stream,buffer,offset,length,pos){var bytesRead=0;for(var i=0;i<length;i++){var result;try{result=input()}catch(e){throw new FS.ErrnoError(29)}if(result===undefined&&bytesRead===0){throw new FS.ErrnoError(6)}if(result===null||result===undefined)break;bytesRead++;buffer[offset+i]=result}if(bytesRead){stream.node.timestamp=Date.now()}return bytesRead},write:function(stream,buffer,offset,length,pos){for(var i=0;i<length;i++){try{output(buffer[offset+i])}catch(e){throw new FS.ErrnoError(29)}}if(length){stream.node.timestamp=Date.now()}return i}});return FS.mkdev(path,mode,dev)},createLink:function(parent,name,target,canRead,canWrite){var path=PATH.join2(typeof parent==="string"?parent:FS.getPath(parent),name);return FS.symlink(target,path)},forceLoadFile:function(obj){if(obj.isDevice||obj.isFolder||obj.link||obj.contents)return true;var success=true;if(typeof XMLHttpRequest!=="undefined"){throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.")}else if(read_){try{obj.contents=intArrayFromString(read_(obj.url),true);obj.usedBytes=obj.contents.length}catch(e){success=false}}else{throw new Error("Cannot load without read() or XMLHttpRequest.")}if(!success)___setErrNo(29);return success},createLazyFile:function(parent,name,url,canRead,canWrite){function LazyUint8Array(){this.lengthKnown=false;this.chunks=[]}LazyUint8Array.prototype.get=function LazyUint8Array_get(idx){if(idx>this.length-1||idx<0){return undefined}var chunkOffset=idx%this.chunkSize;var chunkNum=idx/this.chunkSize|0;return this.getter(chunkNum)[chunkOffset]};LazyUint8Array.prototype.setDataGetter=function LazyUint8Array_setDataGetter(getter){this.getter=getter};LazyUint8Array.prototype.cacheLength=function LazyUint8Array_cacheLength(){var xhr=new XMLHttpRequest;xhr.open("HEAD",url,false);xhr.send(null);if(!(xhr.status>=200&&xhr.status<300||xhr.status===304))throw new Error("Couldn't load "+url+". Status: "+xhr.status);var datalength=Number(xhr.getResponseHeader("Content-length"));var header;var hasByteServing=(header=xhr.getResponseHeader("Accept-Ranges"))&&header==="bytes";var usesGzip=(header=xhr.getResponseHeader("Content-Encoding"))&&header==="gzip";var chunkSize=1024*1024;if(!hasByteServing)chunkSize=datalength;var doXHR=function(from,to){if(from>to)throw new Error("invalid range ("+from+", "+to+") or no bytes requested!");if(to>datalength-1)throw new Error("only "+datalength+" bytes available! programmer error!");var xhr=new XMLHttpRequest;xhr.open("GET",url,false);if(datalength!==chunkSize)xhr.setRequestHeader("Range","bytes="+from+"-"+to);if(typeof Uint8Array!="undefined")xhr.responseType="arraybuffer";if(xhr.overrideMimeType){xhr.overrideMimeType("text/plain; charset=x-user-defined")}xhr.send(null);if(!(xhr.status>=200&&xhr.status<300||xhr.status===304))throw new Error("Couldn't load "+url+". Status: "+xhr.status);if(xhr.response!==undefined){return new Uint8Array(xhr.response||[])}else{return intArrayFromString(xhr.responseText||"",true)}};var lazyArray=this;lazyArray.setDataGetter(function(chunkNum){var start=chunkNum*chunkSize;var end=(chunkNum+1)*chunkSize-1;end=Math.min(end,datalength-1);if(typeof lazyArray.chunks[chunkNum]==="undefined"){lazyArray.chunks[chunkNum]=doXHR(start,end)}if(typeof lazyArray.chunks[chunkNum]==="undefined")throw new Error("doXHR failed!");return lazyArray.chunks[chunkNum]});if(usesGzip||!datalength){chunkSize=datalength=1;datalength=this.getter(0).length;chunkSize=datalength;console.log("LazyFiles on gzip forces download of the whole file when length is accessed")}this._length=datalength;this._chunkSize=chunkSize;this.lengthKnown=true};if(typeof XMLHttpRequest!=="undefined"){if(!ENVIRONMENT_IS_WORKER)throw"Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc";var lazyArray=new LazyUint8Array;Object.defineProperties(lazyArray,{length:{get:function(){if(!this.lengthKnown){this.cacheLength()}return this._length}},chunkSize:{get:function(){if(!this.lengthKnown){this.cacheLength()}return this._chunkSize}}});var properties={isDevice:false,contents:lazyArray}}else{var properties={isDevice:false,url:url}}var node=FS.createFile(parent,name,properties,canRead,canWrite);if(properties.contents){node.contents=properties.contents}else if(properties.url){node.contents=null;node.url=properties.url}Object.defineProperties(node,{usedBytes:{get:function(){return this.contents.length}}});var stream_ops={};var keys=Object.keys(node.stream_ops);keys.forEach(function(key){var fn=node.stream_ops[key];stream_ops[key]=function forceLoadLazyFile(){if(!FS.forceLoadFile(node)){throw new FS.ErrnoError(29)}return fn.apply(null,arguments)}});stream_ops.read=function stream_ops_read(stream,buffer,offset,length,position){if(!FS.forceLoadFile(node)){throw new FS.ErrnoError(29)}var contents=stream.node.contents;if(position>=contents.length)return 0;var size=Math.min(contents.length-position,length);assert(size>=0);if(contents.slice){for(var i=0;i<size;i++){buffer[offset+i]=contents[position+i]}}else{for(var i=0;i<size;i++){buffer[offset+i]=contents.get(position+i)}}return size};node.stream_ops=stream_ops;return node},createPreloadedFile:function(parent,name,url,canRead,canWrite,onload,onerror,dontCreateFile,canOwn,preFinish){Browser.init();var fullname=name?PATH_FS.resolve(PATH.join2(parent,name)):parent;var dep=getUniqueRunDependency("cp "+fullname);function processData(byteArray){function finish(byteArray){if(preFinish)preFinish();if(!dontCreateFile){FS.createDataFile(parent,name,byteArray,canRead,canWrite,canOwn)}if(onload)onload();removeRunDependency(dep)}var handled=false;Module["preloadPlugins"].forEach(function(plugin){if(handled)return;if(plugin["canHandle"](fullname)){plugin["handle"](byteArray,fullname,finish,function(){if(onerror)onerror();removeRunDependency(dep)});handled=true}});if(!handled)finish(byteArray)}addRunDependency(dep);if(typeof url=="string"){Browser.asyncLoad(url,function(byteArray){processData(byteArray)},onerror)}else{processData(url)}},indexedDB:function(){return window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB},DB_NAME:function(){return"EM_FS_"+window.location.pathname},DB_VERSION:20,DB_STORE_NAME:"FILE_DATA",saveFilesToDB:function(paths,onload,onerror){onload=onload||function(){};onerror=onerror||function(){};var indexedDB=FS.indexedDB();try{var openRequest=indexedDB.open(FS.DB_NAME(),FS.DB_VERSION)}catch(e){return onerror(e)}openRequest.onupgradeneeded=function openRequest_onupgradeneeded(){console.log("creating db");var db=openRequest.result;db.createObjectStore(FS.DB_STORE_NAME)};openRequest.onsuccess=function openRequest_onsuccess(){var db=openRequest.result;var transaction=db.transaction([FS.DB_STORE_NAME],"readwrite");var files=transaction.objectStore(FS.DB_STORE_NAME);var ok=0,fail=0,total=paths.length;function finish(){if(fail==0)onload();else onerror()}paths.forEach(function(path){var putRequest=files.put(FS.analyzePath(path).object.contents,path);putRequest.onsuccess=function putRequest_onsuccess(){ok++;if(ok+fail==total)finish()};putRequest.onerror=function putRequest_onerror(){fail++;if(ok+fail==total)finish()}});transaction.onerror=onerror};openRequest.onerror=onerror},loadFilesFromDB:function(paths,onload,onerror){onload=onload||function(){};onerror=onerror||function(){};var indexedDB=FS.indexedDB();try{var openRequest=indexedDB.open(FS.DB_NAME(),FS.DB_VERSION)}catch(e){return onerror(e)}openRequest.onupgradeneeded=onerror;openRequest.onsuccess=function openRequest_onsuccess(){var db=openRequest.result;try{var transaction=db.transaction([FS.DB_STORE_NAME],"readonly")}catch(e){onerror(e);return}var files=transaction.objectStore(FS.DB_STORE_NAME);var ok=0,fail=0,total=paths.length;function finish(){if(fail==0)onload();else onerror()}paths.forEach(function(path){var getRequest=files.get(path);getRequest.onsuccess=function getRequest_onsuccess(){if(FS.analyzePath(path).exists){FS.unlink(path)}FS.createDataFile(PATH.dirname(path),PATH.basename(path),getRequest.result,true,true,true);ok++;if(ok+fail==total)finish()};getRequest.onerror=function getRequest_onerror(){fail++;if(ok+fail==total)finish()}});transaction.onerror=onerror};openRequest.onerror=onerror}};var SYSCALLS={DEFAULT_POLLMASK:5,mappings:{},umask:511,calculateAt:function(dirfd,path){if(path[0]!=="/"){var dir;if(dirfd===-100){dir=FS.cwd()}else{var dirstream=FS.getStream(dirfd);if(!dirstream)throw new FS.ErrnoError(8);dir=dirstream.path}path=PATH.join2(dir,path)}return path},doStat:function(func,path,buf){try{var stat=func(path)}catch(e){if(e&&e.node&&PATH.normalize(path)!==PATH.normalize(FS.getPath(e.node))){return-54}throw e}HEAP32[buf>>2]=stat.dev;HEAP32[buf+4>>2]=0;HEAP32[buf+8>>2]=stat.ino;HEAP32[buf+12>>2]=stat.mode;HEAP32[buf+16>>2]=stat.nlink;HEAP32[buf+20>>2]=stat.uid;HEAP32[buf+24>>2]=stat.gid;HEAP32[buf+28>>2]=stat.rdev;HEAP32[buf+32>>2]=0;tempI64=[stat.size>>>0,(tempDouble=stat.size,+Math_abs(tempDouble)>=1?tempDouble>0?(Math_min(+Math_floor(tempDouble/4294967296),4294967295)|0)>>>0:~~+Math_ceil((tempDouble-+(~~tempDouble>>>0))/4294967296)>>>0:0)],HEAP32[buf+40>>2]=tempI64[0],HEAP32[buf+44>>2]=tempI64[1];HEAP32[buf+48>>2]=4096;HEAP32[buf+52>>2]=stat.blocks;HEAP32[buf+56>>2]=stat.atime.getTime()/1e3|0;HEAP32[buf+60>>2]=0;HEAP32[buf+64>>2]=stat.mtime.getTime()/1e3|0;HEAP32[buf+68>>2]=0;HEAP32[buf+72>>2]=stat.ctime.getTime()/1e3|0;HEAP32[buf+76>>2]=0;tempI64=[stat.ino>>>0,(tempDouble=stat.ino,+Math_abs(tempDouble)>=1?tempDouble>0?(Math_min(+Math_floor(tempDouble/4294967296),4294967295)|0)>>>0:~~+Math_ceil((tempDouble-+(~~tempDouble>>>0))/4294967296)>>>0:0)],HEAP32[buf+80>>2]=tempI64[0],HEAP32[buf+84>>2]=tempI64[1];return 0},doMsync:function(addr,stream,len,flags){var buffer=new Uint8Array(HEAPU8.subarray(addr,addr+len));FS.msync(stream,buffer,0,len,flags)},doMkdir:function(path,mode){path=PATH.normalize(path);if(path[path.length-1]==="/")path=path.substr(0,path.length-1);FS.mkdir(path,mode,0);return 0},doMknod:function(path,mode,dev){switch(mode&61440){case 32768:case 8192:case 24576:case 4096:case 49152:break;default:return-28}FS.mknod(path,mode,dev);return 0},doReadlink:function(path,buf,bufsize){if(bufsize<=0)return-28;var ret=FS.readlink(path);var len=Math.min(bufsize,lengthBytesUTF8(ret));var endChar=HEAP8[buf+len];stringToUTF8(ret,buf,bufsize+1);HEAP8[buf+len]=endChar;return len},doAccess:function(path,amode){if(amode&~7){return-28}var node;var lookup=FS.lookupPath(path,{follow:true});node=lookup.node;if(!node){return-44}var perms="";if(amode&4)perms+="r";if(amode&2)perms+="w";if(amode&1)perms+="x";if(perms&&FS.nodePermissions(node,perms)){return-2}return 0},doDup:function(path,flags,suggestFD){var suggest=FS.getStream(suggestFD);if(suggest)FS.close(suggest);return FS.open(path,flags,0,suggestFD,suggestFD).fd},doReadv:function(stream,iov,iovcnt,offset){var ret=0;for(var i=0;i<iovcnt;i++){var ptr=HEAP32[iov+i*8>>2];var len=HEAP32[iov+(i*8+4)>>2];var curr=FS.read(stream,HEAP8,ptr,len,offset);if(curr<0)return-1;ret+=curr;if(curr<len)break}return ret},doWritev:function(stream,iov,iovcnt,offset){var ret=0;for(var i=0;i<iovcnt;i++){var ptr=HEAP32[iov+i*8>>2];var len=HEAP32[iov+(i*8+4)>>2];var curr=FS.write(stream,HEAP8,ptr,len,offset);if(curr<0)return-1;ret+=curr}return ret},varargs:0,get:function(varargs){SYSCALLS.varargs+=4;var ret=HEAP32[SYSCALLS.varargs-4>>2];return ret},getStr:function(){var ret=UTF8ToString(SYSCALLS.get());return ret},getStreamFromFD:function(fd){if(fd===undefined)fd=SYSCALLS.get();var stream=FS.getStream(fd);if(!stream)throw new FS.ErrnoError(8);return stream},get64:function(){var low=SYSCALLS.get(),high=SYSCALLS.get();if(low>=0)assert(high===0);else assert(high===-1);return low},getZero:function(){assert(SYSCALLS.get()===0)}};function __emscripten_syscall_munmap(addr,len){if(addr===-1||len===0){return-28}var info=SYSCALLS.mappings[addr];if(!info)return 0;if(len===info.len){var stream=FS.getStream(info.fd);SYSCALLS.doMsync(addr,stream,len,info.flags);FS.munmap(stream);SYSCALLS.mappings[addr]=null;if(info.allocated){_free(info.malloc)}}return 0}function ___syscall91(which,varargs){SYSCALLS.varargs=varargs;try{var addr=SYSCALLS.get(),len=SYSCALLS.get();return __emscripten_syscall_munmap(addr,len)}catch(e){if(typeof FS==="undefined"||!(e instanceof FS.ErrnoError))abort(e);return-e.errno}}function ___unlock(){}function _fd_close(fd){try{var stream=SYSCALLS.getStreamFromFD(fd);FS.close(stream);return 0}catch(e){if(typeof FS==="undefined"||!(e instanceof FS.ErrnoError))abort(e);return e.errno}}function ___wasi_fd_close(){return _fd_close.apply(null,arguments)}function _fd_read(fd,iov,iovcnt,pnum){try{var stream=SYSCALLS.getStreamFromFD(fd);var num=SYSCALLS.doReadv(stream,iov,iovcnt);HEAP32[pnum>>2]=num;return 0}catch(e){if(typeof FS==="undefined"||!(e instanceof FS.ErrnoError))abort(e);return e.errno}}function ___wasi_fd_read(){return _fd_read.apply(null,arguments)}function _fd_seek(fd,offset_low,offset_high,whence,newOffset){try{var stream=SYSCALLS.getStreamFromFD(fd);var HIGH_OFFSET=4294967296;var offset=offset_high*HIGH_OFFSET+(offset_low>>>0);var DOUBLE_LIMIT=9007199254740992;if(offset<=-DOUBLE_LIMIT||offset>=DOUBLE_LIMIT){return-61}FS.llseek(stream,offset,whence);tempI64=[stream.position>>>0,(tempDouble=stream.position,+Math_abs(tempDouble)>=1?tempDouble>0?(Math_min(+Math_floor(tempDouble/4294967296),4294967295)|0)>>>0:~~+Math_ceil((tempDouble-+(~~tempDouble>>>0))/4294967296)>>>0:0)],HEAP32[newOffset>>2]=tempI64[0],HEAP32[newOffset+4>>2]=tempI64[1];if(stream.getdents&&offset===0&&whence===0)stream.getdents=null;return 0}catch(e){if(typeof FS==="undefined"||!(e instanceof FS.ErrnoError))abort(e);return e.errno}}function ___wasi_fd_seek(){return _fd_seek.apply(null,arguments)}function _fd_write(fd,iov,iovcnt,pnum){try{var stream=SYSCALLS.getStreamFromFD(fd);var num=SYSCALLS.doWritev(stream,iov,iovcnt);HEAP32[pnum>>2]=num;return 0}catch(e){if(typeof FS==="undefined"||!(e instanceof FS.ErrnoError))abort(e);return e.errno}}function ___wasi_fd_write(){return _fd_write.apply(null,arguments)}function getShiftFromSize(size){switch(size){case 1:return 0;case 2:return 1;case 4:return 2;case 8:return 3;default:throw new TypeError("Unknown type size: "+size)}}function embind_init_charCodes(){var codes=new Array(256);for(var i=0;i<256;++i){codes[i]=String.fromCharCode(i)}embind_charCodes=codes}var embind_charCodes=undefined;function readLatin1String(ptr){var ret="";var c=ptr;while(HEAPU8[c]){ret+=embind_charCodes[HEAPU8[c++]]}return ret}var awaitingDependencies={};var registeredTypes={};var typeDependencies={};var char_0=48;var char_9=57;function makeLegalFunctionName(name){if(undefined===name){return"_unknown"}name=name.replace(/[^a-zA-Z0-9_]/g,"$");var f=name.charCodeAt(0);if(f>=char_0&&f<=char_9){return"_"+name}else{return name}}function createNamedFunction(name,body){name=makeLegalFunctionName(name);return new Function("body","return function "+name+"() {\n"+'    "use strict";'+"    return body.apply(this, arguments);\n"+"};\n")(body)}function extendError(baseErrorType,errorName){var errorClass=createNamedFunction(errorName,function(message){this.name=errorName;this.message=message;var stack=new Error(message).stack;if(stack!==undefined){this.stack=this.toString()+"\n"+stack.replace(/^Error(:[^\n]*)?\n/,"")}});errorClass.prototype=Object.create(baseErrorType.prototype);errorClass.prototype.constructor=errorClass;errorClass.prototype.toString=function(){if(this.message===undefined){return this.name}else{return this.name+": "+this.message}};return errorClass}var BindingError=undefined;function throwBindingError(message){throw new BindingError(message)}var InternalError=undefined;function throwInternalError(message){throw new InternalError(message)}function whenDependentTypesAreResolved(myTypes,dependentTypes,getTypeConverters){myTypes.forEach(function(type){typeDependencies[type]=dependentTypes});function onComplete(typeConverters){var myTypeConverters=getTypeConverters(typeConverters);if(myTypeConverters.length!==myTypes.length){throwInternalError("Mismatched type converter count")}for(var i=0;i<myTypes.length;++i){registerType(myTypes[i],myTypeConverters[i])}}var typeConverters=new Array(dependentTypes.length);var unregisteredTypes=[];var registered=0;dependentTypes.forEach(function(dt,i){if(registeredTypes.hasOwnProperty(dt)){typeConverters[i]=registeredTypes[dt]}else{unregisteredTypes.push(dt);if(!awaitingDependencies.hasOwnProperty(dt)){awaitingDependencies[dt]=[]}awaitingDependencies[dt].push(function(){typeConverters[i]=registeredTypes[dt];++registered;if(registered===unregisteredTypes.length){onComplete(typeConverters)}})}});if(0===unregisteredTypes.length){onComplete(typeConverters)}}function registerType(rawType,registeredInstance,options){options=options||{};if(!("argPackAdvance"in registeredInstance)){throw new TypeError("registerType registeredInstance requires argPackAdvance")}var name=registeredInstance.name;if(!rawType){throwBindingError('type "'+name+'" must have a positive integer typeid pointer')}if(registeredTypes.hasOwnProperty(rawType)){if(options.ignoreDuplicateRegistrations){return}else{throwBindingError("Cannot register type '"+name+"' twice")}}registeredTypes[rawType]=registeredInstance;delete typeDependencies[rawType];if(awaitingDependencies.hasOwnProperty(rawType)){var callbacks=awaitingDependencies[rawType];delete awaitingDependencies[rawType];callbacks.forEach(function(cb){cb()})}}function __embind_register_bool(rawType,name,size,trueValue,falseValue){var shift=getShiftFromSize(size);name=readLatin1String(name);registerType(rawType,{name:name,"fromWireType":function(wt){return!!wt},"toWireType":function(destructors,o){return o?trueValue:falseValue},"argPackAdvance":8,"readValueFromPointer":function(pointer){var heap;if(size===1){heap=HEAP8}else if(size===2){heap=HEAP16}else if(size===4){heap=HEAP32}else{throw new TypeError("Unknown boolean type size: "+name)}return this["fromWireType"](heap[pointer>>shift])},destructorFunction:null})}var emval_free_list=[];var emval_handle_array=[{},{value:undefined},{value:null},{value:true},{value:false}];function __emval_decref(handle){if(handle>4&&0===--emval_handle_array[handle].refcount){emval_handle_array[handle]=undefined;emval_free_list.push(handle)}}function count_emval_handles(){var count=0;for(var i=5;i<emval_handle_array.length;++i){if(emval_handle_array[i]!==undefined){++count}}return count}function get_first_emval(){for(var i=5;i<emval_handle_array.length;++i){if(emval_handle_array[i]!==undefined){return emval_handle_array[i]}}return null}function init_emval(){Module["count_emval_handles"]=count_emval_handles;Module["get_first_emval"]=get_first_emval}function __emval_register(value){switch(value){case undefined:{return 1}case null:{return 2}case true:{return 3}case false:{return 4}default:{var handle=emval_free_list.length?emval_free_list.pop():emval_handle_array.length;emval_handle_array[handle]={refcount:1,value:value};return handle}}}function simpleReadValueFromPointer(pointer){return this["fromWireType"](HEAPU32[pointer>>2])}function __embind_register_emval(rawType,name){name=readLatin1String(name);registerType(rawType,{name:name,"fromWireType":function(handle){var rv=emval_handle_array[handle].value;__emval_decref(handle);return rv},"toWireType":function(destructors,value){return __emval_register(value)},"argPackAdvance":8,"readValueFromPointer":simpleReadValueFromPointer,destructorFunction:null})}function _embind_repr(v){if(v===null){return"null"}var t=typeof v;if(t==="object"||t==="array"||t==="function"){return v.toString()}else{return""+v}}function floatReadValueFromPointer(name,shift){switch(shift){case 2:return function(pointer){return this["fromWireType"](HEAPF32[pointer>>2])};case 3:return function(pointer){return this["fromWireType"](HEAPF64[pointer>>3])};default:throw new TypeError("Unknown float type: "+name)}}function __embind_register_float(rawType,name,size){var shift=getShiftFromSize(size);name=readLatin1String(name);registerType(rawType,{name:name,"fromWireType":function(value){return value},"toWireType":function(destructors,value){if(typeof value!=="number"&&typeof value!=="boolean"){throw new TypeError('Cannot convert "'+_embind_repr(value)+'" to '+this.name)}return value},"argPackAdvance":8,"readValueFromPointer":floatReadValueFromPointer(name,shift),destructorFunction:null})}function new_(constructor,argumentList){if(!(constructor instanceof Function)){throw new TypeError("new_ called with constructor type "+typeof constructor+" which is not a function")}var dummy=createNamedFunction(constructor.name||"unknownFunctionName",function(){});dummy.prototype=constructor.prototype;var obj=new dummy;var r=constructor.apply(obj,argumentList);return r instanceof Object?r:obj}function runDestructors(destructors){while(destructors.length){var ptr=destructors.pop();var del=destructors.pop();del(ptr)}}function craftInvokerFunction(humanName,argTypes,classType,cppInvokerFunc,cppTargetFunc){var argCount=argTypes.length;if(argCount<2){throwBindingError("argTypes array size mismatch! Must at least get return value and 'this' types!")}var isClassMethodFunc=argTypes[1]!==null&&classType!==null;var needsDestructorStack=false;for(var i=1;i<argTypes.length;++i){if(argTypes[i]!==null&&argTypes[i].destructorFunction===undefined){needsDestructorStack=true;break}}var returns=argTypes[0].name!=="void";var argsList="";var argsListWired="";for(var i=0;i<argCount-2;++i){argsList+=(i!==0?", ":"")+"arg"+i;argsListWired+=(i!==0?", ":"")+"arg"+i+"Wired"}var invokerFnBody="return function "+makeLegalFunctionName(humanName)+"("+argsList+") {\n"+"if (arguments.length !== "+(argCount-2)+") {\n"+"throwBindingError('function "+humanName+" called with ' + arguments.length + ' arguments, expected "+(argCount-2)+" args!');\n"+"}\n";if(needsDestructorStack){invokerFnBody+="var destructors = [];\n"}var dtorStack=needsDestructorStack?"destructors":"null";var args1=["throwBindingError","invoker","fn","runDestructors","retType","classParam"];var args2=[throwBindingError,cppInvokerFunc,cppTargetFunc,runDestructors,argTypes[0],argTypes[1]];if(isClassMethodFunc){invokerFnBody+="var thisWired = classParam.toWireType("+dtorStack+", this);\n"}for(var i=0;i<argCount-2;++i){invokerFnBody+="var arg"+i+"Wired = argType"+i+".toWireType("+dtorStack+", arg"+i+"); // "+argTypes[i+2].name+"\n";args1.push("argType"+i);args2.push(argTypes[i+2])}if(isClassMethodFunc){argsListWired="thisWired"+(argsListWired.length>0?", ":"")+argsListWired}invokerFnBody+=(returns?"var rv = ":"")+"invoker(fn"+(argsListWired.length>0?", ":"")+argsListWired+");\n";if(needsDestructorStack){invokerFnBody+="runDestructors(destructors);\n"}else{for(var i=isClassMethodFunc?1:2;i<argTypes.length;++i){var paramName=i===1?"thisWired":"arg"+(i-2)+"Wired";if(argTypes[i].destructorFunction!==null){invokerFnBody+=paramName+"_dtor("+paramName+"); // "+argTypes[i].name+"\n";args1.push(paramName+"_dtor");args2.push(argTypes[i].destructorFunction)}}}if(returns){invokerFnBody+="var ret = retType.fromWireType(rv);\n"+"return ret;\n"}else{}invokerFnBody+="}\n";args1.push(invokerFnBody);var invokerFunction=new_(Function,args1).apply(null,args2);return invokerFunction}function ensureOverloadTable(proto,methodName,humanName){if(undefined===proto[methodName].overloadTable){var prevFunc=proto[methodName];proto[methodName]=function(){if(!proto[methodName].overloadTable.hasOwnProperty(arguments.length)){throwBindingError("Function '"+humanName+"' called with an invalid number of arguments ("+arguments.length+") - expects one of ("+proto[methodName].overloadTable+")!")}return proto[methodName].overloadTable[arguments.length].apply(this,arguments)};proto[methodName].overloadTable=[];proto[methodName].overloadTable[prevFunc.argCount]=prevFunc}}function exposePublicSymbol(name,value,numArguments){if(Module.hasOwnProperty(name)){if(undefined===numArguments||undefined!==Module[name].overloadTable&&undefined!==Module[name].overloadTable[numArguments]){throwBindingError("Cannot register public name '"+name+"' twice")}ensureOverloadTable(Module,name,name);if(Module.hasOwnProperty(numArguments)){throwBindingError("Cannot register multiple overloads of a function with the same number of arguments ("+numArguments+")!")}Module[name].overloadTable[numArguments]=value}else{Module[name]=value;if(undefined!==numArguments){Module[name].numArguments=numArguments}}}function heap32VectorToArray(count,firstElement){var array=[];for(var i=0;i<count;i++){array.push(HEAP32[(firstElement>>2)+i])}return array}function replacePublicSymbol(name,value,numArguments){if(!Module.hasOwnProperty(name)){throwInternalError("Replacing nonexistant public symbol")}if(undefined!==Module[name].overloadTable&&undefined!==numArguments){Module[name].overloadTable[numArguments]=value}else{Module[name]=value;Module[name].argCount=numArguments}}function embind__requireFunction(signature,rawFunction){signature=readLatin1String(signature);function makeDynCaller(dynCall){var args=[];for(var i=1;i<signature.length;++i){args.push("a"+i)}var name="dynCall_"+signature+"_"+rawFunction;var body="return function "+name+"("+args.join(", ")+") {\n";body+="    return dynCall(rawFunction"+(args.length?", ":"")+args.join(", ")+");\n";body+="};\n";return new Function("dynCall","rawFunction",body)(dynCall,rawFunction)}var fp;if(Module["FUNCTION_TABLE_"+signature]!==undefined){fp=Module["FUNCTION_TABLE_"+signature][rawFunction]}else if(typeof FUNCTION_TABLE!=="undefined"){fp=FUNCTION_TABLE[rawFunction]}else{var dc=Module["dynCall_"+signature];if(dc===undefined){dc=Module["dynCall_"+signature.replace(/f/g,"d")];if(dc===undefined){throwBindingError("No dynCall invoker for signature: "+signature)}}fp=makeDynCaller(dc)}if(typeof fp!=="function"){throwBindingError("unknown function pointer with signature "+signature+": "+rawFunction)}return fp}var UnboundTypeError=undefined;function getTypeName(type){var ptr=___getTypeName(type);var rv=readLatin1String(ptr);_free(ptr);return rv}function throwUnboundTypeError(message,types){var unboundTypes=[];var seen={};function visit(type){if(seen[type]){return}if(registeredTypes[type]){return}if(typeDependencies[type]){typeDependencies[type].forEach(visit);return}unboundTypes.push(type);seen[type]=true}types.forEach(visit);throw new UnboundTypeError(message+": "+unboundTypes.map(getTypeName).join([", "]))}function __embind_register_function(name,argCount,rawArgTypesAddr,signature,rawInvoker,fn){var argTypes=heap32VectorToArray(argCount,rawArgTypesAddr);name=readLatin1String(name);rawInvoker=embind__requireFunction(signature,rawInvoker);exposePublicSymbol(name,function(){throwUnboundTypeError("Cannot call "+name+" due to unbound types",argTypes)},argCount-1);whenDependentTypesAreResolved([],argTypes,function(argTypes){var invokerArgsArray=[argTypes[0],null].concat(argTypes.slice(1));replacePublicSymbol(name,craftInvokerFunction(name,invokerArgsArray,null,rawInvoker,fn),argCount-1);return[]})}function integerReadValueFromPointer(name,shift,signed){switch(shift){case 0:return signed?function readS8FromPointer(pointer){return HEAP8[pointer]}:function readU8FromPointer(pointer){return HEAPU8[pointer]};case 1:return signed?function readS16FromPointer(pointer){return HEAP16[pointer>>1]}:function readU16FromPointer(pointer){return HEAPU16[pointer>>1]};case 2:return signed?function readS32FromPointer(pointer){return HEAP32[pointer>>2]}:function readU32FromPointer(pointer){return HEAPU32[pointer>>2]};default:throw new TypeError("Unknown integer type: "+name)}}function __embind_register_integer(primitiveType,name,size,minRange,maxRange){name=readLatin1String(name);if(maxRange===-1){maxRange=4294967295}var shift=getShiftFromSize(size);var fromWireType=function(value){return value};if(minRange===0){var bitshift=32-8*size;fromWireType=function(value){return value<<bitshift>>>bitshift}}var isUnsignedType=name.indexOf("unsigned")!=-1;registerType(primitiveType,{name:name,"fromWireType":fromWireType,"toWireType":function(destructors,value){if(typeof value!=="number"&&typeof value!=="boolean"){throw new TypeError('Cannot convert "'+_embind_repr(value)+'" to '+this.name)}if(value<minRange||value>maxRange){throw new TypeError('Passing a number "'+_embind_repr(value)+'" from JS side to C/C++ side to an argument of type "'+name+'", which is outside the valid range ['+minRange+", "+maxRange+"]!")}return isUnsignedType?value>>>0:value|0},"argPackAdvance":8,"readValueFromPointer":integerReadValueFromPointer(name,shift,minRange!==0),destructorFunction:null})}function __embind_register_memory_view(rawType,dataTypeIndex,name){var typeMapping=[Int8Array,Uint8Array,Int16Array,Uint16Array,Int32Array,Uint32Array,Float32Array,Float64Array];var TA=typeMapping[dataTypeIndex];function decodeMemoryView(handle){handle=handle>>2;var heap=HEAPU32;var size=heap[handle];var data=heap[handle+1];return new TA(heap["buffer"],data,size)}name=readLatin1String(name);registerType(rawType,{name:name,"fromWireType":decodeMemoryView,"argPackAdvance":8,"readValueFromPointer":decodeMemoryView},{ignoreDuplicateRegistrations:true})}function __embind_register_std_string(rawType,name){name=readLatin1String(name);var stdStringIsUTF8=name==="std::string";registerType(rawType,{name:name,"fromWireType":function(value){var length=HEAPU32[value>>2];var str;if(stdStringIsUTF8){var endChar=HEAPU8[value+4+length];var endCharSwap=0;if(endChar!=0){endCharSwap=endChar;HEAPU8[value+4+length]=0}var decodeStartPtr=value+4;for(var i=0;i<=length;++i){var currentBytePtr=value+4+i;if(HEAPU8[currentBytePtr]==0){var stringSegment=UTF8ToString(decodeStartPtr);if(str===undefined)str=stringSegment;else{str+=String.fromCharCode(0);str+=stringSegment}decodeStartPtr=currentBytePtr+1}}if(endCharSwap!=0)HEAPU8[value+4+length]=endCharSwap}else{var a=new Array(length);for(var i=0;i<length;++i){a[i]=String.fromCharCode(HEAPU8[value+4+i])}str=a.join("")}_free(value);return str},"toWireType":function(destructors,value){if(value instanceof ArrayBuffer){value=new Uint8Array(value)}var getLength;var valueIsOfTypeString=typeof value==="string";if(!(valueIsOfTypeString||value instanceof Uint8Array||value instanceof Uint8ClampedArray||value instanceof Int8Array)){throwBindingError("Cannot pass non-string to std::string")}if(stdStringIsUTF8&&valueIsOfTypeString){getLength=function(){return lengthBytesUTF8(value)}}else{getLength=function(){return value.length}}var length=getLength();var ptr=_malloc(4+length+1);HEAPU32[ptr>>2]=length;if(stdStringIsUTF8&&valueIsOfTypeString){stringToUTF8(value,ptr+4,length+1)}else{if(valueIsOfTypeString){for(var i=0;i<length;++i){var charCode=value.charCodeAt(i);if(charCode>255){_free(ptr);throwBindingError("String has UTF-16 code units that do not fit in 8 bits")}HEAPU8[ptr+4+i]=charCode}}else{for(var i=0;i<length;++i){HEAPU8[ptr+4+i]=value[i]}}}if(destructors!==null){destructors.push(_free,ptr)}return ptr},"argPackAdvance":8,"readValueFromPointer":simpleReadValueFromPointer,destructorFunction:function(ptr){_free(ptr)}})}function __embind_register_std_wstring(rawType,charSize,name){name=readLatin1String(name);var getHeap,shift;if(charSize===2){getHeap=function(){return HEAPU16};shift=1}else if(charSize===4){getHeap=function(){return HEAPU32};shift=2}registerType(rawType,{name:name,"fromWireType":function(value){var HEAP=getHeap();var length=HEAPU32[value>>2];var a=new Array(length);var start=value+4>>shift;for(var i=0;i<length;++i){a[i]=String.fromCharCode(HEAP[start+i])}_free(value);return a.join("")},"toWireType":function(destructors,value){var length=value.length;var ptr=_malloc(4+length*charSize);var HEAP=getHeap();HEAPU32[ptr>>2]=length;var start=ptr+4>>shift;for(var i=0;i<length;++i){HEAP[start+i]=value.charCodeAt(i)}if(destructors!==null){destructors.push(_free,ptr)}return ptr},"argPackAdvance":8,"readValueFromPointer":simpleReadValueFromPointer,destructorFunction:function(ptr){_free(ptr)}})}function __embind_register_void(rawType,name){name=readLatin1String(name);registerType(rawType,{isVoid:true,name:name,"argPackAdvance":0,"fromWireType":function(){return undefined},"toWireType":function(destructors,o){return undefined}})}function _abort(){abort()}function _atexit(func,arg){warnOnce("atexit() called, but EXIT_RUNTIME is not set, so atexits() will not be called. set EXIT_RUNTIME to 1 (see the FAQ)");__ATEXIT__.unshift({func:func,arg:arg})}function _emscripten_get_heap_size(){return HEAP8.length}function emscripten_realloc_buffer(size){try{wasmMemory.grow(size-buffer.byteLength+65535>>16);updateGlobalBufferAndViews(wasmMemory.buffer);return 1}catch(e){console.error("emscripten_realloc_buffer: Attempted to grow heap from "+buffer.byteLength+" bytes to "+size+" bytes, but got error: "+e)}}function _emscripten_resize_heap(requestedSize){var oldSize=_emscripten_get_heap_size();assert(requestedSize>oldSize);var PAGE_MULTIPLE=65536;var LIMIT=2147483648-PAGE_MULTIPLE;if(requestedSize>LIMIT){err("Cannot enlarge memory, asked to go up to "+requestedSize+" bytes, but the limit is "+LIMIT+" bytes!");return false}var MIN_TOTAL_MEMORY=16777216;var newSize=Math.max(oldSize,MIN_TOTAL_MEMORY);while(newSize<requestedSize){if(newSize<=536870912){newSize=alignUp(2*newSize,PAGE_MULTIPLE)}else{newSize=Math.min(alignUp((3*newSize+2147483648)/4,PAGE_MULTIPLE),LIMIT)}if(newSize===oldSize){warnOnce("Cannot ask for more memory since we reached the practical limit in browsers (which is just below 2GB), so the request would have failed. Requesting only "+HEAP8.length)}}var replacement=emscripten_realloc_buffer(newSize);if(!replacement){err("Failed to grow the heap from "+oldSize+" bytes to "+newSize+" bytes, not enough memory!");return false}return true}function _getenv(name){if(name===0)return 0;name=UTF8ToString(name);if(!ENV.hasOwnProperty(name))return 0;if(_getenv.ret)_free(_getenv.ret);_getenv.ret=allocateUTF8(ENV[name]);return _getenv.ret}var ___tm_timezone=(stringToUTF8("GMT",1028336,4),1028336);function _gmtime_r(time,tmPtr){var date=new Date(HEAP32[time>>2]*1e3);HEAP32[tmPtr>>2]=date.getUTCSeconds();HEAP32[tmPtr+4>>2]=date.getUTCMinutes();HEAP32[tmPtr+8>>2]=date.getUTCHours();HEAP32[tmPtr+12>>2]=date.getUTCDate();HEAP32[tmPtr+16>>2]=date.getUTCMonth();HEAP32[tmPtr+20>>2]=date.getUTCFullYear()-1900;HEAP32[tmPtr+24>>2]=date.getUTCDay();HEAP32[tmPtr+36>>2]=0;HEAP32[tmPtr+32>>2]=0;var start=Date.UTC(date.getUTCFullYear(),0,1,0,0,0,0);var yday=(date.getTime()-start)/(1e3*60*60*24)|0;HEAP32[tmPtr+28>>2]=yday;HEAP32[tmPtr+40>>2]=___tm_timezone;return tmPtr}function _llvm_eh_typeid_for(type){return type}function _llvm_stackrestore(p){var self=_llvm_stacksave;var ret=self.LLVM_SAVEDSTACKS[p];self.LLVM_SAVEDSTACKS.splice(p,1);stackRestore(ret)}function _llvm_stacksave(){var self=_llvm_stacksave;if(!self.LLVM_SAVEDSTACKS){self.LLVM_SAVEDSTACKS=[]}self.LLVM_SAVEDSTACKS.push(stackSave());return self.LLVM_SAVEDSTACKS.length-1}function _llvm_trap(){abort("trap!")}function _emscripten_memcpy_big(dest,src,num){HEAPU8.set(HEAPU8.subarray(src,src+num),dest)}function _tzset(){if(_tzset.called)return;_tzset.called=true;HEAP32[__get_timezone()>>2]=(new Date).getTimezoneOffset()*60;var currentYear=(new Date).getFullYear();var winter=new Date(currentYear,0,1);var summer=new Date(currentYear,6,1);HEAP32[__get_daylight()>>2]=Number(winter.getTimezoneOffset()!=summer.getTimezoneOffset());function extractZone(date){var match=date.toTimeString().match(/\(([A-Za-z ]+)\)$/);return match?match[1]:"GMT"}var winterName=extractZone(winter);var summerName=extractZone(summer);var winterNamePtr=allocate(intArrayFromString(winterName),"i8",ALLOC_NORMAL);var summerNamePtr=allocate(intArrayFromString(summerName),"i8",ALLOC_NORMAL);if(summer.getTimezoneOffset()<winter.getTimezoneOffset()){HEAP32[__get_tzname()>>2]=winterNamePtr;HEAP32[__get_tzname()+4>>2]=summerNamePtr}else{HEAP32[__get_tzname()>>2]=summerNamePtr;HEAP32[__get_tzname()+4>>2]=winterNamePtr}}function _mktime(tmPtr){_tzset();var date=new Date(HEAP32[tmPtr+20>>2]+1900,HEAP32[tmPtr+16>>2],HEAP32[tmPtr+12>>2],HEAP32[tmPtr+8>>2],HEAP32[tmPtr+4>>2],HEAP32[tmPtr>>2],0);var dst=HEAP32[tmPtr+32>>2];var guessedOffset=date.getTimezoneOffset();var start=new Date(date.getFullYear(),0,1);var summerOffset=new Date(date.getFullYear(),6,1).getTimezoneOffset();var winterOffset=start.getTimezoneOffset();var dstOffset=Math.min(winterOffset,summerOffset);if(dst<0){HEAP32[tmPtr+32>>2]=Number(summerOffset!=winterOffset&&dstOffset==guessedOffset)}else if(dst>0!=(dstOffset==guessedOffset)){var nonDstOffset=Math.max(winterOffset,summerOffset);var trueOffset=dst>0?dstOffset:nonDstOffset;date.setTime(date.getTime()+(trueOffset-guessedOffset)*6e4)}HEAP32[tmPtr+24>>2]=date.getDay();var yday=(date.getTime()-start.getTime())/(1e3*60*60*24)|0;HEAP32[tmPtr+28>>2]=yday;return date.getTime()/1e3|0}var __sigalrm_handler=0;function _signal(sig,func){if(sig==14){__sigalrm_handler=func}else{err("Calling stub instead of signal()")}return 0}function __isLeapYear(year){return year%4===0&&(year%100!==0||year%400===0)}function __arraySum(array,index){var sum=0;for(var i=0;i<=index;sum+=array[i++]);return sum}var __MONTH_DAYS_LEAP=[31,29,31,30,31,30,31,31,30,31,30,31];var __MONTH_DAYS_REGULAR=[31,28,31,30,31,30,31,31,30,31,30,31];function __addDays(date,days){var newDate=new Date(date.getTime());while(days>0){var leap=__isLeapYear(newDate.getFullYear());var currentMonth=newDate.getMonth();var daysInCurrentMonth=(leap?__MONTH_DAYS_LEAP:__MONTH_DAYS_REGULAR)[currentMonth];if(days>daysInCurrentMonth-newDate.getDate()){days-=daysInCurrentMonth-newDate.getDate()+1;newDate.setDate(1);if(currentMonth<11){newDate.setMonth(currentMonth+1)}else{newDate.setMonth(0);newDate.setFullYear(newDate.getFullYear()+1)}}else{newDate.setDate(newDate.getDate()+days);return newDate}}return newDate}function _strftime(s,maxsize,format,tm){var tm_zone=HEAP32[tm+40>>2];var date={tm_sec:HEAP32[tm>>2],tm_min:HEAP32[tm+4>>2],tm_hour:HEAP32[tm+8>>2],tm_mday:HEAP32[tm+12>>2],tm_mon:HEAP32[tm+16>>2],tm_year:HEAP32[tm+20>>2],tm_wday:HEAP32[tm+24>>2],tm_yday:HEAP32[tm+28>>2],tm_isdst:HEAP32[tm+32>>2],tm_gmtoff:HEAP32[tm+36>>2],tm_zone:tm_zone?UTF8ToString(tm_zone):""};var pattern=UTF8ToString(format);var EXPANSION_RULES_1={"%c":"%a %b %d %H:%M:%S %Y","%D":"%m/%d/%y","%F":"%Y-%m-%d","%h":"%b","%r":"%I:%M:%S %p","%R":"%H:%M","%T":"%H:%M:%S","%x":"%m/%d/%y","%X":"%H:%M:%S","%Ec":"%c","%EC":"%C","%Ex":"%m/%d/%y","%EX":"%H:%M:%S","%Ey":"%y","%EY":"%Y","%Od":"%d","%Oe":"%e","%OH":"%H","%OI":"%I","%Om":"%m","%OM":"%M","%OS":"%S","%Ou":"%u","%OU":"%U","%OV":"%V","%Ow":"%w","%OW":"%W","%Oy":"%y"};for(var rule in EXPANSION_RULES_1){pattern=pattern.replace(new RegExp(rule,"g"),EXPANSION_RULES_1[rule])}var WEEKDAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];function leadingSomething(value,digits,character){var str=typeof value==="number"?value.toString():value||"";while(str.length<digits){str=character[0]+str}return str}function leadingNulls(value,digits){return leadingSomething(value,digits,"0")}function compareByDay(date1,date2){function sgn(value){return value<0?-1:value>0?1:0}var compare;if((compare=sgn(date1.getFullYear()-date2.getFullYear()))===0){if((compare=sgn(date1.getMonth()-date2.getMonth()))===0){compare=sgn(date1.getDate()-date2.getDate())}}return compare}function getFirstWeekStartDate(janFourth){switch(janFourth.getDay()){case 0:return new Date(janFourth.getFullYear()-1,11,29);case 1:return janFourth;case 2:return new Date(janFourth.getFullYear(),0,3);case 3:return new Date(janFourth.getFullYear(),0,2);case 4:return new Date(janFourth.getFullYear(),0,1);case 5:return new Date(janFourth.getFullYear()-1,11,31);case 6:return new Date(janFourth.getFullYear()-1,11,30)}}function getWeekBasedYear(date){var thisDate=__addDays(new Date(date.tm_year+1900,0,1),date.tm_yday);var janFourthThisYear=new Date(thisDate.getFullYear(),0,4);var janFourthNextYear=new Date(thisDate.getFullYear()+1,0,4);var firstWeekStartThisYear=getFirstWeekStartDate(janFourthThisYear);var firstWeekStartNextYear=getFirstWeekStartDate(janFourthNextYear);if(compareByDay(firstWeekStartThisYear,thisDate)<=0){if(compareByDay(firstWeekStartNextYear,thisDate)<=0){return thisDate.getFullYear()+1}else{return thisDate.getFullYear()}}else{return thisDate.getFullYear()-1}}var EXPANSION_RULES_2={"%a":function(date){return WEEKDAYS[date.tm_wday].substring(0,3)},"%A":function(date){return WEEKDAYS[date.tm_wday]},"%b":function(date){return MONTHS[date.tm_mon].substring(0,3)},"%B":function(date){return MONTHS[date.tm_mon]},"%C":function(date){var year=date.tm_year+1900;return leadingNulls(year/100|0,2)},"%d":function(date){return leadingNulls(date.tm_mday,2)},"%e":function(date){return leadingSomething(date.tm_mday,2," ")},"%g":function(date){return getWeekBasedYear(date).toString().substring(2)},"%G":function(date){return getWeekBasedYear(date)},"%H":function(date){return leadingNulls(date.tm_hour,2)},"%I":function(date){var twelveHour=date.tm_hour;if(twelveHour==0)twelveHour=12;else if(twelveHour>12)twelveHour-=12;return leadingNulls(twelveHour,2)},"%j":function(date){return leadingNulls(date.tm_mday+__arraySum(__isLeapYear(date.tm_year+1900)?__MONTH_DAYS_LEAP:__MONTH_DAYS_REGULAR,date.tm_mon-1),3)},"%m":function(date){return leadingNulls(date.tm_mon+1,2)},"%M":function(date){return leadingNulls(date.tm_min,2)},"%n":function(){return"\n"},"%p":function(date){if(date.tm_hour>=0&&date.tm_hour<12){return"AM"}else{return"PM"}},"%S":function(date){return leadingNulls(date.tm_sec,2)},"%t":function(){return"\t"},"%u":function(date){return date.tm_wday||7},"%U":function(date){var janFirst=new Date(date.tm_year+1900,0,1);var firstSunday=janFirst.getDay()===0?janFirst:__addDays(janFirst,7-janFirst.getDay());var endDate=new Date(date.tm_year+1900,date.tm_mon,date.tm_mday);if(compareByDay(firstSunday,endDate)<0){var februaryFirstUntilEndMonth=__arraySum(__isLeapYear(endDate.getFullYear())?__MONTH_DAYS_LEAP:__MONTH_DAYS_REGULAR,endDate.getMonth()-1)-31;var firstSundayUntilEndJanuary=31-firstSunday.getDate();var days=firstSundayUntilEndJanuary+februaryFirstUntilEndMonth+endDate.getDate();return leadingNulls(Math.ceil(days/7),2)}return compareByDay(firstSunday,janFirst)===0?"01":"00"},"%V":function(date){var janFourthThisYear=new Date(date.tm_year+1900,0,4);var janFourthNextYear=new Date(date.tm_year+1901,0,4);var firstWeekStartThisYear=getFirstWeekStartDate(janFourthThisYear);var firstWeekStartNextYear=getFirstWeekStartDate(janFourthNextYear);var endDate=__addDays(new Date(date.tm_year+1900,0,1),date.tm_yday);if(compareByDay(endDate,firstWeekStartThisYear)<0){return"53"}if(compareByDay(firstWeekStartNextYear,endDate)<=0){return"01"}var daysDifference;if(firstWeekStartThisYear.getFullYear()<date.tm_year+1900){daysDifference=date.tm_yday+32-firstWeekStartThisYear.getDate()}else{daysDifference=date.tm_yday+1-firstWeekStartThisYear.getDate()}return leadingNulls(Math.ceil(daysDifference/7),2)},"%w":function(date){return date.tm_wday},"%W":function(date){var janFirst=new Date(date.tm_year,0,1);var firstMonday=janFirst.getDay()===1?janFirst:__addDays(janFirst,janFirst.getDay()===0?1:7-janFirst.getDay()+1);var endDate=new Date(date.tm_year+1900,date.tm_mon,date.tm_mday);if(compareByDay(firstMonday,endDate)<0){var februaryFirstUntilEndMonth=__arraySum(__isLeapYear(endDate.getFullYear())?__MONTH_DAYS_LEAP:__MONTH_DAYS_REGULAR,endDate.getMonth()-1)-31;var firstMondayUntilEndJanuary=31-firstMonday.getDate();var days=firstMondayUntilEndJanuary+februaryFirstUntilEndMonth+endDate.getDate();return leadingNulls(Math.ceil(days/7),2)}return compareByDay(firstMonday,janFirst)===0?"01":"00"},"%y":function(date){return(date.tm_year+1900).toString().substring(2)},"%Y":function(date){return date.tm_year+1900},"%z":function(date){var off=date.tm_gmtoff;var ahead=off>=0;off=Math.abs(off)/60;off=off/60*100+off%60;return(ahead?"+":"-")+String("0000"+off).slice(-4)},"%Z":function(date){return date.tm_zone},"%%":function(){return"%"}};for(var rule in EXPANSION_RULES_2){if(pattern.indexOf(rule)>=0){pattern=pattern.replace(new RegExp(rule,"g"),EXPANSION_RULES_2[rule](date))}}var bytes=intArrayFromString(pattern,false);if(bytes.length>maxsize){return 0}writeArrayToMemory(bytes,s);return bytes.length-1}function _strftime_l(s,maxsize,format,tm){return _strftime(s,maxsize,format,tm)}function _time(ptr){var ret=Date.now()/1e3|0;if(ptr){HEAP32[ptr>>2]=ret}return ret}FS.staticInit();embind_init_charCodes();BindingError=Module["BindingError"]=extendError(Error,"BindingError");InternalError=Module["InternalError"]=extendError(Error,"InternalError");init_emval();UnboundTypeError=Module["UnboundTypeError"]=extendError(Error,"UnboundTypeError");function intArrayFromString(stringy,dontAddNull,length){var len=length>0?length:lengthBytesUTF8(stringy)+1;var u8array=new Array(len);var numBytesWritten=stringToUTF8Array(stringy,u8array,0,u8array.length);if(dontAddNull)u8array.length=numBytesWritten;return u8array}var debug_table_diii=[0,"__ZNSt3__215__num_get_floatIeEET_PKcS3_Rj","__ZNSt3__215__num_get_floatIdEET_PKcS3_Rj",0];var debug_table_fiii=[0,"__ZNSt3__215__num_get_floatIfEET_PKcS3_Rj"];var debug_table_i=[0,"__ZNSt3__26locale7classicEv","__ZN5boost6detail11crc_table_tILi32ELi8ELy79764919ELb1EE9get_tableEv","__ZN8Language9SingletonINS_6GermanEE8instanceEv","__ZN8Language9SingletonINS_7EnglishEE8instanceEv","__ZN8Language9SingletonINS_7SpanishEE8instanceEv","__ZN8Language9SingletonINS_6FrenchEE8instanceEv","__ZN8Language9SingletonINS_7ItalianEE8instanceEv","__ZN8Language9SingletonINS_5DutchEE8instanceEv","__ZN8Language9SingletonINS_10PortugueseEE8instanceEv","__ZN8Language9SingletonINS_7RussianEE8instanceEv","__ZN8Language9SingletonINS_8JapaneseEE8instanceEv","__ZN8Language9SingletonINS_18Chinese_SimplifiedEE8instanceEv","__ZN8Language9SingletonINS_9EsperantoEE8instanceEv","__ZN8Language9SingletonINS_6LojbanEE8instanceEv","_pthread_self","__ZNSt3__26__clocEv","__ZNSt3__26locale5__imp12make_classicEv","__ZNSt3__26locale5__imp11make_globalEv","__ZNSt3__26locale8__globalEv",0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_ii=[0,"__ZNKSt13runtime_error4whatEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEE5cloneEv","__ZNK5boost3any6holderINS_13property_tree11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS2_13id_translatorISA_EEEEE4typeEv","__ZNK5boost3any6holderINS_13property_tree11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS2_13id_translatorISA_EEEEE5cloneEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEE5cloneEv","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE4syncEv","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE9showmanycEv","__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE9underflowEv","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE5uflowEv","__ZNK5boost3any6holderINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE4typeEv","__ZNK5boost3any6holderINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE5cloneEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEE5cloneEv","__ZNKSt11logic_error4whatEv","__ZNK5boost7bad_get4whatEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEE5cloneEv","__ZNK5boost16bad_lexical_cast4whatEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEE5cloneEv","__ZNK5boost6system12system_error4whatEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEE5cloneEv","__ZNK5boost6system6detail22generic_error_category4nameEv","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEE5cloneEv","__ZTv0_n12_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEE5cloneEv","__ZN5boost6detail18sp_counted_impl_pdIPN6crypto7rs_commEPFvPvEE19get_untyped_deleterEv","__ZNK2hw4core14device_defaultcvbEv","__ZN2hw4core14device_default4initEv","__ZN2hw4core14device_default7releaseEv","__ZN2hw4core14device_default7connectEv","__ZN2hw4core14device_default10disconnectEv","__ZNK2hw6device8get_modeEv","__ZNK2hw4core14device_default8get_typeEv","__ZNK2hw6device15device_protocolEv","__ZN2hw4core14device_default8try_lockEv","__ZN2hw4core14device_default8close_txEv","__ZNK2hw6device16has_ki_cold_syncEv","__ZNK2hw6device16has_tx_cold_signEv","__ZNK2hw6device19has_ki_live_refreshEv","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS5_3keyES8_S8_PKjE3__0EEE19get_untyped_deleterEv","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS5_3keyERKNSt3__26vectorINSA_IS6_NS9_9allocatorIS6_EEEENSB_ISD_EEEERKSD_jmRN2hw6deviceEE3__1EEE19get_untyped_deleterEv","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS7_mbRNSt3__212basic_stringIcNSB_11char_traitsIcEENSB_9allocatorIcEEEEE3__0EEE19get_untyped_deleterEv","___emscripten_stdout_close","___stdio_close","__ZNKSt3__217bad_function_call4whatEv","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE9underflowEv","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE4syncEv","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE9showmanycEv","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE9underflowEv","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE5uflowEv","__ZNKSt3__219__iostream_category4nameEv","__ZNSt3__211__stdoutbufIwE4syncEv","__ZNSt3__211__stdoutbufIcE4syncEv","__ZNSt3__210__stdinbufIwE9underflowEv","__ZNSt3__210__stdinbufIwE5uflowEv","__ZNSt3__210__stdinbufIcE9underflowEv","__ZNSt3__210__stdinbufIcE5uflowEv","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE13do_date_orderEv","__ZNKSt3__220__time_get_c_storageIcE7__weeksEv","__ZNKSt3__220__time_get_c_storageIcE8__monthsEv","__ZNKSt3__220__time_get_c_storageIcE7__am_pmEv","__ZNKSt3__220__time_get_c_storageIcE3__cEv","__ZNKSt3__220__time_get_c_storageIcE3__rEv","__ZNKSt3__220__time_get_c_storageIcE3__xEv","__ZNKSt3__220__time_get_c_storageIcE3__XEv","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE13do_date_orderEv","__ZNKSt3__220__time_get_c_storageIwE7__weeksEv","__ZNKSt3__220__time_get_c_storageIwE8__monthsEv","__ZNKSt3__220__time_get_c_storageIwE7__am_pmEv","__ZNKSt3__220__time_get_c_storageIwE3__cEv","__ZNKSt3__220__time_get_c_storageIwE3__rEv","__ZNKSt3__220__time_get_c_storageIwE3__xEv","__ZNKSt3__220__time_get_c_storageIwE3__XEv","__ZNKSt3__210moneypunctIcLb0EE16do_decimal_pointEv","__ZNKSt3__210moneypunctIcLb0EE16do_thousands_sepEv","__ZNKSt3__210moneypunctIcLb0EE14do_frac_digitsEv","__ZNKSt3__210moneypunctIcLb1EE16do_decimal_pointEv","__ZNKSt3__210moneypunctIcLb1EE16do_thousands_sepEv","__ZNKSt3__210moneypunctIcLb1EE14do_frac_digitsEv","__ZNKSt3__210moneypunctIwLb0EE16do_decimal_pointEv","__ZNKSt3__210moneypunctIwLb0EE16do_thousands_sepEv","__ZNKSt3__210moneypunctIwLb0EE14do_frac_digitsEv","__ZNKSt3__210moneypunctIwLb1EE16do_decimal_pointEv","__ZNKSt3__210moneypunctIwLb1EE16do_thousands_sepEv","__ZNKSt3__210moneypunctIwLb1EE14do_frac_digitsEv","__ZNKSt3__27codecvtIDic11__mbstate_tE11do_encodingEv","__ZNKSt3__27codecvtIDic11__mbstate_tE16do_always_noconvEv","__ZNKSt3__27codecvtIDic11__mbstate_tE13do_max_lengthEv","__ZNKSt3__27codecvtIwc11__mbstate_tE11do_encodingEv","__ZNKSt3__27codecvtIwc11__mbstate_tE16do_always_noconvEv","__ZNKSt3__27codecvtIwc11__mbstate_tE13do_max_lengthEv","__ZNKSt3__28numpunctIcE16do_decimal_pointEv","__ZNKSt3__28numpunctIcE16do_thousands_sepEv","__ZNKSt3__28numpunctIwE16do_decimal_pointEv","__ZNKSt3__28numpunctIwE16do_thousands_sepEv","__ZNKSt3__27codecvtIcc11__mbstate_tE11do_encodingEv","__ZNKSt3__27codecvtIcc11__mbstate_tE16do_always_noconvEv","__ZNKSt3__27codecvtIcc11__mbstate_tE13do_max_lengthEv","__ZNKSt3__27codecvtIDsc11__mbstate_tE11do_encodingEv","__ZNKSt3__27codecvtIDsc11__mbstate_tE16do_always_noconvEv","__ZNKSt3__27codecvtIDsc11__mbstate_tE13do_max_lengthEv","__ZNKSt3__224__generic_error_category4nameEv","__ZNKSt3__223__system_error_category4nameEv","__ZNKSt9bad_alloc4whatEv","__ZNKSt9exception4whatEv","__ZNKSt8bad_cast4whatEv","__ZNKSt10bad_typeid4whatEv","__ZN10emscripten8internal7InvokerINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEJEE6invokeEPFS8_vE","__ZN10emscripten8internal11BindingTypeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEvE10toWireTypeERKS8_","__Znwm","__ZNR5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEdeEv","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9not_foundEv","__ZNK5boost9iterators6detail20iterator_facade_baseINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEESB_NS5_4lessISB_EEE14assoc_iteratorENS5_4pairIKSB_SE_EENS0_27bidirectional_traversal_tagERSI_lLb0ELb0EEptEv","__ZNK5boost9iterators6detail20iterator_facade_baseINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEESB_NS5_4lessISB_EEE8iteratorENS5_4pairIKSB_SE_EENS0_27bidirectional_traversal_tagERSI_lLb0ELb0EEptEv","__ZNK5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEE6headerEv","__ZN5boost11multi_index6detail19bidir_node_iteratorINS1_20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseINSt3__24pairIKNS7_12basic_stringIcNS7_11char_traitsIcEENS7_9allocatorIcEEEENS_13property_tree11basic_ptreeISE_SE_NS7_4lessISE_EEEEEENSC_ISL_EEEEEEEEEppEv","__ZNK5boost11multi_index6detail10index_baseINSt3__24pairIKNS3_12basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEENS_13property_tree11basic_ptreeISA_SA_NS3_4lessISA_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_EEEENS0_18ordered_non_uniqueINSK_INSG_4subs7by_nameESM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_EENS0_6memberISH_SB_XadL_ZNSH_5firstEEEEESF_EESM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_EENS8_ISH_EEE11final_size_Ev","__ZN5boost11multi_index6detail20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseINSt3__24pairIKNS6_12basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEENS_13property_tree11basic_ptreeISD_SD_NS6_4lessISD_EEEEEENSB_ISK_EEEEEEE4nextEv","__ZN5boost11multi_index6detail20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseINSt3__24pairIKNS6_12basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEENS_13property_tree11basic_ptreeISD_SD_NS6_4lessISD_EEEEEENSB_ISK_EEEEEEE9from_implEPNS1_25sequenced_index_node_implISC_EE","__ZNK5boost11multi_index6detail18ordered_index_implINS0_6memberINSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEESC_XadL_ZNSI_5firstEEEEESG_NS1_9nth_layerILi2ESI_NS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EEEENS0_18ordered_non_uniqueINSN_INSH_4subs7by_nameESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EESJ_SG_EESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EENS9_ISI_EEEENS_3mpl6v_itemISU_NS10_7vector0ISP_EELi0EEENS1_22ordered_non_unique_tagENS1_19null_augment_policyEE6headerEv","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9not_foundEv","__ZNK5boost9iterators6detail20iterator_facade_baseINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEESB_NS5_4lessISB_EEE20const_assoc_iteratorENS5_4pairIKSB_SE_EENS0_27bidirectional_traversal_tagERKSI_lLb0ELb0EEptEv","__ZNKR5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEdeEv","__ZNSt3__24endlIcNS_11char_traitsIcEEEERNS_13basic_ostreamIT_T0_EES7_","__ZNK5boost11multi_index6detail10index_baseINSt3__24pairIKNS3_12basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEENS_13property_tree11basic_ptreeISA_SA_NS3_4lessISA_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_EEEENS0_18ordered_non_uniqueINSK_INSG_4subs7by_nameESM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_EENS0_6memberISH_SB_XadL_ZNSH_5firstEEEEESF_EESM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_SM_EENS8_ISH_EEE12final_empty_Ev","__ZNSt3__213basic_istreamIcNS_11char_traitsIcEEE3getEv","__ZNSt3__22wsIcNS_11char_traitsIcEEEERNS_13basic_istreamIT_T0_EES7_","__ZL18_heap_vals_ptr_forRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__ZNR5boost8optionalINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS1_9allocatorIS4_EEEEEdeEv","__ZNR5boost8optionalIyEdeEv","__ZNR5boost8optionalINSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS1_9allocatorIS4_EEEEEdeEv","__ZNR5boost8optionalIjEdeEv","__ZN16monero_fee_utils17get_fee_algorithmENSt3__28functionIFbhxEEE","__ZN5boost8optionalINSt3__213unordered_mapINS1_12basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS1_6vectorIN21monero_transfer_utils18RandomAmountOutputENS6_ISB_EEEENS1_4hashIS8_EENS1_8equal_toIS8_EENS6_INS1_4pairIKS8_SD_EEEEEEEptEv","__ZN5boost15optional_detail13optional_baseINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE8get_implEv","__ZNR5boost8optionalImEdeEv","__ZNR5boost8optionalIN10cryptonote11transactionEEdeEv","__ZNR5boost8optionalIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEEEdeEv","__ZNR5boost8optionalINSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS1_9allocatorISA_EEEEEdeEv","__ZN2hw10get_deviceERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN5boost17value_initializedIN6crypto10public_keyEEcvRS2_Ev","__ZNK5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEptEv","__ZN5boost17value_initializedIN10cryptonote20tx_destination_entryEEcvRS2_Ev","__ZN5boost15aligned_storageILm33ELm4EE7addressEv","__ZN5boost15aligned_storageILm72ELm8EE7addressEv","__ZN5boost17value_initializedIN10cryptonote22account_public_addressEEcvRS2_Ev","__ZN5boost17value_initializedIN5tools8scrubbedIN19monero_wallet_utils19ec_nonscalar_16ByteEEEEcvRS5_Ev","__ZNR5boost8optionalIN19monero_wallet_utils17WalletDescriptionEEdeEv","__ZNR5boost8optionalIN19monero_wallet_utils18ComponentsFromSeedEEdeEv","__ZNR5boost8optionalIN4epee15wipeable_stringEEdeEv","__ZNK5boost8optionalINSt3__213unordered_mapINS1_12basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS1_6vectorIN21monero_transfer_utils18RandomAmountOutputENS6_ISB_EEEENS1_4hashIS8_EENS1_8equal_toIS8_EENS6_INS1_4pairIKS8_SD_EEEEEEEptEv","__ZNR5boost8optionalIhEdeEv","__ZN6crypto9check_keyERKNS_10public_keyE","__ZNK5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE4typeEv","__ZN5boost3getIN10cryptonote11txin_to_keyENS1_8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashES2_EEENS_13add_referenceIKT_E4typeERKNS_7variantIT0_JDpT1_EEE","__ZN5boost17value_initializedIN6crypto14key_derivationEEcvRS2_Ev","__ZN5boost8optionalIN10cryptonote23subaddress_receive_infoEEptEv","__ZN5boost15aligned_storageILm40ELm8EE7addressEv","__ZNK5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE4typeEv","_mktime","_time","__ZN6crypto10crypto_ops9check_keyERKNS_10public_keyE","__ZNK5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE4typeEv","__ZN5boost3getIN10cryptonote12txout_to_keyENS1_15txout_to_scriptEJNS1_19txout_to_scripthashES2_NS1_19txout_to_tagged_keyEEEENS_13add_referenceIT_E4typeERNS_7variantIT0_JDpT1_EEE","__ZN5boost3getIN10cryptonote11txin_to_keyENS1_8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashES2_EEENS_13add_referenceIT_E4typeERNS_7variantIT0_JDpT1_EEE","__ZNSt3__23decERNS_8ios_baseE","__ZNSt3__23hexERNS_8ios_baseE","_atexit","__ZNKR5boost8optionalIN10cryptonote22account_public_addressEEdeEv","__ZN3rct21straus_get_cache_sizeERKNSt3__210shared_ptrINS_18straus_cached_dataEEE","__ZN3rct24pippenger_get_cache_sizeERKNSt3__210shared_ptrINS_21pippenger_cached_dataEEE","__Znam","__ZN4epee15wipeable_string8pop_backEv","__ZNK5boost11crc_optimalILm32ELj79764919ELj4294967295ELj4294967295ELb1ELb1EE8checksumEv","__ZN12_GLOBAL__N_116itanium_demangle22AbstractManglingParserINS0_14ManglingParserINS_16DefaultAllocatorEEES3_E5parseEv","__ZN12_GLOBAL__N_116itanium_demangle22AbstractManglingParserINS0_14ManglingParserINS_16DefaultAllocatorEEES3_E16parseTemplateArgEv","__ZN12_GLOBAL__N_116itanium_demangle22AbstractManglingParserINS0_14ManglingParserINS_16DefaultAllocatorEEES3_E9parseTypeEv",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_iidiiii=[0,"_fmt_fp"];var debug_table_iii=[0,"__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE9pbackfailEi","__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE8overflowEi","__ZNK5boost6system14error_category6failedEi","__ZN5boost6detail18sp_counted_impl_pdIPN6crypto7rs_commEPFvPvEE11get_deleterERKSt9type_info","__ZN5boost6detail18sp_counted_impl_pdIPN6crypto7rs_commEPFvPvEE17get_local_deleterERKSt9type_info","__ZN2hw4core14device_default8set_nameERKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE","__ZN2hw4core14device_default8set_modeENS_6device11device_modeE","__ZN2hw4core14device_default18get_public_addressERN10cryptonote22account_public_addressE","__ZN2hw4core14device_default7open_txERN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEE","__ZN2hw6device8set_modeENS0_11device_modeE","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS5_3keyES8_S8_PKjE3__0EEE11get_deleterERKSt9type_info","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS5_3keyES8_S8_PKjE3__0EEE17get_local_deleterERKSt9type_info","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS5_3keyERKNSt3__26vectorINSA_IS6_NS9_9allocatorIS6_EEEENSB_ISD_EEEERKSD_jmRN2hw6deviceEE3__1EEE11get_deleterERKSt9type_info","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS5_3keyERKNSt3__26vectorINSA_IS6_NS9_9allocatorIS6_EEEENSB_ISD_EEEERKSD_jmRN2hw6deviceEE3__1EEE17get_local_deleterERKSt9type_info","__ZNKSt3__220__shared_ptr_pointerIPN3rct18straus_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEE13__get_deleterERKSt9type_info","__ZNKSt3__220__shared_ptr_pointerIPN3rct21pippenger_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEE13__get_deleterERKSt9type_info","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS7_mbRNSt3__212basic_stringIcNSB_11char_traitsIcEENSB_9allocatorIcEEEEE3__0EEE11get_deleterERKSt9type_info","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS7_mbRNSt3__212basic_stringIcNSB_11char_traitsIcEENSB_9allocatorIcEEEEE3__0EEE17get_local_deleterERKSt9type_info","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE9pbackfailEi","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE8overflowEi","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE9pbackfailEj","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE8overflowEj","__ZNSt3__211__stdoutbufIwE8overflowEj","__ZNSt3__211__stdoutbufIcE8overflowEi","__ZNSt3__210__stdinbufIwE9pbackfailEj","__ZNSt3__210__stdinbufIcE9pbackfailEi","__ZNKSt3__25ctypeIcE10do_toupperEc","__ZNKSt3__25ctypeIcE10do_tolowerEc","__ZNKSt3__25ctypeIcE8do_widenEc","__ZNKSt3__25ctypeIwE10do_toupperEw","__ZNKSt3__25ctypeIwE10do_tolowerEw","__ZNKSt3__25ctypeIwE8do_widenEc","__ZNKSt3__219__shared_weak_count13__get_deleterERKSt9type_info","__ZNK12_GLOBAL__N_116itanium_demangle4Node19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node12hasArraySlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node15hasFunctionSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node13getSyntaxNodeERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ReferenceType19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle11PointerType19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ParameterPack19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ParameterPack12hasArraySlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ParameterPack15hasFunctionSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ParameterPack13getSyntaxNodeERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle24ForwardTemplateReference19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle24ForwardTemplateReference12hasArraySlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle24ForwardTemplateReference15hasFunctionSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle24ForwardTemplateReference13getSyntaxNodeERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle19PointerToMemberType19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9ArrayType19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9ArrayType12hasArraySlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8QualType19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8QualType12hasArraySlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8QualType15hasFunctionSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12FunctionType19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12FunctionType15hasFunctionSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FunctionEncoding19hasRHSComponentSlowERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FunctionEncoding15hasFunctionSlowERNS_12OutputStreamE","__ZN13serial_bridge13is_subaddressENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN13serial_bridge21is_integrated_addressENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN13serial_bridge19are_equal_mnemonicsENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__Z13is_subaddressNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__Z21is_integrated_addressNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__Z19are_equal_mnemonicsNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__ZN10emscripten8internal7InvokerINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEJRKS8_EE6invokeEPFS8_SA_EPNS0_11BindingTypeIS8_vEUt_E","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9walk_pathERNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKc","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE10force_pathERNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE4findERKS8_","__ZN5boost9iteratorsneINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEE14assoc_iteratorENS4_4pairIKSA_SD_EENS0_27bidirectional_traversal_tagERSH_lSE_SH_SI_SJ_lEENS0_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INSK_12always_bool2ESM_SN_E4typeEE4typeERKNS0_15iterator_facadeISM_T0_T1_T2_T3_EERKNSV_ISN_T5_T6_T7_T8_EE","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEEaSERKSB_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9push_backERKNS2_4pairIKS8_SB_EE","__ZN5boost9iteratorseqINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEE14assoc_iteratorENS4_4pairIKSA_SD_EENS0_27bidirectional_traversal_tagERSH_lSE_SH_SI_SJ_lEENS0_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INSK_12always_bool2ESM_SN_E4typeEE4typeERKNS0_15iterator_facadeISM_T0_T1_T2_T3_EERKNSV_ISN_T5_T6_T7_T8_EE","__ZN5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEE13make_iteratorEPNS1_20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseISI_SY_EEEEEE","__ZNKSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7compareINS_17basic_string_viewIcS2_EEEENS_9enable_ifIXsr33__can_be_converted_to_string_viewIcS2_T_EE5valueEiE4typeERKSA_","__ZN5boost14operators_implneERKNS_11multi_index6detail19bidir_node_iteratorINS2_20sequenced_index_nodeINS2_18ordered_index_nodeINS2_19null_augment_policyENS2_15index_node_baseINSt3__24pairIKNS8_12basic_stringIcNS8_11char_traitsIcEENS8_9allocatorIcEEEENS_13property_tree11basic_ptreeISF_SF_NS8_4lessISF_EEEEEENSD_ISM_EEEEEEEEEEST_","__ZNK5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEE13make_iteratorEPNS1_20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseISI_SY_EEEEEE","__ZN5boost11multi_index6detail18ordered_index_implINS0_6memberINSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEESC_XadL_ZNSI_5firstEEEEESG_NS1_9nth_layerILi2ESI_NS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EEEENS0_18ordered_non_uniqueINSN_INSH_4subs7by_nameESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EESJ_SG_EESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EENS9_ISI_EEEENS_3mpl6v_itemISU_NS10_7vector0ISP_EELi0EEENS1_22ordered_non_unique_tagENS1_19null_augment_policyEE13make_iteratorEPNS1_18ordered_index_nodeIS16_NS1_15index_node_baseISI_SY_EEEE","__ZN5boost16exception_detail12refcount_ptrINS0_20error_info_containerEEaSERKS3_","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE4findERKS8_","__ZN5boost9iteratorseqINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEE20const_assoc_iteratorENS4_4pairIKSA_SD_EENS0_27bidirectional_traversal_tagERKSH_lSE_SH_SI_SK_lEENS0_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INSL_12always_bool2ESN_SO_E4typeEE4typeERKNS0_15iterator_facadeISN_T0_T1_T2_T3_EERKNSW_ISO_T5_T6_T7_T8_EE","__ZNK5boost11multi_index6detail18ordered_index_implINS0_6memberINSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEESC_XadL_ZNSI_5firstEEEEESG_NS1_9nth_layerILi2ESI_NS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EEEENS0_18ordered_non_uniqueINSN_INSH_4subs7by_nameESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EESJ_SG_EESP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_SP_EENS9_ISI_EEEENS_3mpl6v_itemISU_NS10_7vector0ISP_EELi0EEENS1_22ordered_non_unique_tagENS1_19null_augment_policyEE13make_iteratorEPNS1_18ordered_index_nodeIS16_NS1_15index_node_baseISI_SY_EEEE","__ZNKSt3__26locale9use_facetERNS0_2idE","__ZN19serial_bridge_utils16parsed_json_rootERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERN5boost13property_tree11basic_ptreeIS6_S6_NS0_4lessIS6_EEEE","__ZNSt3__212__hash_tableINS_17__hash_value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP22Send_Task_AsyncContextEENS_22__unordered_map_hasherIS7_SA_NS_4hashIS7_EELb1EEENS_21__unordered_map_equalIS7_SA_NS_8equal_toIS7_EELb1EEENS5_ISA_EEE4findIS7_EENS_15__hash_iteratorIPNS_11__hash_nodeISA_PvEEEERKT_","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3getIbEET_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZN4epee12string_tools10hex_to_podIN5tools8scrubbedIN6crypto9ec_scalarEEEEEbN5boost16basic_string_refIcNSt3__211char_traitsIcEEEERNS_7mlockedIT_EE","__ZNSt3__213unordered_mapINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP22Send_Task_AsyncContextNS_4hashIS6_EENS_8equal_toIS6_EENS4_INS_4pairIKS6_S8_EEEEEixERSE_","__ZNK5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEE12get_value_orERKS7_","__ZNSt3__2lsINS_11char_traitsIcEEEERNS_13basic_ostreamIcT_EES6_c","__ZNSt3__2lsIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS_13basic_ostreamIT_T0_EES9_RKNS_12basic_stringIS6_S7_T1_EE","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE5countERKS8_","__ZNSt3__2lsINS_11char_traitsIcEEEERNS_13basic_ostreamIcT_EES6_PKc","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEm","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9get_valueIbNS0_17stream_translatorIcS5_S7_bEEEENS_9enable_ifINS0_6detail13is_translatorIT0_EET_E4typeESI_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9get_childERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZN5boost8optionalIyEaSIRyEENS_9enable_ifINS_7is_sameIyNS_5decayIT_E4typeEEERS1_E4typeEOS7_","__ZN5boost8optionalIjEaSIRjEENS_9enable_ifINS_7is_sameIjNS_5decayIT_E4typeEEERS1_E4typeEOS7_","__ZN5boost15foreach_detail_7containIKNSt3__26vectorINS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS7_IS9_EEEEEENS0_8auto_anyIPT_EERSE_PN4mpl_5bool_ILb0EEE","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRS7_EENS_9enable_ifINS_7is_sameIS7_NS_5decayIT_E4typeEEERS8_E4typeEOSE_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIS7_EENS_9enable_ifINS_7is_sameIS7_NS_5decayIT_E4typeEEERS8_E4typeEOSD_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSERKS8_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA16_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN4epee12string_tools23parse_hexstr_to_binbuffEN5boost16basic_string_refIcNSt3__211char_traitsIcEEEERNS3_12basic_stringIcS5_NS3_9allocatorIcEEEE","__ZN6cryptolsERNSt3__213basic_ostreamIcNS0_11char_traitsIcEEEERKNS_10public_keyE","__ZN6cryptolsERNSt3__213basic_ostreamIcNS0_11char_traitsIcEEEERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEE","__ZN6cryptolsERNSt3__213basic_ostreamIcNS0_11char_traitsIcEEEERKNS_14key_derivationE","__ZN6crypto24secret_key_to_public_keyERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNS_10public_keyE","__ZN6cryptoneERKNS_10public_keyES2_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA52_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN12_GLOBAL__N_120_add_pid_to_tx_extraERKN5boost8optionalINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEEERNS2_6vectorIhNS6_IhEEEE","__ZNSt3__212__hash_tableINS_17__hash_value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_6vectorIN21monero_transfer_utils18RandomAmountOutputENS5_ISA_EEEEEENS_22__unordered_map_hasherIS7_SD_NS_4hashIS7_EELb1EEENS_21__unordered_map_equalIS7_SD_NS_8equal_toIS7_EELb1EEENS5_ISD_EEE4findIS7_EENS_15__hash_iteratorIPNS_11__hash_nodeISD_PvEEEERKT_","__ZN10cryptonote27add_extra_nonce_to_tx_extraERNSt3__26vectorIhNS0_9allocatorIhEEEERKNS0_12basic_stringIcNS0_11char_traitsIcEENS2_IcEEEE","__ZNSt3__213unordered_mapIN6crypto10public_keyEN10cryptonote16subaddress_indexENS_4hashIS2_EENS_8equal_toIS2_EENS_9allocatorINS_4pairIKS2_S4_EEEEEixERSB_","__ZN5boost8optionalIN10cryptonote11transactionEEaSIRS2_EENS_9enable_ifINS_7is_sameIS2_NS_5decayIT_E4typeEEERS3_E4typeEOS9_","__ZN5boost8optionalImEaSIRmEENS_9enable_ifINS_7is_sameImNS_5decayIT_E4typeEEERS1_E4typeEOS7_","__ZN12_GLOBAL__N_122_rct_hex_to_rct_commitERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERN3rct3keyE","__ZN5boost8optionalIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEEEaSIRS8_EENS_9enable_ifINS_7is_sameIS8_NS_5decayIT_E4typeEEERS9_E4typeEOSF_","__ZN5boost8optionalINSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS1_9allocatorISA_EEEEEaSIRSD_EENS_9enable_ifINS_7is_sameISD_NS_5decayIT_E4typeEEERSE_E4typeEOSK_","__ZN10cryptonote29t_serializable_object_to_blobINS_11transactionEEEbRKT_RNSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEE","__ZN13serialization9serializeI14binary_archiveILb1EEN10cryptonote11transactionEEEbRT_RT0_","__ZNR5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE13apply_visitorINS_6detail7variant11get_visitorIS5_EEEENT_11result_typeERSC_","__ZNK3rct3keyeqERKS0_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA34_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN19monero_wallet_utils14is_prefixed_byERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES8_","__ZN19monero_wallet_utils24WalletDescriptionRetValsaSEOS0_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA28_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalIN19monero_wallet_utils17WalletDescriptionEEaSIS2_EENS_9enable_ifINS_7is_sameIS2_NS_5decayIT_E4typeEEERS3_E4typeEOS8_","__ZN19monero_wallet_utils12decoded_seedERKN4epee15wipeable_stringERNS_27MnemonicDecodedSeed_RetValsE","__ZN6cryptoeqERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEES8_","__ZN19monero_wallet_utils27MnemonicDecodedSeed_RetValsaSEOS0_","__Z18_areBothSpaceCharscc","__ZNSt3__2rsIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS_13basic_istreamIT_T0_EES9_RNS_12basic_stringIS6_S7_T1_EE","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA25_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA46_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA13_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN4epee12string_tools10hex_to_podIN19monero_wallet_utils19ec_nonscalar_16ByteEEEbN5boost16basic_string_refIcNSt3__211char_traitsIcEEEERN5tools8scrubbedIT_EE","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA20_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA36_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalIN4epee15wipeable_stringEEaSIRS2_EENS_9enable_ifINS_7is_sameIS2_NS_5decayIT_E4typeEEERS3_E4typeEOS9_","__ZN19monero_wallet_utils26ComponentsFromSeed_RetValsaSEOS0_","__ZN5boost8optionalIN19monero_wallet_utils18ComponentsFromSeedEEaSIS2_EENS_9enable_ifINS_7is_sameIS2_NS_5decayIT_E4typeEEERS3_E4typeEOS8_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA17_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA31_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA18_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA32_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN6cryptoneERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEES8_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA47_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEaSIRA45_KcEENS_9enable_ifINS_15optional_detail30is_optional_val_init_candidateIS7_T_EERS8_E4typeEOSG_","__ZN5boost15foreach_detail_7containINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEEENS0_8auto_anyIPT_EERSF_PN4mpl_5bool_ILb0EEE","__ZN5boost15foreach_detail_5derefINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb0EEEEENS0_17foreach_referenceIT_T0_E4typeERKNS0_13auto_any_baseEPNS0_9type2typeISI_SJ_EE","__ZN5boost15foreach_detail_7containINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS2_9allocatorIS5_EEEEEENS0_8auto_anyIPT_EERSA_PN4mpl_5bool_ILb0EEE","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9get_childERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZN5boost15foreach_detail_7containIKNS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEEENS0_8auto_anyIPT_EERSG_PN4mpl_5bool_ILb0EEE","__ZN5boost15foreach_detail_5derefINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb1EEEEENS0_17foreach_referenceIT_T0_E4typeERKNS0_13auto_any_baseEPNS0_9type2typeISI_SJ_EE","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding5is_wsEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding13is_open_braceEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding14is_close_braceEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding8is_colonEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding8is_commaEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding15is_open_bracketEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding16is_close_bracketEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding8is_quoteEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_tEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_rEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_uEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_eEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_fEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_aEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_lEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_sEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_nEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding8is_minusEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_0Ec","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding9is_digit0Ec","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding6is_dotEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding8is_digitEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding5is_eEEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding12is_plusminusEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding12is_backslashEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding8is_slashEc","__ZNK5boost13property_tree11json_parser6detail32external_ascii_superset_encoding4is_bEc","__ZN10cryptonote29t_serializable_object_to_blobINS_22account_public_addressEEEbRKT_RNSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEE","__ZN13serialization9serializeI14binary_archiveILb1EEN10cryptonote22account_public_addressEEEbRT_RT0_","__ZN10cryptonote29t_serializable_object_to_blobINS_18integrated_addressEEEbRKT_RNSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEE","__ZN13serialization9serializeI14binary_archiveILb1EEN10cryptonote18integrated_addressEEEbRT_RT0_","__ZN13serialization12parse_binaryIN10cryptonote18integrated_addressEEEbRKNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEERT_","__ZN13serialization12parse_binaryIN10cryptonote22account_public_addressEEEbRKNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEERT_","__ZNKR5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE13apply_visitorINS_6detail7variant11get_visitorIKS5_EEEENT_11result_typeERSD_","__ZNKR5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE13apply_visitorINS_6detail7variant11get_visitorIKS4_EEEENT_11result_typeERSD_","__ZNKR5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE13apply_visitorINS_6detail7variant11get_visitorIKS5_EEEENT_11result_typeERSD_","__ZN6cryptoeqERKNS_10public_keyES2_","__ZN5boost10conversion6detail19try_lexical_convertINSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEiEEbRKT0_RT_","__Z12do_serializeI14binary_archiveILb0EEN5boost7variantIN10cryptonote16tx_extra_paddingEJNS4_16tx_extra_pub_keyENS4_14tx_extra_nonceENS4_25tx_extra_merge_mining_tagENS4_28tx_extra_additional_pub_keysENS4_22tx_extra_vrf_signatureEEEEEbRT_RT0_","__Z12do_serializeI14binary_archiveILb0EEN10cryptonote14tx_extra_nonceEEbRT_RT0_","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEEaSIS4_EENS_9enable_ifINS_3mpl3or_INS_7is_sameIT_S8_EENS_6detail7variant29is_variant_constructible_fromIRKSE_NSB_6l_itemIN4mpl_5long_ILl6EEES2_NSL_INSN_ILl5EEES3_NSL_INSN_ILl4EEES4_NSL_INSN_ILl3EEES5_NSL_INSN_ILl2EEES6_NSL_INSN_ILl1EEES7_NSB_5l_endEEEEEEEEEEEEEEENSM_5bool_ILb0EEES13_S13_EERS8_E4typeESK_","__Z12do_serializeI14binary_archiveILb0EEN10cryptonote28tx_extra_additional_pub_keysEEbRT_RT0_","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEEaSIS6_EENS_9enable_ifINS_3mpl3or_INS_7is_sameIT_S8_EENS_6detail7variant29is_variant_constructible_fromIRKSE_NSB_6l_itemIN4mpl_5long_ILl6EEES2_NSL_INSN_ILl5EEES3_NSL_INSN_ILl4EEES4_NSL_INSN_ILl3EEES5_NSL_INSN_ILl2EEES6_NSL_INSN_ILl1EEES7_NSB_5l_endEEEEEEEEEEEEEEENSM_5bool_ILb0EEES13_S13_EERS8_E4typeESK_","__Z12do_serializeI14binary_archiveILb0EEN10cryptonote22tx_extra_vrf_signatureEEbRT_RT0_","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEEaSIS7_EENS_9enable_ifINS_3mpl3or_INS_7is_sameIT_S8_EENS_6detail7variant29is_variant_constructible_fromIRKSE_NSB_6l_itemIN4mpl_5long_ILl6EEES2_NSL_INSN_ILl5EEES3_NSL_INSN_ILl4EEES4_NSL_INSN_ILl3EEES5_NSL_INSN_ILl2EEES6_NSL_INSN_ILl1EEES7_NSB_5l_endEEEEEEEEEEEEEEENSM_5bool_ILb0EEES13_S13_EERS8_E4typeESK_","__Z12do_serializeI14binary_archiveEbRT_ILb0EERNSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEE","__ZN13serialization9serializeI14binary_archiveILb0EEN10cryptonote25tx_extra_merge_mining_tag16serialize_helperEEEbRT_RT0_","__ZN13serialization18check_stream_stateI14binary_archiveILb0EEEEbRT_b","__ZNR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIS7_EEEENT_11result_typeERSE_","__Z12do_serializeI14binary_archiveILb1EEN10cryptonote25tx_extra_merge_mining_tag16serialize_helperEEbRT_RT0_","__ZN13serialization9serializeI14binary_archiveILb1EENSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEEEbRT_RT0_","__ZNR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIS5_EEEENT_11result_typeERSE_","__ZNR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIS4_EEEENT_11result_typeERSE_","__ZNR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIS6_EEEENT_11result_typeERSE_","__ZNR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIS3_EEEENT_11result_typeERSE_","__ZN10cryptonote14parse_tx_extraERKNSt3__26vectorIhNS0_9allocatorIhEEEERNS1_IN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyENS_14tx_extra_nonceENS_25tx_extra_merge_mining_tagENS_28tx_extra_additional_pub_keysENS_22tx_extra_vrf_signatureEEEENS2_ISF_EEEE","__ZNKR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIKS3_EEEENT_11result_typeERSF_","__ZNKR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIKS6_EEEENT_11result_typeERSF_","__Z12do_serializeI14binary_archiveILb1EEN5boost7variantIN10cryptonote16tx_extra_paddingEJNS4_16tx_extra_pub_keyENS4_14tx_extra_nonceENS4_25tx_extra_merge_mining_tagENS4_28tx_extra_additional_pub_keysENS4_22tx_extra_vrf_signatureEEEEEbRT_RT0_","__ZN13serialization9serializeI14binary_archiveILb1EEN10cryptonote18transaction_prefixEEEbRT_RT0_","__ZN10cryptonote12account_keysaSEOS0_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6assignEPKc","__ZN6cryptoeqERKNS_9key_imageES2_","__ZN5boosteqIN10cryptonote22account_public_addressEEEbRKT_RKNS_8optionalIS3_EE","__ZNKSt3__212__hash_tableIN10cryptonote22account_public_addressENS_4hashIS2_EENS_8equal_toIS2_EENS_9allocatorIS2_EEE4findIS2_EENS_21__hash_const_iteratorIPNS_11__hash_nodeIS2_PvEEEERKT_","__ZNKSt3__24hashIN10cryptonote22account_public_addressEEclERKS2_","__ZNK10cryptonote22account_public_addresseqERKS0_","__ZN5boost14equal_pointeesINS_8optionalIN10cryptonote22account_public_addressEEEEEbRKT_S7_","__ZN10cryptonote26remove_field_from_tx_extraERNSt3__26vectorIhNS0_9allocatorIhEEEERKSt9type_info","__ZN10cryptonoteeqERKN6crypto10public_keyERKN3rct3keyE","__ZN10cryptonote23add_tx_pub_key_to_extraERNS_11transactionERKN6crypto10public_keyE","__ZN10cryptonote35add_additional_tx_pub_keys_to_extraERNSt3__26vectorIhNS0_9allocatorIhEEEERKNS1_IN6crypto10public_keyENS2_IS7_EEEE","__ZN10cryptonoteL22xcash_add_public_tx_v1ERNSt3__26vectorIhNS0_9allocatorIhEEEERKNS_21tx_extra_public_tx_v1E","__ZN3rctlsERNSt3__213basic_ostreamIcNS0_11char_traitsIcEEEERKNS_3keyE","__ZN10cryptonote21get_output_public_keyERKNS_6tx_outERN6crypto10public_keyE","__ZN10cryptonoteL28xcash_serialize_public_tx_v1ERKNS_21tx_extra_public_tx_v1ERNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEE","__ZN13serialization9serializeI12json_archiveILb1EEN10cryptonote11transactionEEEbRT_RT0_","__ZNR5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE13apply_visitorINS_6detail7variant11get_visitorIS4_EEEENT_11result_typeERSC_","__ZZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbbEN29input_generation_context_dataaSEOS1R_","__ZNKR5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE13apply_visitorINS_6detail7variant11get_visitorIKS4_EEEENT_11result_typeERSF_","__ZN5tools6base586decodeERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERS7_","__ZNSt3__26__treeINS_12__value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_10unique_ptrIN2hw6deviceENS_14default_deleteISA_EEEEEENS_19__map_value_compareIS7_SE_NS_4lessIS7_EELb1EEENS5_ISE_EEE4findIS7_EENS_15__tree_iteratorISE_PNS_11__tree_nodeISE_PvEElEERKT_","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEi","__ZN3rctL4testERKNS_3keyEm","__ZN12_GLOBAL__N_113checksum_testENSt3__26vectorIN4epee15wipeable_stringENS0_9allocatorIS3_EEEEPKN8Language4BaseE","__ZNKSt3__212__hash_tableINS_17__hash_value_typeIN4epee15wipeable_stringEjEENS_22__unordered_map_hasherIS3_S4_N8Language8WordHashELb1EEENS_21__unordered_map_equalIS3_S4_NS6_9WordEqualELb1EEENS_9allocatorIS4_EEE4findIS3_EENS_21__hash_const_iteratorIPNS_11__hash_nodeIS4_PvEEEERKT_","__ZNKSt3__213unordered_mapIN4epee15wipeable_stringEjN8Language8WordHashENS3_9WordEqualENS_9allocatorINS_4pairIKS2_jEEEEE2atERS8_","__ZN12_GLOBAL__N_121create_checksum_indexERKNSt3__26vectorIN4epee15wipeable_stringENS0_9allocatorIS3_EEEEPKN8Language4BaseE","__ZZNK8Language9WordEqualclERKN4epee15wipeable_stringES4_ENKUljE_clEj","__ZZNK8Language9WordEqualclERKN4epee15wipeable_stringES4_ENKUljE0_clEj","__ZZNK8Language8WordHashclERKN4epee15wipeable_stringEENKUljE_clEj","__ZNSt3__213unordered_mapIN4epee15wipeable_stringEjN8Language8WordHashENS3_9WordEqualENS_9allocatorINS_4pairIKS2_jEEEEEixEOS2_","__ZNSt3__212__hash_tableINS_17__hash_value_typeIN4epee15wipeable_stringEjEENS_22__unordered_map_hasherIS3_S4_N8Language8WordHashELb1EEENS_21__unordered_map_equalIS3_S4_NS6_9WordEqualELb1EEENS_9allocatorIS4_EEE4findIS3_EENS_15__hash_iteratorIPNS_11__hash_nodeIS4_PvEEEERKT_","__ZNSt3__213unordered_mapIN4epee15wipeable_stringEjN8Language8WordHashENS3_9WordEqualENS_9allocatorINS_4pairIKS2_jEEEEEixERS8_","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEj","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEt","__ZNK12_GLOBAL__N_116itanium_demangle4Node8hasArrayERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node11hasFunctionERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node15hasRHSComponentERNS_12OutputStreamE","__ZN12_GLOBAL__N_116itanium_demangle22AbstractManglingParserINS0_14ManglingParserINS_16DefaultAllocatorEEES3_E9consumeIfENS_10StringViewE"];var debug_table_iiii=[0,"__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE6setbufEPcl","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE6xsgetnEPcl","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE6xsputnEPKcl","__ZNK5boost6system14error_category10equivalentEiRKNS0_15error_conditionE","__ZNK5boost6system14error_category10equivalentERKNS0_10error_codeEi","__ZN2hw4core14device_default15get_secret_keysERN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEESA_","__ZN2hw4core14device_default11verify_keysERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEERKNS6_10public_keyE","__ZN2hw4core14device_default14scalarmultBaseERN3rct3keyERKS3_","__ZN2hw4core14device_default24secret_key_to_public_keyERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEERNS6_10public_keyE","__ZN2hw4core14device_default13mlsag_prepareERN3rct3keyES4_","__ZN2hw4core14device_default10mlsag_hashERKNSt3__26vectorIN3rct3keyENS2_9allocatorIS5_EEEERS5_","__ZN2hw4core14device_default10clsag_hashERKNSt3__26vectorIN3rct3keyENS2_9allocatorIS5_EEEERS5_","___stdio_write","___stdio_read","_sn_write","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE6setbufEPwl","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE6xsgetnEPwl","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE6xsputnEPKwl","__ZNKSt3__214error_category10equivalentEiRKNS_15error_conditionE","__ZNKSt3__214error_category10equivalentERKNS_10error_codeEi","__ZNSt3__211__stdoutbufIwE6xsputnEPKwl","__ZNSt3__211__stdoutbufIcE6xsputnEPKcl","__ZNKSt3__27collateIcE7do_hashEPKcS3_","__ZNKSt3__27collateIwE7do_hashEPKwS3_","__ZNKSt3__28messagesIcE7do_openERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_6localeE","__ZNKSt3__28messagesIwE7do_openERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_6localeE","__ZNKSt3__25ctypeIcE10do_toupperEPcPKc","__ZNKSt3__25ctypeIcE10do_tolowerEPcPKc","__ZNKSt3__25ctypeIcE9do_narrowEcc","__ZNKSt3__25ctypeIwE5do_isEtw","__ZNKSt3__25ctypeIwE10do_toupperEPwPKw","__ZNKSt3__25ctypeIwE10do_tolowerEPwPKw","__ZNKSt3__25ctypeIwE9do_narrowEwc","__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv","__ZNK10__cxxabiv123__fundamental_type_info9can_catchEPKNS_16__shim_type_infoERPv","__ZNK10__cxxabiv119__pointer_type_info9can_catchEPKNS_16__shim_type_infoERPv","__ZNK10__cxxabiv120__function_type_info9can_catchEPKNS_16__shim_type_infoERPv","__ZNK10__cxxabiv116__enum_type_info9can_catchEPKNS_16__shim_type_infoERPv","__ZN10emscripten8internal7InvokerINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEJS8_S8_EE6invokeEPFS8_S8_S8_EPNS0_11BindingTypeIS8_vEUt_ESF_","__ZN10emscripten8internal7InvokerIbJNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_EE6invokeEPFbS8_S8_EPNS0_11BindingTypeIS8_vEUt_ESF_","__ZNSt3__221__murmur2_or_cityhashImLm32EEclEPKvm","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIN21monero_transfer_utils26CreateTransactionErrorCodeEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIPKcEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIS8_EERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9put_childERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKSB_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKcm","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putImEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_","__ZNSt3__25stoulERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPmi","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIbEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIN19monero_send_routine21SendFunds_ProcessStepEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_","__ZN5boost15foreach_detail_5beginINSt3__26vectorINS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS7_IS9_EEEEN4mpl_5bool_ILb1EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISH_SI_EEPNSD_ILb0EEE","__ZN5boost15foreach_detail_3endINSt3__26vectorINS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS7_IS9_EEEEN4mpl_5bool_ILb1EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISH_SI_EEPNSD_ILb0EEE","__ZN5boost15foreach_detail_4doneINSt3__26vectorINS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS7_IS9_EEEEN4mpl_5bool_ILb1EEEEEbRKNS0_13auto_any_baseESH_PNS0_9type2typeIT_T0_EE","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9add_childERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKSB_","__ZN10cryptonote28get_account_address_from_strERNS_18address_parse_infoENS_12network_typeERKNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEE","__ZNSt3__26vectorINS_4pairIyN3rct5ctkeyEEENS_9allocatorIS4_EEE6insertENS_11__wrap_iterIPKS4_EERS9_","__ZNSt3__26vectorINS_4pairIyN3rct5ctkeyEEENS_9allocatorIS4_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS4_RS6_EEPS4_","__ZN19monero_wallet_utils10new_walletERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERNS_24WalletDescriptionRetValsEN10cryptonote12network_typeE","__ZN6crypto13ElectrumWords14bytes_to_wordsERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNS1_15wipeable_stringERKNSt3__212basic_stringIcNSC_11char_traitsIcEENSC_9allocatorIcEEEE","__ZNSt3__26uniqueINS_11__wrap_iterIPcEEPFbccEEET_S6_S6_T0_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5eraseEmm","__ZN6crypto13ElectrumWords14words_to_bytesERKN4epee15wipeable_stringERNS1_7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNSt3__212basic_stringIcNSC_11char_traitsIcEENSC_9allocatorIcEEEE","__ZN19monero_wallet_utils14words_to_bytesERKN4epee15wipeable_stringERN5tools8scrubbedINS_19ec_nonscalar_16ByteEEERNSt3__212basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE","__ZN19monero_wallet_utils14bytes_to_wordsERKN5tools8scrubbedINS_19ec_nonscalar_16ByteEEERN4epee15wipeable_stringERKNSt3__212basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE","__ZN19monero_wallet_utils42convenience__new_wallet_with_language_codeERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERNS_24WalletDescriptionRetValsEN10cryptonote12network_typeE","__ZN19monero_wallet_utils26address_and_keys_from_seedERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEN10cryptonote12network_typeERNS_26ComponentsFromSeed_RetValsE","__ZN19monero_wallet_utils11wallet_withERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERNS_24WalletDescriptionRetValsEN10cryptonote12network_typeE","__ZN5boost15foreach_detail_5beginINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb0EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISJ_SK_EEPSG_","__ZN5boost15foreach_detail_3endINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb0EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISJ_SK_EEPSG_","__ZN5boost15foreach_detail_4doneINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb0EEEEEbRKNS0_13auto_any_baseESJ_PNS0_9type2typeIT_T0_EE","__ZN5boost15foreach_detail_5beginINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS2_9allocatorIS5_EEEEN4mpl_5bool_ILb0EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISE_SF_EEPSB_","__ZN5boost15foreach_detail_3endINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS2_9allocatorIS5_EEEEN4mpl_5bool_ILb0EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISE_SF_EEPSB_","__ZN5boost15foreach_detail_4doneINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS2_9allocatorIS5_EEEEN4mpl_5bool_ILb0EEEEEbRKNS0_13auto_any_baseESE_PNS0_9type2typeIT_T0_EE","__ZN5boost15foreach_detail_5beginINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb1EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISJ_SK_EEPNSF_ILb0EEE","__ZN5boost15foreach_detail_3endINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb1EEEEENS0_8auto_anyINS0_16foreach_iteratorIT_T0_E4typeEEERKNS0_13auto_any_baseEPNS0_9type2typeISJ_SK_EEPNSF_ILb0EEE","__ZN5boost15foreach_detail_4doneINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb1EEEEEbRKNS0_13auto_any_baseESJ_PNS0_9type2typeIT_T0_EE","__ZN5tools6base5811decode_addrERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERyRS7_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6insertEmPKc","__ZN10cryptonote35calculate_transaction_prunable_hashERKNS_11transactionEPKN5boost16basic_string_refIcNSt3__211char_traitsIcEEEERN6crypto4hashE","__ZN10cryptonoteL4pickINS_16tx_extra_pub_keyEEEbR14binary_archiveILb1EERNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJS1_NS_14tx_extra_nonceENS_25tx_extra_merge_mining_tagENS_28tx_extra_additional_pub_keysENS_22tx_extra_vrf_signatureEEEENS5_9allocatorISE_EEEEh","__ZN10cryptonoteL4pickINS_28tx_extra_additional_pub_keysEEEbR14binary_archiveILb1EERNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyENS_14tx_extra_nonceENS_25tx_extra_merge_mining_tagES1_NS_22tx_extra_vrf_signatureEEEENS5_9allocatorISE_EEEEh","__ZN10cryptonoteL4pickINS_14tx_extra_nonceEEEbR14binary_archiveILb1EERNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyES1_NS_25tx_extra_merge_mining_tagENS_28tx_extra_additional_pub_keysENS_22tx_extra_vrf_signatureEEEENS5_9allocatorISE_EEEEh","__ZN10cryptonoteL4pickINS_25tx_extra_merge_mining_tagEEEbR14binary_archiveILb1EERNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyENS_14tx_extra_nonceES1_NS_28tx_extra_additional_pub_keysENS_22tx_extra_vrf_signatureEEEENS5_9allocatorISE_EEEEh","__ZN10cryptonoteL4pickINS_22tx_extra_vrf_signatureEEEbR14binary_archiveILb1EERNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyENS_14tx_extra_nonceENS_25tx_extra_merge_mining_tagENS_28tx_extra_additional_pub_keysES1_EEENS5_9allocatorISE_EEEEh","__ZN10cryptonote27find_tx_extra_field_by_typeINS_16tx_extra_pub_keyEEEbRKNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJS1_NS_14tx_extra_nonceENS_25tx_extra_merge_mining_tagENS_28tx_extra_additional_pub_keysENS_22tx_extra_vrf_signatureEEEENS2_9allocatorISB_EEEERT_m","__ZN10cryptonote27find_tx_extra_field_by_typeINS_28tx_extra_additional_pub_keysEEEbRKNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyENS_14tx_extra_nonceENS_25tx_extra_merge_mining_tagES1_NS_22tx_extra_vrf_signatureEEEENS2_9allocatorISB_EEEERT_m","__ZNSt3__26vectorIhNS_9allocatorIhEEE26__swap_out_circular_bufferERNS_14__split_bufferIhRS2_EEPh","__ZN10cryptonote27find_tx_extra_field_by_typeINS_14tx_extra_nonceEEEbRKNSt3__26vectorIN5boost7variantINS_16tx_extra_paddingEJNS_16tx_extra_pub_keyES1_NS_25tx_extra_merge_mining_tagENS_28tx_extra_additional_pub_keysENS_22tx_extra_vrf_signatureEEEENS2_9allocatorISB_EEEERT_m","__ZN10cryptonote13sort_tx_extraERKNSt3__26vectorIhNS0_9allocatorIhEEEERS4_b","__ZN6crypto23generate_key_derivationERKNS_10public_keyERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNS_14key_derivationE","__ZN5tools11read_varintINSt3__211__wrap_iterIPcEEyEEiOT_S6_RT0_","__ZNSt3__26__treeINS_12__value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_10unique_ptrIN2hw6deviceENS_14default_deleteISA_EEEEEENS_19__map_value_compareIS7_SE_NS_4lessIS7_EELb1EEENS5_ISE_EEE12__find_equalISE_EERPNS_16__tree_node_baseIPvEERPNS_15__tree_end_nodeISP_EERKT_","__ZNK8Language9WordEqualclERKN4epee15wipeable_stringES4_","_do_read","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE23__append_forward_unsafeIPcEERS5_T_S9_","__ZNSt3__212basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE23__append_forward_unsafeIPwEERS5_T_S9_","__ZNSt3__212basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6appendEPKwm",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_iiiii=[0,"__ZNK5boost6system6detail22generic_error_category7messageEiPcm","__ZNK5boost6system14error_category7messageEiPcm","__ZN2hw4core14device_default13scalarmultKeyERN3rct3keyERKS3_S6_","__ZN2hw4core14device_default13sc_secret_addERN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEERKS9_SC_","__ZN2hw4core14device_default23generate_key_derivationERKN6crypto10public_keyERKN4epee7mlockedIN5tools8scrubbedINS2_9ec_scalarEEEEERNS2_14key_derivationE","__ZN2hw4core14device_default20derivation_to_scalarERKN6crypto14key_derivationEmRNS2_9ec_scalarE","__ZN2hw4core14device_default18generate_key_imageERKN6crypto10public_keyERKN4epee7mlockedIN5tools8scrubbedINS2_9ec_scalarEEEEERNS2_9key_imageE","__ZN2hw4core14device_default15derive_view_tagERKN6crypto14key_derivationEmRNS2_8view_tagE","__ZN2hw4core14device_default18encrypt_payment_idERN6crypto5hash8ERKNS2_10public_keyERKN4epee7mlockedIN5tools8scrubbedINS2_9ec_scalarEEEEE","__ZN2hw4core14device_default10ecdhEncodeERN3rct9ecdhTupleERKNS2_3keyEb","__ZN2hw4core14device_default10ecdhDecodeERN3rct9ecdhTupleERKNS2_3keyEb","__ZNKSt3__25ctypeIcE8do_widenEPKcS3_Pc","__ZNKSt3__25ctypeIwE5do_isEPKwS3_Pt","__ZNKSt3__25ctypeIwE10do_scan_isEtPKwS3_","__ZNKSt3__25ctypeIwE11do_scan_notEtPKwS3_","__ZNKSt3__25ctypeIwE8do_widenEPKcS3_Pw","__ZN10emscripten8internal7InvokerINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEJS8_S8_S8_EE6invokeEPFS8_S8_S8_S8_EPNS0_11BindingTypeIS8_vEUt_ESF_SF_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIN21monero_transfer_utils26CreateTransactionErrorCodeENS0_17stream_translatorIcS5_S7_SE_EEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_T0_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIPKcNS0_17stream_translatorIcS5_S7_SE_EEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_T0_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putImNS0_17stream_translatorIcS5_S7_mEEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_T0_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIbNS0_17stream_translatorIcS5_S7_bEEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_T0_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3putIN19monero_send_routine21SendFunds_ProcessStepENS0_17stream_translatorIcS5_S7_SE_EEEERSB_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKT_T0_","__ZN6crypto17derive_public_keyERKNS_14key_derivationEmRKNS_10public_keyERS3_","__ZNSt3__26vectorIhNS_9allocatorIhEEE6insertINS_11__wrap_iterIPcEEEENS_9enable_ifIXaasr21__is_forward_iteratorIT_EE5valuesr16is_constructibleIhNS_15iterator_traitsIS9_E9referenceEEE5valueENS5_IPhEEE4typeENS5_IPKhEES9_S9_","__ZN3rct10rctSigBase21serialize_rctsig_baseILb1E14binary_archiveEEbRT0_IXT_EEmm","__ZN12_GLOBAL__N_118find_seed_languageERKNSt3__26vectorIN4epee15wipeable_stringENS0_9allocatorIS3_EEEEbRNS1_IjNS4_IjEEEEPPN8Language4BaseE","__ZNSt3__217__libcpp_sscanf_lEPKcP15__locale_structS1_z","__ZNSt3__227__num_get_unsigned_integralImEET_PKcS3_Rji","__ZNSt3__227__num_get_unsigned_integralIjEET_PKcS3_Rji","__ZNSt3__227__num_get_unsigned_integralItEET_PKcS3_Rji","__ZNSt3__225__num_get_signed_integralIlEET_PKcS3_Rji","__ZNSt3__219__libcpp_asprintf_lEPPcP15__locale_structPKcz","__ZNSt3__212_GLOBAL__N_110as_integerImNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEET_RKS7_RKT0_Pmi",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_iiiiid=[0,"__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcd","__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEce","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwd","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwe",0,0,0];var debug_table_iiiiii=[0,"__ZN2hw4core14device_default28derive_subaddress_public_keyERKN6crypto10public_keyERKNS2_14key_derivationEmRS3_","__ZN2hw4core14device_default17derive_secret_keyERKN6crypto14key_derivationEmRKN4epee7mlockedIN5tools8scrubbedINS2_9ec_scalarEEEEERSC_","__ZN2hw4core14device_default17derive_public_keyERKN6crypto14key_derivationEmRKNS2_10public_keyERS6_","__ZNKSt3__27collateIcE10do_compareEPKcS3_S3_S3_","__ZNKSt3__27collateIwE10do_compareEPKwS3_S3_S3_","__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcb","__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcl","__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcm","__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcPKv","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwb","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwl","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwm","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwPKv","__ZNKSt3__27codecvtIDic11__mbstate_tE10do_unshiftERS1_PcS4_RS4_","__ZNKSt3__27codecvtIDic11__mbstate_tE9do_lengthERS1_PKcS5_m","__ZNKSt3__27codecvtIwc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_","__ZNKSt3__27codecvtIwc11__mbstate_tE9do_lengthERS1_PKcS5_m","__ZNKSt3__25ctypeIcE9do_narrowEPKcS3_cPc","__ZNKSt3__25ctypeIwE9do_narrowEPKwS3_cPc","__ZNKSt3__27codecvtIcc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_","__ZNKSt3__27codecvtIcc11__mbstate_tE9do_lengthERS1_PKcS5_m","__ZNKSt3__27codecvtIDsc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_","__ZNKSt3__27codecvtIDsc11__mbstate_tE9do_lengthERS1_PKcS5_m","__ZNKSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7compareEmmPKcm","__ZN6crypto13ElectrumWords14words_to_bytesERKN4epee15wipeable_stringERS2_mbRNSt3__212basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEE",0,0,0,0,0,0];var debug_table_iiiiiid=[0,"__ZNKSt3__29money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_bRNS_8ios_baseEce","__ZNKSt3__29money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_bRNS_8ios_baseEwe",0];var debug_table_iiiiiii=[0,"__ZN2hw4core14device_default18conceal_derivationERN6crypto14key_derivationERKNS2_10public_keyERKNSt3__26vectorIS5_NS8_9allocatorIS5_EEEERKS3_RKNS9_IS3_NSA_IS3_EEEE","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRb","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRl","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRx","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRt","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjS8_","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRm","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRy","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRf","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRd","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRe","__ZNKSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRPv","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRb","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRl","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRx","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRt","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjS8_","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRm","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRy","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRf","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRd","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRe","__ZNKSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRPv","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE11do_get_timeES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE11do_get_dateES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE14do_get_weekdayES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE16do_get_monthnameES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE11do_get_yearES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE11do_get_timeES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE11do_get_dateES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE14do_get_weekdayES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE16do_get_monthnameES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE11do_get_yearES4_S4_RNS_8ios_baseERjP2tm","__ZNKSt3__29money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_bRNS_8ios_baseEcRKNS_12basic_stringIcS3_NS_9allocatorIcEEEE","__ZNKSt3__29money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_bRNS_8ios_baseEwRKNS_12basic_stringIwS3_NS_9allocatorIwEEEE","__ZN10emscripten8internal7InvokerINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEJS8_S8_S8_S8_S8_EE6invokeEPFS8_S8_S8_S8_S8_S8_EPNS0_11BindingTypeIS8_vEUt_ESF_SF_SF_SF_","__ZNSt3__216__pad_and_outputIcNS_11char_traitsIcEEEENS_19ostreambuf_iteratorIT_T0_EES6_PKS4_S8_S8_RNS_8ios_baseES4_","__ZN16monero_fee_utils20estimate_rct_tx_sizeEiiimbb","__ZN19monero_wallet_utils31validate_wallet_components_withERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES8_N5boost8optionalIS6_EESB_N10cryptonote12network_typeERNS_33WalletComponentsValidationResultsE","__ZN3rct14rctSigPrunable25serialize_rctsig_prunableILb1E14binary_archiveEEbRT0_IXT_EEhmmm","__ZNSt3__216__pad_and_outputIwNS_11char_traitsIwEEEENS_19ostreambuf_iteratorIT_T0_EES6_PKS4_S8_S8_RNS_8ios_baseES4_",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_iiiiiiii=[0,"__ZN2hw4core14device_default13mlsag_prehashERKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEmmRKNS2_6vectorIN3rct3keyENS6_ISD_EEEERKNSB_INSC_5ctkeyENS6_ISI_EEEERSD_","__ZN2hw4core14device_default13mlsag_prepareERKN3rct3keyES5_RS3_S6_S6_S6_","__ZN2hw4core14device_default10mlsag_signERKN3rct3keyERKNSt3__26vectorIS3_NS6_9allocatorIS3_EEEESC_mmRSA_","__ZNKSt3__28time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcPK2tmcc","__ZNKSt3__28time_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwPK2tmcc","__ZNKSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjRe","__ZNKSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjRNS_12basic_stringIcS3_NS_9allocatorIcEEEE","__ZNKSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRe","__ZNKSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRNS_12basic_stringIwS3_NS_9allocatorIwEEEE","__ZNSt3__214__scan_keywordINS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEPKNS_12basic_stringIcS3_NS_9allocatorIcEEEENS_5ctypeIcEEEET0_RT_SE_SD_SD_RKT1_Rjb","__ZNSt3__214__scan_keywordINS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEPKNS_12basic_stringIwS3_NS_9allocatorIwEEEENS_5ctypeIwEEEET0_RT_SE_SD_SD_RKT1_Rjb",0,0,0,0];var debug_table_iiiiiiiii=[0,"__ZN2hw4core14device_default10clsag_signERKN3rct3keyES5_S5_S5_S5_S5_RS3_","__ZN2hw6device17compute_key_imageERKN10cryptonote12account_keysERKN6crypto10public_keyERKNS5_14key_derivationEmRKNS1_16subaddress_indexERNS1_7keypairERNS5_9key_imageE","__ZNKSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjP2tmcc","__ZNKSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjP2tmcc","__ZNKSt3__27codecvtIDic11__mbstate_tE6do_outERS1_PKDiS5_RS5_PcS7_RS7_","__ZNKSt3__27codecvtIDic11__mbstate_tE5do_inERS1_PKcS5_RS5_PDiS7_RS7_","__ZNKSt3__27codecvtIwc11__mbstate_tE6do_outERS1_PKwS5_RS5_PcS7_RS7_","__ZNKSt3__27codecvtIwc11__mbstate_tE5do_inERS1_PKcS5_RS5_PwS7_RS7_","__ZNKSt3__27codecvtIcc11__mbstate_tE6do_outERS1_PKcS5_RS5_PcS7_RS7_","__ZNKSt3__27codecvtIcc11__mbstate_tE5do_inERS1_PKcS5_RS5_PcS7_RS7_","__ZNKSt3__27codecvtIDsc11__mbstate_tE6do_outERS1_PKDsS5_RS5_PcS7_RS7_","__ZNKSt3__27codecvtIDsc11__mbstate_tE5do_inERS1_PKcS5_RS5_PDsS7_RS7_","__ZN10cryptonote33generate_key_image_helper_precompERKNS_12account_keysERKN6crypto10public_keyERKNS3_14key_derivationEmRKNS_16subaddress_indexERNS_7keypairERNS3_9key_imageERN2hw6deviceE",0,0];var debug_table_iiiiiiiiii=[0,"__ZN2hw4core14device_default13clsag_prepareERKN3rct3keyES5_RS3_S6_S5_S6_S6_S6_","__ZN10cryptonote25generate_key_image_helperERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERSE_SK_RKNS3_6vectorIS6_NSC_IS6_EEEEmRNS_7keypairERNS5_9key_imageERN2hw6deviceE",0];var debug_table_iiiiiiiiiii=[0,"__ZNSt3__29__num_getIcE17__stage2_int_loopEciPcRS2_RjcRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSD_PKc","__ZNSt3__29__num_getIwE17__stage2_int_loopEwiPcRS2_RjwRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSD_PKw",0];var debug_table_iiiiiiiiiiii=[0,"__ZNSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIcEERNS_10unique_ptrIcPFvPvEEERPcSM_","__ZNSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE8__do_getERS4_S4_bRKNS_6localeEjRjRbRKNS_5ctypeIwEERNS_10unique_ptrIwPFvPvEEERPwSM_",0];var debug_table_iiiiiiiiiiiii=[0,"__ZNSt3__29__num_getIcE19__stage2_float_loopEcRbRcPcRS4_ccRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSE_RjS4_","__ZNSt3__29__num_getIwE19__stage2_float_loopEwRbRcPcRS4_wwRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSE_RjPw",0];var debug_table_iiiiiiiiiiiiiii=[0,"__ZN10cryptonote27construct_tx_and_get_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEb"];var debug_table_iiiiiiiiiiiiiiii=[0,"__ZN2hw4core14device_default30generate_output_ephemeral_keysEmRKN10cryptonote12account_keysERKN6crypto10public_keyERKN4epee7mlockedIN5tools8scrubbedINS6_9ec_scalarEEEEERKNS2_20tx_destination_entryERKN5boost8optionalINS2_22account_public_addressEEEmRKbRKNSt3__26vectorISG_NSU_9allocatorISG_EEEERNSV_IS7_NSW_IS7_EEEERNSV_IN3rct3keyENSW_IS15_EEEERS7_bRNS6_8view_tagE","__ZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbb",0];var debug_table_iiiiij=[0,"__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcx","__ZNKSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcy","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwx","__ZNKSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwy",0,0,0];var debug_table_iiiiiji=[0,"__ZN22monero_key_image_utils14new__key_imageERKN6crypto10public_keyERKN4epee7mlockedIN5tools8scrubbedINS0_9ec_scalarEEEEESC_S3_yRNS_15KeyImageRetValsE"];var debug_table_iiiij=[0,"__ZN2hw4core14device_default19generate_chacha_keyERKN10cryptonote12account_keysERN4epee7mlockedIN5tools8scrubbedINSt3__25arrayIhLm32EEEEEEEy"];var debug_table_iiiiji=[0,"__ZN12_GLOBAL__N_126_rct_hex_to_decrypted_maskERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEERKNSD_10public_keyEyRN3rct3keyE"];var debug_table_iiij=[0,"__ZNSt3__210__function16__policy_invokerIFbhxEE12__call_emptyEPKNS0_16__policy_storageEhx","__ZNSt3__210__function16__policy_invokerIFbhxEE11__call_implINS0_12__alloc_funcIZN17monero_fork_rules22make_use_fork_rules_fnEhEUlhxE_NS_9allocatorIS7_EES2_EEEEbPKNS0_16__policy_storageEhx","__ZNSt3__210__function16__policy_invokerIFbhxEE11__call_implINS0_12__alloc_funcIPS2_NS_9allocatorIS6_EES2_EEEEbPKNS0_16__policy_storageEhx"];var debug_table_iij=[0,"__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEy","__ZN17monero_fork_rules37lightwallet_hardcoded__use_fork_rulesEhx",0];var debug_table_ji=[0,"__ZN10cryptonote22get_transaction_weightERKNS_11transactionE"];var debug_table_jiii=[0,"__ZNSt3__26stoullERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPmi"];var debug_table_jiiii=[0,"__ZN16monero_fee_utils18get_fee_multiplierEjjiNSt3__28functionIFbhxEEE","__ZNSt3__227__num_get_unsigned_integralIyEET_PKcS3_Rji","__ZNSt3__225__num_get_signed_integralIxEET_PKcS3_Rji","__ZNSt3__212_GLOBAL__N_110as_integerIyNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEET_RKS7_RKT0_Pmi",0,0,0];var debug_table_jiiiiiiiijjj=[0,"__ZN16monero_fee_utils12estimate_feeEbbiiimbbyyy"];var debug_table_jiiijjj=[0,"__ZN16monero_fee_utils13calculate_feeEbRKN10cryptonote11transactionEmyyy"];var debug_table_jiji=[0,"___emscripten_stdout_seek","___stdio_seek","___atomic_fetch_add_8"];var debug_table_jji=[0,"__ZN16monero_fee_utils34get_upper_transaction_weight_limitEyNSt3__28functionIFbhxEEE"];var debug_table_jjii=[0,"__ZN16monero_fee_utils24estimated_tx_network_feeEyjNSt3__28functionIFbhxEEE"];var debug_table_v=[0,"___cxa_pure_virtual","___cxa_end_catch","___cxa_rethrow","___cxa_bad_typeid","__ZN5boost3_bi8storage2INS_17reference_wrapperINS_13property_tree11json_parser6detail18standard_callbacksINS3_11basic_ptreeINSt3__212basic_stringIcNS8_11char_traitsIcEENS8_9allocatorIcEEEESE_NS8_4lessISE_EEEEEEEENS_3argILi1EEEE3a2_Ev","__ZN5boost10conversion6detail14throw_bad_castIiNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEEEvv","__ZN2hwL21clear_device_registryEv","__ZN6logger7do_initEv","__ZSt17__throw_bad_allocv","__ZNSt3__2L10init_weeksEv","__ZNSt3__2L11init_monthsEv","__ZNSt3__2L10init_am_pmEv","__ZNSt3__2L11init_wweeksEv","__ZNSt3__2L12init_wmonthsEv","__ZNSt3__2L11init_wam_pmEv","__ZNSt3__212_GLOBAL__N_14makeINS_7collateIcEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7collateIwEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_5ctypeIwEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7codecvtIcc11__mbstate_tEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7codecvtIwc11__mbstate_tEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7codecvtIDsc11__mbstate_tEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7codecvtIDic11__mbstate_tEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_7num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_10moneypunctIcLb0EEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_10moneypunctIcLb1EEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_10moneypunctIwLb0EEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_10moneypunctIwLb1EEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_9money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_9money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_9money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_9money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_8time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_8time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_8time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_8time_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_8messagesIcEEjEERT_T0_","__ZNSt3__212_GLOBAL__N_14makeINS_8messagesIwEEjEERT_T0_","__ZL28demangling_terminate_handlerv",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_vi=[0,"__ZN5boost13property_tree14ptree_bad_pathD2Ev","__ZN5boost13property_tree14ptree_bad_pathD0Ev","__ZN5boost10wrapexceptINS_13property_tree14ptree_bad_pathEED1Ev","__ZN5boost10wrapexceptINS_13property_tree14ptree_bad_pathEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEE7rethrowEv","__ZThn12_N5boost10wrapexceptINS_13property_tree14ptree_bad_pathEED1Ev","__ZThn12_N5boost10wrapexceptINS_13property_tree14ptree_bad_pathEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_13property_tree14ptree_bad_pathEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_13property_tree14ptree_bad_pathEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEED0Ev","__ZThn12_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEED1Ev","__ZThn12_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_pathEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_pathEED0Ev","__ZThn12_N5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_pathEED1Ev","__ZThn12_N5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_pathEED0Ev","__ZN5boost13property_tree11ptree_errorD2Ev","__ZN5boost13property_tree11ptree_errorD0Ev","__ZN5boost16exception_detail10clone_baseD2Ev","__ZN5boost16exception_detail10clone_baseD0Ev","__ZN5boost3any6holderINS_13property_tree11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS2_13id_translatorISA_EEEEED2Ev","__ZN5boost3any6holderINS_13property_tree11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS2_13id_translatorISA_EEEEED0Ev","__ZN5boost3any11placeholderD2Ev","__ZN5boost3any11placeholderD0Ev","__ZN5boost13property_tree14ptree_bad_dataD2Ev","__ZN5boost13property_tree14ptree_bad_dataD0Ev","__ZN5boost10wrapexceptINS_13property_tree14ptree_bad_dataEED1Ev","__ZN5boost10wrapexceptINS_13property_tree14ptree_bad_dataEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEE7rethrowEv","__ZThn12_N5boost10wrapexceptINS_13property_tree14ptree_bad_dataEED1Ev","__ZThn12_N5boost10wrapexceptINS_13property_tree14ptree_bad_dataEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_13property_tree14ptree_bad_dataEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_13property_tree14ptree_bad_dataEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEED0Ev","__ZThn12_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEED1Ev","__ZThn12_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_dataEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_dataEED0Ev","__ZThn12_N5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_dataEED1Ev","__ZThn12_N5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_dataEED0Ev","__ZNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZTv0_n12_NSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZTv0_n12_NSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev","__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZNSt3__218basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZNSt3__218basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZThn8_NSt3__218basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZThn8_NSt3__218basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZTv0_n12_NSt3__218basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZTv0_n12_NSt3__218basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZN5boost3any6holderINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEED2Ev","__ZN5boost3any6holderINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEED0Ev","__ZN5boost13property_tree17file_parser_errorD2Ev","__ZN5boost13property_tree17file_parser_errorD0Ev","__ZN5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEED1Ev","__ZN5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEE7rethrowEv","__ZThn36_N5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEED1Ev","__ZThn36_N5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEED0Ev","__ZThn36_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEED1Ev","__ZThn36_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEED0Ev","__ZThn36_N5boost16exception_detail19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEED1Ev","__ZThn36_N5boost16exception_detail19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEED0Ev","__ZN5boost13property_tree11json_parser17json_parser_errorD2Ev","__ZN5boost13property_tree11json_parser17json_parser_errorD0Ev","__ZNSt3__214basic_iostreamIcNS_11char_traitsIcEEED1Ev","__ZNSt3__214basic_iostreamIcNS_11char_traitsIcEEED0Ev","__ZThn8_NSt3__214basic_iostreamIcNS_11char_traitsIcEEED1Ev","__ZThn8_NSt3__214basic_iostreamIcNS_11char_traitsIcEEED0Ev","__ZTv0_n12_NSt3__214basic_iostreamIcNS_11char_traitsIcEEED1Ev","__ZTv0_n12_NSt3__214basic_iostreamIcNS_11char_traitsIcEEED0Ev","__ZNSt3__213basic_istreamIcNS_11char_traitsIcEEED1Ev","__ZNSt3__213basic_istreamIcNS_11char_traitsIcEEED0Ev","__ZTv0_n12_NSt3__213basic_istreamIcNS_11char_traitsIcEEED1Ev","__ZTv0_n12_NSt3__213basic_istreamIcNS_11char_traitsIcEEED0Ev","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEED1Ev","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEED0Ev","__ZTv0_n12_NSt3__213basic_ostreamIcNS_11char_traitsIcEEED1Ev","__ZTv0_n12_NSt3__213basic_ostreamIcNS_11char_traitsIcEEED0Ev","__ZNSt3__219basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZNSt3__219basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZTv0_n12_NSt3__219basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev","__ZTv0_n12_NSt3__219basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED0Ev","__ZN5tools5error17wallet_error_baseISt13runtime_errorED2Ev","__ZN5tools5error17wallet_error_baseISt13runtime_errorED0Ev","__ZN5tools5error21wallet_internal_errorD2Ev","__ZN5tools5error21wallet_internal_errorD0Ev","__ZN5tools5error17wallet_error_baseISt11logic_errorED2Ev","__ZN5tools5error17wallet_error_baseISt11logic_errorED0Ev","__ZN5tools5error16invalid_priorityD2Ev","__ZN5tools5error16invalid_priorityD0Ev","__ZN10cryptonote11transactionD2Ev","__ZN10cryptonote11transactionD0Ev","__ZN5boost10wrapexceptINS_7bad_getEED1Ev","__ZN5boost10wrapexceptINS_7bad_getEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEE7rethrowEv","__ZThn4_N5boost10wrapexceptINS_7bad_getEED1Ev","__ZThn4_N5boost10wrapexceptINS_7bad_getEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_7bad_getEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_7bad_getEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEED0Ev","__ZThn4_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEED1Ev","__ZThn4_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_7bad_getEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_7bad_getEED0Ev","__ZThn4_N5boost16exception_detail19error_info_injectorINS_7bad_getEED1Ev","__ZThn4_N5boost16exception_detail19error_info_injectorINS_7bad_getEED0Ev","__ZN5boost7bad_getD2Ev","__ZN5boost7bad_getD0Ev","__ZN5boost10wrapexceptINS_16bad_lexical_castEED1Ev","__ZN5boost10wrapexceptINS_16bad_lexical_castEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEE7rethrowEv","__ZThn12_N5boost10wrapexceptINS_16bad_lexical_castEED1Ev","__ZThn12_N5boost10wrapexceptINS_16bad_lexical_castEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_16bad_lexical_castEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_16bad_lexical_castEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEED0Ev","__ZThn12_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEED1Ev","__ZThn12_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_16bad_lexical_castEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_16bad_lexical_castEED0Ev","__ZThn12_N5boost16exception_detail19error_info_injectorINS_16bad_lexical_castEED1Ev","__ZThn12_N5boost16exception_detail19error_info_injectorINS_16bad_lexical_castEED0Ev","__ZN5boost16bad_lexical_castD2Ev","__ZN5boost16bad_lexical_castD0Ev","__ZN5boost6system12system_errorD2Ev","__ZN5boost6system12system_errorD0Ev","__ZN5boost10wrapexceptINS_21thread_resource_errorEED1Ev","__ZN5boost10wrapexceptINS_21thread_resource_errorEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEE7rethrowEv","__ZThn32_N5boost10wrapexceptINS_21thread_resource_errorEED1Ev","__ZThn32_N5boost10wrapexceptINS_21thread_resource_errorEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_21thread_resource_errorEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_21thread_resource_errorEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEED0Ev","__ZThn32_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEED1Ev","__ZThn32_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_21thread_resource_errorEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_21thread_resource_errorEED0Ev","__ZThn32_N5boost16exception_detail19error_info_injectorINS_21thread_resource_errorEED1Ev","__ZThn32_N5boost16exception_detail19error_info_injectorINS_21thread_resource_errorEED0Ev","__ZN5boost21thread_resource_errorD2Ev","__ZN5boost21thread_resource_errorD0Ev","__ZN5boost16thread_exceptionD2Ev","__ZN5boost16thread_exceptionD0Ev","__ZN5boost10wrapexceptINS_10lock_errorEED1Ev","__ZN5boost10wrapexceptINS_10lock_errorEED0Ev","__ZNK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEE7rethrowEv","__ZThn32_N5boost10wrapexceptINS_10lock_errorEED1Ev","__ZThn32_N5boost10wrapexceptINS_10lock_errorEED0Ev","__ZTv0_n16_NK5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEE7rethrowEv","__ZTv0_n20_N5boost10wrapexceptINS_10lock_errorEED1Ev","__ZTv0_n20_N5boost10wrapexceptINS_10lock_errorEED0Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED1Ev","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED0Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED1Ev","__ZTv0_n20_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED0Ev","__ZThn32_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED1Ev","__ZThn32_N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEED0Ev","__ZN5boost16exception_detail19error_info_injectorINS_10lock_errorEED2Ev","__ZN5boost16exception_detail19error_info_injectorINS_10lock_errorEED0Ev","__ZThn32_N5boost16exception_detail19error_info_injectorINS_10lock_errorEED1Ev","__ZThn32_N5boost16exception_detail19error_info_injectorINS_10lock_errorEED0Ev","__ZN5boost10lock_errorD2Ev","__ZN5boost10lock_errorD0Ev","__ZN5boost6detail18sp_counted_impl_pdIPN6crypto7rs_commEPFvPvEED2Ev","__ZN5boost6detail18sp_counted_impl_pdIPN6crypto7rs_commEPFvPvEED0Ev","__ZN5boost6detail18sp_counted_impl_pdIPN6crypto7rs_commEPFvPvEE7disposeEv","__ZN5boost6detail15sp_counted_base7destroyEv","__ZN5boost6detail15sp_counted_baseD2Ev","__ZN5boost6detail15sp_counted_baseD0Ev","__ZN2hw4core14device_defaultD2Ev","__ZN2hw4core14device_defaultD0Ev","__ZN2hw4core14device_default4lockEv","__ZN2hw4core14device_default6unlockEv","__ZN2hw6deviceD2Ev","__ZN2hw6deviceD0Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS5_3keyES8_S8_PKjE3__0EEED2Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS5_3keyES8_S8_PKjE3__0EEED0Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS5_3keyES8_S8_PKjE3__0EEE7disposeEv","__ZN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS2_3keyES5_S5_PKjE3__0ED2Ev","__ZN4epee10misc_utils14call_befor_dieIZN3rct12genBorromeanEPKNS2_3keyES5_S5_PKjE3__0ED0Ev","__ZN4epee10misc_utils19call_befor_die_baseD2Ev","__ZN4epee10misc_utils19call_befor_die_baseD0Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS5_3keyERKNSt3__26vectorINSA_IS6_NS9_9allocatorIS6_EEEENSB_ISD_EEEERKSD_jmRN2hw6deviceEE3__1EEED2Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS5_3keyERKNSt3__26vectorINSA_IS6_NS9_9allocatorIS6_EEEENSB_ISD_EEEERKSD_jmRN2hw6deviceEE3__1EEED0Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS5_3keyERKNSt3__26vectorINSA_IS6_NS9_9allocatorIS6_EEEENSB_ISD_EEEERKSD_jmRN2hw6deviceEE3__1EEE7disposeEv","__ZN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS2_3keyERKNSt3__26vectorINS7_IS3_NS6_9allocatorIS3_EEEENS8_ISA_EEEERKSA_jmRN2hw6deviceEE3__1ED2Ev","__ZN4epee10misc_utils14call_befor_dieIZN3rct9MLSAG_GenERKNS2_3keyERKNSt3__26vectorINS7_IS3_NS6_9allocatorIS3_EEEENS8_ISA_EEEERKSA_jmRN2hw6deviceEE3__1ED0Ev","__ZNSt3__220__shared_ptr_pointerIPN3rct18straus_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEED2Ev","__ZNSt3__220__shared_ptr_pointerIPN3rct18straus_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEED0Ev","__ZNSt3__220__shared_ptr_pointerIPN3rct18straus_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEE16__on_zero_sharedEv","__ZNSt3__220__shared_ptr_pointerIPN3rct18straus_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEE21__on_zero_shared_weakEv","__ZNSt3__220__shared_ptr_pointerIPN3rct21pippenger_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEED2Ev","__ZNSt3__220__shared_ptr_pointerIPN3rct21pippenger_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEED0Ev","__ZNSt3__220__shared_ptr_pointerIPN3rct21pippenger_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEE16__on_zero_sharedEv","__ZNSt3__220__shared_ptr_pointerIPN3rct21pippenger_cached_dataENS_14default_deleteIS2_EENS_9allocatorIS2_EEE21__on_zero_shared_weakEv","__ZN8Language10EnglishOldD2Ev","__ZN8Language10EnglishOldD0Ev","__ZN8Language4BaseD2Ev","__ZN8Language4BaseD0Ev","__ZN8Language6LojbanD2Ev","__ZN8Language6LojbanD0Ev","__ZN8Language9EsperantoD2Ev","__ZN8Language9EsperantoD0Ev","__ZN8Language7RussianD2Ev","__ZN8Language7RussianD0Ev","__ZN8Language8JapaneseD2Ev","__ZN8Language8JapaneseD0Ev","__ZN8Language10PortugueseD2Ev","__ZN8Language10PortugueseD0Ev","__ZN8Language7ItalianD2Ev","__ZN8Language7ItalianD0Ev","__ZN8Language6GermanD2Ev","__ZN8Language6GermanD0Ev","__ZN8Language7SpanishD2Ev","__ZN8Language7SpanishD0Ev","__ZN8Language6FrenchD2Ev","__ZN8Language6FrenchD0Ev","__ZN8Language5DutchD2Ev","__ZN8Language5DutchD0Ev","__ZN8Language7EnglishD2Ev","__ZN8Language7EnglishD0Ev","__ZN8Language18Chinese_SimplifiedD2Ev","__ZN8Language18Chinese_SimplifiedD0Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS7_mbRNSt3__212basic_stringIcNSB_11char_traitsIcEENSB_9allocatorIcEEEEE3__0EEED2Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS7_mbRNSt3__212basic_stringIcNSB_11char_traitsIcEENSB_9allocatorIcEEEEE3__0EEED0Ev","__ZN5boost6detail17sp_counted_impl_pIN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS7_mbRNSt3__212basic_stringIcNSB_11char_traitsIcEENSB_9allocatorIcEEEEE3__0EEE7disposeEv","__ZN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS_15wipeable_stringERS4_mbRNSt3__212basic_stringIcNS8_11char_traitsIcEENS8_9allocatorIcEEEEE3__0ED2Ev","__ZN4epee10misc_utils14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS_15wipeable_stringERS4_mbRNSt3__212basic_stringIcNS8_11char_traitsIcEENS8_9allocatorIcEEEEE3__0ED0Ev","__ZNSt3__217bad_function_callD2Ev","__ZNSt3__217bad_function_callD0Ev","__ZNSt3__29basic_iosIcNS_11char_traitsIcEEED2Ev","__ZNSt3__29basic_iosIcNS_11char_traitsIcEEED0Ev","__ZNSt3__28ios_baseD2Ev","__ZNSt3__28ios_baseD0Ev","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEED2Ev","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEED0Ev","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEED2Ev","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEED0Ev","__ZNSt3__213basic_istreamIwNS_11char_traitsIwEEED1Ev","__ZNSt3__213basic_istreamIwNS_11char_traitsIwEEED0Ev","__ZTv0_n12_NSt3__213basic_istreamIwNS_11char_traitsIwEEED1Ev","__ZTv0_n12_NSt3__213basic_istreamIwNS_11char_traitsIwEEED0Ev","__ZNSt3__213basic_ostreamIwNS_11char_traitsIwEEED1Ev","__ZNSt3__213basic_ostreamIwNS_11char_traitsIwEEED0Ev","__ZTv0_n12_NSt3__213basic_ostreamIwNS_11char_traitsIwEEED1Ev","__ZTv0_n12_NSt3__213basic_ostreamIwNS_11char_traitsIwEEED0Ev","__ZNSt3__214error_categoryD2Ev","__ZNSt3__219__iostream_categoryD0Ev","__ZNSt3__28ios_base7failureD2Ev","__ZNSt3__28ios_base7failureD0Ev","__ZNSt3__211__stdoutbufIwED0Ev","__ZNSt3__211__stdoutbufIcED0Ev","__ZNSt3__210__stdinbufIwED0Ev","__ZNSt3__210__stdinbufIcED0Ev","__ZNSt3__27collateIcED2Ev","__ZNSt3__27collateIcED0Ev","__ZNSt3__26locale5facet16__on_zero_sharedEv","__ZNSt3__27collateIwED2Ev","__ZNSt3__27collateIwED0Ev","__ZNSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEED2Ev","__ZNSt3__27num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEED0Ev","__ZNSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEED2Ev","__ZNSt3__27num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEED0Ev","__ZNSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEED2Ev","__ZNSt3__27num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEED0Ev","__ZNSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEED2Ev","__ZNSt3__27num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEED0Ev","__ZNSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEED2Ev","__ZNSt3__28time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEED0Ev","__ZNSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEED2Ev","__ZNSt3__28time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEED0Ev","__ZNSt3__28time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEED2Ev","__ZNSt3__28time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEED0Ev","__ZNSt3__28time_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEED2Ev","__ZNSt3__28time_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEED0Ev","__ZNSt3__210moneypunctIcLb0EED2Ev","__ZNSt3__210moneypunctIcLb0EED0Ev","__ZNSt3__210moneypunctIcLb1EED2Ev","__ZNSt3__210moneypunctIcLb1EED0Ev","__ZNSt3__210moneypunctIwLb0EED2Ev","__ZNSt3__210moneypunctIwLb0EED0Ev","__ZNSt3__210moneypunctIwLb1EED2Ev","__ZNSt3__210moneypunctIwLb1EED0Ev","__ZNSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEED2Ev","__ZNSt3__29money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEED0Ev","__ZNSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEED2Ev","__ZNSt3__29money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEED0Ev","__ZNSt3__29money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEED2Ev","__ZNSt3__29money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEED0Ev","__ZNSt3__29money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEED2Ev","__ZNSt3__29money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEED0Ev","__ZNSt3__28messagesIcED2Ev","__ZNSt3__28messagesIcED0Ev","__ZNSt3__28messagesIwED2Ev","__ZNSt3__28messagesIwED0Ev","__ZNSt3__26locale5facetD2Ev","__ZNSt3__216__narrow_to_utf8ILm32EED0Ev","__ZNSt3__217__widen_from_utf8ILm32EED0Ev","__ZNSt3__27codecvtIwc11__mbstate_tED2Ev","__ZNSt3__27codecvtIwc11__mbstate_tED0Ev","__ZNSt3__26locale5__impD2Ev","__ZNSt3__26locale5__impD0Ev","__ZNSt3__25ctypeIcED2Ev","__ZNSt3__25ctypeIcED0Ev","__ZNSt3__28numpunctIcED2Ev","__ZNSt3__28numpunctIcED0Ev","__ZNSt3__28numpunctIwED2Ev","__ZNSt3__28numpunctIwED0Ev","__ZNSt3__26locale5facetD0Ev","__ZNSt3__25ctypeIwED0Ev","__ZNSt3__27codecvtIcc11__mbstate_tED0Ev","__ZNSt3__27codecvtIDsc11__mbstate_tED0Ev","__ZNSt3__27codecvtIDic11__mbstate_tED0Ev","__ZNSt3__214__shared_countD2Ev","__ZNSt3__214__shared_countD0Ev","__ZNSt3__219__shared_weak_countD0Ev","__ZNSt3__224__generic_error_categoryD0Ev","__ZNSt3__223__system_error_categoryD0Ev","__ZNSt3__212system_errorD2Ev","__ZNSt3__212system_errorD0Ev","__ZN10__cxxabiv116__shim_type_infoD2Ev","__ZN10__cxxabiv117__class_type_infoD0Ev","__ZNK10__cxxabiv116__shim_type_info5noop1Ev","__ZNK10__cxxabiv116__shim_type_info5noop2Ev","__ZN10__cxxabiv120__si_class_type_infoD0Ev","__ZN12_GLOBAL__N_116itanium_demangle4NodeD2Ev","__ZN12_GLOBAL__N_116itanium_demangle10AbiTagAttrD0Ev","__ZN12_GLOBAL__N_116itanium_demangle4NodeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle19SpecialSubstitutionD0Ev","__ZN12_GLOBAL__N_116itanium_demangle20PostfixQualifiedTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13ReferenceTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle11PointerTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle20NameWithTemplateArgsD0Ev","__ZN12_GLOBAL__N_116itanium_demangle12TemplateArgsD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13ParameterPackD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15IntegerCastExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle16FloatLiteralImplIeED0Ev","__ZN12_GLOBAL__N_116itanium_demangle16FloatLiteralImplIdED0Ev","__ZN12_GLOBAL__N_116itanium_demangle16FloatLiteralImplIfED0Ev","__ZN12_GLOBAL__N_116itanium_demangle8BoolExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle14IntegerLiteralD0Ev","__ZN12_GLOBAL__N_116itanium_demangle20TemplateArgumentPackD0Ev","__ZN12_GLOBAL__N_116itanium_demangle9ThrowExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle12InitListExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13NodeArrayNodeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13EnclosingExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle19SizeofParamPackExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle22ParameterPackExpansionD0Ev","__ZN12_GLOBAL__N_116itanium_demangle8CastExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15ConditionalExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle7NewExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle11PostfixExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15BracedRangeExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10BracedExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle8NameTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle18ArraySubscriptExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10MemberExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle19GlobalQualifiedNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15LiteralOperatorD0Ev","__ZN12_GLOBAL__N_116itanium_demangle22ConversionOperatorTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle8DtorNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13QualifiedNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10DeleteExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle14ConversionExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle8CallExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10PrefixExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10BinaryExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle8FoldExprD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13FunctionParamD0Ev","__ZN12_GLOBAL__N_116itanium_demangle24ForwardTemplateReferenceD0Ev","__ZN12_GLOBAL__N_116itanium_demangle22ElaboratedTypeSpefTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle16StdQualifiedNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle21StructuredBindingNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15ClosureTypeNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15UnnamedTypeNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle9LocalNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle12CtorDtorNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle27ExpandedSpecialSubstitutionD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10NestedNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle19PointerToMemberTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle9ArrayTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle10VectorTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle15PixelVectorTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle8QualTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle17VendorExtQualTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle13ObjCProtoNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle12FunctionTypeD0Ev","__ZN12_GLOBAL__N_116itanium_demangle20DynamicExceptionSpecD0Ev","__ZN12_GLOBAL__N_116itanium_demangle12NoexceptSpecD0Ev","__ZN12_GLOBAL__N_116itanium_demangle11SpecialNameD0Ev","__ZN12_GLOBAL__N_116itanium_demangle9DotSuffixD0Ev","__ZN12_GLOBAL__N_116itanium_demangle16FunctionEncodingD0Ev","__ZN12_GLOBAL__N_116itanium_demangle12EnableIfAttrD0Ev","__ZN12_GLOBAL__N_116itanium_demangle21CtorVtableSpecialNameD0Ev","__ZNSt9exceptionD2Ev","__ZNSt9bad_allocD0Ev","__ZNSt9exceptionD0Ev","__ZNSt11logic_errorD2Ev","__ZNSt11logic_errorD0Ev","__ZNSt13runtime_errorD2Ev","__ZNSt13runtime_errorD0Ev","__ZNSt16invalid_argumentD0Ev","__ZNSt12length_errorD0Ev","__ZNSt12out_of_rangeD0Ev","__ZNSt11range_errorD0Ev","__ZNSt14overflow_errorD0Ev","__ZNSt8bad_castD2Ev","__ZNSt8bad_castD0Ev","__ZNSt10bad_typeidD2Ev","__ZNSt10bad_typeidD0Ev","__ZN10__cxxabiv123__fundamental_type_infoD0Ev","__ZN10__cxxabiv119__pointer_type_infoD0Ev","__ZN10__cxxabiv120__function_type_infoD0Ev","__ZN10__cxxabiv116__enum_type_infoD0Ev","__ZN10__cxxabiv121__vmi_class_type_infoD0Ev","__ZN18emscr_async_bridge10send_fundsERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN18emscr_async_bridge27send_cb_I__got_unspent_outsERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN18emscr_async_bridge27send_cb_II__got_random_outsERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN18emscr_async_bridge25send_cb_III__submitted_txERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN13serial_bridge14new_payment_idEv","__Z14new_payment_idv","__ZN5tools8scrubbedIN6crypto9ec_scalarEE5scrubEv","__ZN5boost15optional_detail13optional_baseINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE7destroyEv","__ZN19serial_bridge_utilsL27ret_json_key__any__err_codeEv","__ZN19serial_bridge_utilsL26ret_json_key__any__err_msgEv","__ZN19serial_bridge_utilsL37ret_json_key__send__spendable_balanceEv","__ZN19serial_bridge_utilsL36ret_json_key__send__required_balanceEv","__ZN5boost11multi_index21multi_index_containerINSt3__24pairIKNS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS_13property_tree11basic_ptreeIS9_S9_NS2_4lessIS9_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EEEENS0_18ordered_non_uniqueINSJ_INSF_4subs7by_nameESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS0_6memberISG_SA_XadL_ZNSG_5firstEEEEESE_EESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS7_ISG_EEEC2Ev","__ZN5boost11multi_index21multi_index_containerINSt3__24pairIKNS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS_13property_tree11basic_ptreeIS9_S9_NS2_4lessIS9_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EEEENS0_18ordered_non_uniqueINSJ_INSF_4subs7by_nameESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS0_6memberISG_SA_XadL_ZNSG_5firstEEEEESE_EESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS7_ISG_EEE17delete_all_nodes_Ev","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEEC2Ev","__ZN5boost15throw_exceptionINS_16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_pathEEEEEvRKT_","__ZN5boost16exception_detail12refcount_ptrINS0_20error_info_containerEE7releaseEv","__ZN5boost9exceptionC2Ev","__ZN5boost15throw_exceptionINS_16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_dataEEEEEvRKT_","__ZNSt3__28ios_base33__set_badbit_and_consider_rethrowEv","__ZN5boost6tuples4consINS0_9null_typeENS1_INS0_5tupleINS_11multi_index6memberINSt3__24pairIKNS6_12basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEENS_13property_tree11basic_ptreeISD_SD_NS6_4lessISD_EEEEEESE_XadL_ZNSK_5firstEEEEESI_S2_S2_S2_S2_S2_S2_S2_S2_EES2_EEEC2Ev","__ZN5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEE16empty_initializeEv","__ZN19serial_bridge_utilsL28ret_json_key__send__used_feeEv","__ZN19serial_bridge_utilsL30ret_json_key__send__total_sentEv","__ZN19serial_bridge_utilsL25ret_json_key__send__mixinEv","__ZN19serial_bridge_utilsL36ret_json_key__send__final_payment_idEv","__ZN19serial_bridge_utilsL40ret_json_key__send__serialized_signed_txEv","__ZN19serial_bridge_utilsL27ret_json_key__send__tx_hashEv","__ZN19serial_bridge_utilsL26ret_json_key__send__tx_keyEv","__ZN19serial_bridge_utilsL30ret_json_key__send__tx_pub_keyEv","__Z36_delete_and_remove_heap_vals_ptr_forRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__ZN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEC2Ev","__ZN5boost15throw_exceptionINS_16exception_detail19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEEEvRKT_","__ZN18emscr_async_bridge34_reenterable_construct_and_send_txERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN5boost15optional_detail13optional_baseINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS2_9allocatorIS5_EEEEE7destroyEv","__ZN5boost15optional_detail13optional_baseINSt3__213unordered_mapINS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS2_6vectorIN21monero_transfer_utils18RandomAmountOutputENS7_ISC_EEEENS2_4hashIS9_EENS2_8equal_toIS9_EENS7_INS2_4pairIKS9_SE_EEEEEEE7destroyEv","__ZN5boost15optional_detail13optional_baseINSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS2_9allocatorIS5_EEEEE7destroyEv","__ZN5tools5error15throw_wallet_exINS0_16invalid_priorityEJEEEvONSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEDpRKT0_","__ZN5boost15optional_detail13optional_baseIN10cryptonote11transactionEE7destroyEv","__ZN5boost17value_initializedIN6crypto10public_keyEEC2Ev","__ZN5boost17value_initializedIN10cryptonote20tx_destination_entryEEC2Ev","__ZN10cryptonote12account_baseC2Ev","__ZN10cryptonote11transactionC2Ev","__ZN5boost15optional_detail13optional_baseIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEEE7destroyEv","__ZN5boost15optional_detail13optional_baseINSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS2_9allocatorISB_EEEEE7destroyEv","__ZN5boost15throw_exceptionINS_7bad_getEEEvRKT_","__ZN10cryptonote11transaction8set_nullEv","__ZN5boost15optional_detail13optional_baseIN10cryptonote22account_public_addressEE7destroyEv","__ZN5boost17value_initializedIN10cryptonote22account_public_addressEEC2Ev","__ZN5tools8scrubbedIN19monero_wallet_utils19ec_nonscalar_16ByteEE5scrubEv","__ZN5boost15optional_detail13optional_baseIN19monero_wallet_utils17WalletDescriptionEE7destroyEv","__ZN5boost15optional_detail13optional_baseIN4epee15wipeable_stringEE7destroyEv","__ZN5boost15optional_detail13optional_baseIN19monero_wallet_utils18ComponentsFromSeedEE7destroyEv","__ZN5boost13property_tree11json_parser6detail6parserINS2_18standard_callbacksINS0_11basic_ptreeINSt3__212basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEESC_NS6_4lessISC_EEEEEENS2_8encodingIcEENS6_19istreambuf_iteratorIcS9_EESK_E11parse_valueEv","__ZN5boost13property_tree11json_parser6detail6parserINS2_18standard_callbacksINS0_11basic_ptreeINSt3__212basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEESC_NS6_4lessISC_EEEEEENS2_8encodingIcEENS6_19istreambuf_iteratorIcS9_EESK_E6finishEv","__ZN5boost17value_initializedIN6crypto14key_derivationEEC2Ev","__ZN5boost15throw_exceptionINS_16bad_lexical_castEEEvRKT_","__ZN5boost15optional_detail13optional_baseIN10cryptonote23subaddress_receive_infoEE7destroyEv","__ZN5boost15optional_detail13optional_baseIN6crypto8view_tagEE7destroyEv","__ZN5tools8scrubbedINSt3__25arrayIcLm32EEEE5scrubEv","__ZN10cryptonote12account_base8set_nullEv","__ZN5boost5mutexC2Ev","__ZN5boost15throw_exceptionINS_21thread_resource_errorEEEvRKT_","__ZN5boost5mutex6unlockEv","__ZN5boost15throw_exceptionINS_10lock_errorEEEvRKT_","__ZN6cryptoL13random_scalarERNS_9ec_scalarE","_free","__ZN12_GLOBAL__N_111local_abortEPKc","__ZZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbbEN29input_generation_context_dataC2Ev","__ZN10cryptonote11transaction17invalidate_hashesEv","__ZN4epee15wipeable_string4wipeEv","__ZN2hw4core12register_allERNSt3__23mapINS1_12basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS1_10unique_ptrINS_6deviceENS1_14default_deleteISA_EEEENS1_4lessIS8_EENS6_INS1_4pairIKS8_SD_EEEEEE","__ZN2hw15device_registryC2Ev","__ZN5tools8scrubbedINSt3__25arrayIcLm65EEEE5scrubEv","__ZN2hw4core14device_defaultC2Ev","__ZN3rct5skGenERNS_3keyE","__ZZN3rct12genBorromeanEPKNS_3keyES2_S2_PKjENK3__0clEv","__ZN3rct5skGenEv","__ZZN3rct9MLSAG_GenERKNS_3keyERKNSt3__26vectorINS4_IS0_NS3_9allocatorIS0_EEEENS5_IS7_EEEERKS7_jmRN2hw6deviceEENK3__1clEv","__ZN8Language18Chinese_SimplifiedC2Ev","__ZN8Language7EnglishC2Ev","__ZN8Language5DutchC2Ev","__ZN8Language6FrenchC2Ev","__ZN8Language7SpanishC2Ev","__ZN8Language6GermanC2Ev","__ZN8Language7ItalianC2Ev","__ZN8Language10PortugueseC2Ev","__ZN8Language8JapaneseC2Ev","__ZN8Language7RussianC2Ev","__ZN8Language9EsperantoC2Ev","__ZN8Language6LojbanC2Ev","__ZN8Language10EnglishOldC2Ev","__ZZN6crypto13ElectrumWords14words_to_bytesERKN4epee15wipeable_stringERS2_mbRNSt3__212basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEEENK3__0clEv","__ZZN6logger7do_initEvEN3__08__invokeEi","__ZN5boost2io20basic_ios_fill_saverIcNSt3__211char_traitsIcEEE7restoreEv","__ZN5boost2io15ios_width_saver7restoreEv","__ZN5boost2io19ios_precision_saver7restoreEv","__ZN5boost2io15ios_flags_saver7restoreEv","__ZNSt3__26locale2id6__initEv","__ZNSt3__217__call_once_proxyINS_5tupleIJONS_12_GLOBAL__N_111__fake_bindEEEEEEvPv","__ZNSt3__212__do_nothingEPv","__ZNSt3__221__throw_runtime_errorEPKc","__ZNSt3__212_GLOBAL__N_112throw_helperISt12out_of_rangeEEvRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__ZNSt3__212_GLOBAL__N_112throw_helperISt16invalid_argumentEEvRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_vii=[0,"__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE5imbueERKNS_6localeE","__ZNK6logger9formatterIJRKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEE6do_logERNS1_13basic_ostreamIcS4_EE","__ZNK6logger9formatterIJPKcS2_S2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKciS2_mS2_iS2_iS2_iS2_S2_S2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKyPKcmS4_EE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKcEE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJbPKcEE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJiPKchS2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJmPKcmS2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKyPKcS2_S4_S2_S4_S2_S4_EE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEPKcEE6do_logERNS1_13basic_ostreamIcS4_EE","__ZNK6logger9formatterIJPKcS2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKcRKN6crypto10public_keyES2_EE6do_logERNSt3__213basic_ostreamIcNS8_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKcRKyS2_S4_S2_EE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKcmS2_mS2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJPFRNSt3__213basic_ostreamIcNS1_11char_traitsIcEEEES6_ERKNS1_12basic_stringIcS4_NS1_9allocatorIcEEEES8_RKN6crypto4hashEPKcEE6do_logES6_","__ZNK6logger9formatterIJRKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEPFRNS1_13basic_ostreamIcS4_EESC_ES9_SE_RKN6crypto4hashEPKcEE6do_logESC_","__ZNK6logger9formatterIJPKciS2_mS2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKN6crypto10public_keyEEE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKN6crypto10public_keyEPKcEE6do_logERNSt3__213basic_ostreamIcNS8_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKyPKcEE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKyPKcRKN6crypto10public_keyES4_EE6do_logERNSt3__213basic_ostreamIcNSA_11char_traitsIcEEEE","__ZNK6logger9formatterIJbPKcRKyS2_EE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEPKcPFRNS1_13basic_ostreamIcS4_EESE_ES9_SB_SG_SB_RKySB_iSB_EE6do_logESE_","__ZNK6logger9formatterIJmPKcRKyS2_EE6do_logERNSt3__213basic_ostreamIcNS6_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKN6crypto5hash8EPKcEE6do_logERNSt3__213basic_ostreamIcNS8_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKcRKNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEES2_EE6do_logERNS3_13basic_ostreamIcS6_EE","__ZNK2hw4core14device_default8get_nameEv","__ZN2hw6device12set_callbackEPNS_17i_device_callbackE","__ZN2hw6device19set_derivation_pathERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE","__ZN2hw6device7set_pinERKN4epee15wipeable_stringE","__ZN2hw6device14set_passphraseERKN4epee15wipeable_stringE","__ZN2hw6device20computing_key_imagesEb","__ZN2hw6device16set_network_typeEN10cryptonote12network_typeE","__ZNK6logger9formatterIJiPKcEE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJPKcmS2_EE6do_logERNSt3__213basic_ostreamIcNS4_11char_traitsIcEEEE","__ZNK6logger9formatterIJRKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEPKcS9_SB_EE6do_logERNS1_13basic_ostreamIcS4_EE","__ZNK6logger9formatterIJjPKcRKNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEES2_SB_EE6do_logERNS3_13basic_ostreamIcS6_EE","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE5imbueERKNS_6localeE","__ZNSt3__211__stdoutbufIwE5imbueERKNS_6localeE","__ZNSt3__211__stdoutbufIcE5imbueERKNS_6localeE","__ZNSt3__210__stdinbufIwE5imbueERKNS_6localeE","__ZNSt3__210__stdinbufIcE5imbueERKNS_6localeE","__ZNKSt3__210moneypunctIcLb0EE11do_groupingEv","__ZNKSt3__210moneypunctIcLb0EE14do_curr_symbolEv","__ZNKSt3__210moneypunctIcLb0EE16do_positive_signEv","__ZNKSt3__210moneypunctIcLb0EE16do_negative_signEv","__ZNKSt3__210moneypunctIcLb0EE13do_pos_formatEv","__ZNKSt3__210moneypunctIcLb0EE13do_neg_formatEv","__ZNKSt3__210moneypunctIcLb1EE11do_groupingEv","__ZNKSt3__210moneypunctIcLb1EE14do_curr_symbolEv","__ZNKSt3__210moneypunctIcLb1EE16do_positive_signEv","__ZNKSt3__210moneypunctIcLb1EE16do_negative_signEv","__ZNKSt3__210moneypunctIcLb1EE13do_pos_formatEv","__ZNKSt3__210moneypunctIcLb1EE13do_neg_formatEv","__ZNKSt3__210moneypunctIwLb0EE11do_groupingEv","__ZNKSt3__210moneypunctIwLb0EE14do_curr_symbolEv","__ZNKSt3__210moneypunctIwLb0EE16do_positive_signEv","__ZNKSt3__210moneypunctIwLb0EE16do_negative_signEv","__ZNKSt3__210moneypunctIwLb0EE13do_pos_formatEv","__ZNKSt3__210moneypunctIwLb0EE13do_neg_formatEv","__ZNKSt3__210moneypunctIwLb1EE11do_groupingEv","__ZNKSt3__210moneypunctIwLb1EE14do_curr_symbolEv","__ZNKSt3__210moneypunctIwLb1EE16do_positive_signEv","__ZNKSt3__210moneypunctIwLb1EE16do_negative_signEv","__ZNKSt3__210moneypunctIwLb1EE13do_pos_formatEv","__ZNKSt3__210moneypunctIwLb1EE13do_neg_formatEv","__ZNKSt3__28messagesIcE8do_closeEl","__ZNKSt3__28messagesIwE8do_closeEl","__ZNKSt3__28numpunctIcE11do_groupingEv","__ZNKSt3__28numpunctIcE11do_truenameEv","__ZNKSt3__28numpunctIcE12do_falsenameEv","__ZNKSt3__28numpunctIwE11do_groupingEv","__ZNKSt3__28numpunctIwE11do_truenameEv","__ZNKSt3__28numpunctIwE12do_falsenameEv","__ZNK12_GLOBAL__N_116itanium_demangle10AbiTagAttr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle4Node11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle19SpecialSubstitution9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle19SpecialSubstitution11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle20PostfixQualifiedType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ReferenceType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ReferenceType10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle11PointerType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle11PointerType10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle20NameWithTemplateArgs9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle20NameWithTemplateArgs11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle12TemplateArgs9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ParameterPack9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ParameterPack10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle15IntegerCastExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FloatLiteralImplIeE9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FloatLiteralImplIdE9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FloatLiteralImplIfE9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8BoolExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle14IntegerLiteral9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle20TemplateArgumentPack9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9ThrowExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12InitListExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13NodeArrayNode9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13EnclosingExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle19SizeofParamPackExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle22ParameterPackExpansion9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8CastExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle15ConditionalExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle7NewExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle11PostfixExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle15BracedRangeExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle10BracedExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8NameType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8NameType11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle18ArraySubscriptExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle10MemberExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle19GlobalQualifiedName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle19GlobalQualifiedName11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle15LiteralOperator9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle22ConversionOperatorType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8DtorName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13QualifiedName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13QualifiedName11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle10DeleteExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle14ConversionExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8CallExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle10PrefixExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle10BinaryExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8FoldExpr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13FunctionParam9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle24ForwardTemplateReference9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle24ForwardTemplateReference10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle22ElaboratedTypeSpefType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16StdQualifiedName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16StdQualifiedName11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle21StructuredBindingName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle15ClosureTypeName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle15UnnamedTypeName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9LocalName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12CtorDtorName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle27ExpandedSpecialSubstitution9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle27ExpandedSpecialSubstitution11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle10NestedName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle10NestedName11getBaseNameEv","__ZNK12_GLOBAL__N_116itanium_demangle19PointerToMemberType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle19PointerToMemberType10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9ArrayType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9ArrayType10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle10VectorType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle15PixelVectorType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8QualType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle8QualType10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle17VendorExtQualType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle13ObjCProtoName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12FunctionType9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12FunctionType10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle20DynamicExceptionSpec9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12NoexceptSpec9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle11SpecialName9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle9DotSuffix9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FunctionEncoding9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle16FunctionEncoding10printRightERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle12EnableIfAttr9printLeftERNS_12OutputStreamE","__ZNK12_GLOBAL__N_116itanium_demangle21CtorVtableSpecialName9printLeftERNS_12OutputStreamE","__ZN19serial_bridge_utils27error_ret_json_from_messageERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZN13serial_bridge34send_step2__try_create_transactionERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_","__Z10send_fundsRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__Z27send_cb_I__got_unspent_outsRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__Z27send_cb_II__got_random_outsRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__Z25send_cb_III__submitted_txRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__Z34send_step2__try_create_transactionRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__ZN10emscripten8internal11BindingTypeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEvE12fromWireTypeEPNS9_Ut_E","__ZN18emscr_async_bridge27send_app_handler__error_msgERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES8_","__ZNSt3__217_DeallocateCaller27__do_deallocate_handle_sizeEPvm","__ZN4epee7mlocker6unlockEPvm","__ZN18emscr_async_bridge28send_app_handler__error_jsonERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES8_","__ZN19serial_bridge_utils18ret_json_from_rootERKN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEES9_NS3_4lessIS9_EEEE","__ZNKSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE3strEv","__ZN5boost13property_tree11string_pathINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS0_13id_translatorIS8_EEE6reduceEv","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEEC2ERKSB_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE4swapERSB_","__ZN5boost11multi_index21multi_index_containerINSt3__24pairIKNS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS_13property_tree11basic_ptreeIS9_S9_NS2_4lessIS9_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EEEENS0_18ordered_non_uniqueINSJ_INSF_4subs7by_nameESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS0_6memberISG_SA_XadL_ZNSG_5firstEEEEESE_EESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS7_ISG_EEEC2ERKSX_","__ZNSt11logic_errorC2EPKc","__ZN5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEEC2ERKS13_","__ZN5boost11multi_index6detail8copy_mapINS1_20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseINSt3__24pairIKNS7_12basic_stringIcNS7_11char_traitsIcEENS7_9allocatorIcEEEENS_13property_tree11basic_ptreeISE_SE_NS7_4lessISE_EEEEEENSC_ISL_EEEEEEEESM_E5cloneEPSP_","__ZNSt3__24pairIKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEN5boost13property_tree11basic_ptreeIS6_S6_NS_4lessIS6_EEEEEC2ERKSE_","__ZN5boost13property_tree11ptree_errorC2ERKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE","__ZN5boost3anyC2INS_13property_tree11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS2_13id_translatorISA_EEEEEERKT_","__ZN5boost16exception_detail11enable_bothINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS8_","__ZN5boost10wrapexceptINS_13property_tree14ptree_bad_pathEEC1ERKNS_16exception_detail19error_info_injectorIS2_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEEC1ERKS6_","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_pathEEC2ERKS4_","__ZN5boost9exceptionC2ERKS0_","__ZN5boost3anyC2ERKS0_","__ZN5boost16exception_detail20copy_boost_exceptionEPNS_9exceptionEPKS1_","__ZNK5boost13property_tree11string_pathINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS0_13id_translatorIS8_EEE4dumpEv","__ZN5boost3any6holderINS_13property_tree11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS2_13id_translatorISA_EEEEEC2ERKSD_","__ZN5boost13property_tree11string_pathINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS0_13id_translatorIS8_EEEC2ERKSB_","__ZN5boost16exception_detail11enable_bothINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS8_","__ZN5boost10wrapexceptINS_13property_tree14ptree_bad_dataEEC1ERKNS_16exception_detail19error_info_injectorIS2_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEEC1ERKS6_","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree14ptree_bad_dataEEC2ERKS4_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE9push_backEc","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEPKcvE6insertERNS2_13basic_ostreamIcS4_EERKS6_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEC2EOS7_","__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEE6sentryC2ERS3_","__ZNSt3__28ios_base5clearEj","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEN21monero_transfer_utils26CreateTransactionErrorCodeEvE6insertERNS2_13basic_ostreamIcS4_EERKS6_","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEmvE6insertERNS2_13basic_ostreamIcS4_EERKm","__ZanIJPKcS1_S1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA42_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZNSt3__26vectorIyNS_9allocatorIyEEE11__vallocateEm","__ZNSt3__26vectorIyNS_9allocatorIyEEEC2ERKS3_","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEEC2ERKS5_","__ZN17monero_fork_rules22make_use_fork_rules_fnEh","__ZN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEC2ERKS6_","__ZL31send_app_handler__status_updateRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEN19monero_send_routine21SendFunds_ProcessStepE","__ZNK5tools5error17wallet_error_baseISt13runtime_errorE9to_stringEv","__ZanIJRKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEEEvRKN6logger4infoERKNS9_6formatIJDpT_EEE","__ZN4epee7mlocker4lockEPvm","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__212__hash_tableINS_17__hash_value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP22Send_Task_AsyncContextEENS_22__unordered_map_hasherIS7_SA_NS_4hashIS7_EELb1EEENS_21__unordered_map_equalIS7_SA_NS_8equal_toIS7_EELb1EEENS5_ISA_EEE6rehashEm","__ZN5boost13property_tree11json_parser14create_escapesIcEENSt3__212basic_stringIT_NS3_11char_traitsIS5_EENS3_9allocatorIS5_EEEERKSA_","__ZN5boost3anyC2INSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEEERKT_","__ZN5boost3any6holderINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEEC2ERKS8_","__ZN5boost16exception_detail11enable_bothINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS9_","__ZN5boost10wrapexceptINS_13property_tree11json_parser17json_parser_errorEEC1ERKNS_16exception_detail19error_info_injectorIS3_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEEC1ERKS7_","__ZN5boost16exception_detail19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEC2ERKS5_","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEbvE6insertERNS2_13basic_ostreamIcS4_EEb","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEN19monero_send_routine21SendFunds_ProcessStepEvE6insertERNS2_13basic_ostreamIcS4_EERKS6_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEC2ERKS8_","__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE3strERKNS_12basic_stringIcS2_S4_EE","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEbvE7extractERNS2_13basic_istreamIcS4_EERb","__ZN5boost8optionalIbEC2EOb","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA56_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZNSt3__28functionIFbhxEEC2ERKS2_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA37_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA22_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN19monero_send_routine32new__parsed_res__get_random_outsERKN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEES9_NS3_4lessIS9_EEEE","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA26_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZNSt3__26vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE11__vallocateEm","__ZN5boost15optional_detail16tc_optional_baseIyE6assignENS_6none_tE","__ZN5boost15optional_detail16tc_optional_baseIjE6assignENS_6none_tE","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA38_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__Z25send_app_handler__successRKNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKN19monero_send_routine25SendFunds_Success_RetValsE","__ZN4epee12string_tools10pod_to_hexIN6crypto10public_keyEEENSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKT_","__ZN4epee12string_tools10pod_to_hexIN6crypto5hash8EEENSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKT_","__ZN5boost15optional_detail13optional_baseINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE12assign_valueEOS8_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA67_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN5boost15optional_detail13optional_baseINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE6assignEOS9_","__ZNK5tools5error16invalid_priority9to_stringEv","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZN12_GLOBAL__N_116pop_random_valueIN21monero_transfer_utils15SpendableOutputEEET_RNSt3__26vectorIS3_NS4_9allocatorIS3_EEEE","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA62_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN10cryptonote32set_payment_id_to_tx_extra_nonceERNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKN6crypto4hashE","__ZN10cryptonote42set_encrypted_payment_id_to_tx_extra_nonceERNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKN6crypto5hash8E","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE6resizeEm","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__214__split_bufferIN21monero_transfer_utils15SpendableOutputERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIN21monero_transfer_utils18RandomAmountOutputENS_9allocatorIS2_EEE11__vallocateEm","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA60_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA28_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA24_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA25_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZNSt3__26vectorIN10cryptonote18address_parse_infoENS_9allocatorIS2_EEEC2Em","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA58_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN10cryptonote29t_serializable_object_to_blobINS_11transactionEEENSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKT_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA33_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN10cryptonote20get_transaction_hashERKNS_11transactionE","__ZN4epee12string_tools10pod_to_hexIN6crypto4hashEEENSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKT_","__ZN10cryptonote10tx_to_blobERKNS_11transactionE","__ZN4epee12string_tools21buff_to_hex_nodelimerERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE","__ZN4epee12string_tools10pod_to_hexINS_7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEEEENSt3__212basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEERKT_","__ZN5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE22internal_apply_visitorINS_6detail7variant9destroyerEEENT_11result_typeERSB_","__ZN5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE22internal_apply_visitorINS_6detail7variant9destroyerEEENT_11result_typeERSB_","__ZNSt3__26vectorIN10cryptonote18address_parse_infoENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN10cryptonote18address_parse_infoENS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__212__hash_tableINS_17__hash_value_typeIN6crypto10public_keyEN10cryptonote16subaddress_indexEEENS_22__unordered_map_hasherIS3_S6_NS_4hashIS3_EELb1EEENS_21__unordered_map_equalIS3_S6_NS_8equal_toIS3_EELb1EEENS_9allocatorIS6_EEE6rehashEm","__ZN21monero_transfer_utils18RandomAmountOutputC2ERKS0_","__ZanIJPKcEEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZNSt3__26vectorINS_4pairIyN3rct5ctkeyEEENS_9allocatorIS4_EEE21__push_back_slow_pathIRKS4_EEvOT_","__ZN10cryptonote37get_additional_tx_pub_keys_from_extraERKNSt3__26vectorIhNS0_9allocatorIhEEEE","__ZN10cryptonote15tx_source_entryC2ERKS0_","__ZNSt3__26vectorIN10cryptonote15tx_source_entryENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZN10cryptonote20tx_destination_entryC2ERKS0_","__ZNSt3__26vectorIN10cryptonote20tx_destination_entryENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZN5boost8optionalIN10cryptonote22account_public_addressEEC2ERKS2_","__ZanIJbPKcEEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA55_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZNSt3__26vectorINS0_IN6crypto9signatureENS_9allocatorIS2_EEEENS3_IS5_EEEC2ERKS7_","__ZN3rct6rctSigC2ERKS0_","__ZNSt3__26vectorIN10cryptonote6tx_outENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIhNS_9allocatorIhEEEC2ERKS3_","__ZNSt3__26vectorINS0_IN6crypto9signatureENS_9allocatorIS2_EEEENS3_IS5_EEE11__vallocateEm","__ZN3rct14rctSigPrunableC2ERKS0_","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct9ecdhTupleENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct11BulletproofENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct15BulletproofPlusENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct5mgSigENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct5clsagENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN3rct8rangeSigENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct11BulletproofENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct15BulletproofPlusENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct5mgSigENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct5clsagENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorINS0_IN3rct3keyENS_9allocatorIS2_EEEENS3_IS5_EEE11__vallocateEm","__ZNSt3__26vectorINS0_IN3rct5ctkeyENS_9allocatorIS2_EEEENS3_IS5_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct9ecdhTupleENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN6crypto9signatureENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN5boost7variantIN10cryptonote8txin_genEJNS3_14txin_to_scriptENS3_18txin_to_scripthashENS3_11txin_to_keyEEEENS_9allocatorIS8_EEE11__vallocateEm","__ZNSt3__26vectorIN10cryptonote6tx_outENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIhNS_9allocatorIhEEE11__vallocateEm","__ZNK5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE22internal_apply_visitorINS_6detail7variant9copy_intoEEENT_11result_typeERSB_","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEE11__vallocateEm","__ZNK5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE22internal_apply_visitorINS_6detail7variant9copy_intoEEENT_11result_typeERSB_","__ZN14binary_archiveILb1EEC2ERNSt3__213basic_ostreamIcNS1_11char_traitsIcEEEE","__ZN5boost16exception_detail11enable_bothINS_7bad_getEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS5_","__ZN5boost10wrapexceptINS_7bad_getEEC1ERKNS_16exception_detail19error_info_injectorIS1_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEEC1ERKS5_","__ZN5boost16exception_detail19error_info_injectorINS_7bad_getEEC2ERKS3_","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEEEEvOS9_DpRKT0_","__ZNSt3__26vectorINS_4pairIyN3rct5ctkeyEEENS_9allocatorIS4_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS4_RS6_EE","__ZZN12_GLOBAL__N_126_rct_hex_to_decrypted_maskERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEERKNSD_10public_keyEyRN3rct3keyEENK3__1clEv","__ZN3rct14hash_to_scalarERKNS_3keyE","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEEC2ERKS5_","__ZNSt3__26vectorIN10cryptonote15tx_source_entryENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIN10cryptonote20tx_destination_entryENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS_9allocatorIS8_EEE11__vallocateEm","__ZNSt3__26vectorINS_4pairIyN3rct5ctkeyEEENS_9allocatorIS4_EEE11__vallocateEm","__ZN5tools5error15throw_wallet_exINS0_21wallet_internal_errorEJA34_cEEEvONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEDpRKT0_","__ZN4epee15wipeable_stringC2ERKS0_","__ZN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEC2EOKS6_","__ZN4epee15wipeable_stringC2ERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE","__ZN5boost9algorithm8to_lowerINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEEEvRT_RKNS2_6localeE","__ZNSt3__216istream_iteratorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEcS3_lEC2ERKS7_","__ZN19monero_wallet_utils25coerce_valid_sec_key_fromERKN5tools8scrubbedINS_19ec_nonscalar_16ByteEEERN4epee7mlockedINS1_IN6crypto9ec_scalarEEEEE","__ZN4epee12string_tools10pod_to_hexIN5tools8scrubbedIN19monero_wallet_utils19ec_nonscalar_16ByteEEEEENSt3__212basic_stringIcNS7_11char_traitsIcEENS7_9allocatorIcEEEERKT_","__ZN19monero_wallet_utils17WalletDescriptionC2ERKS0_","__ZN5boost8optionalINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEC2ERKS7_","__ZN4epee12string_tools10pod_to_hexIN6crypto9key_imageEEENSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKT_","__ZNSt3__26vectorIN21monero_transfer_utils18RandomAmountOutputENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS_9allocatorIS2_EEE11__vallocateEm","__ZN5boost15foreach_detail_4nextINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb0EEEEEvRKNS0_13auto_any_baseEPNS0_9type2typeIT_T0_EE","__ZNSt3__26vectorIN21monero_transfer_utils18RandomAmountOutputENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZNSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZN5boost8optionalIyEC2EOy","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEjvE7extractERNS2_13basic_istreamIcS4_EERj","__ZN5boost8optionalIjEC2EOj","__ZN21monero_transfer_utils15SpendableOutputC2ERKS0_","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZNSt3__26vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE21__push_back_slow_pathIS6_EEvOT_","__ZNSt3__26vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEEC2ERKS8_","__ZNSt3__26vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS6_RS7_EE","__ZN5boost15foreach_detail_4nextINS_13property_tree11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEN4mpl_5bool_ILb1EEEEEvRKNS0_13auto_any_baseEPNS0_9type2typeIT_T0_EE","__ZN5boost8optionalINSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS1_9allocatorIS4_EEEEEC2ERKS7_","__ZN5boost13property_tree16customize_streamIcNSt3__211char_traitsIcEEhvE7extractERNS2_13basic_istreamIcS4_EERh","__ZN5boost8optionalIhEC2EOh","__ZN5boost8optionalINSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS1_9allocatorIS4_EEEEEC2ERKS7_","__ZN5boost13property_tree11json_parser9read_jsonINS0_11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEEEvRNS4_13basic_istreamINT_8key_type10value_typeENS6_ISG_EEEERSF_","__ZN5boost13property_tree11json_parser6detail6parserINS2_18standard_callbacksINS0_11basic_ptreeINSt3__212basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEESC_NS6_4lessISC_EEEEEENS2_8encodingIcEENS6_19istreambuf_iteratorIcS9_EESK_E11parse_errorEPKc","__ZNSt3__26vectorIN5boost13property_tree11json_parser6detail18standard_callbacksINS2_11basic_ptreeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEESC_NS_4lessISC_EEEEE5layerENSA_ISH_EEE26__swap_out_circular_bufferERNS_14__split_bufferISH_RSI_EE","__ZN5boost13property_tree11json_parser6detail18standard_callbacksINS0_11basic_ptreeINSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEESB_NS5_4lessISB_EEEEE12on_code_unitEc","__ZNSt13runtime_errorC2EPKc","__ZanIJRKyPKcS1_S3_S1_S3_S1_S3_EEvRKN6logger4infoERKNS4_6formatIJDpT_EEE","__ZanIJmPKcmS1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZanIJiPKchS1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZNSt3__29to_stringEi","__ZNSt13runtime_errorC2ERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZNSt3__29to_stringEm","__ZNSt3__214__split_bufferIN3rct3keyERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZN10cryptonote13get_blob_hashERKN5boost16basic_string_refIcNSt3__211char_traitsIcEEEERN6crypto4hashE","__ZN10cryptonote13get_blob_hashERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERN6crypto4hashE","__ZNSt3__214__split_bufferIN3rct5mgSigERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct5mgSigENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__214__split_bufferIN3rct5clsagERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct5clsagENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__214__split_bufferIN3rct8rangeSigERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct8rangeSigENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__214__split_bufferIN3rct5ctkeyERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__214__split_bufferIN3rct9ecdhTupleERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct9ecdhTupleENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__214__split_bufferIN6crypto9signatureERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN6crypto9signatureENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIhNS_9allocatorIhEEE26__swap_out_circular_bufferERNS_14__split_bufferIhRS2_EE","__ZN5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE22internal_apply_visitorINS_6detail7variant9move_intoEEENT_11result_typeERSB_","__ZN5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE14variant_assignEOS6_","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZN5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE22internal_apply_visitorINS_6detail7variant9move_intoEEENT_11result_typeERSB_","__ZanIJPKcRKN6crypto10public_keyES1_EEvRKN6logger4infoERKNS6_6formatIJDpT_EEE","__ZNSt3__26vectorIN6crypto14key_derivationENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZNSt3__26vectorIN6crypto14key_derivationENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZN5boost12lexical_castINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEiEET_RKT0_","__ZN5boost16exception_detail11enable_bothINS_16bad_lexical_castEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS5_","__ZN5boost10wrapexceptINS_16bad_lexical_castEEC1ERKNS_16exception_detail19error_info_injectorIS1_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEEC1ERKS5_","__ZN5boost16exception_detail19error_info_injectorINS_16bad_lexical_castEEC2ERKS3_","__ZanIJRKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEPKcEEvRKN6logger4infoERKNSB_6formatIJDpT_EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEEC2ERKS8_","__ZNSt3__26vectorIN5boost7variantIN10cryptonote16tx_extra_paddingEJNS3_16tx_extra_pub_keyENS3_14tx_extra_nonceENS3_25tx_extra_merge_mining_tagENS3_28tx_extra_additional_pub_keysENS3_22tx_extra_vrf_signatureEEEENS_9allocatorISA_EEE21__push_back_slow_pathIRKSA_EEvOT_","__ZNK5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE22internal_apply_visitorINS_6detail7variant9copy_intoEEENT_11result_typeERSD_","__ZNSt3__26vectorIN5boost7variantIN10cryptonote16tx_extra_paddingEJNS3_16tx_extra_pub_keyENS3_14tx_extra_nonceENS3_25tx_extra_merge_mining_tagENS3_28tx_extra_additional_pub_keysENS3_22tx_extra_vrf_signatureEEEENS_9allocatorISA_EEE26__swap_out_circular_bufferERNS_14__split_bufferISA_RSC_EE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE22internal_apply_visitorINS_6detail7variant9move_intoEEENT_11result_typeERSD_","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE14variant_assignEOS8_","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE22internal_apply_visitorINS_6detail7variant9destroyerEEENT_11result_typeERSD_","__ZN14binary_archiveILb0EEC2EN4epee4spanIKhEE","__ZNSt3__214__split_bufferIhRNS_9allocatorIhEEE18__construct_at_endEm","__ZNSt3__26vectorIhNS_9allocatorIhEEE6resizeEm","__ZNSt3__26vectorIhNS_9allocatorIhEEE7reserveEm","__ZNSt3__26vectorIhNS_9allocatorIhEEE21__push_back_slow_pathIhEEvOT_","__ZN5tools12write_varintINSt3__219ostreambuf_iteratorIcNS1_11char_traitsIcEEEEmEENS1_9enable_ifIXaasr3std11is_integralIT0_EE5valuesr3std11is_unsignedIS7_EE5valueEvE4typeEOT_S7_","__ZN5boost16exception_detail11enable_bothINS_21thread_resource_errorEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS5_","__ZNK5boost6system10error_code7messageEv","__ZN5boost10wrapexceptINS_21thread_resource_errorEEC1ERKNS_16exception_detail19error_info_injectorIS1_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEEC1ERKS5_","__ZN5boost16exception_detail19error_info_injectorINS_21thread_resource_errorEEC2ERKS3_","__ZN5boost16exception_detail11enable_bothINS_10lock_errorEEENS_10wrapexceptINS0_26remove_error_info_injectorIT_E4typeEEERKS5_","__ZN5boost10wrapexceptINS_10lock_errorEEC1ERKNS_16exception_detail19error_info_injectorIS1_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC1ERKS5_","__ZN5boost16exception_detail19error_info_injectorINS_10lock_errorEEC2ERKS3_","__ZN6cryptoL10hash_to_ecERKNS_10public_keyERNS_5ge_p3E","__ZN5boost6detail20sp_deleter_constructIN6crypto7rs_commES3_EEvPNS_10shared_ptrIT_EEPT0_","__ZNSt3__212__hash_tableIN10cryptonote22account_public_addressENS_4hashIS2_EENS_8equal_toIS2_EENS_9allocatorIS2_EEE6rehashEm","__ZanIJPKcmS1_mS1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZanIJRKN6crypto5hash8EPKcEEvRKN6logger4infoERKNS6_6formatIJDpT_EEE","__ZanIJmPKcRKyS1_EEvRKN6logger4infoERKNS4_6formatIJDpT_EEE","__ZZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbbEN29input_generation_context_dataC2EOS1R_","__ZNSt3__26vectorIZN10cryptonote24construct_tx_with_tx_keyERKNS1_12account_keysERKNS_13unordered_mapIN6crypto10public_keyENS1_16subaddress_indexENS_4hashIS7_EENS_8equal_toIS7_EENS_9allocatorINS_4pairIKS7_S8_EEEEEERNS0_INS1_15tx_source_entryENSD_ISL_EEEERNS0_INS1_20tx_destination_entryENSD_ISP_EEEERKN5boost8optionalINS1_22account_public_addressEEERKNS0_IhNSD_IhEEEERNS1_11transactionENS_12basic_stringIcNS_11char_traitsIcEENSD_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS6_9ec_scalarEEEEERKNS0_IS1G_NSD_IS1G_EEEEbRKN3rct9RCTConfigEbbE29input_generation_context_dataNSD_IS1R_EEE21__push_back_slow_pathIS1R_EEvOT_","__ZN4epee12string_tools10pod_to_hexIN3rct3keyEEENSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKT_","__ZanIJRKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEPKcPFRNS0_13basic_ostreamIcS3_EESD_ES8_SA_SF_SA_RKySA_iSA_EEvRKN6logger4infoERKNSI_6formatIJDpT_EEE","__ZanIJbPKcRKyS1_EEvRKN6logger4infoERKNS4_6formatIJDpT_EEE","__ZanIJRKyPKcRKN6crypto10public_keyES3_EEvRKN6logger4infoERKNS8_6formatIJDpT_EEE","__ZNSt3__26vectorIyNS_9allocatorIyEEE21__push_back_slow_pathIRKyEEvOT_","__ZN10cryptonote35absolute_output_offsets_to_relativeERKNSt3__26vectorIyNS0_9allocatorIyEEEE","__ZNSt3__26vectorIN5boost7variantIN10cryptonote8txin_genEJNS3_14txin_to_scriptENS3_18txin_to_scripthashENS3_11txin_to_keyEEEENS_9allocatorIS8_EEE21__push_back_slow_pathIS8_EEvOT_","__ZNSt3__26vectorImNS_9allocatorImEEEC2Em","__ZNSt3__26vectorImNS_9allocatorImEEEC2ERKS3_","__ZN5tools17apply_permutationIZN10cryptonote24construct_tx_with_tx_keyERKNS1_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS1_16subaddress_indexENS5_4hashIS8_EENS5_8equal_toIS8_EENS5_9allocatorINS5_4pairIKS8_S9_EEEEEERNS5_6vectorINS1_15tx_source_entryENSE_ISN_EEEERNSM_INS1_20tx_destination_entryENSE_ISR_EEEERKN5boost8optionalINS1_22account_public_addressEEERKNSM_IhNSE_IhEEEERNS1_11transactionENS5_12basic_stringIcNS5_11char_traitsIcEENSE_IcEEEEhRKN4epee7mlockedINS_8scrubbedINS7_9ec_scalarEEEEERKNSM_IS1H_NSE_IS1H_EEEEbRKN3rct9RCTConfigEbbE3__1EEvNSM_ImNSE_ImEEEERKT_","__ZanIJRKyPKcEEvRKN6logger4infoERKNS4_6formatIJDpT_EEE","__ZN10cryptonote6tx_outC2ERKS0_","__ZNSt3__26vectorIN10cryptonote6tx_outENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZanIJRKN6crypto10public_keyEPKcEEvRKN6logger4infoERKNS6_6formatIJDpT_EEE","__ZanIJRKN6crypto10public_keyEEEvRKN6logger4infoERKNS4_6formatIJDpT_EEE","__ZanIJPKciS1_mS1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZanIJPKcRKyS1_S3_S1_EEvRKN6logger4infoERKNS4_6formatIJDpT_EEE","__ZN10cryptonote27get_transaction_prefix_hashERKNS_18transaction_prefixERN6crypto4hashE","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEEC2Em","__ZNSt3__26vectorIPKN6crypto10public_keyENS_9allocatorIS4_EEE21__push_back_slow_pathIS4_EEvOT_","__ZNSt3__26vectorINS0_IN6crypto9signatureENS_9allocatorIS2_EEEENS3_IS5_EEE21__push_back_slow_pathIS5_EEvOT_","__ZNSt3__26vectorIN6crypto9signatureENS_9allocatorIS2_EEE6resizeEm","__ZZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbbENK3__4clERKNS5_9signatureE","__ZN10cryptonote15obj_to_json_strINS_11transactionEEENSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERT_","__ZanIJRKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEPFRNS0_13basic_ostreamIcS3_EESB_ES8_SD_RKN6crypto4hashEPKcEEvRKN6logger4infoERKNSK_6formatIJDpT_EEE","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEE7reserveEm","__ZNSt3__26vectorINS0_IN3rct5ctkeyENS_9allocatorIS2_EEEENS3_IS5_EEEC2Em","__ZNSt3__26vectorIjNS_9allocatorIjEEE21__push_back_slow_pathIjEEvOT_","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEE6resizeEm","__ZNSt3__26vectorIyNS_9allocatorIyEEE21__push_back_slow_pathIyEEvOT_","__ZanIJPFRNSt3__213basic_ostreamIcNS0_11char_traitsIcEEEES5_ERKNS0_12basic_stringIcS3_NS0_9allocatorIcEEEES7_RKN6crypto4hashEPKcEEvRKN6logger4infoERKNSK_6formatIJDpT_EEE","__ZNSt3__26vectorIZN10cryptonote24construct_tx_with_tx_keyERKNS1_12account_keysERKNS_13unordered_mapIN6crypto10public_keyENS1_16subaddress_indexENS_4hashIS7_EENS_8equal_toIS7_EENS_9allocatorINS_4pairIKS7_S8_EEEEEERNS0_INS1_15tx_source_entryENSD_ISL_EEEERNS0_INS1_20tx_destination_entryENSD_ISP_EEEERKN5boost8optionalINS1_22account_public_addressEEERKNS0_IhNSD_IhEEEERNS1_11transactionENS_12basic_stringIcNS_11char_traitsIcEENSD_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS6_9ec_scalarEEEEERKNS0_IS1G_NSD_IS1G_EEEEbRKN3rct9RCTConfigEbbE29input_generation_context_dataNSD_IS1R_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS1R_RS1S_EE","__ZNSt3__26vectorIyNS_9allocatorIyEEE26__swap_out_circular_bufferERNS_14__split_bufferIyRS2_EE","__ZNSt3__26vectorIN5boost7variantIN10cryptonote8txin_genEJNS3_14txin_to_scriptENS3_18txin_to_scripthashENS3_11txin_to_keyEEEENS_9allocatorIS8_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS8_RSA_EE","__ZNSt3__26vectorImNS_9allocatorImEEE11__vallocateEm","__ZNSt3__26vectorImNS_9allocatorImEEE18__construct_at_endEm","__ZNSt3__26vectorIN10cryptonote6tx_outENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIPKN6crypto10public_keyENS_9allocatorIS4_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS4_RS6_EE","__ZNSt3__26vectorINS0_IN6crypto9signatureENS_9allocatorIS2_EEEENS3_IS5_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS5_RS6_EE","__ZNSt3__26vectorINS0_IN3rct5ctkeyENS_9allocatorIS2_EEEENS3_IS5_EEE18__construct_at_endEm","__ZNSt3__26vectorIjNS_9allocatorIjEEE26__swap_out_circular_bufferERNS_14__split_bufferIjRS2_EE","__ZN5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE14variant_assignEOS6_","__ZN10cryptonote7keypair8generateERN2hw6deviceE","__ZNSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS_9allocatorIS8_EEE21__push_back_slow_pathIS8_EEvOT_","__ZNSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS_9allocatorIS8_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS8_RSA_EE","__ZNSt3__26vectorIiNS_9allocatorIiEEE26__swap_out_circular_bufferERNS_14__split_bufferIiRS2_EE","__ZNSt3__26vectorIaNS_9allocatorIaEEE26__swap_out_circular_bufferERNS_14__split_bufferIaRS2_EE","__ZN5tools6base586encodeERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE","__ZNSt3__26vectorIcNS_9allocatorIcEEE11__vallocateEm","__ZNSt3__26vectorIcNS_9allocatorIcEEE7reserveEm","__ZNSt3__26vectorIcNS_9allocatorIcEEE6resizeEm","__ZNSt3__26vectorIcNS_9allocatorIcEEE26__swap_out_circular_bufferERNS_14__split_bufferIcRS2_EE","__ZNSt3__214__split_bufferIcRNS_9allocatorIcEEE18__construct_at_endEm","__ZNSt3__26vectorIN4epee15wipeable_stringENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZNSt3__26vectorIN4epee15wipeable_stringENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZanIJPKcRKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES1_EEvRKN6logger4infoERKNSB_6formatIJDpT_EEE","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEE7reserveEm","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEE21__push_back_slow_pathIRKS2_EEvOT_","__ZN3rct14scalarmultBaseERKNS_3keyE","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE18__construct_at_endEm","__ZN3rct14scalarmultBaseERNS_3keyERKS0_","__ZN3rct14hash_to_scalarEPKNS_3keyE","__ZN3rct10hash_to_p3ER5ge_p3RKNS_3keyE","__ZN3rct7precompEP9ge_cachedRKNS_3keyE","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEEC2Em","__ZN3rct14hash_to_scalarERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEE","__ZNSt3__26vectorIN3rct6geDsmpENS_9allocatorIS2_EEEC2Em","__ZN4epee10misc_utils26create_scope_leave_handlerIZN3rct9MLSAG_GenERKNS2_3keyERKNSt3__26vectorINS7_IS3_NS6_9allocatorIS3_EEEENS8_ISA_EEEERKSA_jmRN2hw6deviceEE3__1EEN5boost10shared_ptrINS0_19call_befor_die_baseEEET_","__ZN3rct7skpkGenERNS_3keyES1_","__ZN3rct6skvGenEm","__ZNSt3__26vectorIN3rct6geDsmpENS_9allocatorIS2_EEE11__vallocateEm","__ZNSt3__26vectorIN3rct6geDsmpENS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE7reserveEm","__ZN3rct12cn_fast_hashERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEE","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZNSt3__26vectorIN3rct8rangeSigENS_9allocatorIS2_EEE6resizeEm","__ZNSt3__26vectorIN3rct9ecdhTupleENS_9allocatorIS2_EEE6resizeEm","__ZN3rct11scalarmultHERKNS_3keyE","__ZNSt3__26vectorIN3rct5mgSigENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZanIJiPKcEEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZNSt3__26vectorIN3rct15BulletproofPlusENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZNSt3__26vectorIN3rct11BulletproofENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZN3rct11scalarmult8ERKNS_3keyE","__ZNSt3__26vectorIyNS_9allocatorIyEEEC2Em","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE6resizeEm","__ZNSt3__26vectorIN3rct5clsagENS_9allocatorIS2_EEE6resizeEm","__ZNSt3__26vectorIN3rct5mgSigENS_9allocatorIS2_EEE6resizeEm","__ZN12_GLOBAL__N_116make_dummy_clsagEm","__ZNSt3__26vectorIN3rct15BulletproofPlusENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIN3rct11BulletproofENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZNSt3__26vectorIyNS_9allocatorIyEEE18__construct_at_endEm","__ZNSt3__26vectorI5ge_p3NS_9allocatorIS1_EEEC2Em","__ZN3rctL6invertERKNS_3keyE","__ZNSt3__26vectorIN3rct12MultiexpDataENS_9allocatorIS2_EEE7reserveEm","__ZNSt3__26vectorIN3rct12MultiexpDataENS_9allocatorIS2_EEE21__push_back_slow_pathIS2_EEvOT_","__ZanIJPKcmS1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZNSt3__26vectorI5ge_p3NS_9allocatorIS1_EEE11__vallocateEm","__ZNSt3__26vectorI5ge_p3NS_9allocatorIS1_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct12MultiexpDataENS_9allocatorIS2_EEE6resizeEm","__ZNSt3__214__split_bufferI5ge_p3RNS_9allocatorIS1_EEE18__construct_at_endEm","__ZNSt3__26vectorI5ge_p3NS_9allocatorIS1_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS1_RS3_EE","__ZNSt3__214__split_bufferIN3rct12MultiexpDataERNS_9allocatorIS2_EEE18__construct_at_endEm","__ZNSt3__26vectorIN3rct12MultiexpDataENS_9allocatorIS2_EEE26__swap_out_circular_bufferERNS_14__split_bufferIS2_RS4_EE","__ZN5tools15get_varint_dataImEENSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKT_","__ZN3rctL6invertERKNS_3keyE_1871","__ZN3rctL4pow2Em","__ZN3rctL3addER5ge_p3RK9ge_cached","__ZN3rctL3addER5ge_p3RKS0_","__ZNK4epee15wipeable_string5splitERNSt3__26vectorIS0_NS1_9allocatorIS0_EEEE","__ZN4epee10misc_utils26create_scope_leave_handlerIZN6crypto13ElectrumWords14words_to_bytesERKNS_15wipeable_stringERS4_mbRNSt3__212basic_stringIcNS8_11char_traitsIcEENS8_9allocatorIcEEEEE3__0EEN5boost10shared_ptrINS0_19call_befor_die_baseEEET_","__ZNSt3__26vectorIN4epee15wipeable_stringENS_9allocatorIS2_EEEC2ERKS5_","__ZN4epee15wipeable_stringpLEc","__ZN4epee15wipeable_stringpLERKS0_","__ZNSt3__26vectorIPN8Language4BaseENS_9allocatorIS3_EEE11__vallocateEm","__ZNSt3__26vectorIjNS_9allocatorIjEEE7reserveEm","__ZNSt3__26vectorIjNS_9allocatorIjEEE21__push_back_slow_pathIRKjEEvOT_","__ZNSt3__26vectorIN4epee15wipeable_stringENS_9allocatorIS2_EEE11__vallocateEm","__ZanIJPKcS1_EEvRKN6logger4infoERKNS2_6formatIJDpT_EEE","__ZN5boost11crc_optimalILm32ELj79764919ELj4294967295ELj4294967295ELb1ELb1EEC2Ej","__ZN8Language4Base9set_wordsEPKPKc","__ZN8Language4Base13populate_mapsEj","__ZN4epee15wipeable_stringC2EONSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE","__ZanIJRKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEPKcS8_SA_EEvRKN6logger4infoERKNSB_6formatIJDpT_EEE","__ZNSt3__212__hash_tableINS_17__hash_value_typeIN4epee15wipeable_stringEjEENS_22__unordered_map_hasherIS3_S4_N8Language8WordHashELb1EEENS_21__unordered_map_equalIS3_S4_NS6_9WordEqualELb1EEENS_9allocatorIS4_EEE6rehashEm","__ZNSt3__214__split_bufferINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS4_IS6_EEE18__construct_at_endEm","__ZN4epee15wipeable_stringpLERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE","__ZN4epee15wipeable_string9push_backEc","__ZNSt3__26vectorIPKN8Language4BaseENS_9allocatorIS4_EEE11__vallocateEm","__ZN5boost2io15ios_flags_saverC2ERNSt3__28ios_baseE","__ZN5boost2io19ios_precision_saverC2ERNSt3__28ios_baseE","__ZN5boost2io15ios_width_saverC2ERNSt3__28ios_baseE","__ZN5boost2io20basic_ios_fill_saverIcNSt3__211char_traitsIcEEEC2ERNS2_9basic_iosIcS4_EE","_pop_arg_long_double","__ZNSt3__28ios_base16__call_callbacksENS0_5eventE","__ZNSt3__212basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE9push_backEw","__ZNSt3__26vectorIPNS_6locale5facetENS_15__sso_allocatorIS3_Lm28EEEEC2Em","__ZNSt3__26locale5__imp7installINS_7collateIcEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7collateIwEEEEvPT_","__ZNSt3__26locale5__imp7installINS_5ctypeIcEEEEvPT_","__ZNSt3__26locale5__imp7installINS_5ctypeIwEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7codecvtIcc11__mbstate_tEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7codecvtIwc11__mbstate_tEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7codecvtIDsc11__mbstate_tEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7codecvtIDic11__mbstate_tEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8numpunctIcEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8numpunctIwEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_7num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_10moneypunctIcLb0EEEEEvPT_","__ZNSt3__26locale5__imp7installINS_10moneypunctIcLb1EEEEEvPT_","__ZNSt3__26locale5__imp7installINS_10moneypunctIwLb0EEEEEvPT_","__ZNSt3__26locale5__imp7installINS_10moneypunctIwLb1EEEEEvPT_","__ZNSt3__26locale5__imp7installINS_9money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_9money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_9money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_9money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8time_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8time_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8time_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8messagesIcEEEEvPT_","__ZNSt3__26locale5__imp7installINS_8messagesIwEEEEvPT_","__ZNSt3__26vectorIPNS_6locale5facetENS_15__sso_allocatorIS3_Lm28EEEE11__vallocateEm","__ZNSt3__26vectorIPNS_6locale5facetENS_15__sso_allocatorIS3_Lm28EEEE18__construct_at_endEm","__ZNSt3__26vectorIPNS_6locale5facetENS_15__sso_allocatorIS3_Lm28EEEE6resizeEm","__ZNSt3__214__split_bufferIPNS_6locale5facetERNS_15__sso_allocatorIS3_Lm28EEEE18__construct_at_endEm","__ZNSt3__26vectorIPNS_6locale5facetENS_15__sso_allocatorIS3_Lm28EEEE26__swap_out_circular_bufferERNS_14__split_bufferIS3_RS5_EE","__ZNSt3__218__libcpp_refstringC2EPKc","__ZNSt11logic_errorC2ERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE","__ZNK12_GLOBAL__N_116itanium_demangle4Node5printERNS_12OutputStreamE","_abort_message",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_viii=[0,"__ZNK5boost6system14error_category23default_error_conditionEi","__ZNK5boost6system6detail22generic_error_category7messageEi","__ZN2hw4core14device_default27get_transaction_prefix_hashERKN10cryptonote18transaction_prefixERN6crypto4hashE","__ZN2hw4core14device_default17genCommitmentMaskERKN3rct3keyE","__ZN2hw6device15display_addressERKN10cryptonote16subaddress_indexERKN5boost8optionalIN6crypto5hash8EEE","__ZNKSt3__214error_category23default_error_conditionEi","__ZNKSt3__219__iostream_category7messageEi","__ZNKSt3__224__generic_error_category7messageEi","__ZNKSt3__223__system_error_category23default_error_conditionEi","__ZNKSt3__223__system_error_category7messageEi","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKcm","__ZN13serial_bridge14decode_addressENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN13serial_bridge20newly_created_walletENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN13serial_bridge26address_and_keys_from_seedENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN13serial_bridge18mnemonic_from_seedENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN13serial_bridge27seed_and_keys_from_mnemonicENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__Z14decode_addressNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__Z20newly_created_walletNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__Z18mnemonic_from_seedNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__Z27seed_and_keys_from_mnemonicNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__Z26address_and_keys_from_seedNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_","__ZN5boost13property_tree14ptree_bad_dataC2INS_3anyEEERKNSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKT_","__ZN5boost13property_tree13id_translatorINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEE9get_valueERKS8_","__ZN5boost13property_tree14ptree_bad_pathC2INS0_11string_pathINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS0_13id_translatorISA_EEEEEERKSA_RKT_","__ZN5boost11multi_index21multi_index_containerINSt3__24pairIKNS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS_13property_tree11basic_ptreeIS9_S9_NS2_4lessIS9_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EEEENS0_18ordered_non_uniqueINSJ_INSF_4subs7by_nameESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS0_6memberISG_SA_XadL_ZNSG_5firstEEEEESE_EESL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_SL_EENS7_ISG_EEE15construct_valueEPNS0_6detail20sequenced_index_nodeINSY_18ordered_index_nodeINSY_19null_augment_policyENSY_15index_node_baseISG_SW_EEEEEERKSG_","__ZN5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEE5copy_ERKS13_RKNS1_8copy_mapINS1_20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseISI_SY_EEEEEESY_EE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEEC1ERKS6_NS6_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_pathEEEEC2ERKS5_","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEEC1ERKS6_NS6_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree14ptree_bad_dataEEEEC2ERKS5_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6resizeEmc","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9put_valueIPKcNS0_17stream_translatorIcS5_S7_SE_EEEEvRKT_T0_","__ZNSt3__28ios_base5imbueERKNS_6localeE","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9put_valueIN21monero_transfer_utils26CreateTransactionErrorCodeENS0_17stream_translatorIcS5_S7_SE_EEEEvRKT_T0_","__ZN5boost11multi_index6detail15sequenced_indexINS1_9nth_layerILi1ENSt3__24pairIKNS4_12basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEENS_13property_tree11basic_ptreeISB_SB_NS4_4lessISB_EEEEEENS0_10indexed_byINS0_9sequencedINS0_3tagIN4mpl_2naESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EEEENS0_18ordered_non_uniqueINSL_INSH_4subs7by_nameESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS0_6memberISI_SC_XadL_ZNSI_5firstEEEEESG_EESN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_SN_EENS9_ISI_EEEENS_3mpl7vector0ISN_EEEC2ERKNS_6tuples4consINS14_9null_typeENS15_INS14_5tupleISV_SG_S16_S16_S16_S16_S16_S16_S16_S16_EES16_EEEERKSY_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9put_valueImNS0_17stream_translatorIcS5_S7_mEEEEvRKT_T0_","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE12get_optionalIS8_EENS_8optionalIT_EERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3getIS8_EET_RKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZN19monero_send_routine33new__req_params__get_unspent_outsENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_","__ZN5boost13property_tree11json_parser10write_jsonINS0_11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEEEvRNS4_13basic_ostreamINT_8key_type10value_typeENS6_ISG_EEEERKSF_b","__ZN5tools5error21wallet_internal_errorC2EONSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKS8_","___cxa_throw","__ZN5boost13property_tree14ptree_bad_dataC2INSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEEERKS9_RKT_","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEEC1ERKS7_NS7_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_13property_tree11json_parser17json_parser_errorEEEEC2ERKS6_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9put_valueIbNS0_17stream_translatorIcS5_S7_bEEEEvRKT_T0_","__ZN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE9put_valueIN19monero_send_routine21SendFunds_ProcessStepENS0_17stream_translatorIcS5_S7_SE_EEEEvRKT_T0_","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE18get_value_optionalIbNS0_17stream_translatorIcS5_S7_bEEEENS_8optionalIT_EET0_","__ZNSt3__213basic_istreamIcNS_11char_traitsIcEEE6sentryC2ERS3_b","__ZN19monero_send_routine32new__req_params__get_random_outsERKNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS0_9allocatorIS3_EEEERKN5boost8optionalINS0_13unordered_mapINS0_12basic_stringIcNS0_11char_traitsIcEENS4_IcEEEENS1_INS2_18RandomAmountOutputENS4_ISH_EEEENS0_4hashISG_EENS0_8equal_toISG_EENS4_INS0_4pairIKSG_SJ_EEEEEEEE","__ZN6monero13address_utils14decodedAddressERKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEN10cryptonote12network_typeE","__ZN6crypto18generate_key_imageERKNS_10public_keyERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNS_9key_imageE","__ZN5tools5error17wallet_error_baseISt11logic_errorEC2EONSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEERKSA_","__ZN12_GLOBAL__N_19pop_indexIN21monero_transfer_utils15SpendableOutputEEET_RNSt3__26vectorIS3_NS4_9allocatorIS3_EEEEm","__ZN10cryptonote25get_tx_pub_key_from_extraERKNS_11transactionEm","__ZNSt3__26__sortIRZN21monero_transfer_utils18create_transactionERNS1_31TransactionConstruction_RetValsERKN10cryptonote12account_keysEjRKNS_13unordered_mapIN6crypto10public_keyENS4_16subaddress_indexENS_4hashISA_EENS_8equal_toISA_EENS_9allocatorINS_4pairIKSA_SB_EEEEEERKNS_6vectorINS4_18address_parse_infoENSG_ISP_EEEERKNSO_IyNSG_IyEEEEyyRKNS_12basic_stringIcNS_11char_traitsIcEENSG_IcEEEERKNSO_INS1_15SpendableOutputENSG_IS15_EEEERNSO_INS1_19RandomAmountOutputsENSG_IS1A_EEEERKNSO_IhNSG_IhEEEENS_8functionIFbhxEEEybNS4_12network_typeEE3__0PNS1_18RandomAmountOutputEEEvT0_S1Q_T_","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEEC1ERKS5_NS5_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_7bad_getEEEEC2ERKS4_","__ZNSt3__2plIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_12basic_stringIT_T0_T1_EEPKS6_RKS9_","__ZNSt3__214__split_bufferINS_4pairIyN3rct5ctkeyEEERNS_9allocatorIS4_EEE18__construct_at_endINS_13move_iteratorIPS4_EEEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESE_SE_","__ZN6crypto20derivation_to_scalarERKNS_14key_derivationEmRNS_9ec_scalarE","__ZNK10cryptonote12account_base22get_public_address_strENS_12network_typeE","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE12get_optionalIjEENS_8optionalIT_EERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE18get_value_optionalIjNS0_17stream_translatorIcS5_S7_jEEEENS_8optionalIT_EET0_","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE6assignIPS2_EENS_9enable_ifIXaasr21__is_forward_iteratorIT_EE5valuesr16is_constructibleIS2_NS_15iterator_traitsIS9_E9referenceEEE5valueEvE4typeES9_S9_","__Z26_possible_uint64_from_jsonRKN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEEERKS8_","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE12get_optionalIhEENS_8optionalIT_EERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEE","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE18get_value_optionalIhNS0_17stream_translatorIcS5_S7_hEEEENS_8optionalIT_EET0_","__ZN5boost13property_tree11json_parser6detail18read_json_internalINS0_11basic_ptreeINSt3__212basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEESB_NS5_4lessISB_EEEEEEvRNS5_13basic_istreamINT_8key_type10value_typeENS7_ISH_EEEERSG_RKSB_","__ZN5boost13property_tree11json_parser6detail14make_minirangeINSt3__219istreambuf_iteratorIcNS4_11char_traitsIcEEEES8_EENS2_9minirangeIT_T0_EESA_SB_","__ZN5boost13property_tree11json_parser6detail6parserINS2_18standard_callbacksINS0_11basic_ptreeINSt3__212basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEESC_NS6_4lessISC_EEEEEENS2_8encodingIcEENS6_19istreambuf_iteratorIcS9_EESK_E9set_inputINS2_9minirangeISK_SK_EEEEvRKSC_RKT_","__ZN6crypto12cn_fast_hashEPKvm","__ZN10cryptonoteL14add_public_keyERN6crypto10public_keyERKS1_S4_","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEEC1ERKS5_NS5_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_16bad_lexical_castEEEEC2ERKS4_","__ZNSt3__26vectorIhNS_9allocatorIhEEEC2INS_11__wrap_iterIPcEEEET_NS_9enable_ifIXaasr21__is_forward_iteratorIS8_EE5valuesr16is_constructibleIhNS_15iterator_traitsIS8_E9referenceEEE5valueES8_E4typeE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEEC2IS6_EEOT_PNS_9enable_ifINS_3mpl3or_INSD_4and_INS_19is_rvalue_referenceISB_EENSD_4not_INS_8is_constISA_EEEENSI_INS_7is_sameISA_S8_EEEENS_6detail7variant29is_variant_constructible_fromISB_NSD_6l_itemIN4mpl_5long_ILl6EEES2_NSS_INSU_ILl5EEES3_NSS_INSU_ILl4EEES4_NSS_INSU_ILl3EEES5_NSS_INSU_ILl2EEES6_NSS_INSU_ILl1EEES7_NSD_5l_endEEEEEEEEEEEEEEENST_5bool_ILb1EEEEENSM_ISA_NS_18recursive_variant_EEENS19_ILb0EEES1E_S1E_EEvE4typeE","__ZNSt3__214__split_bufferIhRNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPKcEEEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_","__ZNSt3__26__sortIRNS_6__lessIyyEEPyEEvT0_S5_T_","__ZN6crypto12cn_fast_hashEPKvmRNS_4hashE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEEC1ERKS5_NS5_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_21thread_resource_errorEEEEC2ERKS4_","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC1ERKS5_NS5_9clone_tagE","__ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINS_10lock_errorEEEEC2ERKS4_","__ZN6crypto10crypto_ops18generate_key_imageERKNS_10public_keyERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNS_9key_imageE","__ZN6crypto14hash_to_scalarEPKvmRNS_9ec_scalarE","__ZNSt3__26vectorIhNS_9allocatorIhEEE6assignIPhEENS_9enable_ifIXaasr21__is_forward_iteratorIT_EE5valuesr16is_constructibleIhNS_15iterator_traitsIS7_E9referenceEEE5valueEvE4typeES7_S7_","__ZN10cryptonote28get_destination_view_key_pubERKNSt3__26vectorINS_20tx_destination_entryENS0_9allocatorIS2_EEEERKN5boost8optionalINS_22account_public_addressEEE","__ZN5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEEC2IS5_EERT_PNS_9enable_ifINS_3mpl3or_INSB_4and_INSB_4not_INS_8is_constIS8_EEEENSE_INS_7is_sameIS8_S6_EEEENS_6detail7variant29is_variant_constructible_fromIS9_NSB_6l_itemIN4mpl_5long_ILl4EEES2_NSO_INSQ_ILl3EEES3_NSO_INSQ_ILl2EEES4_NSO_INSQ_ILl1EEES5_NSB_5l_endEEEEEEEEEEENSP_5bool_ILb1EEES12_EENSI_IS8_NS_18recursive_variant_EEENS11_ILb0EEES16_S16_EEvE4typeE","__ZNSt3__27shuffleINS_11__wrap_iterIPN10cryptonote20tx_destination_entryEEEN6crypto13random_deviceEEEvT_S8_OT0_","__ZNSt3__26__sortIRZN10cryptonote24construct_tx_with_tx_keyERKNS1_12account_keysERKNS_13unordered_mapIN6crypto10public_keyENS1_16subaddress_indexENS_4hashIS7_EENS_8equal_toIS7_EENS_9allocatorINS_4pairIKS7_S8_EEEEEERNS_6vectorINS1_15tx_source_entryENSD_ISM_EEEERNSL_INS1_20tx_destination_entryENSD_ISQ_EEEERKN5boost8optionalINS1_22account_public_addressEEERKNSL_IhNSD_IhEEEERNS1_11transactionENS_12basic_stringIcNS_11char_traitsIcEENSD_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS6_9ec_scalarEEEEERKNSL_IS1H_NSD_IS1H_EEEEbRKN3rct9RCTConfigEbbE3__0PmEEvT0_S1V_T_","__ZN2hw6device14scalarmultBaseERKN3rct3keyE","__ZN10cryptonote27get_transaction_prefix_hashERKNS_18transaction_prefixERN6crypto4hashERN2hw6deviceE","__ZN12json_archiveILb1EEC2ERNSt3__213basic_ostreamIcNS1_11char_traitsIcEEEEb","__ZNSt3__214__split_bufferIhRNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPcEEEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESA_SA_","__ZNSt3__26vectorIiNS_9allocatorIiEEE6resizeEmRKi","__ZNSt3__214__split_bufferIiRNS_9allocatorIiEEE18__construct_at_endEmRKi","__ZNSt3__26vectorIaNS_9allocatorIaEEE6resizeEmRKa","__ZNSt3__214__split_bufferIaRNS_9allocatorIaEEE18__construct_at_endEmRKa","__ZN5tools6base5812_GLOBAL__N_112encode_blockEPKcmPc","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEmc","__ZN4epee15wipeable_string4growEmm","__ZN3rct7addKeysERKNS_3keyES2_","__ZN3rct13scalarmultKeyERKNS_3keyES2_","__ZNSt3__26__treeINS_12__value_typeINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_10unique_ptrIN2hw6deviceENS_14default_deleteISA_EEEEEENS_19__map_value_compareIS7_SE_NS_4lessIS7_EELb1EEENS5_ISE_EEE21__emplace_unique_implIJNS_4pairIPKcSD_EEEEENSM_INS_15__tree_iteratorISE_PNS_11__tree_nodeISE_PvEElEEbEEDpOT_","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE6assignIPS2_EENS_9enable_ifIXaasr21__is_forward_iteratorIT_EE5valuesr16is_constructibleIS2_NS_15iterator_traitsIS9_E9referenceEEE5valueEvE4typeES9_S9_","__ZN5boost6detail20sp_pointer_constructIN4epee10misc_utils19call_befor_die_baseENS3_14call_befor_dieIZN3rct12genBorromeanEPKNS6_3keyES9_S9_PKjE3__0EEEEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE","__ZN3rct13scalarmultKeyERNS_3keyERKS0_S3_","__ZNSt3__26vectorINS0_IN3rct3keyENS_9allocatorIS2_EEEENS3_IS5_EEEC2EmRKS5_","__ZN5boost6detail20sp_pointer_constructIN4epee10misc_utils19call_befor_die_baseENS3_14call_befor_dieIZN3rct9MLSAG_GenERKNS6_3keyERKNSt3__26vectorINSB_IS7_NSA_9allocatorIS7_EEEENSC_ISE_EEEERKSE_jmRN2hw6deviceEE3__1EEEEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE","__ZN3rct7addKeysERNS_3keyERKS0_S3_","__ZN3rct7subKeysERNS_3keyERKS0_S3_","__ZNSt3__26vectorINS0_IN3rct5ctkeyENS_9allocatorIS2_EEEENS3_IS5_EEE6assignIPS5_EENS_9enable_ifIXaasr21__is_forward_iteratorIT_EE5valuesr16is_constructibleIS5_NS_15iterator_traitsISB_E9referenceEEE5valueEvE4typeESB_SB_","__ZN3rct18get_pre_mlsag_hashERKNS_6rctSigERN2hw6deviceE","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEEC2EmRKS2_","__ZN3rctL15vector_exponentERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7_","__ZN3rctL15vector_subtractERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEERKS2_","__ZN3rctL13vector_powersERKNS_3keyEm","__ZN3rctL10vector_addERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEERKS2_","__ZN3rctL8hadamardERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7_","__ZN3rctL10vector_addERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7_","__ZN3rctL13inner_productERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7_","__ZN3rctL13vector_scalarERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEERKS2_","__ZN3rctL13inner_productERKN4epee4spanIKNS_3keyEEES6_","__ZN3rctL13vector_scalarERKN4epee4spanIKNS_3keyEEERS3_","__ZN3rctL12get_exponentERKNS_3keyEm","__ZN3rct17straus_init_cacheERKNSt3__26vectorINS_12MultiexpDataENS0_9allocatorIS2_EEEEm","__ZNSt3__26vectorIN3rct12MultiexpDataENS_9allocatorIS2_EEE24__emplace_back_slow_pathIJRKNS1_3keyER5ge_p3EEEvDpOT_","__ZN3rctL8multiexpERKNSt3__26vectorINS_12MultiexpDataENS0_9allocatorIS2_EEEEm","__ZN3rct17bulletproof_PROVEERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7_","__ZN3rctL17transcript_updateERNS_3keyERKS0_","__ZN3rctL15vector_exponentERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7__1864","__ZN3rctL23vector_of_scalar_powersERKNS_3keyEm","__ZN3rctL15vector_subtractERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEERKS2__1868","__ZN3rctL10vector_addERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEERKS2__1869","__ZN3rctL10vector_addERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7__1870","__ZN3rctL13vector_scalarERKN4epee4spanIKNS_3keyEEERS3__1875","__ZN3rctL13hadamard_foldERNSt3__26vectorI5ge_p3NS0_9allocatorIS2_EEEERKNS_3keyES9_","__ZN3rctL8multiexpERKNSt3__26vectorINS_12MultiexpDataENS0_9allocatorIS2_EEEEm_1878","__ZN3rctL12get_exponentERKNS_3keyEm_1895","__ZN3rct22bulletproof_plus_PROVEERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES7_","__ZN4epee15wipeable_string6appendEPKcm","__ZN8Language10utf8prefixIN4epee15wipeable_stringEEET_RKS3_m","__ZN5boost11crc_optimalILm32ELj79764919ELj4294967295ELj4294967295ELb1ELb1EE13process_bytesEPKvm","__ZN5tools13utf8canonicalIN4epee15wipeable_stringEZNK8Language9WordEqualclERKS2_S6_EUljE0_EET_RKS8_T0_","__ZN8Language10utf8prefixINSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEEET_RKS8_m","__ZN5boost6detail20sp_pointer_constructIN4epee10misc_utils19call_befor_die_baseENS3_14call_befor_dieIZN6crypto13ElectrumWords14words_to_bytesERKNS2_15wipeable_stringERS8_mbRNSt3__212basic_stringIcNSC_11char_traitsIcEENSC_9allocatorIcEEEEE3__0EEEEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE","__ZNSt3__28ios_base7failureC2EPKcRKNS_10error_codeE","__ZNSt3__212basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6__initEPKwm","__ZNSt3__219__double_or_nothingIcEEvRNS_10unique_ptrIT_PFvPvEEERPS2_S9_","__ZNSt3__219__double_or_nothingIjEEvRNS_10unique_ptrIT_PFvPvEEERPS2_S9_","__ZNSt3__219__double_or_nothingIwEEvRNS_10unique_ptrIT_PFvPvEEERPS2_S9_","__ZNSt3__212_GLOBAL__N_19as_stringINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPFiPcmPKczEiEET_T0_SD_PKNSD_10value_typeET1_","__ZNSt3__212_GLOBAL__N_19as_stringINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPFiPcmPKczEmEET_T0_SD_PKNSD_10value_typeET1_","__ZNSt3__212system_error6__initERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__ZNSt3__212system_errorC2ENS_10error_codeEPKc","__ZNK12_GLOBAL__N_116itanium_demangle13ReferenceType8collapseERNS_12OutputStreamE",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_viiii=[0,"__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE7seekposENS_4fposI11__mbstate_tEEj","__ZN2hw4core14device_default31get_subaddress_spend_public_keyERKN10cryptonote12account_keysERKNS2_16subaddress_indexE","__ZN2hw4core14device_default14get_subaddressERKN10cryptonote12account_keysERKNS2_16subaddress_indexE","__ZN2hw4core14device_default25get_subaddress_secret_keyERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEERKN10cryptonote16subaddress_indexE","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE7seekposENS_4fposI11__mbstate_tEEj","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE7seekposENS_4fposI11__mbstate_tEEj","__ZNKSt3__27collateIcE12do_transformEPKcS3_","__ZNKSt3__27collateIwE12do_transformEPKwS3_","__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi","__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi","__ZNK10__cxxabiv121__vmi_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi","__ZN13serial_bridge22new_integrated_addressENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_S6_","__ZN13serial_bridge24estimated_tx_network_feeENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_S6_","__Z22new_integrated_addressNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_S5_","__Z24estimated_tx_network_feeNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_S5_","__ZN5boost13property_tree11string_pathINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS0_13id_translatorIS8_EEEC2ERKS8_cSA_","__ZN5boost16exception_detail16throw_exception_INS_13property_tree14ptree_bad_dataEEEvRKT_PKcS8_i","__ZN5boost16exception_detail16throw_exception_INS_13property_tree14ptree_bad_pathEEEvRKT_PKcS8_i","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKcmm","__ZN5boost13property_tree11string_pathINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEENS0_13id_translatorIS8_EEEC2EPKccSA_","__ZNSt3__26vectorIyNS_9allocatorIyEEE18__construct_at_endIPKyEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES8_S8_m","__ZNK5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_NS2_4lessIS8_EEE3getIS8_EENS_10disable_ifINS0_6detail13is_translatorIT_EESG_E4typeERKNS0_11string_pathIS8_NS0_13id_translatorIS8_EEEERKSG_","__ZNSt3__26vectorIyNS_9allocatorIyEEE18__construct_at_endIPyEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES7_S7_m","__ZNSt3__26vectorIN21monero_transfer_utils15SpendableOutputENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZN5boost13property_tree11json_parser19write_json_internalINS0_11basic_ptreeINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEESA_NS4_4lessISA_EEEEEEvRNS4_13basic_ostreamINT_8key_type10value_typeENS6_ISG_EEEERKSF_RKSA_b","__ZN5boost13property_tree11json_parser17json_parser_errorC2ERKNSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEESB_m","__ZN5boost16exception_detail16throw_exception_INS_13property_tree11json_parser17json_parser_errorEEEvRKT_PKcS9_i","__ZNSt3__26vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endIPKS6_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESD_SD_m","__ZN6crypto17derive_secret_keyERKNS_14key_derivationEmRKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERS9_","__ZNSt3__26vectorIN21monero_transfer_utils18RandomAmountOutputENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorINS0_IN6crypto9signatureENS_9allocatorIS2_EEEENS3_IS5_EEE18__construct_at_endIPS5_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_m","__ZNSt3__26vectorIN3rct8rangeSigENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN3rct11BulletproofENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN3rct15BulletproofPlusENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN3rct5mgSigENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN3rct5clsagENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN3rct3keyENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorINS0_IN3rct3keyENS_9allocatorIS2_EEEENS3_IS5_EEE18__construct_at_endIPS5_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_m","__ZNSt3__26vectorINS0_IN3rct5ctkeyENS_9allocatorIS2_EEEENS3_IS5_EEE18__construct_at_endIPS5_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_m","__ZNSt3__26vectorIN3rct9ecdhTupleENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN3rct5ctkeyENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN6crypto9signatureENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIN5boost7variantIN10cryptonote8txin_genEJNS3_14txin_to_scriptENS3_18txin_to_scripthashENS3_11txin_to_keyEEEENS_9allocatorIS8_EEE18__construct_at_endIPS8_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESF_SF_m","__ZNSt3__26vectorIN10cryptonote6tx_outENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__26vectorIhNS_9allocatorIhEEE18__construct_at_endIPhEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES7_S7_m","__ZNSt3__26vectorIN6crypto10public_keyENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZNSt3__214__split_bufferINS_4pairIyN3rct5ctkeyEEERNS_9allocatorIS4_EEEC2EmmS7_","__ZNSt3__26vectorIN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEENS_9allocatorIS8_EEE18__construct_at_endIPS8_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESF_SF_m","__ZNSt3__26vectorINS_4pairIyN3rct5ctkeyEEENS_9allocatorIS4_EEE18__construct_at_endIPS4_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_m","__ZNSt3__26vectorIN21monero_transfer_utils19RandomAmountOutputsENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","___assert_fail","__ZNSt3__26vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endIPS6_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESC_SC_m","__ZN5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE17convert_constructIKS5_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote15txout_to_scriptEJNS1_19txout_to_scripthashENS1_12txout_to_keyENS1_19txout_to_tagged_keyEEE17convert_constructIKS4_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIKS7_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIKS6_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIKS5_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIKS4_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIKS3_EEvRT_iN4mpl_5bool_ILb0EEE","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIKS2_EEvRT_iN4mpl_5bool_ILb0EEE","__ZNSt3__26vectorIhNS_9allocatorIhEEE18__construct_at_endINS_11__wrap_iterIPcEEEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZN5boost7variantIN10cryptonote16tx_extra_paddingEJNS1_16tx_extra_pub_keyENS1_14tx_extra_nonceENS1_25tx_extra_merge_mining_tagENS1_28tx_extra_additional_pub_keysENS1_22tx_extra_vrf_signatureEEE17convert_constructIS6_EENS_9enable_ifINS_19is_rvalue_referenceIOT_EEvE4typeESD_iN4mpl_5bool_ILb0EEE","__ZNSt3__212__hash_tableIN10cryptonote22account_public_addressENS_4hashIS2_EENS_8equal_toIS2_EENS_9allocatorIS2_EEE21__construct_node_hashIRKS2_JEEENS_10unique_ptrINS_11__hash_nodeIS2_PvEENS_22__hash_node_destructorINS7_ISG_EEEEEEmOT_DpOT0_","__ZN2hw6device13scalarmultKeyERKN3rct3keyES4_","__ZN10cryptonote26get_account_address_as_strENS_12network_typeEbRKNS_22account_public_addressE","__ZN6crypto18generate_signatureERKNS_4hashERKNS_10public_keyERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERNS_9signatureE","__ZN5boost7variantIN10cryptonote8txin_genEJNS1_14txin_to_scriptENS1_18txin_to_scripthashENS1_11txin_to_keyEEE17convert_constructIS5_EEvRT_iN4mpl_5bool_ILb0EEE","__ZNSt3__26vectorImNS_9allocatorImEEE18__construct_at_endIPmEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES7_S7_m","__ZNSt3__26vectorIcNS_9allocatorIcEEE18__construct_at_endIPcEENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES7_S7_m","__ZN3rct8addKeys2ERNS_3keyERKS0_S3_S3_","__ZN3rct10proveRangeERNS_3keyES1_RKy","__ZN12_GLOBAL__N_127make_dummy_bulletproof_plusERKNSt3__26vectorIyNS0_9allocatorIyEEEERNS1_IN3rct3keyENS2_IS8_EEEESB_","__ZN12_GLOBAL__N_122make_dummy_bulletproofERKNSt3__26vectorIyNS0_9allocatorIyEEEERNS1_IN3rct3keyENS2_IS8_EEEESB_","__ZN3rctL15hash_cache_mashERNS_3keyERKS0_S3_","__ZN3rctL5sliceERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEEmm","__ZN3rctL13hadamard_foldERNSt3__26vectorI5ge_p3NS0_9allocatorIS2_EEEEPKNS1_INS_3keyENS3_IS7_EEEERKS7_SD_","__ZN3rct20pippenger_init_cacheERKNSt3__26vectorINS_12MultiexpDataENS0_9allocatorIS2_EEEEmm","__ZN3rct6strausERKNSt3__26vectorINS_12MultiexpDataENS0_9allocatorIS2_EEEERKNS0_10shared_ptrINS_18straus_cached_dataEEEm","__ZN3rctL5sliceERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEEmm_1874","__ZN3rctL22weighted_inner_productERKN4epee4spanIKNS_3keyEEES6_RS3_","__ZN3rctL22weighted_inner_productERKNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEERKN4epee4spanIKS2_EERSA_","__ZN3rctL17transcript_updateERNS_3keyERKS0_S3_","__ZNSt3__26vectorIPN8Language4BaseENS_9allocatorIS3_EEE18__construct_at_endIPKS3_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_m","__ZNSt3__26vectorIN4epee15wipeable_stringENS_9allocatorIS2_EEE18__construct_at_endIPS2_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeES9_S9_m","__ZN5boost6detail31make_partial_xor_products_tableILi8EjEENS_5arrayIT0_XlsLy1ET_EEEiS3_b","__ZNSt3__26vectorIPKN8Language4BaseENS_9allocatorIS4_EEE18__construct_at_endIPKS4_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESC_SC_m","__ZNSt3__26vectorIPKN8Language4BaseENS_9allocatorIS4_EEE18__construct_at_endIPS4_EENS_9enable_ifIXsr21__is_forward_iteratorIT_EE5valueEvE4typeESB_SB_m","__ZNSt3__216__check_groupingERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjS8_Rj",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_viiiii=[0,"__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib","__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib","__ZNK10__cxxabiv121__vmi_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib","__ZN5boost11multi_index6detail8copy_mapINS1_20sequenced_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseINSt3__24pairIKNS7_12basic_stringIcNS7_11char_traitsIcEENS7_9allocatorIcEEEENS_13property_tree11basic_ptreeISE_SE_NS7_4lessISE_EEEEEENSC_ISL_EEEEEEEESM_EC2ERKSM_mPSP_ST_","__ZN19monero_send_routine33new__parsed_res__get_unspent_outsERKN5boost13property_tree11basic_ptreeINSt3__212basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEES9_NS3_4lessIS9_EEEERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEESO_RKNSJ_10public_keyE","__ZN5boost13property_tree11json_parser6detail18read_json_internalINSt3__219istreambuf_iteratorIcNS4_11char_traitsIcEEEES8_NS2_8encodingIcEENS2_18standard_callbacksINS0_11basic_ptreeINS4_12basic_stringIcS7_NS4_9allocatorIcEEEESG_NS4_4lessISG_EEEEEEEEvT_T0_RT1_RT2_RKSG_","__ZN6crypto13generate_keysERNS_10public_keyERN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEERKS8_b","__ZN10cryptonote18classify_addressesERKNSt3__26vectorINS_20tx_destination_entryENS0_9allocatorIS2_EEEERKN5boost8optionalINS_22account_public_addressEEERmSE_RSA_","__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_mmRKS4_","__ZN3rct8addKeys3ERNS_3keyERKS0_S3_S3_PK9ge_cached","__ZN3rctL15hash_cache_mashERNS_3keyERKS0_S3_S3_","__ZN3rct9pippengerERKNSt3__26vectorINS_12MultiexpDataENS0_9allocatorIS2_EEEERKNS0_10shared_ptrINS_21pippenger_cached_dataEEEmm","__ZN8Language4BaseC2EPKcS2_RKNSt3__26vectorINS3_12basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEENS8_ISA_EEEEj",0,0];var debug_table_viiiiii=[0,"__ZN2hw4core14device_default32get_subaddress_spend_public_keysERKN10cryptonote12account_keysEjjj","__ZN2hw4core14device_default13generate_keysERN6crypto10public_keyERN4epee7mlockedIN5tools8scrubbedINS2_9ec_scalarEEEEERKSB_b","__ZNKSt3__28messagesIcE6do_getEliiRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE","__ZNKSt3__28messagesIwE6do_getEliiRKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEE","__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib","__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib","__ZNK10__cxxabiv121__vmi_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib","__ZN13serial_bridge29validate_components_for_loginENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_S6_S6_S6_","__ZN13serial_bridge18generate_key_imageENSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEES6_S6_S6_S6_","__Z29validate_components_for_loginNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_S5_S5_S5_","__Z18generate_key_imageNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES5_S5_S5_S5_","__ZN10cryptonote12account_base8generateERKN4epee7mlockedIN5tools8scrubbedIN6crypto9ec_scalarEEEEEbbb","__ZN6crypto23generate_ring_signatureERKNS_4hashERKNS_9key_imageERKNSt3__26vectorIPKNS_10public_keyENS6_9allocatorISA_EEEERKN4epee7mlockedIN5tools8scrubbedINS_9ec_scalarEEEEEmPNS_9signatureE","__ZN3rct14addKeys_aGbBcCERNS_3keyERKS0_S3_PK9ge_cachedS3_S6_","__ZN3rct25proveRangeBulletproofPlusERNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES6_RKNS1_IyNS3_IyEEEEN4epee4spanIKS2_EERN2hw6deviceE","__ZN3rct21proveRangeBulletproofERNSt3__26vectorINS_3keyENS0_9allocatorIS2_EEEES6_RKNS1_IyNS3_IyEEEEN4epee4spanIKS2_EERN2hw6deviceE","__ZN3rctL15hash_cache_mashERNS_3keyERKS0_S3_S3_S3_",0,0,0,0,0,0,0,0,0,0,0,0,0,0];var debug_table_viiiiiii=[0,"__ZN3rct14addKeys_aAbBcCERNS_3keyERKS0_PK9ge_cachedS3_S6_S3_S6_","__ZN3rct9MLSAG_GenERKNS_3keyERKNSt3__26vectorINS4_IS0_NS3_9allocatorIS0_EEEENS5_IS7_EEEERKS7_jmRN2hw6deviceE","__ZNSt3__29__num_putIcE21__widen_and_group_intEPcS2_S2_S2_RS2_S3_RKNS_6localeE","__ZNSt3__29__num_putIcE23__widen_and_group_floatEPcS2_S2_S2_RS2_S3_RKNS_6localeE","__ZNSt3__29__num_putIwE21__widen_and_group_intEPcS2_S2_PwRS3_S4_RKNS_6localeE","__ZNSt3__29__num_putIwE23__widen_and_group_floatEPcS2_S2_PwRS3_S4_RKNS_6localeE",0];var debug_table_viiiiiiii=[0,"__ZN2hw4core14device_default17generate_tx_proofERKN6crypto4hashERKNS2_10public_keyES8_RKN5boost8optionalIS6_EES8_RKN4epee7mlockedIN5tools8scrubbedINS2_9ec_scalarEEEEERNS2_9signatureE","__ZN10cryptonote21is_out_to_acc_precompERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS0_4hashIS3_EENS0_8equal_toIS3_EENS0_9allocatorINS0_4pairIKS3_S4_EEEEEERSB_RKNS2_14key_derivationERKNS0_6vectorISI_NS9_ISI_EEEEmRN2hw6deviceERKN5boost8optionalINS2_8view_tagEEE","__ZN3rct19proveRctCLSAGSimpleERKNS_3keyERKNSt3__26vectorINS_5ctkeyENS3_9allocatorIS5_EEEERKS5_S2_S2_jRN2hw6deviceE","__ZN3rct16proveRctMGSimpleERKNS_3keyERKNSt3__26vectorINS_5ctkeyENS3_9allocatorIS5_EEEERKS5_S2_S2_jRN2hw6deviceE",0,0,0];var debug_table_viiiiiiiii=[0,"__ZN3rct10proveRctMGERKNS_3keyERKNSt3__26vectorINS4_INS_5ctkeyENS3_9allocatorIS5_EEEENS6_IS8_EEEERKS8_SE_SE_jS2_RN2hw6deviceE"];var debug_table_viiiiiiiiii=[0,"__ZN3rct9CLSAG_GenERKNS_3keyERKNSt3__26vectorIS0_NS3_9allocatorIS0_EEEES2_S9_S2_S9_S2_jRN2hw6deviceE","__ZN3rct15BulletproofPlusC2ERKNSt3__26vectorINS_3keyENS1_9allocatorIS3_EEEERKS3_SA_SA_SA_SA_SA_S8_S8_","__ZNSt3__211__money_getIcE13__gather_infoEbRKNS_6localeERNS_10money_base7patternERcS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEESF_SF_SF_Ri","__ZNSt3__211__money_getIwE13__gather_infoEbRKNS_6localeERNS_10money_base7patternERwS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS9_IwNSA_IwEENSC_IwEEEESJ_SJ_Ri","__ZNSt3__211__money_putIcE13__gather_infoEbbRKNS_6localeERNS_10money_base7patternERcS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEESF_SF_Ri","__ZNSt3__211__money_putIwE13__gather_infoEbbRKNS_6localeERNS_10money_base7patternERwS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS9_IwNSA_IwEENSC_IwEEEESJ_Ri",0];var debug_table_viiiiiiiiiii=[0,"__ZN3rct6genRctERKNS_3keyERKNSt3__26vectorINS_5ctkeyENS3_9allocatorIS5_EEEERKNS4_IS0_NS6_IS0_EEEERKNS4_IyNS6_IyEEEERKNS4_IS8_NS6_IS8_EEEESE_jRS8_RKNS_9RCTConfigERN2hw6deviceE"];var debug_table_viiiiiiiiiiiii=[0,"__ZN3rct11BulletproofC2ERKNSt3__26vectorINS_3keyENS1_9allocatorIS3_EEEERKS3_SA_SA_SA_SA_SA_S8_S8_SA_SA_SA_","__ZN3rctL22cross_vector_exponent8EmRKNSt3__26vectorI5ge_p3NS0_9allocatorIS2_EEEEmS7_mRKNS1_INS_3keyENS3_IS8_EEEEmSC_mPSB_PKS2_PKS8_","__ZN3rctL10compute_LREmRKNS_3keyERKNSt3__26vectorI5ge_p3NS3_9allocatorIS5_EEEEmSA_mRKNS4_IS0_NS6_IS0_EEEEmSE_mS2_S2_"];var debug_table_viiiiiiiiiiiiiii=[0,"__ZNSt3__211__money_putIcE8__formatEPcRS2_S3_jPKcS5_RKNS_5ctypeIcEEbRKNS_10money_base7patternEccRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEESL_SL_i","__ZNSt3__211__money_putIwE8__formatEPwRS2_S3_jPKwS5_RKNS_5ctypeIwEEbRKNS_10money_base7patternEwwRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNSE_IwNSF_IwEENSH_IwEEEESQ_i",0];var debug_table_viiiiiiijjii=[0,"__ZN21monero_transfer_utils41send_step1__prepare_params_for_get_decoysERNS_18Send_Step1_RetValsERKN5boost8optionalINSt3__212basic_stringIcNS4_11char_traitsIcEENS4_9allocatorIcEEEEEERKNS4_6vectorIyNS8_IyEEEEbjNS4_8functionIFbhxEEERKNSE_INS_15SpendableOutputENS8_ISM_EEEEyyNS3_IyEENS3_INS4_13unordered_mapISA_NSE_INS_18RandomAmountOutputENS8_IST_EEEENS4_4hashISA_EENS4_8equal_toISA_EENS8_INS4_4pairIKSA_SV_EEEEEEEE"];var debug_table_viiiiiiijjiiiiji=[0,"__ZN21monero_transfer_utils31convenience__create_transactionERNS_43Convenience_TransactionConstruction_RetValsERKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEESA_SA_RKNS2_6vectorIS8_NS6_IS8_EEEERKN5boost8optionalIS8_EERKNSB_IyNS6_IyEEEEyySA_RKNSB_INS_15SpendableOutputENS6_ISP_EEEERNSB_INS_19RandomAmountOutputsENS6_ISU_EEEENS2_8functionIFbhxEEEyN10cryptonote12network_typeE"];var debug_table_viiiiiiijjiiijjiiji=[0,"__ZN21monero_transfer_utils34send_step2__try_create_transactionERNS_18Send_Step2_RetValsERKNSt3__212basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEESA_SA_RKNS2_6vectorIS8_NS6_IS8_EEEERKN5boost8optionalIS8_EERKNSB_IyNS6_IyEEEEyyjSA_RKNSB_INS_15SpendableOutputENS6_ISP_EEEEyyRNSB_INS_19RandomAmountOutputsENS6_ISU_EEEENS2_8functionIFbhxEEEyN10cryptonote12network_typeE"];var debug_table_viiiiiijiiiiii=[0,"__ZN3rct12genRctSimpleERKNS_3keyERKNSt3__26vectorINS_5ctkeyENS3_9allocatorIS5_EEEERKNS4_IS0_NS6_IS0_EEEERKNS4_IyNS6_IyEEEESI_yRKNS4_IS8_NS6_IS8_EEEESE_RKNS4_IjNS6_IjEEEERS8_RKNS_9RCTConfigERN2hw6deviceE"];var debug_table_viiiiiijjiiiiijii=[0,"__ZN21monero_transfer_utils18create_transactionERNS_31TransactionConstruction_RetValsERKN10cryptonote12account_keysEjRKNSt3__213unordered_mapIN6crypto10public_keyENS2_16subaddress_indexENS6_4hashIS9_EENS6_8equal_toIS9_EENS6_9allocatorINS6_4pairIKS9_SA_EEEEEERKNS6_6vectorINS2_18address_parse_infoENSF_ISO_EEEERKNSN_IyNSF_IyEEEEyyRKNS6_12basic_stringIcNS6_11char_traitsIcEENSF_IcEEEERKNSN_INS_15SpendableOutputENSF_IS14_EEEERNSN_INS_19RandomAmountOutputsENSF_IS19_EEEERKNSN_IhNSF_IhEEEENS6_8functionIFbhxEEEybNS2_12network_typeE"];var debug_table_viiiiij=[0,"_cn_slow_hash"];var debug_table_viiij=[0,"__ZN6crypto19generate_chacha_keyEPKvmRN4epee7mlockedIN5tools8scrubbedINSt3__25arrayIhLm32EEEEEEEy"];var debug_table_viij=[0,"__ZZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbbENK3__2clERS19_y","__ZZN10cryptonote24construct_tx_with_tx_keyERKNS_12account_keysERKNSt3__213unordered_mapIN6crypto10public_keyENS_16subaddress_indexENS3_4hashIS6_EENS3_8equal_toIS6_EENS3_9allocatorINS3_4pairIKS6_S7_EEEEEERNS3_6vectorINS_15tx_source_entryENSC_ISL_EEEERNSK_INS_20tx_destination_entryENSC_ISP_EEEERKN5boost8optionalINS_22account_public_addressEEERKNSK_IhNSC_IhEEEERNS_11transactionENS3_12basic_stringIcNS3_11char_traitsIcEENSC_IcEEEEhRKN4epee7mlockedIN5tools8scrubbedINS5_9ec_scalarEEEEERKNSK_IS1G_NSC_IS1G_EEEEbRKN3rct9RCTConfigEbbENK3__3clERS19_y","__ZN3rct4genCERNS_3keyERKS0_y","__ZNSt3__212_GLOBAL__N_19as_stringINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPFiPcmPKczEyEET_T0_SD_PKNSD_10value_typeET1_",0,0,0];var debug_table_viijii=[0,"__ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE7seekoffExNS_8ios_base7seekdirEj","__ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE7seekoffExNS_8ios_base7seekdirEj","__ZNSt3__215basic_streambufIwNS_11char_traitsIwEEE7seekoffExNS_8ios_base7seekdirEj"];var debug_table_viijj=[0,"__ZN18emscr_async_bridge28send_app_handler__error_codeERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEN21monero_transfer_utils26CreateTransactionErrorCodeEyy"];var debug_table_vij=[0,"__ZN19serial_bridge_utils18RetVals_Transforms8str_fromEy","__ZN3rct10zeroCommitEy","__ZNSt3__29to_stringEy","__ZN10cryptonoteL18xcash_write_varintERNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEy","__ZN5tools12write_varintINSt3__219ostreambuf_iteratorIcNS1_11char_traitsIcEEEEyEENS1_9enable_ifIXaasr3std11is_integralIT0_EE5valuesr3std11is_unsignedIS7_EE5valueEvE4typeEOT_S7_","__ZN3rct3d2hEy",0];var debug_table_viji=[0,"__ZN5tools6base5811encode_addrEyRKNSt3__212basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE"];var debug_table_vjiiii=[0,"__ZN10cryptonote10set_tx_outEyRKN6crypto10public_keyEbRKNS0_8view_tagERNS_6tx_outE"];var debug_tables={"diii":debug_table_diii,"fiii":debug_table_fiii,"i":debug_table_i,"ii":debug_table_ii,"iidiiii":debug_table_iidiiii,"iii":debug_table_iii,"iiii":debug_table_iiii,"iiiii":debug_table_iiiii,"iiiiid":debug_table_iiiiid,"iiiiii":debug_table_iiiiii,"iiiiiid":debug_table_iiiiiid,"iiiiiii":debug_table_iiiiiii,"iiiiiiii":debug_table_iiiiiiii,"iiiiiiiii":debug_table_iiiiiiiii,"iiiiiiiiii":debug_table_iiiiiiiiii,"iiiiiiiiiii":debug_table_iiiiiiiiiii,"iiiiiiiiiiii":debug_table_iiiiiiiiiiii,"iiiiiiiiiiiii":debug_table_iiiiiiiiiiiii,"iiiiiiiiiiiiiii":debug_table_iiiiiiiiiiiiiii,"iiiiiiiiiiiiiiii":debug_table_iiiiiiiiiiiiiiii,"iiiiij":debug_table_iiiiij,"iiiiiji":debug_table_iiiiiji,"iiiij":debug_table_iiiij,"iiiiji":debug_table_iiiiji,"iiij":debug_table_iiij,"iij":debug_table_iij,"ji":debug_table_ji,"jiii":debug_table_jiii,"jiiii":debug_table_jiiii,"jiiiiiiiijjj":debug_table_jiiiiiiiijjj,"jiiijjj":debug_table_jiiijjj,"jiji":debug_table_jiji,"jji":debug_table_jji,"jjii":debug_table_jjii,"v":debug_table_v,"vi":debug_table_vi,"vii":debug_table_vii,"viii":debug_table_viii,"viiii":debug_table_viiii,"viiiii":debug_table_viiiii,"viiiiii":debug_table_viiiiii,"viiiiiii":debug_table_viiiiiii,"viiiiiiii":debug_table_viiiiiiii,"viiiiiiiii":debug_table_viiiiiiiii,"viiiiiiiiii":debug_table_viiiiiiiiii,"viiiiiiiiiii":debug_table_viiiiiiiiiii,"viiiiiiiiiiiii":debug_table_viiiiiiiiiiiii,"viiiiiiiiiiiiiii":debug_table_viiiiiiiiiiiiiii,"viiiiiiijjii":debug_table_viiiiiiijjii,"viiiiiiijjiiiiji":debug_table_viiiiiiijjiiiiji,"viiiiiiijjiiijjiiji":debug_table_viiiiiiijjiiijjiiji,"viiiiiijiiiiii":debug_table_viiiiiijiiiiii,"viiiiiijjiiiiijii":debug_table_viiiiiijjiiiiijii,"viiiiij":debug_table_viiiiij,"viiij":debug_table_viiij,"viij":debug_table_viij,"viijii":debug_table_viijii,"viijj":debug_table_viijj,"vij":debug_table_vij,"viji":debug_table_viji,"vjiiii":debug_table_vjiiii};function nullFunc_diii(x){abortFnPtrError(x,"diii")}function nullFunc_fiii(x){abortFnPtrError(x,"fiii")}function nullFunc_i(x){abortFnPtrError(x,"i")}function nullFunc_ii(x){abortFnPtrError(x,"ii")}function nullFunc_iidiiii(x){abortFnPtrError(x,"iidiiii")}function nullFunc_iii(x){abortFnPtrError(x,"iii")}function nullFunc_iiii(x){abortFnPtrError(x,"iiii")}function nullFunc_iiiii(x){abortFnPtrError(x,"iiiii")}function nullFunc_iiiiid(x){abortFnPtrError(x,"iiiiid")}function nullFunc_iiiiii(x){abortFnPtrError(x,"iiiiii")}function nullFunc_iiiiiid(x){abortFnPtrError(x,"iiiiiid")}function nullFunc_iiiiiii(x){abortFnPtrError(x,"iiiiiii")}function nullFunc_iiiiiiii(x){abortFnPtrError(x,"iiiiiiii")}function nullFunc_iiiiiiiii(x){abortFnPtrError(x,"iiiiiiiii")}function nullFunc_iiiiiiiiii(x){abortFnPtrError(x,"iiiiiiiiii")}function nullFunc_iiiiiiiiiii(x){abortFnPtrError(x,"iiiiiiiiiii")}function nullFunc_iiiiiiiiiiii(x){abortFnPtrError(x,"iiiiiiiiiiii")}function nullFunc_iiiiiiiiiiiii(x){abortFnPtrError(x,"iiiiiiiiiiiii")}function nullFunc_iiiiiiiiiiiiiii(x){abortFnPtrError(x,"iiiiiiiiiiiiiii")}function nullFunc_iiiiiiiiiiiiiiii(x){abortFnPtrError(x,"iiiiiiiiiiiiiiii")}function nullFunc_iiiiij(x){abortFnPtrError(x,"iiiiij")}function nullFunc_iiiiiji(x){abortFnPtrError(x,"iiiiiji")}function nullFunc_iiiij(x){abortFnPtrError(x,"iiiij")}function nullFunc_iiiiji(x){abortFnPtrError(x,"iiiiji")}function nullFunc_iiij(x){abortFnPtrError(x,"iiij")}function nullFunc_iij(x){abortFnPtrError(x,"iij")}function nullFunc_ji(x){abortFnPtrError(x,"ji")}function nullFunc_jiii(x){abortFnPtrError(x,"jiii")}function nullFunc_jiiii(x){abortFnPtrError(x,"jiiii")}function nullFunc_jiiiiiiiijjj(x){abortFnPtrError(x,"jiiiiiiiijjj")}function nullFunc_jiiijjj(x){abortFnPtrError(x,"jiiijjj")}function nullFunc_jiji(x){abortFnPtrError(x,"jiji")}function nullFunc_jji(x){abortFnPtrError(x,"jji")}function nullFunc_jjii(x){abortFnPtrError(x,"jjii")}function nullFunc_v(x){abortFnPtrError(x,"v")}function nullFunc_vi(x){abortFnPtrError(x,"vi")}function nullFunc_vii(x){abortFnPtrError(x,"vii")}function nullFunc_viii(x){abortFnPtrError(x,"viii")}function nullFunc_viiii(x){abortFnPtrError(x,"viiii")}function nullFunc_viiiii(x){abortFnPtrError(x,"viiiii")}function nullFunc_viiiiii(x){abortFnPtrError(x,"viiiiii")}function nullFunc_viiiiiii(x){abortFnPtrError(x,"viiiiiii")}function nullFunc_viiiiiiii(x){abortFnPtrError(x,"viiiiiiii")}function nullFunc_viiiiiiiii(x){abortFnPtrError(x,"viiiiiiiii")}function nullFunc_viiiiiiiiii(x){abortFnPtrError(x,"viiiiiiiiii")}function nullFunc_viiiiiiiiiii(x){abortFnPtrError(x,"viiiiiiiiiii")}function nullFunc_viiiiiiiiiiiii(x){abortFnPtrError(x,"viiiiiiiiiiiii")}function nullFunc_viiiiiiiiiiiiiii(x){abortFnPtrError(x,"viiiiiiiiiiiiiii")}function nullFunc_viiiiiiijjii(x){abortFnPtrError(x,"viiiiiiijjii")}function nullFunc_viiiiiiijjiiiiji(x){abortFnPtrError(x,"viiiiiiijjiiiiji")}function nullFunc_viiiiiiijjiiijjiiji(x){abortFnPtrError(x,"viiiiiiijjiiijjiiji")}function nullFunc_viiiiiijiiiiii(x){abortFnPtrError(x,"viiiiiijiiiiii")}function nullFunc_viiiiiijjiiiiijii(x){abortFnPtrError(x,"viiiiiijjiiiiijii")}function nullFunc_viiiiij(x){abortFnPtrError(x,"viiiiij")}function nullFunc_viiij(x){abortFnPtrError(x,"viiij")}function nullFunc_viij(x){abortFnPtrError(x,"viij")}function nullFunc_viijii(x){abortFnPtrError(x,"viijii")}function nullFunc_viijj(x){abortFnPtrError(x,"viijj")}function nullFunc_vij(x){abortFnPtrError(x,"vij")}function nullFunc_viji(x){abortFnPtrError(x,"viji")}function nullFunc_vjiiii(x){abortFnPtrError(x,"vjiiii")}function invoke_diii(index,a1,a2,a3){var sp=stackSave();try{return dynCall_diii(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_fiii(index,a1,a2,a3){var sp=stackSave();try{return dynCall_fiii(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_i(index){var sp=stackSave();try{return dynCall_i(index)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_ii(index,a1){var sp=stackSave();try{return dynCall_ii(index,a1)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iii(index,a1,a2){var sp=stackSave();try{return dynCall_iii(index,a1,a2)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiii(index,a1,a2,a3){var sp=stackSave();try{return dynCall_iiii(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiii(index,a1,a2,a3,a4){var sp=stackSave();try{return dynCall_iiiii(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiii(index,a1,a2,a3,a4,a5){var sp=stackSave();try{return dynCall_iiiiii(index,a1,a2,a3,a4,a5)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiii(index,a1,a2,a3,a4,a5,a6){var sp=stackSave();try{return dynCall_iiiiiii(index,a1,a2,a3,a4,a5,a6)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiii(index,a1,a2,a3,a4,a5,a6,a7){var sp=stackSave();try{return dynCall_iiiiiiii(index,a1,a2,a3,a4,a5,a6,a7)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8){var sp=stackSave();try{return dynCall_iiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9){var sp=stackSave();try{return dynCall_iiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10){var sp=stackSave();try{return dynCall_iiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11){var sp=stackSave();try{return dynCall_iiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12){var sp=stackSave();try{return dynCall_iiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14){var sp=stackSave();try{return dynCall_iiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15){var sp=stackSave();try{return dynCall_iiiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiij(index,a1,a2,a3,a4,a5,a6){var sp=stackSave();try{return dynCall_iiiiij(index,a1,a2,a3,a4,a5,a6)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiiji(index,a1,a2,a3,a4,a5,a6,a7){var sp=stackSave();try{return dynCall_iiiiiji(index,a1,a2,a3,a4,a5,a6,a7)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iiiiji(index,a1,a2,a3,a4,a5,a6){var sp=stackSave();try{return dynCall_iiiiji(index,a1,a2,a3,a4,a5,a6)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_iij(index,a1,a2,a3){var sp=stackSave();try{return dynCall_iij(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_ji(index,a1){var sp=stackSave();try{return dynCall_ji(index,a1)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jiii(index,a1,a2,a3){var sp=stackSave();try{return dynCall_jiii(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jiiii(index,a1,a2,a3,a4){var sp=stackSave();try{return dynCall_jiiii(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jiiiiiiiijjj(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14){var sp=stackSave();try{return dynCall_jiiiiiiiijjj(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jiiijjj(index,a1,a2,a3,a4,a5,a6,a7,a8,a9){var sp=stackSave();try{return dynCall_jiiijjj(index,a1,a2,a3,a4,a5,a6,a7,a8,a9)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jiji(index,a1,a2,a3,a4){var sp=stackSave();try{return dynCall_jiji(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jji(index,a1,a2,a3){var sp=stackSave();try{return dynCall_jji(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_jjii(index,a1,a2,a3,a4){var sp=stackSave();try{return dynCall_jjii(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_v(index){var sp=stackSave();try{dynCall_v(index)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_vi(index,a1){var sp=stackSave();try{dynCall_vi(index,a1)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_vii(index,a1,a2){var sp=stackSave();try{dynCall_vii(index,a1,a2)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viii(index,a1,a2,a3){var sp=stackSave();try{dynCall_viii(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiii(index,a1,a2,a3,a4){var sp=stackSave();try{dynCall_viiii(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiii(index,a1,a2,a3,a4,a5){var sp=stackSave();try{dynCall_viiiii(index,a1,a2,a3,a4,a5)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiii(index,a1,a2,a3,a4,a5,a6){var sp=stackSave();try{dynCall_viiiiii(index,a1,a2,a3,a4,a5,a6)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiii(index,a1,a2,a3,a4,a5,a6,a7){var sp=stackSave();try{dynCall_viiiiiii(index,a1,a2,a3,a4,a5,a6,a7)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8){var sp=stackSave();try{dynCall_viiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9){var sp=stackSave();try{dynCall_viiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10){var sp=stackSave();try{dynCall_viiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11){var sp=stackSave();try{dynCall_viiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13){var sp=stackSave();try{dynCall_viiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15){var sp=stackSave();try{dynCall_viiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiijjii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13){var sp=stackSave();try{dynCall_viiiiiiijjii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiijjiiiiji(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18){var sp=stackSave();try{dynCall_viiiiiiijjiiiiji(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiiijjiiijjiiji(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20,a21,a22,a23){var sp=stackSave();try{dynCall_viiiiiiijjiiijjiiji(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20,a21,a22,a23)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiijiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14){var sp=stackSave();try{dynCall_viiiiiijiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiiijjiiiiijii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19){var sp=stackSave();try{dynCall_viiiiiijjiiiiijii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiiiij(index,a1,a2,a3,a4,a5,a6,a7){var sp=stackSave();try{dynCall_viiiiij(index,a1,a2,a3,a4,a5,a6,a7)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viiij(index,a1,a2,a3,a4,a5){var sp=stackSave();try{dynCall_viiij(index,a1,a2,a3,a4,a5)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viij(index,a1,a2,a3,a4){var sp=stackSave();try{dynCall_viij(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viijj(index,a1,a2,a3,a4,a5,a6){var sp=stackSave();try{dynCall_viijj(index,a1,a2,a3,a4,a5,a6)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_vij(index,a1,a2,a3){var sp=stackSave();try{dynCall_vij(index,a1,a2,a3)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_viji(index,a1,a2,a3,a4){var sp=stackSave();try{dynCall_viji(index,a1,a2,a3,a4)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}function invoke_vjiiii(index,a1,a2,a3,a4,a5,a6){var sp=stackSave();try{dynCall_vjiiii(index,a1,a2,a3,a4,a5,a6)}catch(e){stackRestore(sp);if(e!==e+0&&e!=="longjmp")throw e;_setThrew(1,0)}}var asmGlobalArg={};var asmLibraryArg={"___assert_fail":___assert_fail,"___atomic_fetch_add_8":___atomic_fetch_add_8,"___buildEnvironment":___buildEnvironment,"___cxa_allocate_exception":___cxa_allocate_exception,"___cxa_begin_catch":___cxa_begin_catch,"___cxa_end_catch":___cxa_end_catch,"___cxa_find_matching_catch_2":___cxa_find_matching_catch_2,"___cxa_find_matching_catch_3":___cxa_find_matching_catch_3,"___cxa_free_exception":___cxa_free_exception,"___cxa_rethrow":___cxa_rethrow,"___cxa_throw":___cxa_throw,"___cxa_uncaught_exceptions":___cxa_uncaught_exceptions,"___lock":___lock,"___map_file":___map_file,"___resumeException":___resumeException,"___syscall91":___syscall91,"___unlock":___unlock,"___wasi_fd_close":___wasi_fd_close,"___wasi_fd_read":___wasi_fd_read,"___wasi_fd_seek":___wasi_fd_seek,"___wasi_fd_write":___wasi_fd_write,"__embind_register_bool":__embind_register_bool,"__embind_register_emval":__embind_register_emval,"__embind_register_float":__embind_register_float,"__embind_register_function":__embind_register_function,"__embind_register_integer":__embind_register_integer,"__embind_register_memory_view":__embind_register_memory_view,"__embind_register_std_string":__embind_register_std_string,"__embind_register_std_wstring":__embind_register_std_wstring,"__embind_register_void":__embind_register_void,"__memory_base":1024,"__table_base":0,"_abort":_abort,"_atexit":_atexit,"_emscripten_asm_const_iii":_emscripten_asm_const_iii,"_emscripten_get_heap_size":_emscripten_get_heap_size,"_emscripten_memcpy_big":_emscripten_memcpy_big,"_emscripten_resize_heap":_emscripten_resize_heap,"_getenv":_getenv,"_gmtime_r":_gmtime_r,"_llvm_eh_typeid_for":_llvm_eh_typeid_for,"_llvm_stackrestore":_llvm_stackrestore,"_llvm_stacksave":_llvm_stacksave,"_llvm_trap":_llvm_trap,"_mktime":_mktime,"_signal":_signal,"_strftime_l":_strftime_l,"_time":_time,"_wasm_random_bytes":_wasm_random_bytes,"abortStackOverflow":abortStackOverflow,"getTempRet0":getTempRet0,"invoke_diii":invoke_diii,"invoke_fiii":invoke_fiii,"invoke_i":invoke_i,"invoke_ii":invoke_ii,"invoke_iii":invoke_iii,"invoke_iiii":invoke_iiii,"invoke_iiiii":invoke_iiiii,"invoke_iiiiii":invoke_iiiiii,"invoke_iiiiiii":invoke_iiiiiii,"invoke_iiiiiiii":invoke_iiiiiiii,"invoke_iiiiiiiii":invoke_iiiiiiiii,"invoke_iiiiiiiiii":invoke_iiiiiiiiii,"invoke_iiiiiiiiiii":invoke_iiiiiiiiiii,"invoke_iiiiiiiiiiii":invoke_iiiiiiiiiiii,"invoke_iiiiiiiiiiiii":invoke_iiiiiiiiiiiii,"invoke_iiiiiiiiiiiiiii":invoke_iiiiiiiiiiiiiii,"invoke_iiiiiiiiiiiiiiii":invoke_iiiiiiiiiiiiiiii,"invoke_iiiiij":invoke_iiiiij,"invoke_iiiiiji":invoke_iiiiiji,"invoke_iiiiji":invoke_iiiiji,"invoke_iij":invoke_iij,"invoke_ji":invoke_ji,"invoke_jiii":invoke_jiii,"invoke_jiiii":invoke_jiiii,"invoke_jiiiiiiiijjj":invoke_jiiiiiiiijjj,"invoke_jiiijjj":invoke_jiiijjj,"invoke_jiji":invoke_jiji,"invoke_jji":invoke_jji,"invoke_jjii":invoke_jjii,"invoke_v":invoke_v,"invoke_vi":invoke_vi,"invoke_vii":invoke_vii,"invoke_viii":invoke_viii,"invoke_viiii":invoke_viiii,"invoke_viiiii":invoke_viiiii,"invoke_viiiiii":invoke_viiiiii,"invoke_viiiiiii":invoke_viiiiiii,"invoke_viiiiiiii":invoke_viiiiiiii,"invoke_viiiiiiiii":invoke_viiiiiiiii,"invoke_viiiiiiiiii":invoke_viiiiiiiiii,"invoke_viiiiiiiiiii":invoke_viiiiiiiiiii,"invoke_viiiiiiiiiiiii":invoke_viiiiiiiiiiiii,"invoke_viiiiiiiiiiiiiii":invoke_viiiiiiiiiiiiiii,"invoke_viiiiiiijjii":invoke_viiiiiiijjii,"invoke_viiiiiiijjiiiiji":invoke_viiiiiiijjiiiiji,"invoke_viiiiiiijjiiijjiiji":invoke_viiiiiiijjiiijjiiji,"invoke_viiiiiijiiiiii":invoke_viiiiiijiiiiii,"invoke_viiiiiijjiiiiijii":invoke_viiiiiijjiiiiijii,"invoke_viiiiij":invoke_viiiiij,"invoke_viiij":invoke_viiij,"invoke_viij":invoke_viij,"invoke_viijj":invoke_viijj,"invoke_vij":invoke_vij,"invoke_viji":invoke_viji,"invoke_vjiiii":invoke_vjiiii,"memory":wasmMemory,"nullFunc_diii":nullFunc_diii,"nullFunc_fiii":nullFunc_fiii,"nullFunc_i":nullFunc_i,"nullFunc_ii":nullFunc_ii,"nullFunc_iidiiii":nullFunc_iidiiii,"nullFunc_iii":nullFunc_iii,"nullFunc_iiii":nullFunc_iiii,"nullFunc_iiiii":nullFunc_iiiii,"nullFunc_iiiiid":nullFunc_iiiiid,"nullFunc_iiiiii":nullFunc_iiiiii,"nullFunc_iiiiiid":nullFunc_iiiiiid,"nullFunc_iiiiiii":nullFunc_iiiiiii,"nullFunc_iiiiiiii":nullFunc_iiiiiiii,"nullFunc_iiiiiiiii":nullFunc_iiiiiiiii,"nullFunc_iiiiiiiiii":nullFunc_iiiiiiiiii,"nullFunc_iiiiiiiiiii":nullFunc_iiiiiiiiiii,"nullFunc_iiiiiiiiiiii":nullFunc_iiiiiiiiiiii,"nullFunc_iiiiiiiiiiiii":nullFunc_iiiiiiiiiiiii,"nullFunc_iiiiiiiiiiiiiii":nullFunc_iiiiiiiiiiiiiii,"nullFunc_iiiiiiiiiiiiiiii":nullFunc_iiiiiiiiiiiiiiii,"nullFunc_iiiiij":nullFunc_iiiiij,"nullFunc_iiiiiji":nullFunc_iiiiiji,"nullFunc_iiiij":nullFunc_iiiij,"nullFunc_iiiiji":nullFunc_iiiiji,"nullFunc_iiij":nullFunc_iiij,"nullFunc_iij":nullFunc_iij,"nullFunc_ji":nullFunc_ji,"nullFunc_jiii":nullFunc_jiii,"nullFunc_jiiii":nullFunc_jiiii,"nullFunc_jiiiiiiiijjj":nullFunc_jiiiiiiiijjj,"nullFunc_jiiijjj":nullFunc_jiiijjj,"nullFunc_jiji":nullFunc_jiji,"nullFunc_jji":nullFunc_jji,"nullFunc_jjii":nullFunc_jjii,"nullFunc_v":nullFunc_v,"nullFunc_vi":nullFunc_vi,"nullFunc_vii":nullFunc_vii,"nullFunc_viii":nullFunc_viii,"nullFunc_viiii":nullFunc_viiii,"nullFunc_viiiii":nullFunc_viiiii,"nullFunc_viiiiii":nullFunc_viiiiii,"nullFunc_viiiiiii":nullFunc_viiiiiii,"nullFunc_viiiiiiii":nullFunc_viiiiiiii,"nullFunc_viiiiiiiii":nullFunc_viiiiiiiii,"nullFunc_viiiiiiiiii":nullFunc_viiiiiiiiii,"nullFunc_viiiiiiiiiii":nullFunc_viiiiiiiiiii,"nullFunc_viiiiiiiiiiiii":nullFunc_viiiiiiiiiiiii,"nullFunc_viiiiiiiiiiiiiii":nullFunc_viiiiiiiiiiiiiii,"nullFunc_viiiiiiijjii":nullFunc_viiiiiiijjii,"nullFunc_viiiiiiijjiiiiji":nullFunc_viiiiiiijjiiiiji,"nullFunc_viiiiiiijjiiijjiiji":nullFunc_viiiiiiijjiiijjiiji,"nullFunc_viiiiiijiiiiii":nullFunc_viiiiiijiiiiii,"nullFunc_viiiiiijjiiiiijii":nullFunc_viiiiiijjiiiiijii,"nullFunc_viiiiij":nullFunc_viiiiij,"nullFunc_viiij":nullFunc_viiij,"nullFunc_viij":nullFunc_viij,"nullFunc_viijii":nullFunc_viijii,"nullFunc_viijj":nullFunc_viijj,"nullFunc_vij":nullFunc_vij,"nullFunc_viji":nullFunc_viji,"nullFunc_vjiiii":nullFunc_vjiiii,"setTempRet0":setTempRet0,"table":wasmTable};var asm=Module["asm"](asmGlobalArg,asmLibraryArg,buffer);Module["asm"]=asm;var __ZSt18uncaught_exceptionv=Module["__ZSt18uncaught_exceptionv"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["__ZSt18uncaught_exceptionv"].apply(null,arguments)};var ___cxa_can_catch=Module["___cxa_can_catch"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___cxa_can_catch"].apply(null,arguments)};var ___cxa_demangle=Module["___cxa_demangle"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___cxa_demangle"].apply(null,arguments)};var ___cxa_is_pointer_type=Module["___cxa_is_pointer_type"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___cxa_is_pointer_type"].apply(null,arguments)};var ___em_js__wasm_random_bytes=Module["___em_js__wasm_random_bytes"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___em_js__wasm_random_bytes"].apply(null,arguments)};var ___embind_register_native_and_builtin_types=Module["___embind_register_native_and_builtin_types"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___embind_register_native_and_builtin_types"].apply(null,arguments)};var ___errno_location=Module["___errno_location"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___errno_location"].apply(null,arguments)};var ___getTypeName=Module["___getTypeName"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["___getTypeName"].apply(null,arguments)};var __get_daylight=Module["__get_daylight"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["__get_daylight"].apply(null,arguments)};var __get_timezone=Module["__get_timezone"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["__get_timezone"].apply(null,arguments)};var __get_tzname=Module["__get_tzname"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["__get_tzname"].apply(null,arguments)};var _fflush=Module["_fflush"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["_fflush"].apply(null,arguments)};var _free=Module["_free"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["_free"].apply(null,arguments)};var _i64Add=Module["_i64Add"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["_i64Add"].apply(null,arguments)};var _main=Module["_main"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["_main"].apply(null,arguments)};var _malloc=Module["_malloc"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["_malloc"].apply(null,arguments)};var _setThrew=Module["_setThrew"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["_setThrew"].apply(null,arguments)};var establishStackSpace=Module["establishStackSpace"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["establishStackSpace"].apply(null,arguments)};var globalCtors=Module["globalCtors"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["globalCtors"].apply(null,arguments)};var stackAlloc=Module["stackAlloc"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["stackAlloc"].apply(null,arguments)};var stackRestore=Module["stackRestore"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["stackRestore"].apply(null,arguments)};var stackSave=Module["stackSave"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["stackSave"].apply(null,arguments)};var dynCall_diii=Module["dynCall_diii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_diii"].apply(null,arguments)};var dynCall_fiii=Module["dynCall_fiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_fiii"].apply(null,arguments)};var dynCall_i=Module["dynCall_i"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_i"].apply(null,arguments)};var dynCall_ii=Module["dynCall_ii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_ii"].apply(null,arguments)};var dynCall_iidiiii=Module["dynCall_iidiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iidiiii"].apply(null,arguments)};var dynCall_iii=Module["dynCall_iii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iii"].apply(null,arguments)};var dynCall_iiii=Module["dynCall_iiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiii"].apply(null,arguments)};var dynCall_iiiii=Module["dynCall_iiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiii"].apply(null,arguments)};var dynCall_iiiiid=Module["dynCall_iiiiid"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiid"].apply(null,arguments)};var dynCall_iiiiii=Module["dynCall_iiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiii"].apply(null,arguments)};var dynCall_iiiiiid=Module["dynCall_iiiiiid"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiid"].apply(null,arguments)};var dynCall_iiiiiii=Module["dynCall_iiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiii"].apply(null,arguments)};var dynCall_iiiiiiii=Module["dynCall_iiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiii=Module["dynCall_iiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiiii=Module["dynCall_iiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiiiii=Module["dynCall_iiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiiiiii=Module["dynCall_iiiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiiiiiii=Module["dynCall_iiiiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiiiiiiiii=Module["dynCall_iiiiiiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiiiiiiiii"].apply(null,arguments)};var dynCall_iiiiiiiiiiiiiiii=Module["dynCall_iiiiiiiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiiiiiiiiiiii"].apply(null,arguments)};var dynCall_iiiiij=Module["dynCall_iiiiij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiij"].apply(null,arguments)};var dynCall_iiiiiji=Module["dynCall_iiiiiji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiiji"].apply(null,arguments)};var dynCall_iiiij=Module["dynCall_iiiij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiij"].apply(null,arguments)};var dynCall_iiiiji=Module["dynCall_iiiiji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiiiji"].apply(null,arguments)};var dynCall_iiij=Module["dynCall_iiij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iiij"].apply(null,arguments)};var dynCall_iij=Module["dynCall_iij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_iij"].apply(null,arguments)};var dynCall_ji=Module["dynCall_ji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_ji"].apply(null,arguments)};var dynCall_jiii=Module["dynCall_jiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jiii"].apply(null,arguments)};var dynCall_jiiii=Module["dynCall_jiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jiiii"].apply(null,arguments)};var dynCall_jiiiiiiiijjj=Module["dynCall_jiiiiiiiijjj"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jiiiiiiiijjj"].apply(null,arguments)};var dynCall_jiiijjj=Module["dynCall_jiiijjj"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jiiijjj"].apply(null,arguments)};var dynCall_jiji=Module["dynCall_jiji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jiji"].apply(null,arguments)};var dynCall_jji=Module["dynCall_jji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jji"].apply(null,arguments)};var dynCall_jjii=Module["dynCall_jjii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_jjii"].apply(null,arguments)};var dynCall_v=Module["dynCall_v"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_v"].apply(null,arguments)};var dynCall_vi=Module["dynCall_vi"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_vi"].apply(null,arguments)};var dynCall_vii=Module["dynCall_vii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_vii"].apply(null,arguments)};var dynCall_viii=Module["dynCall_viii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viii"].apply(null,arguments)};var dynCall_viiii=Module["dynCall_viiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiii"].apply(null,arguments)};var dynCall_viiiii=Module["dynCall_viiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiii"].apply(null,arguments)};var dynCall_viiiiii=Module["dynCall_viiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiii"].apply(null,arguments)};var dynCall_viiiiiii=Module["dynCall_viiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiii"].apply(null,arguments)};var dynCall_viiiiiiii=Module["dynCall_viiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiii"].apply(null,arguments)};var dynCall_viiiiiiiii=Module["dynCall_viiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiiii"].apply(null,arguments)};var dynCall_viiiiiiiiii=Module["dynCall_viiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiiiii"].apply(null,arguments)};var dynCall_viiiiiiiiiii=Module["dynCall_viiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiiiiii"].apply(null,arguments)};var dynCall_viiiiiiiiiiiii=Module["dynCall_viiiiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiiiiiiii"].apply(null,arguments)};var dynCall_viiiiiiiiiiiiiii=Module["dynCall_viiiiiiiiiiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiiiiiiiiii"].apply(null,arguments)};var dynCall_viiiiiiijjii=Module["dynCall_viiiiiiijjii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiijjii"].apply(null,arguments)};var dynCall_viiiiiiijjiiiiji=Module["dynCall_viiiiiiijjiiiiji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiijjiiiiji"].apply(null,arguments)};var dynCall_viiiiiiijjiiijjiiji=Module["dynCall_viiiiiiijjiiijjiiji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiiijjiiijjiiji"].apply(null,arguments)};var dynCall_viiiiiijiiiiii=Module["dynCall_viiiiiijiiiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiijiiiiii"].apply(null,arguments)};var dynCall_viiiiiijjiiiiijii=Module["dynCall_viiiiiijjiiiiijii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiiijjiiiiijii"].apply(null,arguments)};var dynCall_viiiiij=Module["dynCall_viiiiij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiiiij"].apply(null,arguments)};var dynCall_viiij=Module["dynCall_viiij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viiij"].apply(null,arguments)};var dynCall_viij=Module["dynCall_viij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viij"].apply(null,arguments)};var dynCall_viijii=Module["dynCall_viijii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viijii"].apply(null,arguments)};var dynCall_viijj=Module["dynCall_viijj"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viijj"].apply(null,arguments)};var dynCall_vij=Module["dynCall_vij"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_vij"].apply(null,arguments)};var dynCall_viji=Module["dynCall_viji"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_viji"].apply(null,arguments)};var dynCall_vjiiii=Module["dynCall_vjiiii"]=function(){assert(runtimeInitialized,"you need to wait for the runtime to be ready (e.g. wait for main() to be called)");assert(!runtimeExited,"the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");return Module["asm"]["dynCall_vjiiii"].apply(null,arguments)};Module["asm"]=asm;if(!Object.getOwnPropertyDescriptor(Module,"intArrayFromString"))Module["intArrayFromString"]=function(){abort("'intArrayFromString' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"intArrayToString"))Module["intArrayToString"]=function(){abort("'intArrayToString' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"ccall"))Module["ccall"]=function(){abort("'ccall' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"cwrap"))Module["cwrap"]=function(){abort("'cwrap' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"setValue"))Module["setValue"]=function(){abort("'setValue' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getValue"))Module["getValue"]=function(){abort("'getValue' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"allocate"))Module["allocate"]=function(){abort("'allocate' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getMemory"))Module["getMemory"]=function(){abort("'getMemory' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"AsciiToString"))Module["AsciiToString"]=function(){abort("'AsciiToString' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stringToAscii"))Module["stringToAscii"]=function(){abort("'stringToAscii' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"UTF8ArrayToString"))Module["UTF8ArrayToString"]=function(){abort("'UTF8ArrayToString' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};Module["UTF8ToString"]=UTF8ToString;if(!Object.getOwnPropertyDescriptor(Module,"stringToUTF8Array"))Module["stringToUTF8Array"]=function(){abort("'stringToUTF8Array' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};Module["stringToUTF8"]=stringToUTF8;if(!Object.getOwnPropertyDescriptor(Module,"lengthBytesUTF8"))Module["lengthBytesUTF8"]=function(){abort("'lengthBytesUTF8' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"UTF16ToString"))Module["UTF16ToString"]=function(){abort("'UTF16ToString' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stringToUTF16"))Module["stringToUTF16"]=function(){abort("'stringToUTF16' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"lengthBytesUTF16"))Module["lengthBytesUTF16"]=function(){abort("'lengthBytesUTF16' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"UTF32ToString"))Module["UTF32ToString"]=function(){abort("'UTF32ToString' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stringToUTF32"))Module["stringToUTF32"]=function(){abort("'stringToUTF32' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"lengthBytesUTF32"))Module["lengthBytesUTF32"]=function(){abort("'lengthBytesUTF32' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"allocateUTF8"))Module["allocateUTF8"]=function(){abort("'allocateUTF8' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stackTrace"))Module["stackTrace"]=function(){abort("'stackTrace' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addOnPreRun"))Module["addOnPreRun"]=function(){abort("'addOnPreRun' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addOnInit"))Module["addOnInit"]=function(){abort("'addOnInit' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addOnPreMain"))Module["addOnPreMain"]=function(){abort("'addOnPreMain' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addOnExit"))Module["addOnExit"]=function(){abort("'addOnExit' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addOnPostRun"))Module["addOnPostRun"]=function(){abort("'addOnPostRun' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"writeStringToMemory"))Module["writeStringToMemory"]=function(){abort("'writeStringToMemory' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"writeArrayToMemory"))Module["writeArrayToMemory"]=function(){abort("'writeArrayToMemory' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"writeAsciiToMemory"))Module["writeAsciiToMemory"]=function(){abort("'writeAsciiToMemory' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addRunDependency"))Module["addRunDependency"]=function(){abort("'addRunDependency' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"removeRunDependency"))Module["removeRunDependency"]=function(){abort("'removeRunDependency' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"ENV"))Module["ENV"]=function(){abort("'ENV' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"FS"))Module["FS"]=function(){abort("'FS' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createFolder"))Module["FS_createFolder"]=function(){abort("'FS_createFolder' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createPath"))Module["FS_createPath"]=function(){abort("'FS_createPath' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createDataFile"))Module["FS_createDataFile"]=function(){abort("'FS_createDataFile' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createPreloadedFile"))Module["FS_createPreloadedFile"]=function(){abort("'FS_createPreloadedFile' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createLazyFile"))Module["FS_createLazyFile"]=function(){abort("'FS_createLazyFile' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createLink"))Module["FS_createLink"]=function(){abort("'FS_createLink' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_createDevice"))Module["FS_createDevice"]=function(){abort("'FS_createDevice' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"FS_unlink"))Module["FS_unlink"]=function(){abort("'FS_unlink' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")};if(!Object.getOwnPropertyDescriptor(Module,"GL"))Module["GL"]=function(){abort("'GL' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"dynamicAlloc"))Module["dynamicAlloc"]=function(){abort("'dynamicAlloc' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"loadDynamicLibrary"))Module["loadDynamicLibrary"]=function(){abort("'loadDynamicLibrary' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"loadWebAssemblyModule"))Module["loadWebAssemblyModule"]=function(){abort("'loadWebAssemblyModule' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getLEB"))Module["getLEB"]=function(){abort("'getLEB' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getFunctionTables"))Module["getFunctionTables"]=function(){abort("'getFunctionTables' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"alignFunctionTables"))Module["alignFunctionTables"]=function(){abort("'alignFunctionTables' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"registerFunctions"))Module["registerFunctions"]=function(){abort("'registerFunctions' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"addFunction"))Module["addFunction"]=function(){abort("'addFunction' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"removeFunction"))Module["removeFunction"]=function(){abort("'removeFunction' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getFuncWrapper"))Module["getFuncWrapper"]=function(){abort("'getFuncWrapper' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"prettyPrint"))Module["prettyPrint"]=function(){abort("'prettyPrint' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"makeBigInt"))Module["makeBigInt"]=function(){abort("'makeBigInt' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"dynCall"))Module["dynCall"]=function(){abort("'dynCall' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getCompilerSetting"))Module["getCompilerSetting"]=function(){abort("'getCompilerSetting' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stackSave"))Module["stackSave"]=function(){abort("'stackSave' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stackRestore"))Module["stackRestore"]=function(){abort("'stackRestore' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"stackAlloc"))Module["stackAlloc"]=function(){abort("'stackAlloc' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"establishStackSpace"))Module["establishStackSpace"]=function(){abort("'establishStackSpace' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"print"))Module["print"]=function(){abort("'print' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"printErr"))Module["printErr"]=function(){abort("'printErr' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"getTempRet0"))Module["getTempRet0"]=function(){abort("'getTempRet0' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"setTempRet0"))Module["setTempRet0"]=function(){abort("'setTempRet0' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"callMain"))Module["callMain"]=function(){abort("'callMain' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"abort"))Module["abort"]=function(){abort("'abort' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"Pointer_stringify"))Module["Pointer_stringify"]=function(){abort("'Pointer_stringify' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"warnOnce"))Module["warnOnce"]=function(){abort("'warnOnce' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"writeStackCookie"))Module["writeStackCookie"]=function(){abort("'writeStackCookie' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"checkStackCookie"))Module["checkStackCookie"]=function(){abort("'checkStackCookie' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"abortStackOverflow"))Module["abortStackOverflow"]=function(){abort("'abortStackOverflow' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")};if(!Object.getOwnPropertyDescriptor(Module,"ALLOC_NORMAL"))Object.defineProperty(Module,"ALLOC_NORMAL",{configurable:true,get:function(){abort("'ALLOC_NORMAL' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")}});if(!Object.getOwnPropertyDescriptor(Module,"ALLOC_STACK"))Object.defineProperty(Module,"ALLOC_STACK",{configurable:true,get:function(){abort("'ALLOC_STACK' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")}});if(!Object.getOwnPropertyDescriptor(Module,"ALLOC_DYNAMIC"))Object.defineProperty(Module,"ALLOC_DYNAMIC",{configurable:true,get:function(){abort("'ALLOC_DYNAMIC' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")}});if(!Object.getOwnPropertyDescriptor(Module,"ALLOC_NONE"))Object.defineProperty(Module,"ALLOC_NONE",{configurable:true,get:function(){abort("'ALLOC_NONE' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)")}});if(!Object.getOwnPropertyDescriptor(Module,"calledRun"))Object.defineProperty(Module,"calledRun",{configurable:true,get:function(){abort("'calledRun' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ). Alternatively, forcing filesystem support (-s FORCE_FILESYSTEM=1) can export this for you")}});var calledRun;Module["then"]=function(func){if(calledRun){func(Module)}else{var old=Module["onRuntimeInitialized"];Module["onRuntimeInitialized"]=function(){if(old)old();func(Module)}}return Module};function ExitStatus(status){this.name="ExitStatus";this.message="Program terminated with exit("+status+")";this.status=status}var calledMain=false;dependenciesFulfilled=function runCaller(){if(!calledRun)run();if(!calledRun)dependenciesFulfilled=runCaller};function callMain(args){assert(runDependencies==0,'cannot call main when async dependencies remain! (listen on Module["onRuntimeInitialized"])');assert(__ATPRERUN__.length==0,"cannot call main when preRun functions remain to be called");args=args||[];var argc=args.length+1;var argv=stackAlloc((argc+1)*4);HEAP32[argv>>2]=allocateUTF8OnStack(thisProgram);for(var i=1;i<argc;i++){HEAP32[(argv>>2)+i]=allocateUTF8OnStack(args[i-1])}HEAP32[(argv>>2)+argc]=0;try{var ret=Module["_main"](argc,argv);exit(ret,true)}catch(e){if(e instanceof ExitStatus){return}else if(e=="SimulateInfiniteLoop"){noExitRuntime=true;return}else{var toLog=e;if(e&&typeof e==="object"&&e.stack){toLog=[e,e.stack]}err("exception thrown: "+toLog);quit_(1,e)}}finally{calledMain=true}}function run(args){args=args||arguments_;if(runDependencies>0){return}writeStackCookie();preRun();if(runDependencies>0)return;function doRun(){if(calledRun)return;calledRun=true;if(ABORT)return;initRuntime();preMain();if(Module["onRuntimeInitialized"])Module["onRuntimeInitialized"]();if(shouldRunNow)callMain(args);postRun()}if(Module["setStatus"]){Module["setStatus"]("Running...");setTimeout(function(){setTimeout(function(){Module["setStatus"]("")},1);doRun()},1)}else{doRun()}checkStackCookie()}Module["run"]=run;function checkUnflushedContent(){var print=out;var printErr=err;var has=false;out=err=function(x){has=true};try{var flush=Module["_fflush"];if(flush)flush(0);["stdout","stderr"].forEach(function(name){var info=FS.analyzePath("/dev/"+name);if(!info)return;var stream=info.object;var rdev=stream.rdev;var tty=TTY.ttys[rdev];if(tty&&tty.output&&tty.output.length){has=true}})}catch(e){}out=print;err=printErr;if(has){warnOnce("stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the FAQ), or make sure to emit a newline when you printf etc.")}}function exit(status,implicit){checkUnflushedContent();if(implicit&&noExitRuntime&&status===0){return}if(noExitRuntime){if(!implicit){err("exit("+status+") called, but EXIT_RUNTIME is not set, so halting execution but not exiting the runtime or preventing further async execution (build with EXIT_RUNTIME=1, if you want a true shutdown)")}}else{ABORT=true;EXITSTATUS=status;exitRuntime();if(Module["onExit"])Module["onExit"](status)}quit_(status,new ExitStatus(status))}if(Module["preInit"]){if(typeof Module["preInit"]=="function")Module["preInit"]=[Module["preInit"]];while(Module["preInit"].length>0){Module["preInit"].pop()()}}var shouldRunNow=true;if(Module["noInitialRun"])shouldRunNow=false;noExitRuntime=true;run();
 
 
-  return MyMoneroClient
+"use strict";
+
+// The Module object: Our interface to the outside world. We import
+// and export values on it. There are various ways Module can be used:
+// 1. Not defined. We create it here
+// 2. A function parameter, function(Module) { ..generated code.. }
+// 3. pre-run appended it, var Module = {}; ..generated code..
+// 4. External script tag defines var Module.
+// We need to check if Module already exists (e.g. case 3 above).
+// Substitution will be replaced with actual code on later stage of the build,
+// this way Closure Compiler will not mangle it (e.g. case 4. above).
+// Note that if you want to run closure, and also to use Module
+// after the generated code, you will need to define   var Module = {};
+// before the code. Then that object will be used in the code, and you
+// can continue to use Module afterwards as well.
+var Module = typeof MyMoneroClient != 'undefined' ? MyMoneroClient : {};
+
+// See https://caniuse.com/mdn-javascript_builtins_object_assign
+
+// See https://caniuse.com/mdn-javascript_builtins_bigint64array
+
+// Set up the promise that indicates the Module is initialized
+var readyPromiseResolve, readyPromiseReject;
+Module['ready'] = new Promise(function(resolve, reject) {
+  readyPromiseResolve = resolve;
+  readyPromiseReject = reject;
+});
+["_main","___getTypeName","__embind_initialize_bindings","_fflush","___set_stack_limits","onRuntimeInitialized"].forEach((prop) => {
+  if (!Object.getOwnPropertyDescriptor(Module['ready'], prop)) {
+    Object.defineProperty(Module['ready'], prop, {
+      get: () => abort('You are getting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
+      set: () => abort('You are setting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
+    });
+  }
+});
+
+// --pre-jses are emitted after the Module integration code, so that they can
+// refer to Module (if they choose; they can also define Module)
+// {{PRE_JSES}}
+
+// Sometimes an existing Module object exists with properties
+// meant to overwrite the default module functionality. Here
+// we collect those properties and reapply _after_ we configure
+// the current environment's defaults to avoid having to be so
+// defensive during initialization.
+var moduleOverrides = Object.assign({}, Module);
+
+var arguments_ = [];
+var thisProgram = './this.program';
+var quit_ = (status, toThrow) => {
+  throw toThrow;
+};
+
+// Determine the runtime environment we are in. You can customize this by
+// setting the ENVIRONMENT setting at compile time (see settings.js).
+
+// Attempt to auto-detect the environment
+var ENVIRONMENT_IS_WEB = typeof window == 'object';
+var ENVIRONMENT_IS_WORKER = typeof importScripts == 'function';
+// N.b. Electron.js environment is simultaneously a NODE-environment, but
+// also a web environment.
+var ENVIRONMENT_IS_NODE = typeof process == 'object' && typeof process.versions == 'object' && typeof process.versions.node == 'string';
+var ENVIRONMENT_IS_SHELL = !ENVIRONMENT_IS_WEB && !ENVIRONMENT_IS_NODE && !ENVIRONMENT_IS_WORKER;
+
+if (Module['ENVIRONMENT']) {
+  throw new Error('Module.ENVIRONMENT has been deprecated. To force the environment, use the ENVIRONMENT compile-time option (for example, -sENVIRONMENT=web or -sENVIRONMENT=node)');
+}
+
+// `/` should be present at the end if `scriptDirectory` is not empty
+var scriptDirectory = '';
+function locateFile(path) {
+  if (Module['locateFile']) {
+    return Module['locateFile'](path, scriptDirectory);
+  }
+  return scriptDirectory + path;
+}
+
+// Hooks that are implemented differently in different runtime environments.
+var read_,
+    readAsync,
+    readBinary,
+    setWindowTitle;
+
+// Normally we don't log exceptions but instead let them bubble out the top
+// level where the embedding environment (e.g. the browser) can handle
+// them.
+// However under v8 and node we sometimes exit the process direcly in which case
+// its up to use us to log the exception before exiting.
+// If we fix https://github.com/emscripten-core/emscripten/issues/15080
+// this may no longer be needed under node.
+function logExceptionOnExit(e) {
+  if (e instanceof ExitStatus) return;
+  let toLog = e;
+  if (e && typeof e == 'object' && e.stack) {
+    toLog = [e, e.stack];
+  }
+  err('exiting due to exception: ' + toLog);
+}
+
+if (ENVIRONMENT_IS_NODE) {
+  if (typeof process == 'undefined' || !process.release || process.release.name !== 'node') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
+  if (ENVIRONMENT_IS_WORKER) {
+    scriptDirectory = require('path').dirname(scriptDirectory) + '/';
+  } else {
+    scriptDirectory = __dirname + '/';
+  }
+
+// include: node_shell_read.js
+
+
+// These modules will usually be used on Node.js. Load them eagerly to avoid
+// the complexity of lazy-loading. However, for now we must guard on require()
+// actually existing: if the JS is put in a .mjs file (ES6 module) and run on
+// node, then we'll detect node as the environment and get here, but require()
+// does not exist (since ES6 modules should use |import|). If the code actually
+// uses the node filesystem then it will crash, of course, but in the case of
+// code that never uses it we don't want to crash here, so the guarding if lets
+// such code work properly. See discussion in
+// https://github.com/emscripten-core/emscripten/pull/17851
+var fs, nodePath;
+if (typeof require === 'function') {
+  fs = require('fs');
+  nodePath = require('path');
+}
+
+read_ = (filename, binary) => {
+  filename = nodePath['normalize'](filename);
+  return fs.readFileSync(filename, binary ? undefined : 'utf8');
+};
+
+readBinary = (filename) => {
+  var ret = read_(filename, true);
+  if (!ret.buffer) {
+    ret = new Uint8Array(ret);
+  }
+  assert(ret.buffer);
+  return ret;
+};
+
+readAsync = (filename, onload, onerror) => {
+  filename = nodePath['normalize'](filename);
+  fs.readFile(filename, function(err, data) {
+    if (err) onerror(err);
+    else onload(data.buffer);
+  });
+};
+
+// end include: node_shell_read.js
+  if (process['argv'].length > 1) {
+    thisProgram = process['argv'][1].replace(/\\/g, '/');
+  }
+
+  arguments_ = process['argv'].slice(2);
+
+  // MODULARIZE will export the module in the proper place outside, we don't need to export here
+
+  process['on']('uncaughtException', function(ex) {
+    // suppress ExitStatus exceptions from showing an error
+    if (!(ex instanceof ExitStatus)) {
+      throw ex;
+    }
+  });
+
+  quit_ = (status, toThrow) => {
+    if (keepRuntimeAlive()) {
+      process['exitCode'] = status;
+      throw toThrow;
+    }
+    logExceptionOnExit(toThrow);
+    process['exit'](status);
+  };
+
+  Module['inspect'] = function () { return '[Emscripten Module object]'; };
+
+} else
+if (ENVIRONMENT_IS_SHELL) {
+
+  if ((typeof process == 'object' && typeof require === 'function') || typeof window == 'object' || typeof importScripts == 'function') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
+
+  if (typeof read != 'undefined') {
+    read_ = function shell_read(f) {
+      return read(f);
+    };
+  }
+
+  readBinary = function readBinary(f) {
+    let data;
+    if (typeof readbuffer == 'function') {
+      return new Uint8Array(readbuffer(f));
+    }
+    data = read(f, 'binary');
+    assert(typeof data == 'object');
+    return data;
+  };
+
+  readAsync = function readAsync(f, onload, onerror) {
+    setTimeout(() => onload(readBinary(f)), 0);
+  };
+
+  if (typeof scriptArgs != 'undefined') {
+    arguments_ = scriptArgs;
+  } else if (typeof arguments != 'undefined') {
+    arguments_ = arguments;
+  }
+
+  if (typeof quit == 'function') {
+    quit_ = (status, toThrow) => {
+      logExceptionOnExit(toThrow);
+      quit(status);
+    };
+  }
+
+  if (typeof print != 'undefined') {
+    // Prefer to use print/printErr where they exist, as they usually work better.
+    if (typeof console == 'undefined') console = /** @type{!Console} */({});
+    console.log = /** @type{!function(this:Console, ...*): undefined} */ (print);
+    console.warn = console.error = /** @type{!function(this:Console, ...*): undefined} */ (typeof printErr != 'undefined' ? printErr : print);
+  }
+
+} else
+
+// Note that this includes Node.js workers when relevant (pthreads is enabled).
+// Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
+// ENVIRONMENT_IS_NODE.
+if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
+  if (ENVIRONMENT_IS_WORKER) { // Check worker, not web, since window could be polyfilled
+    scriptDirectory = self.location.href;
+  } else if (typeof document != 'undefined' && document.currentScript) { // web
+    scriptDirectory = document.currentScript.src;
+  }
+  // When MODULARIZE, this JS may be executed later, after document.currentScript
+  // is gone, so we saved it, and we use it here instead of any other info.
+  if (_scriptDir) {
+    scriptDirectory = _scriptDir;
+  }
+  // blob urls look like blob:http://site.com/etc/etc and we cannot infer anything from them.
+  // otherwise, slice off the final part of the url to find the script directory.
+  // if scriptDirectory does not contain a slash, lastIndexOf will return -1,
+  // and scriptDirectory will correctly be replaced with an empty string.
+  // If scriptDirectory contains a query (starting with ?) or a fragment (starting with #),
+  // they are removed because they could contain a slash.
+  if (scriptDirectory.indexOf('blob:') !== 0) {
+    scriptDirectory = scriptDirectory.substr(0, scriptDirectory.replace(/[?#].*/, "").lastIndexOf('/')+1);
+  } else {
+    scriptDirectory = '';
+  }
+
+  if (!(typeof window == 'object' || typeof importScripts == 'function')) throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
+
+  // Differentiate the Web Worker from the Node Worker case, as reading must
+  // be done differently.
+  {
+// include: web_or_worker_shell_read.js
+
+
+  read_ = (url) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, false);
+      xhr.send(null);
+      return xhr.responseText;
+  }
+
+  if (ENVIRONMENT_IS_WORKER) {
+    readBinary = (url) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, false);
+        xhr.responseType = 'arraybuffer';
+        xhr.send(null);
+        return new Uint8Array(/** @type{!ArrayBuffer} */(xhr.response));
+    };
+  }
+
+  readAsync = (url, onload, onerror) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'arraybuffer';
+    xhr.onload = () => {
+      if (xhr.status == 200 || (xhr.status == 0 && xhr.response)) { // file URLs can return 0
+        onload(xhr.response);
+        return;
+      }
+      onerror();
+    };
+    xhr.onerror = onerror;
+    xhr.send(null);
+  }
+
+// end include: web_or_worker_shell_read.js
+  }
+
+  setWindowTitle = (title) => document.title = title;
+} else
+{
+  throw new Error('environment detection error');
+}
+
+var out = Module['print'] || console.log.bind(console);
+var err = Module['printErr'] || console.warn.bind(console);
+
+// Merge back in the overrides
+Object.assign(Module, moduleOverrides);
+// Free the object hierarchy contained in the overrides, this lets the GC
+// reclaim data used e.g. in memoryInitializerRequest, which is a large typed array.
+moduleOverrides = null;
+checkIncomingModuleAPI();
+
+// Emit code to handle expected values on the Module object. This applies Module.x
+// to the proper local x. This has two benefits: first, we only emit it if it is
+// expected to arrive, and second, by using a local everywhere else that can be
+// minified.
+
+if (Module['arguments']) arguments_ = Module['arguments'];legacyModuleProp('arguments', 'arguments_');
+
+if (Module['thisProgram']) thisProgram = Module['thisProgram'];legacyModuleProp('thisProgram', 'thisProgram');
+
+if (Module['quit']) quit_ = Module['quit'];legacyModuleProp('quit', 'quit_');
+
+// perform assertions in shell.js after we set up out() and err(), as otherwise if an assertion fails it cannot print the message
+// Assertions on removed incoming Module JS APIs.
+assert(typeof Module['memoryInitializerPrefixURL'] == 'undefined', 'Module.memoryInitializerPrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['pthreadMainPrefixURL'] == 'undefined', 'Module.pthreadMainPrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['cdInitializerPrefixURL'] == 'undefined', 'Module.cdInitializerPrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['filePackagePrefixURL'] == 'undefined', 'Module.filePackagePrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['read'] == 'undefined', 'Module.read option was removed (modify read_ in JS)');
+assert(typeof Module['readAsync'] == 'undefined', 'Module.readAsync option was removed (modify readAsync in JS)');
+assert(typeof Module['readBinary'] == 'undefined', 'Module.readBinary option was removed (modify readBinary in JS)');
+assert(typeof Module['setWindowTitle'] == 'undefined', 'Module.setWindowTitle option was removed (modify setWindowTitle in JS)');
+assert(typeof Module['TOTAL_MEMORY'] == 'undefined', 'Module.TOTAL_MEMORY has been renamed Module.INITIAL_MEMORY');
+legacyModuleProp('read', 'read_');
+legacyModuleProp('readAsync', 'readAsync');
+legacyModuleProp('readBinary', 'readBinary');
+legacyModuleProp('setWindowTitle', 'setWindowTitle');
+var IDBFS = 'IDBFS is no longer included by default; build with -lidbfs.js';
+var PROXYFS = 'PROXYFS is no longer included by default; build with -lproxyfs.js';
+var WORKERFS = 'WORKERFS is no longer included by default; build with -lworkerfs.js';
+var NODEFS = 'NODEFS is no longer included by default; build with -lnodefs.js';
+
+assert(!ENVIRONMENT_IS_SHELL, "shell environment detected but not enabled at build time.  Add 'shell' to `-sENVIRONMENT` to enable.");
+
+
+
+
+var STACK_ALIGN = 16;
+var POINTER_SIZE = 4;
+
+function getNativeTypeSize(type) {
+  switch (type) {
+    case 'i1': case 'i8': case 'u8': return 1;
+    case 'i16': case 'u16': return 2;
+    case 'i32': case 'u32': return 4;
+    case 'i64': case 'u64': return 8;
+    case 'float': return 4;
+    case 'double': return 8;
+    default: {
+      if (type[type.length - 1] === '*') {
+        return POINTER_SIZE;
+      }
+      if (type[0] === 'i') {
+        const bits = Number(type.substr(1));
+        assert(bits % 8 === 0, 'getNativeTypeSize invalid bits ' + bits + ', type ' + type);
+        return bits / 8;
+      }
+      return 0;
+    }
+  }
+}
+
+// include: runtime_debug.js
+
+
+function legacyModuleProp(prop, newName) {
+  if (!Object.getOwnPropertyDescriptor(Module, prop)) {
+    Object.defineProperty(Module, prop, {
+      configurable: true,
+      get: function() {
+        abort('Module.' + prop + ' has been replaced with plain ' + newName + ' (the initial value can be provided on Module, but after startup the value is only looked for on a local variable of that name)');
+      }
+    });
+  }
+}
+
+function ignoredModuleProp(prop) {
+  if (Object.getOwnPropertyDescriptor(Module, prop)) {
+    abort('`Module.' + prop + '` was supplied but `' + prop + '` not included in INCOMING_MODULE_JS_API');
+  }
+}
+
+// forcing the filesystem exports a few things by default
+function isExportedByForceFilesystem(name) {
+  return name === 'FS_createPath' ||
+         name === 'FS_createDataFile' ||
+         name === 'FS_createPreloadedFile' ||
+         name === 'FS_unlink' ||
+         name === 'addRunDependency' ||
+         // The old FS has some functionality that WasmFS lacks.
+         name === 'FS_createLazyFile' ||
+         name === 'FS_createDevice' ||
+         name === 'removeRunDependency';
+}
+
+function missingLibrarySymbol(sym) {
+  if (typeof globalThis !== 'undefined' && !Object.getOwnPropertyDescriptor(globalThis, sym)) {
+    Object.defineProperty(globalThis, sym, {
+      configurable: true,
+      get: function() {
+        // Can't `abort()` here because it would break code that does runtime
+        // checks.  e.g. `if (typeof SDL === 'undefined')`.
+        var msg = '`' + sym + '` is a library symbol and not included by default; add it to your library.js __deps or to DEFAULT_LIBRARY_FUNCS_TO_INCLUDE on the command line';
+        // DEFAULT_LIBRARY_FUNCS_TO_INCLUDE requires the name as it appears in
+        // library.js, which means $name for a JS name with no prefix, or name
+        // for a JS name like _name.
+        var librarySymbol = sym;
+        if (!librarySymbol.startsWith('_')) {
+          librarySymbol = '$' + sym;
+        }
+        msg += " (e.g. -sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE=" + librarySymbol + ")";
+        if (isExportedByForceFilesystem(sym)) {
+          msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
+        }
+        warnOnce(msg);
+        return undefined;
+      }
+    });
+  }
+}
+
+function unexportedRuntimeSymbol(sym) {
+  if (!Object.getOwnPropertyDescriptor(Module, sym)) {
+    Object.defineProperty(Module, sym, {
+      configurable: true,
+      get: function() {
+        var msg = "'" + sym + "' was not exported. add it to EXPORTED_RUNTIME_METHODS (see the FAQ)";
+        if (isExportedByForceFilesystem(sym)) {
+          msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
+        }
+        abort(msg);
+      }
+    });
+  }
+}
+
+// end include: runtime_debug.js
+
+
+// === Preamble library stuff ===
+
+// Documentation for the public APIs defined in this file must be updated in:
+//    site/source/docs/api_reference/preamble.js.rst
+// A prebuilt local version of the documentation is available at:
+//    site/build/text/docs/api_reference/preamble.js.txt
+// You can also build docs locally as HTML or other formats in site/
+// An online HTML version (which may be of a different version of Emscripten)
+//    is up at http://kripken.github.io/emscripten-site/docs/api_reference/preamble.js.html
+
+var wasmBinary;
+if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];legacyModuleProp('wasmBinary', 'wasmBinary');
+var noExitRuntime = Module['noExitRuntime'] || true;legacyModuleProp('noExitRuntime', 'noExitRuntime');
+
+if (typeof WebAssembly != 'object') {
+  abort('no native wasm support detected');
+}
+
+// Wasm globals
+
+var wasmMemory;
+
+//========================================
+// Runtime essentials
+//========================================
+
+// whether we are quitting the application. no code should run after this.
+// set in exit() and abort()
+var ABORT = false;
+
+// set by exit() and abort().  Passed to 'onExit' handler.
+// NOTE: This is also used as the process return code code in shell environments
+// but only when noExitRuntime is false.
+var EXITSTATUS;
+
+/** @type {function(*, string=)} */
+function assert(condition, text) {
+  if (!condition) {
+    abort('Assertion failed' + (text ? ': ' + text : ''));
+  }
+}
+
+// We used to include malloc/free by default in the past. Show a helpful error in
+// builds with assertions.
+
+// include: runtime_strings.js
+
+
+// runtime_strings.js: Strings related runtime functions that are part of both MINIMAL_RUNTIME and regular runtime.
+
+var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
+
+// Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the given array that contains uint8 values, returns
+// a copy of that string as a Javascript String object.
+/**
+ * heapOrArray is either a regular array, or a JavaScript typed array view.
+ * @param {number} idx
+ * @param {number=} maxBytesToRead
+ * @return {string}
+ */
+function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
+  var endIdx = idx + maxBytesToRead;
+  var endPtr = idx;
+  // TextDecoder needs to know the byte length in advance, it doesn't stop on null terminator by itself.
+  // Also, use the length info to avoid running tiny strings through TextDecoder, since .subarray() allocates garbage.
+  // (As a tiny code save trick, compare endPtr against endIdx using a negation, so that undefined means Infinity)
+  while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
+
+  if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
+    return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
+  }
+  var str = '';
+  // If building with TextDecoder, we have already computed the string length above, so test loop end condition against that
+  while (idx < endPtr) {
+    // For UTF8 byte structure, see:
+    // http://en.wikipedia.org/wiki/UTF-8#Description
+    // https://www.ietf.org/rfc/rfc2279.txt
+    // https://tools.ietf.org/html/rfc3629
+    var u0 = heapOrArray[idx++];
+    if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
+    var u1 = heapOrArray[idx++] & 63;
+    if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
+    var u2 = heapOrArray[idx++] & 63;
+    if ((u0 & 0xF0) == 0xE0) {
+      u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
+    } else {
+      if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte 0x' + u0.toString(16) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
+      u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
+    }
+
+    if (u0 < 0x10000) {
+      str += String.fromCharCode(u0);
+    } else {
+      var ch = u0 - 0x10000;
+      str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+    }
+  }
+  return str;
+}
+
+// Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the emscripten HEAP, returns a
+// copy of that string as a Javascript String object.
+// maxBytesToRead: an optional length that specifies the maximum number of bytes to read. You can omit
+//                 this parameter to scan the string until the first \0 byte. If maxBytesToRead is
+//                 passed, and the string at [ptr, ptr+maxBytesToReadr[ contains a null byte in the
+//                 middle, then the string will cut short at that byte index (i.e. maxBytesToRead will
+//                 not produce a string of exact length [ptr, ptr+maxBytesToRead[)
+//                 N.B. mixing frequent uses of UTF8ToString() with and without maxBytesToRead may
+//                 throw JS JIT optimizations off, so it is worth to consider consistently using one
+//                 style or the other.
+/**
+ * @param {number} ptr
+ * @param {number=} maxBytesToRead
+ * @return {string}
+ */
+function UTF8ToString(ptr, maxBytesToRead) {
+  return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
+}
+
+// Copies the given Javascript String object 'str' to the given byte array at address 'outIdx',
+// encoded in UTF8 form and null-terminated. The copy will require at most str.length*4+1 bytes of space in the HEAP.
+// Use the function lengthBytesUTF8 to compute the exact number of bytes (excluding null terminator) that this function will write.
+// Parameters:
+//   str: the Javascript string to copy.
+//   heap: the array to copy to. Each index in this array is assumed to be one 8-byte element.
+//   outIdx: The starting offset in the array to begin the copying.
+//   maxBytesToWrite: The maximum number of bytes this function can write to the array.
+//                    This count should include the null terminator,
+//                    i.e. if maxBytesToWrite=1, only the null terminator will be written and nothing else.
+//                    maxBytesToWrite=0 does not write any bytes to the output, not even the null terminator.
+// Returns the number of bytes written, EXCLUDING the null terminator.
+
+function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
+  if (!(maxBytesToWrite > 0)) // Parameter maxBytesToWrite is not optional. Negative values, 0, null, undefined and false each don't write out any bytes.
+    return 0;
+
+  var startIdx = outIdx;
+  var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
+  for (var i = 0; i < str.length; ++i) {
+    // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code unit, not a Unicode code point of the character! So decode UTF16->UTF32->UTF8.
+    // See http://unicode.org/faq/utf_bom.html#utf16-3
+    // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description and https://www.ietf.org/rfc/rfc2279.txt and https://tools.ietf.org/html/rfc3629
+    var u = str.charCodeAt(i); // possibly a lead surrogate
+    if (u >= 0xD800 && u <= 0xDFFF) {
+      var u1 = str.charCodeAt(++i);
+      u = 0x10000 + ((u & 0x3FF) << 10) | (u1 & 0x3FF);
+    }
+    if (u <= 0x7F) {
+      if (outIdx >= endIdx) break;
+      heap[outIdx++] = u;
+    } else if (u <= 0x7FF) {
+      if (outIdx + 1 >= endIdx) break;
+      heap[outIdx++] = 0xC0 | (u >> 6);
+      heap[outIdx++] = 0x80 | (u & 63);
+    } else if (u <= 0xFFFF) {
+      if (outIdx + 2 >= endIdx) break;
+      heap[outIdx++] = 0xE0 | (u >> 12);
+      heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+      heap[outIdx++] = 0x80 | (u & 63);
+    } else {
+      if (outIdx + 3 >= endIdx) break;
+      if (u > 0x10FFFF) warnOnce('Invalid Unicode code point 0x' + u.toString(16) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
+      heap[outIdx++] = 0xF0 | (u >> 18);
+      heap[outIdx++] = 0x80 | ((u >> 12) & 63);
+      heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+      heap[outIdx++] = 0x80 | (u & 63);
+    }
+  }
+  // Null-terminate the pointer to the buffer.
+  heap[outIdx] = 0;
+  return outIdx - startIdx;
+}
+
+// Copies the given Javascript String object 'str' to the emscripten HEAP at address 'outPtr',
+// null-terminated and encoded in UTF8 form. The copy will require at most str.length*4+1 bytes of space in the HEAP.
+// Use the function lengthBytesUTF8 to compute the exact number of bytes (excluding null terminator) that this function will write.
+// Returns the number of bytes written, EXCLUDING the null terminator.
+
+function stringToUTF8(str, outPtr, maxBytesToWrite) {
+  assert(typeof maxBytesToWrite == 'number', 'stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
+  return stringToUTF8Array(str, HEAPU8,outPtr, maxBytesToWrite);
+}
+
+// Returns the number of bytes the given Javascript string takes if encoded as a UTF8 byte array, EXCLUDING the null terminator byte.
+function lengthBytesUTF8(str) {
+  var len = 0;
+  for (var i = 0; i < str.length; ++i) {
+    // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code unit, not a Unicode code point of the character! So decode UTF16->UTF32->UTF8.
+    // See http://unicode.org/faq/utf_bom.html#utf16-3
+    var c = str.charCodeAt(i); // possibly a lead surrogate
+    if (c <= 0x7F) {
+      len++;
+    } else if (c <= 0x7FF) {
+      len += 2;
+    } else if (c >= 0xD800 && c <= 0xDFFF) {
+      len += 4; ++i;
+    } else {
+      len += 3;
+    }
+  }
+  return len;
+}
+
+// end include: runtime_strings.js
+// Memory management
+
+var HEAP,
+/** @type {!ArrayBuffer} */
+  buffer,
+/** @type {!Int8Array} */
+  HEAP8,
+/** @type {!Uint8Array} */
+  HEAPU8,
+/** @type {!Int16Array} */
+  HEAP16,
+/** @type {!Uint16Array} */
+  HEAPU16,
+/** @type {!Int32Array} */
+  HEAP32,
+/** @type {!Uint32Array} */
+  HEAPU32,
+/** @type {!Float32Array} */
+  HEAPF32,
+/** @type {!Float64Array} */
+  HEAPF64;
+
+function updateGlobalBufferAndViews(buf) {
+  buffer = buf;
+  Module['HEAP8'] = HEAP8 = new Int8Array(buf);
+  Module['HEAP16'] = HEAP16 = new Int16Array(buf);
+  Module['HEAP32'] = HEAP32 = new Int32Array(buf);
+  Module['HEAPU8'] = HEAPU8 = new Uint8Array(buf);
+  Module['HEAPU16'] = HEAPU16 = new Uint16Array(buf);
+  Module['HEAPU32'] = HEAPU32 = new Uint32Array(buf);
+  Module['HEAPF32'] = HEAPF32 = new Float32Array(buf);
+  Module['HEAPF64'] = HEAPF64 = new Float64Array(buf);
+}
+
+var TOTAL_STACK = 5242880;
+if (Module['TOTAL_STACK']) assert(TOTAL_STACK === Module['TOTAL_STACK'], 'the stack size can no longer be determined at runtime')
+
+var INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 16777216;legacyModuleProp('INITIAL_MEMORY', 'INITIAL_MEMORY');
+
+assert(INITIAL_MEMORY >= TOTAL_STACK, 'INITIAL_MEMORY should be larger than TOTAL_STACK, was ' + INITIAL_MEMORY + '! (TOTAL_STACK=' + TOTAL_STACK + ')');
+
+// check for full engine support (use string 'subarray' to avoid closure compiler confusion)
+assert(typeof Int32Array != 'undefined' && typeof Float64Array !== 'undefined' && Int32Array.prototype.subarray != undefined && Int32Array.prototype.set != undefined,
+       'JS engine does not provide full typed array support');
+
+// If memory is defined in wasm, the user can't provide it.
+assert(!Module['wasmMemory'], 'Use of `wasmMemory` detected.  Use -sIMPORTED_MEMORY to define wasmMemory externally');
+assert(INITIAL_MEMORY == 16777216, 'Detected runtime INITIAL_MEMORY setting.  Use -sIMPORTED_MEMORY to define wasmMemory dynamically');
+
+// include: runtime_init_table.js
+// In regular non-RELOCATABLE mode the table is exported
+// from the wasm module and this will be assigned once
+// the exports are available.
+var wasmTable;
+
+// end include: runtime_init_table.js
+// include: runtime_stack_check.js
+
+
+// Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
+function writeStackCookie() {
+  var max = _emscripten_stack_get_end();
+  assert((max & 3) == 0);
+  // The stack grow downwards towards _emscripten_stack_get_end.
+  // We write cookies to the final two words in the stack and detect if they are
+  // ever overwritten.
+  HEAPU32[((max)>>2)] = 0x2135467;
+  HEAPU32[(((max)+(4))>>2)] = 0x89BACDFE;
+  // Also test the global address 0 for integrity.
+  HEAPU32[0] = 0x63736d65; /* 'emsc' */
+}
+
+function checkStackCookie() {
+  if (ABORT) return;
+  var max = _emscripten_stack_get_end();
+  var cookie1 = HEAPU32[((max)>>2)];
+  var cookie2 = HEAPU32[(((max)+(4))>>2)];
+  if (cookie1 != 0x2135467 || cookie2 != 0x89BACDFE) {
+    abort('Stack overflow! Stack cookie has been overwritten at 0x' + max.toString(16) + ', expected hex dwords 0x89BACDFE and 0x2135467, but received 0x' + cookie2.toString(16) + ' 0x' + cookie1.toString(16));
+  }
+  // Also test the global address 0 for integrity.
+  if (HEAPU32[0] !== 0x63736d65 /* 'emsc' */) abort('Runtime error: The application has corrupted its heap memory area (address zero)!');
+}
+
+// end include: runtime_stack_check.js
+// include: runtime_assertions.js
+
+
+// Endianness check
+(function() {
+  var h16 = new Int16Array(1);
+  var h8 = new Int8Array(h16.buffer);
+  h16[0] = 0x6373;
+  if (h8[0] !== 0x73 || h8[1] !== 0x63) throw 'Runtime error: expected the system to be little-endian! (Run with -sSUPPORT_BIG_ENDIAN to bypass)';
+})();
+
+// end include: runtime_assertions.js
+var __ATPRERUN__  = []; // functions called before the runtime is initialized
+var __ATINIT__    = []; // functions called during startup
+var __ATMAIN__    = []; // functions called when main() is to be run
+var __ATEXIT__    = []; // functions called during shutdown
+var __ATPOSTRUN__ = []; // functions called after the main() is called
+
+var runtimeInitialized = false;
+
+function keepRuntimeAlive() {
+  return noExitRuntime;
+}
+
+function preRun() {
+
+  if (Module['preRun']) {
+    if (typeof Module['preRun'] == 'function') Module['preRun'] = [Module['preRun']];
+    while (Module['preRun'].length) {
+      addOnPreRun(Module['preRun'].shift());
+    }
+  }
+
+  callRuntimeCallbacks(__ATPRERUN__);
+}
+
+function initRuntime() {
+  assert(!runtimeInitialized);
+  runtimeInitialized = true;
+
+  checkStackCookie();
+
+  ___set_stack_limits(_emscripten_stack_get_base(), _emscripten_stack_get_end());
+  
+if (!Module["noFSInit"] && !FS.init.initialized)
+  FS.init();
+FS.ignorePermissions = false;
+
+TTY.init();
+  callRuntimeCallbacks(__ATINIT__);
+}
+
+function preMain() {
+  checkStackCookie();
+  
+  callRuntimeCallbacks(__ATMAIN__);
+}
+
+function postRun() {
+  checkStackCookie();
+
+  if (Module['postRun']) {
+    if (typeof Module['postRun'] == 'function') Module['postRun'] = [Module['postRun']];
+    while (Module['postRun'].length) {
+      addOnPostRun(Module['postRun'].shift());
+    }
+  }
+
+  callRuntimeCallbacks(__ATPOSTRUN__);
+}
+
+function addOnPreRun(cb) {
+  __ATPRERUN__.unshift(cb);
+}
+
+function addOnInit(cb) {
+  __ATINIT__.unshift(cb);
+}
+
+function addOnPreMain(cb) {
+  __ATMAIN__.unshift(cb);
+}
+
+function addOnExit(cb) {
+}
+
+function addOnPostRun(cb) {
+  __ATPOSTRUN__.unshift(cb);
+}
+
+// include: runtime_math.js
+
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/fround
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/clz32
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
+
+assert(Math.imul, 'This browser does not support Math.imul(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+assert(Math.fround, 'This browser does not support Math.fround(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+assert(Math.clz32, 'This browser does not support Math.clz32(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+assert(Math.trunc, 'This browser does not support Math.trunc(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+
+// end include: runtime_math.js
+// A counter of dependencies for calling run(). If we need to
+// do asynchronous work before running, increment this and
+// decrement it. Incrementing must happen in a place like
+// Module.preRun (used by emcc to add file preloading).
+// Note that you can add dependencies in preRun, even though
+// it happens right before run - run will be postponed until
+// the dependencies are met.
+var runDependencies = 0;
+var runDependencyWatcher = null;
+var dependenciesFulfilled = null; // overridden to take different actions when all run dependencies are fulfilled
+var runDependencyTracking = {};
+
+function getUniqueRunDependency(id) {
+  var orig = id;
+  while (1) {
+    if (!runDependencyTracking[id]) return id;
+    id = orig + Math.random();
+  }
+}
+
+function addRunDependency(id) {
+  runDependencies++;
+
+  if (Module['monitorRunDependencies']) {
+    Module['monitorRunDependencies'](runDependencies);
+  }
+
+  if (id) {
+    assert(!runDependencyTracking[id]);
+    runDependencyTracking[id] = 1;
+    if (runDependencyWatcher === null && typeof setInterval != 'undefined') {
+      // Check for missing dependencies every few seconds
+      runDependencyWatcher = setInterval(function() {
+        if (ABORT) {
+          clearInterval(runDependencyWatcher);
+          runDependencyWatcher = null;
+          return;
+        }
+        var shown = false;
+        for (var dep in runDependencyTracking) {
+          if (!shown) {
+            shown = true;
+            err('still waiting on run dependencies:');
+          }
+          err('dependency: ' + dep);
+        }
+        if (shown) {
+          err('(end of list)');
+        }
+      }, 10000);
+    }
+  } else {
+    err('warning: run dependency added without ID');
+  }
+}
+
+function removeRunDependency(id) {
+  runDependencies--;
+
+  if (Module['monitorRunDependencies']) {
+    Module['monitorRunDependencies'](runDependencies);
+  }
+
+  if (id) {
+    assert(runDependencyTracking[id]);
+    delete runDependencyTracking[id];
+  } else {
+    err('warning: run dependency removed without ID');
+  }
+  if (runDependencies == 0) {
+    if (runDependencyWatcher !== null) {
+      clearInterval(runDependencyWatcher);
+      runDependencyWatcher = null;
+    }
+    if (dependenciesFulfilled) {
+      var callback = dependenciesFulfilled;
+      dependenciesFulfilled = null;
+      callback(); // can add another dependenciesFulfilled
+    }
+  }
+}
+
+/** @param {string|number=} what */
+function abort(what) {
+  {
+    if (Module['onAbort']) {
+      Module['onAbort'](what);
+    }
+  }
+
+  what = 'Aborted(' + what + ')';
+  // TODO(sbc): Should we remove printing and leave it up to whoever
+  // catches the exception?
+  err(what);
+
+  ABORT = true;
+  EXITSTATUS = 1;
+
+  // Use a wasm runtime error, because a JS error might be seen as a foreign
+  // exception, which means we'd run destructors on it. We need the error to
+  // simply make the program stop.
+  // FIXME This approach does not work in Wasm EH because it currently does not assume
+  // all RuntimeErrors are from traps; it decides whether a RuntimeError is from
+  // a trap or not based on a hidden field within the object. So at the moment
+  // we don't have a way of throwing a wasm trap from JS. TODO Make a JS API that
+  // allows this in the wasm spec.
+
+  // Suppress closure compiler warning here. Closure compiler's builtin extern
+  // defintion for WebAssembly.RuntimeError claims it takes no arguments even
+  // though it can.
+  // TODO(https://github.com/google/closure-compiler/pull/3913): Remove if/when upstream closure gets fixed.
+  /** @suppress {checkTypes} */
+  var e = new WebAssembly.RuntimeError(what);
+
+  readyPromiseReject(e);
+  // Throw the error whether or not MODULARIZE is set because abort is used
+  // in code paths apart from instantiation where an exception is expected
+  // to be thrown when abort is called.
+  throw e;
+}
+
+// {{MEM_INITIALIZER}}
+
+// include: memoryprofiler.js
+
+
+// end include: memoryprofiler.js
+// include: URIUtils.js
+
+
+// Prefix of data URIs emitted by SINGLE_FILE and related options.
+var dataURIPrefix = 'data:application/octet-stream;base64,';
+
+// Indicates whether filename is a base64 data URI.
+function isDataURI(filename) {
+  // Prefix of data URIs emitted by SINGLE_FILE and related options.
+  return filename.startsWith(dataURIPrefix);
+}
+
+// Indicates whether filename is delivered via file protocol (as opposed to http/https)
+function isFileURI(filename) {
+  return filename.startsWith('file://');
+}
+
+// end include: URIUtils.js
+/** @param {boolean=} fixedasm */
+function createExportWrapper(name, fixedasm) {
+  return function() {
+    var displayName = name;
+    var asm = fixedasm;
+    if (!fixedasm) {
+      asm = Module['asm'];
+    }
+    assert(runtimeInitialized, 'native function `' + displayName + '` called before runtime initialization');
+    if (!asm[name]) {
+      assert(asm[name], 'exported native function `' + displayName + '` not found');
+    }
+    return asm[name].apply(null, arguments);
+  };
+}
+
+var wasmBinaryFile;
+  wasmBinaryFile = 'MyMoneroCoreCpp_WASM.wasm';
+  if (!isDataURI(wasmBinaryFile)) {
+    wasmBinaryFile = locateFile(wasmBinaryFile);
+  }
+
+function getBinary(file) {
+  try {
+    if (file == wasmBinaryFile && wasmBinary) {
+      return new Uint8Array(wasmBinary);
+    }
+    if (readBinary) {
+      return readBinary(file);
+    }
+    throw "both async and sync fetching of the wasm failed";
+  }
+  catch (err) {
+    abort(err);
+  }
+}
+
+function getBinaryPromise() {
+  // If we don't have the binary yet, try to to load it asynchronously.
+  // Fetch has some additional restrictions over XHR, like it can't be used on a file:// url.
+  // See https://github.com/github/fetch/pull/92#issuecomment-140665932
+  // Cordova or Electron apps are typically loaded from a file:// url.
+  // So use fetch if it is available and the url is not a file, otherwise fall back to XHR.
+  if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
+    if (typeof fetch == 'function'
+      && !isFileURI(wasmBinaryFile)
+    ) {
+      return fetch(wasmBinaryFile, { credentials: 'same-origin' }).then(function(response) {
+        if (!response['ok']) {
+          throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+        }
+        return response['arrayBuffer']();
+      }).catch(function () {
+          return getBinary(wasmBinaryFile);
+      });
+    }
+    else {
+      if (readAsync) {
+        // fetch is not available or url is file => try XHR (readAsync uses XHR internally)
+        return new Promise(function(resolve, reject) {
+          readAsync(wasmBinaryFile, function(response) { resolve(new Uint8Array(/** @type{!ArrayBuffer} */(response))) }, reject)
+        });
+      }
+    }
+  }
+
+  // Otherwise, getBinary should be able to get it synchronously
+  return Promise.resolve().then(function() { return getBinary(wasmBinaryFile); });
+}
+
+// Create the wasm instance.
+// Receives the wasm imports, returns the exports.
+function createWasm() {
+  // prepare imports
+  var info = {
+    'env': asmLibraryArg,
+    'wasi_snapshot_preview1': asmLibraryArg,
+  };
+  // Load the wasm module and create an instance of using native support in the JS engine.
+  // handle a generated wasm instance, receiving its exports and
+  // performing other necessary setup
+  /** @param {WebAssembly.Module=} module*/
+  function receiveInstance(instance, module) {
+    var exports = instance.exports;
+
+    Module['asm'] = exports;
+
+    wasmMemory = Module['asm']['memory'];
+    assert(wasmMemory, "memory not found in wasm exports");
+    // This assertion doesn't hold when emscripten is run in --post-link
+    // mode.
+    // TODO(sbc): Read INITIAL_MEMORY out of the wasm file in post-link mode.
+    //assert(wasmMemory.buffer.byteLength === 16777216);
+    updateGlobalBufferAndViews(wasmMemory.buffer);
+
+    wasmTable = Module['asm']['__indirect_function_table'];
+    assert(wasmTable, "table not found in wasm exports");
+
+    addOnInit(Module['asm']['__wasm_call_ctors']);
+
+    removeRunDependency('wasm-instantiate');
+
+  }
+  // we can't run yet (except in a pthread, where we have a custom sync instantiator)
+  addRunDependency('wasm-instantiate');
+
+  // Prefer streaming instantiation if available.
+  // Async compilation can be confusing when an error on the page overwrites Module
+  // (for example, if the order of elements is wrong, and the one defining Module is
+  // later), so we save Module and check it later.
+  var trueModule = Module;
+  function receiveInstantiationResult(result) {
+    // 'result' is a ResultObject object which has both the module and instance.
+    // receiveInstance() will swap in the exports (to Module.asm) so they can be called
+    assert(Module === trueModule, 'the Module object should not be replaced during async compilation - perhaps the order of HTML elements is wrong?');
+    trueModule = null;
+    // TODO: Due to Closure regression https://github.com/google/closure-compiler/issues/3193, the above line no longer optimizes out down to the following line.
+    // When the regression is fixed, can restore the above USE_PTHREADS-enabled path.
+    receiveInstance(result['instance']);
+  }
+
+  function instantiateArrayBuffer(receiver) {
+    return getBinaryPromise().then(function(binary) {
+      return WebAssembly.instantiate(binary, info);
+    }).then(function (instance) {
+      return instance;
+    }).then(receiver, function(reason) {
+      err('failed to asynchronously prepare wasm: ' + reason);
+
+      // Warn on some common problems.
+      if (isFileURI(wasmBinaryFile)) {
+        err('warning: Loading from a file URI (' + wasmBinaryFile + ') is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing');
+      }
+      abort(reason);
+    });
+  }
+
+  function instantiateAsync() {
+    if (!wasmBinary &&
+        typeof WebAssembly.instantiateStreaming == 'function' &&
+        !isDataURI(wasmBinaryFile) &&
+        // Don't use streaming for file:// delivered objects in a webview, fetch them synchronously.
+        !isFileURI(wasmBinaryFile) &&
+        // Avoid instantiateStreaming() on Node.js environment for now, as while
+        // Node.js v18.1.0 implements it, it does not have a full fetch()
+        // implementation yet.
+        //
+        // Reference:
+        //   https://github.com/emscripten-core/emscripten/pull/16917
+        !ENVIRONMENT_IS_NODE &&
+        typeof fetch == 'function') {
+      return fetch(wasmBinaryFile, { credentials: 'same-origin' }).then(function(response) {
+        // Suppress closure warning here since the upstream definition for
+        // instantiateStreaming only allows Promise<Repsponse> rather than
+        // an actual Response.
+        // TODO(https://github.com/google/closure-compiler/pull/3913): Remove if/when upstream closure is fixed.
+        /** @suppress {checkTypes} */
+        var result = WebAssembly.instantiateStreaming(response, info);
+
+        return result.then(
+          receiveInstantiationResult,
+          function(reason) {
+            // We expect the most common failure cause to be a bad MIME type for the binary,
+            // in which case falling back to ArrayBuffer instantiation should work.
+            err('wasm streaming compile failed: ' + reason);
+            err('falling back to ArrayBuffer instantiation');
+            return instantiateArrayBuffer(receiveInstantiationResult);
+          });
+      });
+    } else {
+      return instantiateArrayBuffer(receiveInstantiationResult);
+    }
+  }
+
+  // User shell pages can write their own Module.instantiateWasm = function(imports, successCallback) callback
+  // to manually instantiate the Wasm module themselves. This allows pages to run the instantiation parallel
+  // to any other async startup actions they are performing.
+  // Also pthreads and wasm workers initialize the wasm instance through this path.
+  if (Module['instantiateWasm']) {
+    try {
+      var exports = Module['instantiateWasm'](info, receiveInstance);
+      return exports;
+    } catch(e) {
+      err('Module.instantiateWasm callback failed with error: ' + e);
+        // If instantiation fails, reject the module ready promise.
+        readyPromiseReject(e);
+    }
+  }
+
+  // If instantiation fails, reject the module ready promise.
+  instantiateAsync().catch(readyPromiseReject);
+  return {}; // no exports yet; we'll fill them in later
+}
+
+// Globals used by JS i64 conversions (see makeSetValue)
+var tempDouble;
+var tempI64;
+
+// === Body ===
+
+var ASM_CONSTS = {
+  350500: ($0, $1) => { const JS__task_id = Module.UTF8ToString($0); const JS__req_params_string = Module.UTF8ToString($1); const JS__req_params = JSON.parse(JS__req_params_string); Module.fromCpp__send_funds__error(JS__task_id, JS__req_params); },  
+ 350726: ($0, $1) => { const JS__task_id = Module.UTF8ToString($0); const JS__req_params_string = Module.UTF8ToString($1); const JS__req_params = JSON.parse(JS__req_params_string); Module.fromCpp__send_funds__success(JS__task_id, JS__req_params); },  
+ 350954: ($0, $1) => { const JS__task_id = Module.UTF8ToString($0); const JS__req_params_string = Module.UTF8ToString($1); const JS__req_params = JSON.parse(JS__req_params_string); Module.fromCpp__send_funds__get_unspent_outs(JS__task_id, JS__req_params); },  
+ 351191: ($0, $1) => { const JS__task_id = Module.UTF8ToString($0); const JS__req_params_string = Module.UTF8ToString($1); const JS__req_params = JSON.parse(JS__req_params_string); Module.fromCpp__send_funds__get_random_outs(JS__task_id, JS__req_params); },  
+ 351427: ($0, $1) => { const JS__task_id = Module.UTF8ToString($0); const JS__req_params_string = Module.UTF8ToString($1); const JS__req_params = JSON.parse(JS__req_params_string); Module.fromCpp__send_funds__submit_raw_tx(JS__task_id, JS__req_params); },  
+ 351661: ($0, $1) => { const JS__task_id = Module.UTF8ToString($0); const JS__req_params_string = Module.UTF8ToString($1); const JS__req_params = JSON.parse(JS__req_params_string); Module.fromCpp__send_funds__status_update(JS__task_id, JS__req_params); }
+};
+
+
+
+
+
+
+  /** @constructor */
+  function ExitStatus(status) {
+      this.name = 'ExitStatus';
+      this.message = 'Program terminated with exit(' + status + ')';
+      this.status = status;
+    }
+
+  function callRuntimeCallbacks(callbacks) {
+      while (callbacks.length > 0) {
+        // Pass the module as the first argument.
+        callbacks.shift()(Module);
+      }
+    }
+
+  function withStackSave(f) {
+      var stack = stackSave();
+      var ret = f();
+      stackRestore(stack);
+      return ret;
+    }
+  function demangle(func) {
+      // If demangle has failed before, stop demangling any further function names
+      // This avoids an infinite recursion with malloc()->abort()->stackTrace()->demangle()->malloc()->...
+      demangle.recursionGuard = (demangle.recursionGuard|0)+1;
+      if (demangle.recursionGuard > 1) return func;
+      assert(___cxa_demangle);
+      return withStackSave(function() {
+        try {
+          var s = func;
+          if (s.startsWith('__Z'))
+            s = s.substr(1);
+          var len = lengthBytesUTF8(s)+1;
+          var buf = stackAlloc(len);
+          stringToUTF8(s, buf, len);
+          var status = stackAlloc(4);
+          var ret = ___cxa_demangle(buf, 0, 0, status);
+          if (HEAP32[((status)>>2)] === 0 && ret) {
+            return UTF8ToString(ret);
+          }
+          // otherwise, libcxxabi failed
+        } catch(e) {
+        } finally {
+          _free(ret);
+          if (demangle.recursionGuard < 2) --demangle.recursionGuard;
+        }
+        // failure when using libcxxabi, don't demangle
+        return func;
+      });
+    }
+
+  
+    /**
+     * @param {number} ptr
+     * @param {string} type
+     */
+  function getValue(ptr, type = 'i8') {
+      if (type.endsWith('*')) type = '*';
+      switch (type) {
+        case 'i1': return HEAP8[((ptr)>>0)];
+        case 'i8': return HEAP8[((ptr)>>0)];
+        case 'i16': return HEAP16[((ptr)>>1)];
+        case 'i32': return HEAP32[((ptr)>>2)];
+        case 'i64': return HEAP32[((ptr)>>2)];
+        case 'float': return HEAPF32[((ptr)>>2)];
+        case 'double': return HEAPF64[((ptr)>>3)];
+        case '*': return HEAPU32[((ptr)>>2)];
+        default: abort('invalid type for getValue: ' + type);
+      }
+      return null;
+    }
+
+  
+    /**
+     * @param {number} ptr
+     * @param {number} value
+     * @param {string} type
+     */
+  function setValue(ptr, value, type = 'i8') {
+      if (type.endsWith('*')) type = '*';
+      switch (type) {
+        case 'i1': HEAP8[((ptr)>>0)] = value; break;
+        case 'i8': HEAP8[((ptr)>>0)] = value; break;
+        case 'i16': HEAP16[((ptr)>>1)] = value; break;
+        case 'i32': HEAP32[((ptr)>>2)] = value; break;
+        case 'i64': (tempI64 = [value>>>0,(tempDouble=value,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[((ptr)>>2)] = tempI64[0],HEAP32[(((ptr)+(4))>>2)] = tempI64[1]); break;
+        case 'float': HEAPF32[((ptr)>>2)] = value; break;
+        case 'double': HEAPF64[((ptr)>>3)] = value; break;
+        case '*': HEAPU32[((ptr)>>2)] = value; break;
+        default: abort('invalid type for setValue: ' + type);
+      }
+    }
+
+  function jsStackTrace() {
+      var error = new Error();
+      if (!error.stack) {
+        // IE10+ special cases: It does have callstack info, but it is only
+        // populated if an Error object is thrown, so try that as a special-case.
+        try {
+          throw new Error();
+        } catch(e) {
+          error = e;
+        }
+        if (!error.stack) {
+          return '(no stack trace available)';
+        }
+      }
+      return error.stack.toString();
+    }
+  
+  function demangleAll(text) {
+      var regex =
+        /\b_Z[\w\d_]+/g;
+      return text.replace(regex,
+        function(x) {
+          var y = demangle(x);
+          return x === y ? x : (y + ' [' + x + ']');
+        });
+    }
+  function stackTrace() {
+      var js = jsStackTrace();
+      if (Module['extraStackTrace']) js += '\n' + Module['extraStackTrace']();
+      return demangleAll(js);
+    }
+
+  function warnOnce(text) {
+      if (!warnOnce.shown) warnOnce.shown = {};
+      if (!warnOnce.shown[text]) {
+        warnOnce.shown[text] = 1;
+        if (ENVIRONMENT_IS_NODE) text = 'warning: ' + text;
+        err(text);
+      }
+    }
+
+  function ___assert_fail(condition, filename, line, func) {
+      abort('Assertion failed: ' + UTF8ToString(condition) + ', at: ' + [filename ? UTF8ToString(filename) : 'unknown filename', line, func ? UTF8ToString(func) : 'unknown function']);
+    }
+
+  function ___cxa_allocate_exception(size) {
+      // Thrown object is prepended by exception metadata block
+      return _malloc(size + 24) + 24;
+    }
+
+  var exceptionCaught =  [];
+  
+  function exception_addRef(info) {
+      info.add_ref();
+    }
+  
+  var uncaughtExceptionCount = 0;
+  function ___cxa_begin_catch(ptr) {
+      var info = new ExceptionInfo(ptr);
+      if (!info.get_caught()) {
+        info.set_caught(true);
+        uncaughtExceptionCount--;
+      }
+      info.set_rethrown(false);
+      exceptionCaught.push(info);
+      exception_addRef(info);
+      return info.get_exception_ptr();
+    }
+
+  var exceptionLast = 0;
+  
+  /** @constructor */
+  function ExceptionInfo(excPtr) {
+      this.excPtr = excPtr;
+      this.ptr = excPtr - 24;
+  
+      this.set_type = function(type) {
+        HEAPU32[(((this.ptr)+(4))>>2)] = type;
+      };
+  
+      this.get_type = function() {
+        return HEAPU32[(((this.ptr)+(4))>>2)];
+      };
+  
+      this.set_destructor = function(destructor) {
+        HEAPU32[(((this.ptr)+(8))>>2)] = destructor;
+      };
+  
+      this.get_destructor = function() {
+        return HEAPU32[(((this.ptr)+(8))>>2)];
+      };
+  
+      this.set_refcount = function(refcount) {
+        HEAP32[((this.ptr)>>2)] = refcount;
+      };
+  
+      this.set_caught = function (caught) {
+        caught = caught ? 1 : 0;
+        HEAP8[(((this.ptr)+(12))>>0)] = caught;
+      };
+  
+      this.get_caught = function () {
+        return HEAP8[(((this.ptr)+(12))>>0)] != 0;
+      };
+  
+      this.set_rethrown = function (rethrown) {
+        rethrown = rethrown ? 1 : 0;
+        HEAP8[(((this.ptr)+(13))>>0)] = rethrown;
+      };
+  
+      this.get_rethrown = function () {
+        return HEAP8[(((this.ptr)+(13))>>0)] != 0;
+      };
+  
+      // Initialize native structure fields. Should be called once after allocated.
+      this.init = function(type, destructor) {
+        this.set_adjusted_ptr(0);
+        this.set_type(type);
+        this.set_destructor(destructor);
+        this.set_refcount(0);
+        this.set_caught(false);
+        this.set_rethrown(false);
+      }
+  
+      this.add_ref = function() {
+        var value = HEAP32[((this.ptr)>>2)];
+        HEAP32[((this.ptr)>>2)] = value + 1;
+      };
+  
+      // Returns true if last reference released.
+      this.release_ref = function() {
+        var prev = HEAP32[((this.ptr)>>2)];
+        HEAP32[((this.ptr)>>2)] = prev - 1;
+        assert(prev > 0);
+        return prev === 1;
+      };
+  
+      this.set_adjusted_ptr = function(adjustedPtr) {
+        HEAPU32[(((this.ptr)+(16))>>2)] = adjustedPtr;
+      };
+  
+      this.get_adjusted_ptr = function() {
+        return HEAPU32[(((this.ptr)+(16))>>2)];
+      };
+  
+      // Get pointer which is expected to be received by catch clause in C++ code. It may be adjusted
+      // when the pointer is casted to some of the exception object base classes (e.g. when virtual
+      // inheritance is used). When a pointer is thrown this method should return the thrown pointer
+      // itself.
+      this.get_exception_ptr = function() {
+        // Work around a fastcomp bug, this code is still included for some reason in a build without
+        // exceptions support.
+        var isPointer = ___cxa_is_pointer_type(this.get_type());
+        if (isPointer) {
+          return HEAPU32[((this.excPtr)>>2)];
+        }
+        var adjusted = this.get_adjusted_ptr();
+        if (adjusted !== 0) return adjusted;
+        return this.excPtr;
+      };
+    }
+  function ___cxa_free_exception(ptr) {
+      try {
+        return _free(new ExceptionInfo(ptr).ptr);
+      } catch(e) {
+        err('exception during __cxa_free_exception: ' + e);
+      }
+    }
+  
+  var wasmTableMirror = [];
+  function getWasmTableEntry(funcPtr) {
+      var func = wasmTableMirror[funcPtr];
+      if (!func) {
+        if (funcPtr >= wasmTableMirror.length) wasmTableMirror.length = funcPtr + 1;
+        wasmTableMirror[funcPtr] = func = wasmTable.get(funcPtr);
+      }
+      assert(wasmTable.get(funcPtr) == func, "JavaScript-side Wasm function table mirror is out of date!");
+      return func;
+    }
+  function exception_decRef(info) {
+      // A rethrown exception can reach refcount 0; it must not be discarded
+      // Its next handler will clear the rethrown flag and addRef it, prior to
+      // final decRef and destruction here
+      if (info.release_ref() && !info.get_rethrown()) {
+        var destructor = info.get_destructor();
+        if (destructor) {
+          // In Wasm, destructors return 'this' as in ARM
+          getWasmTableEntry(destructor)(info.excPtr);
+        }
+        ___cxa_free_exception(info.excPtr);
+      }
+    }
+  function ___cxa_end_catch() {
+      // Clear state flag.
+      _setThrew(0);
+      assert(exceptionCaught.length > 0);
+      // Call destructor if one is registered then clear it.
+      var info = exceptionCaught.pop();
+  
+      exception_decRef(info);
+      exceptionLast = 0; // XXX in decRef?
+    }
+
+  function ___resumeException(ptr) {
+      if (!exceptionLast) { exceptionLast = ptr; }
+      throw ptr;
+    }
+  function ___cxa_find_matching_catch_2() {
+      var thrown = exceptionLast;
+      if (!thrown) {
+        // just pass through the null ptr
+        setTempRet0(0);
+        return 0;
+      }
+      var info = new ExceptionInfo(thrown);
+      info.set_adjusted_ptr(thrown);
+      var thrownType = info.get_type();
+      if (!thrownType) {
+        // just pass through the thrown ptr
+        setTempRet0(0);
+        return thrown;
+      }
+  
+      // can_catch receives a **, add indirection
+      // The different catch blocks are denoted by different types.
+      // Due to inheritance, those types may not precisely match the
+      // type of the thrown object. Find one which matches, and
+      // return the type of the catch block which should be called.
+      for (var i = 0; i < arguments.length; i++) {
+        var caughtType = arguments[i];
+        if (caughtType === 0 || caughtType === thrownType) {
+          // Catch all clause matched or exactly the same type is caught
+          break;
+        }
+        var adjusted_ptr_addr = info.ptr + 16;
+        if (___cxa_can_catch(caughtType, thrownType, adjusted_ptr_addr)) {
+          setTempRet0(caughtType);
+          return thrown;
+        }
+      }
+      setTempRet0(thrownType);
+      return thrown;
+    }
+
+  function ___cxa_find_matching_catch_3() {
+      var thrown = exceptionLast;
+      if (!thrown) {
+        // just pass through the null ptr
+        setTempRet0(0);
+        return 0;
+      }
+      var info = new ExceptionInfo(thrown);
+      info.set_adjusted_ptr(thrown);
+      var thrownType = info.get_type();
+      if (!thrownType) {
+        // just pass through the thrown ptr
+        setTempRet0(0);
+        return thrown;
+      }
+  
+      // can_catch receives a **, add indirection
+      // The different catch blocks are denoted by different types.
+      // Due to inheritance, those types may not precisely match the
+      // type of the thrown object. Find one which matches, and
+      // return the type of the catch block which should be called.
+      for (var i = 0; i < arguments.length; i++) {
+        var caughtType = arguments[i];
+        if (caughtType === 0 || caughtType === thrownType) {
+          // Catch all clause matched or exactly the same type is caught
+          break;
+        }
+        var adjusted_ptr_addr = info.ptr + 16;
+        if (___cxa_can_catch(caughtType, thrownType, adjusted_ptr_addr)) {
+          setTempRet0(caughtType);
+          return thrown;
+        }
+      }
+      setTempRet0(thrownType);
+      return thrown;
+    }
+
+
+  function ___cxa_rethrow() {
+      var info = exceptionCaught.pop();
+      if (!info) {
+        abort('no exception to throw');
+      }
+      var ptr = info.excPtr;
+      if (!info.get_rethrown()) {
+        // Only pop if the corresponding push was through rethrow_primary_exception
+        exceptionCaught.push(info);
+        info.set_rethrown(true);
+        info.set_caught(false);
+        uncaughtExceptionCount++;
+      }
+      exceptionLast = ptr;
+      throw ptr;
+    }
+
+  function ___cxa_throw(ptr, type, destructor) {
+      var info = new ExceptionInfo(ptr);
+      // Initialize ExceptionInfo content after it was allocated in __cxa_allocate_exception.
+      info.init(type, destructor);
+      exceptionLast = ptr;
+      uncaughtExceptionCount++;
+      throw ptr;
+    }
+
+  function ___cxa_uncaught_exceptions() {
+      return uncaughtExceptionCount;
+    }
+
+  function ___handle_stack_overflow(requested) {
+      requested = requested >>> 0;
+      abort('stack overflow (Attempt to set SP to 0x' + requested.toString(16) +
+            ', with stack limits [0x' + _emscripten_stack_get_end().toString(16) +
+            ' - 0x' + _emscripten_stack_get_base().toString(16) + '])');
+    }
+
+
+  var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
+        var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+        return splitPathRe.exec(filename).slice(1);
+      },normalizeArray:(parts, allowAboveRoot) => {
+        // if the path tries to go above the root, `up` ends up > 0
+        var up = 0;
+        for (var i = parts.length - 1; i >= 0; i--) {
+          var last = parts[i];
+          if (last === '.') {
+            parts.splice(i, 1);
+          } else if (last === '..') {
+            parts.splice(i, 1);
+            up++;
+          } else if (up) {
+            parts.splice(i, 1);
+            up--;
+          }
+        }
+        // if the path is allowed to go above the root, restore leading ..s
+        if (allowAboveRoot) {
+          for (; up; up--) {
+            parts.unshift('..');
+          }
+        }
+        return parts;
+      },normalize:(path) => {
+        var isAbsolute = PATH.isAbs(path),
+            trailingSlash = path.substr(-1) === '/';
+        // Normalize the path
+        path = PATH.normalizeArray(path.split('/').filter((p) => !!p), !isAbsolute).join('/');
+        if (!path && !isAbsolute) {
+          path = '.';
+        }
+        if (path && trailingSlash) {
+          path += '/';
+        }
+        return (isAbsolute ? '/' : '') + path;
+      },dirname:(path) => {
+        var result = PATH.splitPath(path),
+            root = result[0],
+            dir = result[1];
+        if (!root && !dir) {
+          // No dirname whatsoever
+          return '.';
+        }
+        if (dir) {
+          // It has a dirname, strip trailing slash
+          dir = dir.substr(0, dir.length - 1);
+        }
+        return root + dir;
+      },basename:(path) => {
+        // EMSCRIPTEN return '/'' for '/', not an empty string
+        if (path === '/') return '/';
+        path = PATH.normalize(path);
+        path = path.replace(/\/$/, "");
+        var lastSlash = path.lastIndexOf('/');
+        if (lastSlash === -1) return path;
+        return path.substr(lastSlash+1);
+      },join:function() {
+        var paths = Array.prototype.slice.call(arguments);
+        return PATH.normalize(paths.join('/'));
+      },join2:(l, r) => {
+        return PATH.normalize(l + '/' + r);
+      }};
+  
+  function getRandomDevice() {
+      if (typeof crypto == 'object' && typeof crypto['getRandomValues'] == 'function') {
+        // for modern web browsers
+        var randomBuffer = new Uint8Array(1);
+        return () => { crypto.getRandomValues(randomBuffer); return randomBuffer[0]; };
+      } else
+      if (ENVIRONMENT_IS_NODE) {
+        // for nodejs with or without crypto support included
+        try {
+          var crypto_module = require('crypto');
+          // nodejs has crypto support
+          return () => crypto_module['randomBytes'](1)[0];
+        } catch (e) {
+          // nodejs doesn't have crypto support
+        }
+      }
+      // we couldn't find a proper implementation, as Math.random() is not suitable for /dev/random, see emscripten-core/emscripten/pull/7096
+      return () => abort("no cryptographic support found for randomDevice. consider polyfilling it if you want to use something insecure like Math.random(), e.g. put this in a --pre-js: var crypto = { getRandomValues: function(array) { for (var i = 0; i < array.length; i++) array[i] = (Math.random()*256)|0 } };");
+    }
+  
+  var PATH_FS = {resolve:function() {
+        var resolvedPath = '',
+          resolvedAbsolute = false;
+        for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+          var path = (i >= 0) ? arguments[i] : FS.cwd();
+          // Skip empty and invalid entries
+          if (typeof path != 'string') {
+            throw new TypeError('Arguments to path.resolve must be strings');
+          } else if (!path) {
+            return ''; // an invalid portion invalidates the whole thing
+          }
+          resolvedPath = path + '/' + resolvedPath;
+          resolvedAbsolute = PATH.isAbs(path);
+        }
+        // At this point the path should be resolved to a full absolute path, but
+        // handle relative paths to be safe (might happen when process.cwd() fails)
+        resolvedPath = PATH.normalizeArray(resolvedPath.split('/').filter((p) => !!p), !resolvedAbsolute).join('/');
+        return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+      },relative:(from, to) => {
+        from = PATH_FS.resolve(from).substr(1);
+        to = PATH_FS.resolve(to).substr(1);
+        function trim(arr) {
+          var start = 0;
+          for (; start < arr.length; start++) {
+            if (arr[start] !== '') break;
+          }
+          var end = arr.length - 1;
+          for (; end >= 0; end--) {
+            if (arr[end] !== '') break;
+          }
+          if (start > end) return [];
+          return arr.slice(start, end - start + 1);
+        }
+        var fromParts = trim(from.split('/'));
+        var toParts = trim(to.split('/'));
+        var length = Math.min(fromParts.length, toParts.length);
+        var samePartsLength = length;
+        for (var i = 0; i < length; i++) {
+          if (fromParts[i] !== toParts[i]) {
+            samePartsLength = i;
+            break;
+          }
+        }
+        var outputParts = [];
+        for (var i = samePartsLength; i < fromParts.length; i++) {
+          outputParts.push('..');
+        }
+        outputParts = outputParts.concat(toParts.slice(samePartsLength));
+        return outputParts.join('/');
+      }};
+  
+  /** @type {function(string, boolean=, number=)} */
+  function intArrayFromString(stringy, dontAddNull, length) {
+    var len = length > 0 ? length : lengthBytesUTF8(stringy)+1;
+    var u8array = new Array(len);
+    var numBytesWritten = stringToUTF8Array(stringy, u8array, 0, u8array.length);
+    if (dontAddNull) u8array.length = numBytesWritten;
+    return u8array;
+  }
+  var TTY = {ttys:[],init:function () {
+        // https://github.com/emscripten-core/emscripten/pull/1555
+        // if (ENVIRONMENT_IS_NODE) {
+        //   // currently, FS.init does not distinguish if process.stdin is a file or TTY
+        //   // device, it always assumes it's a TTY device. because of this, we're forcing
+        //   // process.stdin to UTF8 encoding to at least make stdin reading compatible
+        //   // with text files until FS.init can be refactored.
+        //   process['stdin']['setEncoding']('utf8');
+        // }
+      },shutdown:function() {
+        // https://github.com/emscripten-core/emscripten/pull/1555
+        // if (ENVIRONMENT_IS_NODE) {
+        //   // inolen: any idea as to why node -e 'process.stdin.read()' wouldn't exit immediately (with process.stdin being a tty)?
+        //   // isaacs: because now it's reading from the stream, you've expressed interest in it, so that read() kicks off a _read() which creates a ReadReq operation
+        //   // inolen: I thought read() in that case was a synchronous operation that just grabbed some amount of buffered data if it exists?
+        //   // isaacs: it is. but it also triggers a _read() call, which calls readStart() on the handle
+        //   // isaacs: do process.stdin.pause() and i'd think it'd probably close the pending call
+        //   process['stdin']['pause']();
+        // }
+      },register:function(dev, ops) {
+        TTY.ttys[dev] = { input: [], output: [], ops: ops };
+        FS.registerDevice(dev, TTY.stream_ops);
+      },stream_ops:{open:function(stream) {
+          var tty = TTY.ttys[stream.node.rdev];
+          if (!tty) {
+            throw new FS.ErrnoError(43);
+          }
+          stream.tty = tty;
+          stream.seekable = false;
+        },close:function(stream) {
+          // flush any pending line data
+          stream.tty.ops.fsync(stream.tty);
+        },fsync:function(stream) {
+          stream.tty.ops.fsync(stream.tty);
+        },read:function(stream, buffer, offset, length, pos /* ignored */) {
+          if (!stream.tty || !stream.tty.ops.get_char) {
+            throw new FS.ErrnoError(60);
+          }
+          var bytesRead = 0;
+          for (var i = 0; i < length; i++) {
+            var result;
+            try {
+              result = stream.tty.ops.get_char(stream.tty);
+            } catch (e) {
+              throw new FS.ErrnoError(29);
+            }
+            if (result === undefined && bytesRead === 0) {
+              throw new FS.ErrnoError(6);
+            }
+            if (result === null || result === undefined) break;
+            bytesRead++;
+            buffer[offset+i] = result;
+          }
+          if (bytesRead) {
+            stream.node.timestamp = Date.now();
+          }
+          return bytesRead;
+        },write:function(stream, buffer, offset, length, pos) {
+          if (!stream.tty || !stream.tty.ops.put_char) {
+            throw new FS.ErrnoError(60);
+          }
+          try {
+            for (var i = 0; i < length; i++) {
+              stream.tty.ops.put_char(stream.tty, buffer[offset+i]);
+            }
+          } catch (e) {
+            throw new FS.ErrnoError(29);
+          }
+          if (length) {
+            stream.node.timestamp = Date.now();
+          }
+          return i;
+        }},default_tty_ops:{get_char:function(tty) {
+          if (!tty.input.length) {
+            var result = null;
+            if (ENVIRONMENT_IS_NODE) {
+              // we will read data by chunks of BUFSIZE
+              var BUFSIZE = 256;
+              var buf = Buffer.alloc(BUFSIZE);
+              var bytesRead = 0;
+  
+              try {
+                bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, -1);
+              } catch(e) {
+                // Cross-platform differences: on Windows, reading EOF throws an exception, but on other OSes,
+                // reading EOF returns 0. Uniformize behavior by treating the EOF exception to return 0.
+                if (e.toString().includes('EOF')) bytesRead = 0;
+                else throw e;
+              }
+  
+              if (bytesRead > 0) {
+                result = buf.slice(0, bytesRead).toString('utf-8');
+              } else {
+                result = null;
+              }
+            } else
+            if (typeof window != 'undefined' &&
+              typeof window.prompt == 'function') {
+              // Browser.
+              result = window.prompt('Input: ');  // returns null on cancel
+              if (result !== null) {
+                result += '\n';
+              }
+            } else if (typeof readline == 'function') {
+              // Command line.
+              result = readline();
+              if (result !== null) {
+                result += '\n';
+              }
+            }
+            if (!result) {
+              return null;
+            }
+            tty.input = intArrayFromString(result, true);
+          }
+          return tty.input.shift();
+        },put_char:function(tty, val) {
+          if (val === null || val === 10) {
+            out(UTF8ArrayToString(tty.output, 0));
+            tty.output = [];
+          } else {
+            if (val != 0) tty.output.push(val); // val == 0 would cut text output off in the middle.
+          }
+        },fsync:function(tty) {
+          if (tty.output && tty.output.length > 0) {
+            out(UTF8ArrayToString(tty.output, 0));
+            tty.output = [];
+          }
+        }},default_tty1_ops:{put_char:function(tty, val) {
+          if (val === null || val === 10) {
+            err(UTF8ArrayToString(tty.output, 0));
+            tty.output = [];
+          } else {
+            if (val != 0) tty.output.push(val);
+          }
+        },fsync:function(tty) {
+          if (tty.output && tty.output.length > 0) {
+            err(UTF8ArrayToString(tty.output, 0));
+            tty.output = [];
+          }
+        }}};
+  
+  function zeroMemory(address, size) {
+      HEAPU8.fill(0, address, address + size);
+      return address;
+    }
+  
+  function alignMemory(size, alignment) {
+      assert(alignment, "alignment argument is required");
+      return Math.ceil(size / alignment) * alignment;
+    }
+  function mmapAlloc(size) {
+      abort('internal error: mmapAlloc called but `emscripten_builtin_memalign` native symbol not exported');
+    }
+  var MEMFS = {ops_table:null,mount:function(mount) {
+        return MEMFS.createNode(null, '/', 16384 | 511 /* 0777 */, 0);
+      },createNode:function(parent, name, mode, dev) {
+        if (FS.isBlkdev(mode) || FS.isFIFO(mode)) {
+          // no supported
+          throw new FS.ErrnoError(63);
+        }
+        if (!MEMFS.ops_table) {
+          MEMFS.ops_table = {
+            dir: {
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr,
+                lookup: MEMFS.node_ops.lookup,
+                mknod: MEMFS.node_ops.mknod,
+                rename: MEMFS.node_ops.rename,
+                unlink: MEMFS.node_ops.unlink,
+                rmdir: MEMFS.node_ops.rmdir,
+                readdir: MEMFS.node_ops.readdir,
+                symlink: MEMFS.node_ops.symlink
+              },
+              stream: {
+                llseek: MEMFS.stream_ops.llseek
+              }
+            },
+            file: {
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr
+              },
+              stream: {
+                llseek: MEMFS.stream_ops.llseek,
+                read: MEMFS.stream_ops.read,
+                write: MEMFS.stream_ops.write,
+                allocate: MEMFS.stream_ops.allocate,
+                mmap: MEMFS.stream_ops.mmap,
+                msync: MEMFS.stream_ops.msync
+              }
+            },
+            link: {
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr,
+                readlink: MEMFS.node_ops.readlink
+              },
+              stream: {}
+            },
+            chrdev: {
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr
+              },
+              stream: FS.chrdev_stream_ops
+            }
+          };
+        }
+        var node = FS.createNode(parent, name, mode, dev);
+        if (FS.isDir(node.mode)) {
+          node.node_ops = MEMFS.ops_table.dir.node;
+          node.stream_ops = MEMFS.ops_table.dir.stream;
+          node.contents = {};
+        } else if (FS.isFile(node.mode)) {
+          node.node_ops = MEMFS.ops_table.file.node;
+          node.stream_ops = MEMFS.ops_table.file.stream;
+          node.usedBytes = 0; // The actual number of bytes used in the typed array, as opposed to contents.length which gives the whole capacity.
+          // When the byte data of the file is populated, this will point to either a typed array, or a normal JS array. Typed arrays are preferred
+          // for performance, and used by default. However, typed arrays are not resizable like normal JS arrays are, so there is a small disk size
+          // penalty involved for appending file writes that continuously grow a file similar to std::vector capacity vs used -scheme.
+          node.contents = null; 
+        } else if (FS.isLink(node.mode)) {
+          node.node_ops = MEMFS.ops_table.link.node;
+          node.stream_ops = MEMFS.ops_table.link.stream;
+        } else if (FS.isChrdev(node.mode)) {
+          node.node_ops = MEMFS.ops_table.chrdev.node;
+          node.stream_ops = MEMFS.ops_table.chrdev.stream;
+        }
+        node.timestamp = Date.now();
+        // add the new node to the parent
+        if (parent) {
+          parent.contents[name] = node;
+          parent.timestamp = node.timestamp;
+        }
+        return node;
+      },getFileDataAsTypedArray:function(node) {
+        if (!node.contents) return new Uint8Array(0);
+        if (node.contents.subarray) return node.contents.subarray(0, node.usedBytes); // Make sure to not return excess unused bytes.
+        return new Uint8Array(node.contents);
+      },expandFileStorage:function(node, newCapacity) {
+        var prevCapacity = node.contents ? node.contents.length : 0;
+        if (prevCapacity >= newCapacity) return; // No need to expand, the storage was already large enough.
+        // Don't expand strictly to the given requested limit if it's only a very small increase, but instead geometrically grow capacity.
+        // For small filesizes (<1MB), perform size*2 geometric increase, but for large sizes, do a much more conservative size*1.125 increase to
+        // avoid overshooting the allocation cap by a very large margin.
+        var CAPACITY_DOUBLING_MAX = 1024 * 1024;
+        newCapacity = Math.max(newCapacity, (prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2.0 : 1.125)) >>> 0);
+        if (prevCapacity != 0) newCapacity = Math.max(newCapacity, 256); // At minimum allocate 256b for each file when expanding.
+        var oldContents = node.contents;
+        node.contents = new Uint8Array(newCapacity); // Allocate new storage.
+        if (node.usedBytes > 0) node.contents.set(oldContents.subarray(0, node.usedBytes), 0); // Copy old data over to the new storage.
+      },resizeFileStorage:function(node, newSize) {
+        if (node.usedBytes == newSize) return;
+        if (newSize == 0) {
+          node.contents = null; // Fully decommit when requesting a resize to zero.
+          node.usedBytes = 0;
+        } else {
+          var oldContents = node.contents;
+          node.contents = new Uint8Array(newSize); // Allocate new storage.
+          if (oldContents) {
+            node.contents.set(oldContents.subarray(0, Math.min(newSize, node.usedBytes))); // Copy old data over to the new storage.
+          }
+          node.usedBytes = newSize;
+        }
+      },node_ops:{getattr:function(node) {
+          var attr = {};
+          // device numbers reuse inode numbers.
+          attr.dev = FS.isChrdev(node.mode) ? node.id : 1;
+          attr.ino = node.id;
+          attr.mode = node.mode;
+          attr.nlink = 1;
+          attr.uid = 0;
+          attr.gid = 0;
+          attr.rdev = node.rdev;
+          if (FS.isDir(node.mode)) {
+            attr.size = 4096;
+          } else if (FS.isFile(node.mode)) {
+            attr.size = node.usedBytes;
+          } else if (FS.isLink(node.mode)) {
+            attr.size = node.link.length;
+          } else {
+            attr.size = 0;
+          }
+          attr.atime = new Date(node.timestamp);
+          attr.mtime = new Date(node.timestamp);
+          attr.ctime = new Date(node.timestamp);
+          // NOTE: In our implementation, st_blocks = Math.ceil(st_size/st_blksize),
+          //       but this is not required by the standard.
+          attr.blksize = 4096;
+          attr.blocks = Math.ceil(attr.size / attr.blksize);
+          return attr;
+        },setattr:function(node, attr) {
+          if (attr.mode !== undefined) {
+            node.mode = attr.mode;
+          }
+          if (attr.timestamp !== undefined) {
+            node.timestamp = attr.timestamp;
+          }
+          if (attr.size !== undefined) {
+            MEMFS.resizeFileStorage(node, attr.size);
+          }
+        },lookup:function(parent, name) {
+          throw FS.genericErrors[44];
+        },mknod:function(parent, name, mode, dev) {
+          return MEMFS.createNode(parent, name, mode, dev);
+        },rename:function(old_node, new_dir, new_name) {
+          // if we're overwriting a directory at new_name, make sure it's empty.
+          if (FS.isDir(old_node.mode)) {
+            var new_node;
+            try {
+              new_node = FS.lookupNode(new_dir, new_name);
+            } catch (e) {
+            }
+            if (new_node) {
+              for (var i in new_node.contents) {
+                throw new FS.ErrnoError(55);
+              }
+            }
+          }
+          // do the internal rewiring
+          delete old_node.parent.contents[old_node.name];
+          old_node.parent.timestamp = Date.now()
+          old_node.name = new_name;
+          new_dir.contents[new_name] = old_node;
+          new_dir.timestamp = old_node.parent.timestamp;
+          old_node.parent = new_dir;
+        },unlink:function(parent, name) {
+          delete parent.contents[name];
+          parent.timestamp = Date.now();
+        },rmdir:function(parent, name) {
+          var node = FS.lookupNode(parent, name);
+          for (var i in node.contents) {
+            throw new FS.ErrnoError(55);
+          }
+          delete parent.contents[name];
+          parent.timestamp = Date.now();
+        },readdir:function(node) {
+          var entries = ['.', '..'];
+          for (var key in node.contents) {
+            if (!node.contents.hasOwnProperty(key)) {
+              continue;
+            }
+            entries.push(key);
+          }
+          return entries;
+        },symlink:function(parent, newname, oldpath) {
+          var node = MEMFS.createNode(parent, newname, 511 /* 0777 */ | 40960, 0);
+          node.link = oldpath;
+          return node;
+        },readlink:function(node) {
+          if (!FS.isLink(node.mode)) {
+            throw new FS.ErrnoError(28);
+          }
+          return node.link;
+        }},stream_ops:{read:function(stream, buffer, offset, length, position) {
+          var contents = stream.node.contents;
+          if (position >= stream.node.usedBytes) return 0;
+          var size = Math.min(stream.node.usedBytes - position, length);
+          assert(size >= 0);
+          if (size > 8 && contents.subarray) { // non-trivial, and typed array
+            buffer.set(contents.subarray(position, position + size), offset);
+          } else {
+            for (var i = 0; i < size; i++) buffer[offset + i] = contents[position + i];
+          }
+          return size;
+        },write:function(stream, buffer, offset, length, position, canOwn) {
+          // The data buffer should be a typed array view
+          assert(!(buffer instanceof ArrayBuffer));
+          // If the buffer is located in main memory (HEAP), and if
+          // memory can grow, we can't hold on to references of the
+          // memory buffer, as they may get invalidated. That means we
+          // need to do copy its contents.
+          if (buffer.buffer === HEAP8.buffer) {
+            canOwn = false;
+          }
+  
+          if (!length) return 0;
+          var node = stream.node;
+          node.timestamp = Date.now();
+  
+          if (buffer.subarray && (!node.contents || node.contents.subarray)) { // This write is from a typed array to a typed array?
+            if (canOwn) {
+              assert(position === 0, 'canOwn must imply no weird position inside the file');
+              node.contents = buffer.subarray(offset, offset + length);
+              node.usedBytes = length;
+              return length;
+            } else if (node.usedBytes === 0 && position === 0) { // If this is a simple first write to an empty file, do a fast set since we don't need to care about old data.
+              node.contents = buffer.slice(offset, offset + length);
+              node.usedBytes = length;
+              return length;
+            } else if (position + length <= node.usedBytes) { // Writing to an already allocated and used subrange of the file?
+              node.contents.set(buffer.subarray(offset, offset + length), position);
+              return length;
+            }
+          }
+  
+          // Appending to an existing file and we need to reallocate, or source data did not come as a typed array.
+          MEMFS.expandFileStorage(node, position+length);
+          if (node.contents.subarray && buffer.subarray) {
+            // Use typed array write which is available.
+            node.contents.set(buffer.subarray(offset, offset + length), position);
+          } else {
+            for (var i = 0; i < length; i++) {
+             node.contents[position + i] = buffer[offset + i]; // Or fall back to manual write if not.
+            }
+          }
+          node.usedBytes = Math.max(node.usedBytes, position + length);
+          return length;
+        },llseek:function(stream, offset, whence) {
+          var position = offset;
+          if (whence === 1) {
+            position += stream.position;
+          } else if (whence === 2) {
+            if (FS.isFile(stream.node.mode)) {
+              position += stream.node.usedBytes;
+            }
+          }
+          if (position < 0) {
+            throw new FS.ErrnoError(28);
+          }
+          return position;
+        },allocate:function(stream, offset, length) {
+          MEMFS.expandFileStorage(stream.node, offset + length);
+          stream.node.usedBytes = Math.max(stream.node.usedBytes, offset + length);
+        },mmap:function(stream, length, position, prot, flags) {
+          if (!FS.isFile(stream.node.mode)) {
+            throw new FS.ErrnoError(43);
+          }
+          var ptr;
+          var allocated;
+          var contents = stream.node.contents;
+          // Only make a new copy when MAP_PRIVATE is specified.
+          if (!(flags & 2) && contents.buffer === buffer) {
+            // We can't emulate MAP_SHARED when the file is not backed by the buffer
+            // we're mapping to (e.g. the HEAP buffer).
+            allocated = false;
+            ptr = contents.byteOffset;
+          } else {
+            // Try to avoid unnecessary slices.
+            if (position > 0 || position + length < contents.length) {
+              if (contents.subarray) {
+                contents = contents.subarray(position, position + length);
+              } else {
+                contents = Array.prototype.slice.call(contents, position, position + length);
+              }
+            }
+            allocated = true;
+            ptr = mmapAlloc(length);
+            if (!ptr) {
+              throw new FS.ErrnoError(48);
+            }
+            HEAP8.set(contents, ptr);
+          }
+          return { ptr: ptr, allocated: allocated };
+        },msync:function(stream, buffer, offset, length, mmapFlags) {
+          MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
+          // should we check if bytesWritten and length are the same?
+          return 0;
+        }}};
+  
+  /** @param {boolean=} noRunDep */
+  function asyncLoad(url, onload, onerror, noRunDep) {
+      var dep = !noRunDep ? getUniqueRunDependency('al ' + url) : '';
+      readAsync(url, (arrayBuffer) => {
+        assert(arrayBuffer, 'Loading data file "' + url + '" failed (no arrayBuffer).');
+        onload(new Uint8Array(arrayBuffer));
+        if (dep) removeRunDependency(dep);
+      }, (event) => {
+        if (onerror) {
+          onerror();
+        } else {
+          throw 'Loading data file "' + url + '" failed.';
+        }
+      });
+      if (dep) addRunDependency(dep);
+    }
+  
+  var ERRNO_MESSAGES = {0:"Success",1:"Arg list too long",2:"Permission denied",3:"Address already in use",4:"Address not available",5:"Address family not supported by protocol family",6:"No more processes",7:"Socket already connected",8:"Bad file number",9:"Trying to read unreadable message",10:"Mount device busy",11:"Operation canceled",12:"No children",13:"Connection aborted",14:"Connection refused",15:"Connection reset by peer",16:"File locking deadlock error",17:"Destination address required",18:"Math arg out of domain of func",19:"Quota exceeded",20:"File exists",21:"Bad address",22:"File too large",23:"Host is unreachable",24:"Identifier removed",25:"Illegal byte sequence",26:"Connection already in progress",27:"Interrupted system call",28:"Invalid argument",29:"I/O error",30:"Socket is already connected",31:"Is a directory",32:"Too many symbolic links",33:"Too many open files",34:"Too many links",35:"Message too long",36:"Multihop attempted",37:"File or path name too long",38:"Network interface is not configured",39:"Connection reset by network",40:"Network is unreachable",41:"Too many open files in system",42:"No buffer space available",43:"No such device",44:"No such file or directory",45:"Exec format error",46:"No record locks available",47:"The link has been severed",48:"Not enough core",49:"No message of desired type",50:"Protocol not available",51:"No space left on device",52:"Function not implemented",53:"Socket is not connected",54:"Not a directory",55:"Directory not empty",56:"State not recoverable",57:"Socket operation on non-socket",59:"Not a typewriter",60:"No such device or address",61:"Value too large for defined data type",62:"Previous owner died",63:"Not super-user",64:"Broken pipe",65:"Protocol error",66:"Unknown protocol",67:"Protocol wrong type for socket",68:"Math result not representable",69:"Read only file system",70:"Illegal seek",71:"No such process",72:"Stale file handle",73:"Connection timed out",74:"Text file busy",75:"Cross-device link",100:"Device not a stream",101:"Bad font file fmt",102:"Invalid slot",103:"Invalid request code",104:"No anode",105:"Block device required",106:"Channel number out of range",107:"Level 3 halted",108:"Level 3 reset",109:"Link number out of range",110:"Protocol driver not attached",111:"No CSI structure available",112:"Level 2 halted",113:"Invalid exchange",114:"Invalid request descriptor",115:"Exchange full",116:"No data (for no delay io)",117:"Timer expired",118:"Out of streams resources",119:"Machine is not on the network",120:"Package not installed",121:"The object is remote",122:"Advertise error",123:"Srmount error",124:"Communication error on send",125:"Cross mount point (not really error)",126:"Given log. name not unique",127:"f.d. invalid for this operation",128:"Remote address changed",129:"Can   access a needed shared lib",130:"Accessing a corrupted shared lib",131:".lib section in a.out corrupted",132:"Attempting to link in too many libs",133:"Attempting to exec a shared library",135:"Streams pipe error",136:"Too many users",137:"Socket type not supported",138:"Not supported",139:"Protocol family not supported",140:"Can't send after socket shutdown",141:"Too many references",142:"Host is down",148:"No medium (in tape drive)",156:"Level 2 not synchronized"};
+  
+  var ERRNO_CODES = {};
+  var FS = {root:null,mounts:[],devices:{},streams:[],nextInode:1,nameTable:null,currentPath:"/",initialized:false,ignorePermissions:true,ErrnoError:null,genericErrors:{},filesystems:null,syncFSRequests:0,lookupPath:(path, opts = {}) => {
+        path = PATH_FS.resolve(FS.cwd(), path);
+  
+        if (!path) return { path: '', node: null };
+  
+        var defaults = {
+          follow_mount: true,
+          recurse_count: 0
+        };
+        opts = Object.assign(defaults, opts)
+  
+        if (opts.recurse_count > 8) {  // max recursive lookup of 8
+          throw new FS.ErrnoError(32);
+        }
+  
+        // split the path
+        var parts = PATH.normalizeArray(path.split('/').filter((p) => !!p), false);
+  
+        // start at the root
+        var current = FS.root;
+        var current_path = '/';
+  
+        for (var i = 0; i < parts.length; i++) {
+          var islast = (i === parts.length-1);
+          if (islast && opts.parent) {
+            // stop resolving
+            break;
+          }
+  
+          current = FS.lookupNode(current, parts[i]);
+          current_path = PATH.join2(current_path, parts[i]);
+  
+          // jump to the mount's root node if this is a mountpoint
+          if (FS.isMountpoint(current)) {
+            if (!islast || (islast && opts.follow_mount)) {
+              current = current.mounted.root;
+            }
+          }
+  
+          // by default, lookupPath will not follow a symlink if it is the final path component.
+          // setting opts.follow = true will override this behavior.
+          if (!islast || opts.follow) {
+            var count = 0;
+            while (FS.isLink(current.mode)) {
+              var link = FS.readlink(current_path);
+              current_path = PATH_FS.resolve(PATH.dirname(current_path), link);
+  
+              var lookup = FS.lookupPath(current_path, { recurse_count: opts.recurse_count + 1 });
+              current = lookup.node;
+  
+              if (count++ > 40) {  // limit max consecutive symlinks to 40 (SYMLOOP_MAX).
+                throw new FS.ErrnoError(32);
+              }
+            }
+          }
+        }
+  
+        return { path: current_path, node: current };
+      },getPath:(node) => {
+        var path;
+        while (true) {
+          if (FS.isRoot(node)) {
+            var mount = node.mount.mountpoint;
+            if (!path) return mount;
+            return mount[mount.length-1] !== '/' ? mount + '/' + path : mount + path;
+          }
+          path = path ? node.name + '/' + path : node.name;
+          node = node.parent;
+        }
+      },hashName:(parentid, name) => {
+        var hash = 0;
+  
+        for (var i = 0; i < name.length; i++) {
+          hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
+        }
+        return ((parentid + hash) >>> 0) % FS.nameTable.length;
+      },hashAddNode:(node) => {
+        var hash = FS.hashName(node.parent.id, node.name);
+        node.name_next = FS.nameTable[hash];
+        FS.nameTable[hash] = node;
+      },hashRemoveNode:(node) => {
+        var hash = FS.hashName(node.parent.id, node.name);
+        if (FS.nameTable[hash] === node) {
+          FS.nameTable[hash] = node.name_next;
+        } else {
+          var current = FS.nameTable[hash];
+          while (current) {
+            if (current.name_next === node) {
+              current.name_next = node.name_next;
+              break;
+            }
+            current = current.name_next;
+          }
+        }
+      },lookupNode:(parent, name) => {
+        var errCode = FS.mayLookup(parent);
+        if (errCode) {
+          throw new FS.ErrnoError(errCode, parent);
+        }
+        var hash = FS.hashName(parent.id, name);
+        for (var node = FS.nameTable[hash]; node; node = node.name_next) {
+          var nodeName = node.name;
+          if (node.parent.id === parent.id && nodeName === name) {
+            return node;
+          }
+        }
+        // if we failed to find it in the cache, call into the VFS
+        return FS.lookup(parent, name);
+      },createNode:(parent, name, mode, rdev) => {
+        assert(typeof parent == 'object')
+        var node = new FS.FSNode(parent, name, mode, rdev);
+  
+        FS.hashAddNode(node);
+  
+        return node;
+      },destroyNode:(node) => {
+        FS.hashRemoveNode(node);
+      },isRoot:(node) => {
+        return node === node.parent;
+      },isMountpoint:(node) => {
+        return !!node.mounted;
+      },isFile:(mode) => {
+        return (mode & 61440) === 32768;
+      },isDir:(mode) => {
+        return (mode & 61440) === 16384;
+      },isLink:(mode) => {
+        return (mode & 61440) === 40960;
+      },isChrdev:(mode) => {
+        return (mode & 61440) === 8192;
+      },isBlkdev:(mode) => {
+        return (mode & 61440) === 24576;
+      },isFIFO:(mode) => {
+        return (mode & 61440) === 4096;
+      },isSocket:(mode) => {
+        return (mode & 49152) === 49152;
+      },flagModes:{"r":0,"r+":2,"w":577,"w+":578,"a":1089,"a+":1090},modeStringToFlags:(str) => {
+        var flags = FS.flagModes[str];
+        if (typeof flags == 'undefined') {
+          throw new Error('Unknown file open mode: ' + str);
+        }
+        return flags;
+      },flagsToPermissionString:(flag) => {
+        var perms = ['r', 'w', 'rw'][flag & 3];
+        if ((flag & 512)) {
+          perms += 'w';
+        }
+        return perms;
+      },nodePermissions:(node, perms) => {
+        if (FS.ignorePermissions) {
+          return 0;
+        }
+        // return 0 if any user, group or owner bits are set.
+        if (perms.includes('r') && !(node.mode & 292)) {
+          return 2;
+        } else if (perms.includes('w') && !(node.mode & 146)) {
+          return 2;
+        } else if (perms.includes('x') && !(node.mode & 73)) {
+          return 2;
+        }
+        return 0;
+      },mayLookup:(dir) => {
+        var errCode = FS.nodePermissions(dir, 'x');
+        if (errCode) return errCode;
+        if (!dir.node_ops.lookup) return 2;
+        return 0;
+      },mayCreate:(dir, name) => {
+        try {
+          var node = FS.lookupNode(dir, name);
+          return 20;
+        } catch (e) {
+        }
+        return FS.nodePermissions(dir, 'wx');
+      },mayDelete:(dir, name, isdir) => {
+        var node;
+        try {
+          node = FS.lookupNode(dir, name);
+        } catch (e) {
+          return e.errno;
+        }
+        var errCode = FS.nodePermissions(dir, 'wx');
+        if (errCode) {
+          return errCode;
+        }
+        if (isdir) {
+          if (!FS.isDir(node.mode)) {
+            return 54;
+          }
+          if (FS.isRoot(node) || FS.getPath(node) === FS.cwd()) {
+            return 10;
+          }
+        } else {
+          if (FS.isDir(node.mode)) {
+            return 31;
+          }
+        }
+        return 0;
+      },mayOpen:(node, flags) => {
+        if (!node) {
+          return 44;
+        }
+        if (FS.isLink(node.mode)) {
+          return 32;
+        } else if (FS.isDir(node.mode)) {
+          if (FS.flagsToPermissionString(flags) !== 'r' || // opening for write
+              (flags & 512)) { // TODO: check for O_SEARCH? (== search for dir only)
+            return 31;
+          }
+        }
+        return FS.nodePermissions(node, FS.flagsToPermissionString(flags));
+      },MAX_OPEN_FDS:4096,nextfd:(fd_start = 0, fd_end = FS.MAX_OPEN_FDS) => {
+        for (var fd = fd_start; fd <= fd_end; fd++) {
+          if (!FS.streams[fd]) {
+            return fd;
+          }
+        }
+        throw new FS.ErrnoError(33);
+      },getStream:(fd) => FS.streams[fd],createStream:(stream, fd_start, fd_end) => {
+        if (!FS.FSStream) {
+          FS.FSStream = /** @constructor */ function() {
+            this.shared = { };
+          };
+          FS.FSStream.prototype = {};
+          Object.defineProperties(FS.FSStream.prototype, {
+            object: {
+              /** @this {FS.FSStream} */
+              get: function() { return this.node; },
+              /** @this {FS.FSStream} */
+              set: function(val) { this.node = val; }
+            },
+            isRead: {
+              /** @this {FS.FSStream} */
+              get: function() { return (this.flags & 2097155) !== 1; }
+            },
+            isWrite: {
+              /** @this {FS.FSStream} */
+              get: function() { return (this.flags & 2097155) !== 0; }
+            },
+            isAppend: {
+              /** @this {FS.FSStream} */
+              get: function() { return (this.flags & 1024); }
+            },
+            flags: {
+              /** @this {FS.FSStream} */
+              get: function() { return this.shared.flags; },
+              /** @this {FS.FSStream} */
+              set: function(val) { this.shared.flags = val; },
+            },
+            position : {
+              /** @this {FS.FSStream} */
+              get: function() { return this.shared.position; },
+              /** @this {FS.FSStream} */
+              set: function(val) { this.shared.position = val; },
+            },
+          });
+        }
+        // clone it, so we can return an instance of FSStream
+        stream = Object.assign(new FS.FSStream(), stream);
+        var fd = FS.nextfd(fd_start, fd_end);
+        stream.fd = fd;
+        FS.streams[fd] = stream;
+        return stream;
+      },closeStream:(fd) => {
+        FS.streams[fd] = null;
+      },chrdev_stream_ops:{open:(stream) => {
+          var device = FS.getDevice(stream.node.rdev);
+          // override node's stream ops with the device's
+          stream.stream_ops = device.stream_ops;
+          // forward the open call
+          if (stream.stream_ops.open) {
+            stream.stream_ops.open(stream);
+          }
+        },llseek:() => {
+          throw new FS.ErrnoError(70);
+        }},major:(dev) => ((dev) >> 8),minor:(dev) => ((dev) & 0xff),makedev:(ma, mi) => ((ma) << 8 | (mi)),registerDevice:(dev, ops) => {
+        FS.devices[dev] = { stream_ops: ops };
+      },getDevice:(dev) => FS.devices[dev],getMounts:(mount) => {
+        var mounts = [];
+        var check = [mount];
+  
+        while (check.length) {
+          var m = check.pop();
+  
+          mounts.push(m);
+  
+          check.push.apply(check, m.mounts);
+        }
+  
+        return mounts;
+      },syncfs:(populate, callback) => {
+        if (typeof populate == 'function') {
+          callback = populate;
+          populate = false;
+        }
+  
+        FS.syncFSRequests++;
+  
+        if (FS.syncFSRequests > 1) {
+          err('warning: ' + FS.syncFSRequests + ' FS.syncfs operations in flight at once, probably just doing extra work');
+        }
+  
+        var mounts = FS.getMounts(FS.root.mount);
+        var completed = 0;
+  
+        function doCallback(errCode) {
+          assert(FS.syncFSRequests > 0);
+          FS.syncFSRequests--;
+          return callback(errCode);
+        }
+  
+        function done(errCode) {
+          if (errCode) {
+            if (!done.errored) {
+              done.errored = true;
+              return doCallback(errCode);
+            }
+            return;
+          }
+          if (++completed >= mounts.length) {
+            doCallback(null);
+          }
+        };
+  
+        // sync all mounts
+        mounts.forEach((mount) => {
+          if (!mount.type.syncfs) {
+            return done(null);
+          }
+          mount.type.syncfs(mount, populate, done);
+        });
+      },mount:(type, opts, mountpoint) => {
+        if (typeof type == 'string') {
+          // The filesystem was not included, and instead we have an error
+          // message stored in the variable.
+          throw type;
+        }
+        var root = mountpoint === '/';
+        var pseudo = !mountpoint;
+        var node;
+  
+        if (root && FS.root) {
+          throw new FS.ErrnoError(10);
+        } else if (!root && !pseudo) {
+          var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
+  
+          mountpoint = lookup.path;  // use the absolute path
+          node = lookup.node;
+  
+          if (FS.isMountpoint(node)) {
+            throw new FS.ErrnoError(10);
+          }
+  
+          if (!FS.isDir(node.mode)) {
+            throw new FS.ErrnoError(54);
+          }
+        }
+  
+        var mount = {
+          type: type,
+          opts: opts,
+          mountpoint: mountpoint,
+          mounts: []
+        };
+  
+        // create a root node for the fs
+        var mountRoot = type.mount(mount);
+        mountRoot.mount = mount;
+        mount.root = mountRoot;
+  
+        if (root) {
+          FS.root = mountRoot;
+        } else if (node) {
+          // set as a mountpoint
+          node.mounted = mount;
+  
+          // add the new mount to the current mount's children
+          if (node.mount) {
+            node.mount.mounts.push(mount);
+          }
+        }
+  
+        return mountRoot;
+      },unmount:(mountpoint) => {
+        var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
+  
+        if (!FS.isMountpoint(lookup.node)) {
+          throw new FS.ErrnoError(28);
+        }
+  
+        // destroy the nodes for this mount, and all its child mounts
+        var node = lookup.node;
+        var mount = node.mounted;
+        var mounts = FS.getMounts(mount);
+  
+        Object.keys(FS.nameTable).forEach((hash) => {
+          var current = FS.nameTable[hash];
+  
+          while (current) {
+            var next = current.name_next;
+  
+            if (mounts.includes(current.mount)) {
+              FS.destroyNode(current);
+            }
+  
+            current = next;
+          }
+        });
+  
+        // no longer a mountpoint
+        node.mounted = null;
+  
+        // remove this mount from the child mounts
+        var idx = node.mount.mounts.indexOf(mount);
+        assert(idx !== -1);
+        node.mount.mounts.splice(idx, 1);
+      },lookup:(parent, name) => {
+        return parent.node_ops.lookup(parent, name);
+      },mknod:(path, mode, dev) => {
+        var lookup = FS.lookupPath(path, { parent: true });
+        var parent = lookup.node;
+        var name = PATH.basename(path);
+        if (!name || name === '.' || name === '..') {
+          throw new FS.ErrnoError(28);
+        }
+        var errCode = FS.mayCreate(parent, name);
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        if (!parent.node_ops.mknod) {
+          throw new FS.ErrnoError(63);
+        }
+        return parent.node_ops.mknod(parent, name, mode, dev);
+      },create:(path, mode) => {
+        mode = mode !== undefined ? mode : 438 /* 0666 */;
+        mode &= 4095;
+        mode |= 32768;
+        return FS.mknod(path, mode, 0);
+      },mkdir:(path, mode) => {
+        mode = mode !== undefined ? mode : 511 /* 0777 */;
+        mode &= 511 | 512;
+        mode |= 16384;
+        return FS.mknod(path, mode, 0);
+      },mkdirTree:(path, mode) => {
+        var dirs = path.split('/');
+        var d = '';
+        for (var i = 0; i < dirs.length; ++i) {
+          if (!dirs[i]) continue;
+          d += '/' + dirs[i];
+          try {
+            FS.mkdir(d, mode);
+          } catch(e) {
+            if (e.errno != 20) throw e;
+          }
+        }
+      },mkdev:(path, mode, dev) => {
+        if (typeof dev == 'undefined') {
+          dev = mode;
+          mode = 438 /* 0666 */;
+        }
+        mode |= 8192;
+        return FS.mknod(path, mode, dev);
+      },symlink:(oldpath, newpath) => {
+        if (!PATH_FS.resolve(oldpath)) {
+          throw new FS.ErrnoError(44);
+        }
+        var lookup = FS.lookupPath(newpath, { parent: true });
+        var parent = lookup.node;
+        if (!parent) {
+          throw new FS.ErrnoError(44);
+        }
+        var newname = PATH.basename(newpath);
+        var errCode = FS.mayCreate(parent, newname);
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        if (!parent.node_ops.symlink) {
+          throw new FS.ErrnoError(63);
+        }
+        return parent.node_ops.symlink(parent, newname, oldpath);
+      },rename:(old_path, new_path) => {
+        var old_dirname = PATH.dirname(old_path);
+        var new_dirname = PATH.dirname(new_path);
+        var old_name = PATH.basename(old_path);
+        var new_name = PATH.basename(new_path);
+        // parents must exist
+        var lookup, old_dir, new_dir;
+  
+        // let the errors from non existant directories percolate up
+        lookup = FS.lookupPath(old_path, { parent: true });
+        old_dir = lookup.node;
+        lookup = FS.lookupPath(new_path, { parent: true });
+        new_dir = lookup.node;
+  
+        if (!old_dir || !new_dir) throw new FS.ErrnoError(44);
+        // need to be part of the same mount
+        if (old_dir.mount !== new_dir.mount) {
+          throw new FS.ErrnoError(75);
+        }
+        // source must exist
+        var old_node = FS.lookupNode(old_dir, old_name);
+        // old path should not be an ancestor of the new path
+        var relative = PATH_FS.relative(old_path, new_dirname);
+        if (relative.charAt(0) !== '.') {
+          throw new FS.ErrnoError(28);
+        }
+        // new path should not be an ancestor of the old path
+        relative = PATH_FS.relative(new_path, old_dirname);
+        if (relative.charAt(0) !== '.') {
+          throw new FS.ErrnoError(55);
+        }
+        // see if the new path already exists
+        var new_node;
+        try {
+          new_node = FS.lookupNode(new_dir, new_name);
+        } catch (e) {
+          // not fatal
+        }
+        // early out if nothing needs to change
+        if (old_node === new_node) {
+          return;
+        }
+        // we'll need to delete the old entry
+        var isdir = FS.isDir(old_node.mode);
+        var errCode = FS.mayDelete(old_dir, old_name, isdir);
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        // need delete permissions if we'll be overwriting.
+        // need create permissions if new doesn't already exist.
+        errCode = new_node ?
+          FS.mayDelete(new_dir, new_name, isdir) :
+          FS.mayCreate(new_dir, new_name);
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        if (!old_dir.node_ops.rename) {
+          throw new FS.ErrnoError(63);
+        }
+        if (FS.isMountpoint(old_node) || (new_node && FS.isMountpoint(new_node))) {
+          throw new FS.ErrnoError(10);
+        }
+        // if we are going to change the parent, check write permissions
+        if (new_dir !== old_dir) {
+          errCode = FS.nodePermissions(old_dir, 'w');
+          if (errCode) {
+            throw new FS.ErrnoError(errCode);
+          }
+        }
+        // remove the node from the lookup hash
+        FS.hashRemoveNode(old_node);
+        // do the underlying fs rename
+        try {
+          old_dir.node_ops.rename(old_node, new_dir, new_name);
+        } catch (e) {
+          throw e;
+        } finally {
+          // add the node back to the hash (in case node_ops.rename
+          // changed its name)
+          FS.hashAddNode(old_node);
+        }
+      },rmdir:(path) => {
+        var lookup = FS.lookupPath(path, { parent: true });
+        var parent = lookup.node;
+        var name = PATH.basename(path);
+        var node = FS.lookupNode(parent, name);
+        var errCode = FS.mayDelete(parent, name, true);
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        if (!parent.node_ops.rmdir) {
+          throw new FS.ErrnoError(63);
+        }
+        if (FS.isMountpoint(node)) {
+          throw new FS.ErrnoError(10);
+        }
+        parent.node_ops.rmdir(parent, name);
+        FS.destroyNode(node);
+      },readdir:(path) => {
+        var lookup = FS.lookupPath(path, { follow: true });
+        var node = lookup.node;
+        if (!node.node_ops.readdir) {
+          throw new FS.ErrnoError(54);
+        }
+        return node.node_ops.readdir(node);
+      },unlink:(path) => {
+        var lookup = FS.lookupPath(path, { parent: true });
+        var parent = lookup.node;
+        if (!parent) {
+          throw new FS.ErrnoError(44);
+        }
+        var name = PATH.basename(path);
+        var node = FS.lookupNode(parent, name);
+        var errCode = FS.mayDelete(parent, name, false);
+        if (errCode) {
+          // According to POSIX, we should map EISDIR to EPERM, but
+          // we instead do what Linux does (and we must, as we use
+          // the musl linux libc).
+          throw new FS.ErrnoError(errCode);
+        }
+        if (!parent.node_ops.unlink) {
+          throw new FS.ErrnoError(63);
+        }
+        if (FS.isMountpoint(node)) {
+          throw new FS.ErrnoError(10);
+        }
+        parent.node_ops.unlink(parent, name);
+        FS.destroyNode(node);
+      },readlink:(path) => {
+        var lookup = FS.lookupPath(path);
+        var link = lookup.node;
+        if (!link) {
+          throw new FS.ErrnoError(44);
+        }
+        if (!link.node_ops.readlink) {
+          throw new FS.ErrnoError(28);
+        }
+        return PATH_FS.resolve(FS.getPath(link.parent), link.node_ops.readlink(link));
+      },stat:(path, dontFollow) => {
+        var lookup = FS.lookupPath(path, { follow: !dontFollow });
+        var node = lookup.node;
+        if (!node) {
+          throw new FS.ErrnoError(44);
+        }
+        if (!node.node_ops.getattr) {
+          throw new FS.ErrnoError(63);
+        }
+        return node.node_ops.getattr(node);
+      },lstat:(path) => {
+        return FS.stat(path, true);
+      },chmod:(path, mode, dontFollow) => {
+        var node;
+        if (typeof path == 'string') {
+          var lookup = FS.lookupPath(path, { follow: !dontFollow });
+          node = lookup.node;
+        } else {
+          node = path;
+        }
+        if (!node.node_ops.setattr) {
+          throw new FS.ErrnoError(63);
+        }
+        node.node_ops.setattr(node, {
+          mode: (mode & 4095) | (node.mode & ~4095),
+          timestamp: Date.now()
+        });
+      },lchmod:(path, mode) => {
+        FS.chmod(path, mode, true);
+      },fchmod:(fd, mode) => {
+        var stream = FS.getStream(fd);
+        if (!stream) {
+          throw new FS.ErrnoError(8);
+        }
+        FS.chmod(stream.node, mode);
+      },chown:(path, uid, gid, dontFollow) => {
+        var node;
+        if (typeof path == 'string') {
+          var lookup = FS.lookupPath(path, { follow: !dontFollow });
+          node = lookup.node;
+        } else {
+          node = path;
+        }
+        if (!node.node_ops.setattr) {
+          throw new FS.ErrnoError(63);
+        }
+        node.node_ops.setattr(node, {
+          timestamp: Date.now()
+          // we ignore the uid / gid for now
+        });
+      },lchown:(path, uid, gid) => {
+        FS.chown(path, uid, gid, true);
+      },fchown:(fd, uid, gid) => {
+        var stream = FS.getStream(fd);
+        if (!stream) {
+          throw new FS.ErrnoError(8);
+        }
+        FS.chown(stream.node, uid, gid);
+      },truncate:(path, len) => {
+        if (len < 0) {
+          throw new FS.ErrnoError(28);
+        }
+        var node;
+        if (typeof path == 'string') {
+          var lookup = FS.lookupPath(path, { follow: true });
+          node = lookup.node;
+        } else {
+          node = path;
+        }
+        if (!node.node_ops.setattr) {
+          throw new FS.ErrnoError(63);
+        }
+        if (FS.isDir(node.mode)) {
+          throw new FS.ErrnoError(31);
+        }
+        if (!FS.isFile(node.mode)) {
+          throw new FS.ErrnoError(28);
+        }
+        var errCode = FS.nodePermissions(node, 'w');
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        node.node_ops.setattr(node, {
+          size: len,
+          timestamp: Date.now()
+        });
+      },ftruncate:(fd, len) => {
+        var stream = FS.getStream(fd);
+        if (!stream) {
+          throw new FS.ErrnoError(8);
+        }
+        if ((stream.flags & 2097155) === 0) {
+          throw new FS.ErrnoError(28);
+        }
+        FS.truncate(stream.node, len);
+      },utime:(path, atime, mtime) => {
+        var lookup = FS.lookupPath(path, { follow: true });
+        var node = lookup.node;
+        node.node_ops.setattr(node, {
+          timestamp: Math.max(atime, mtime)
+        });
+      },open:(path, flags, mode) => {
+        if (path === "") {
+          throw new FS.ErrnoError(44);
+        }
+        flags = typeof flags == 'string' ? FS.modeStringToFlags(flags) : flags;
+        mode = typeof mode == 'undefined' ? 438 /* 0666 */ : mode;
+        if ((flags & 64)) {
+          mode = (mode & 4095) | 32768;
+        } else {
+          mode = 0;
+        }
+        var node;
+        if (typeof path == 'object') {
+          node = path;
+        } else {
+          path = PATH.normalize(path);
+          try {
+            var lookup = FS.lookupPath(path, {
+              follow: !(flags & 131072)
+            });
+            node = lookup.node;
+          } catch (e) {
+            // ignore
+          }
+        }
+        // perhaps we need to create the node
+        var created = false;
+        if ((flags & 64)) {
+          if (node) {
+            // if O_CREAT and O_EXCL are set, error out if the node already exists
+            if ((flags & 128)) {
+              throw new FS.ErrnoError(20);
+            }
+          } else {
+            // node doesn't exist, try to create it
+            node = FS.mknod(path, mode, 0);
+            created = true;
+          }
+        }
+        if (!node) {
+          throw new FS.ErrnoError(44);
+        }
+        // can't truncate a device
+        if (FS.isChrdev(node.mode)) {
+          flags &= ~512;
+        }
+        // if asked only for a directory, then this must be one
+        if ((flags & 65536) && !FS.isDir(node.mode)) {
+          throw new FS.ErrnoError(54);
+        }
+        // check permissions, if this is not a file we just created now (it is ok to
+        // create and write to a file with read-only permissions; it is read-only
+        // for later use)
+        if (!created) {
+          var errCode = FS.mayOpen(node, flags);
+          if (errCode) {
+            throw new FS.ErrnoError(errCode);
+          }
+        }
+        // do truncation if necessary
+        if ((flags & 512) && !created) {
+          FS.truncate(node, 0);
+        }
+        // we've already handled these, don't pass down to the underlying vfs
+        flags &= ~(128 | 512 | 131072);
+  
+        // register the stream with the filesystem
+        var stream = FS.createStream({
+          node: node,
+          path: FS.getPath(node),  // we want the absolute path to the node
+          flags: flags,
+          seekable: true,
+          position: 0,
+          stream_ops: node.stream_ops,
+          // used by the file family libc calls (fopen, fwrite, ferror, etc.)
+          ungotten: [],
+          error: false
+        });
+        // call the new stream's open function
+        if (stream.stream_ops.open) {
+          stream.stream_ops.open(stream);
+        }
+        if (Module['logReadFiles'] && !(flags & 1)) {
+          if (!FS.readFiles) FS.readFiles = {};
+          if (!(path in FS.readFiles)) {
+            FS.readFiles[path] = 1;
+          }
+        }
+        return stream;
+      },close:(stream) => {
+        if (FS.isClosed(stream)) {
+          throw new FS.ErrnoError(8);
+        }
+        if (stream.getdents) stream.getdents = null; // free readdir state
+        try {
+          if (stream.stream_ops.close) {
+            stream.stream_ops.close(stream);
+          }
+        } catch (e) {
+          throw e;
+        } finally {
+          FS.closeStream(stream.fd);
+        }
+        stream.fd = null;
+      },isClosed:(stream) => {
+        return stream.fd === null;
+      },llseek:(stream, offset, whence) => {
+        if (FS.isClosed(stream)) {
+          throw new FS.ErrnoError(8);
+        }
+        if (!stream.seekable || !stream.stream_ops.llseek) {
+          throw new FS.ErrnoError(70);
+        }
+        if (whence != 0 && whence != 1 && whence != 2) {
+          throw new FS.ErrnoError(28);
+        }
+        stream.position = stream.stream_ops.llseek(stream, offset, whence);
+        stream.ungotten = [];
+        return stream.position;
+      },read:(stream, buffer, offset, length, position) => {
+        if (length < 0 || position < 0) {
+          throw new FS.ErrnoError(28);
+        }
+        if (FS.isClosed(stream)) {
+          throw new FS.ErrnoError(8);
+        }
+        if ((stream.flags & 2097155) === 1) {
+          throw new FS.ErrnoError(8);
+        }
+        if (FS.isDir(stream.node.mode)) {
+          throw new FS.ErrnoError(31);
+        }
+        if (!stream.stream_ops.read) {
+          throw new FS.ErrnoError(28);
+        }
+        var seeking = typeof position != 'undefined';
+        if (!seeking) {
+          position = stream.position;
+        } else if (!stream.seekable) {
+          throw new FS.ErrnoError(70);
+        }
+        var bytesRead = stream.stream_ops.read(stream, buffer, offset, length, position);
+        if (!seeking) stream.position += bytesRead;
+        return bytesRead;
+      },write:(stream, buffer, offset, length, position, canOwn) => {
+        if (length < 0 || position < 0) {
+          throw new FS.ErrnoError(28);
+        }
+        if (FS.isClosed(stream)) {
+          throw new FS.ErrnoError(8);
+        }
+        if ((stream.flags & 2097155) === 0) {
+          throw new FS.ErrnoError(8);
+        }
+        if (FS.isDir(stream.node.mode)) {
+          throw new FS.ErrnoError(31);
+        }
+        if (!stream.stream_ops.write) {
+          throw new FS.ErrnoError(28);
+        }
+        if (stream.seekable && stream.flags & 1024) {
+          // seek to the end before writing in append mode
+          FS.llseek(stream, 0, 2);
+        }
+        var seeking = typeof position != 'undefined';
+        if (!seeking) {
+          position = stream.position;
+        } else if (!stream.seekable) {
+          throw new FS.ErrnoError(70);
+        }
+        var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
+        if (!seeking) stream.position += bytesWritten;
+        return bytesWritten;
+      },allocate:(stream, offset, length) => {
+        if (FS.isClosed(stream)) {
+          throw new FS.ErrnoError(8);
+        }
+        if (offset < 0 || length <= 0) {
+          throw new FS.ErrnoError(28);
+        }
+        if ((stream.flags & 2097155) === 0) {
+          throw new FS.ErrnoError(8);
+        }
+        if (!FS.isFile(stream.node.mode) && !FS.isDir(stream.node.mode)) {
+          throw new FS.ErrnoError(43);
+        }
+        if (!stream.stream_ops.allocate) {
+          throw new FS.ErrnoError(138);
+        }
+        stream.stream_ops.allocate(stream, offset, length);
+      },mmap:(stream, length, position, prot, flags) => {
+        // User requests writing to file (prot & PROT_WRITE != 0).
+        // Checking if we have permissions to write to the file unless
+        // MAP_PRIVATE flag is set. According to POSIX spec it is possible
+        // to write to file opened in read-only mode with MAP_PRIVATE flag,
+        // as all modifications will be visible only in the memory of
+        // the current process.
+        if ((prot & 2) !== 0
+            && (flags & 2) === 0
+            && (stream.flags & 2097155) !== 2) {
+          throw new FS.ErrnoError(2);
+        }
+        if ((stream.flags & 2097155) === 1) {
+          throw new FS.ErrnoError(2);
+        }
+        if (!stream.stream_ops.mmap) {
+          throw new FS.ErrnoError(43);
+        }
+        return stream.stream_ops.mmap(stream, length, position, prot, flags);
+      },msync:(stream, buffer, offset, length, mmapFlags) => {
+        if (!stream.stream_ops.msync) {
+          return 0;
+        }
+        return stream.stream_ops.msync(stream, buffer, offset, length, mmapFlags);
+      },munmap:(stream) => 0,ioctl:(stream, cmd, arg) => {
+        if (!stream.stream_ops.ioctl) {
+          throw new FS.ErrnoError(59);
+        }
+        return stream.stream_ops.ioctl(stream, cmd, arg);
+      },readFile:(path, opts = {}) => {
+        opts.flags = opts.flags || 0;
+        opts.encoding = opts.encoding || 'binary';
+        if (opts.encoding !== 'utf8' && opts.encoding !== 'binary') {
+          throw new Error('Invalid encoding type "' + opts.encoding + '"');
+        }
+        var ret;
+        var stream = FS.open(path, opts.flags);
+        var stat = FS.stat(path);
+        var length = stat.size;
+        var buf = new Uint8Array(length);
+        FS.read(stream, buf, 0, length, 0);
+        if (opts.encoding === 'utf8') {
+          ret = UTF8ArrayToString(buf, 0);
+        } else if (opts.encoding === 'binary') {
+          ret = buf;
+        }
+        FS.close(stream);
+        return ret;
+      },writeFile:(path, data, opts = {}) => {
+        opts.flags = opts.flags || 577;
+        var stream = FS.open(path, opts.flags, opts.mode);
+        if (typeof data == 'string') {
+          var buf = new Uint8Array(lengthBytesUTF8(data)+1);
+          var actualNumBytes = stringToUTF8Array(data, buf, 0, buf.length);
+          FS.write(stream, buf, 0, actualNumBytes, undefined, opts.canOwn);
+        } else if (ArrayBuffer.isView(data)) {
+          FS.write(stream, data, 0, data.byteLength, undefined, opts.canOwn);
+        } else {
+          throw new Error('Unsupported data type');
+        }
+        FS.close(stream);
+      },cwd:() => FS.currentPath,chdir:(path) => {
+        var lookup = FS.lookupPath(path, { follow: true });
+        if (lookup.node === null) {
+          throw new FS.ErrnoError(44);
+        }
+        if (!FS.isDir(lookup.node.mode)) {
+          throw new FS.ErrnoError(54);
+        }
+        var errCode = FS.nodePermissions(lookup.node, 'x');
+        if (errCode) {
+          throw new FS.ErrnoError(errCode);
+        }
+        FS.currentPath = lookup.path;
+      },createDefaultDirectories:() => {
+        FS.mkdir('/tmp');
+        FS.mkdir('/home');
+        FS.mkdir('/home/web_user');
+      },createDefaultDevices:() => {
+        // create /dev
+        FS.mkdir('/dev');
+        // setup /dev/null
+        FS.registerDevice(FS.makedev(1, 3), {
+          read: () => 0,
+          write: (stream, buffer, offset, length, pos) => length,
+        });
+        FS.mkdev('/dev/null', FS.makedev(1, 3));
+        // setup /dev/tty and /dev/tty1
+        // stderr needs to print output using err() rather than out()
+        // so we register a second tty just for it.
+        TTY.register(FS.makedev(5, 0), TTY.default_tty_ops);
+        TTY.register(FS.makedev(6, 0), TTY.default_tty1_ops);
+        FS.mkdev('/dev/tty', FS.makedev(5, 0));
+        FS.mkdev('/dev/tty1', FS.makedev(6, 0));
+        // setup /dev/[u]random
+        var random_device = getRandomDevice();
+        FS.createDevice('/dev', 'random', random_device);
+        FS.createDevice('/dev', 'urandom', random_device);
+        // we're not going to emulate the actual shm device,
+        // just create the tmp dirs that reside in it commonly
+        FS.mkdir('/dev/shm');
+        FS.mkdir('/dev/shm/tmp');
+      },createSpecialDirectories:() => {
+        // create /proc/self/fd which allows /proc/self/fd/6 => readlink gives the
+        // name of the stream for fd 6 (see test_unistd_ttyname)
+        FS.mkdir('/proc');
+        var proc_self = FS.mkdir('/proc/self');
+        FS.mkdir('/proc/self/fd');
+        FS.mount({
+          mount: () => {
+            var node = FS.createNode(proc_self, 'fd', 16384 | 511 /* 0777 */, 73);
+            node.node_ops = {
+              lookup: (parent, name) => {
+                var fd = +name;
+                var stream = FS.getStream(fd);
+                if (!stream) throw new FS.ErrnoError(8);
+                var ret = {
+                  parent: null,
+                  mount: { mountpoint: 'fake' },
+                  node_ops: { readlink: () => stream.path },
+                };
+                ret.parent = ret; // make it look like a simple root node
+                return ret;
+              }
+            };
+            return node;
+          }
+        }, {}, '/proc/self/fd');
+      },createStandardStreams:() => {
+        // TODO deprecate the old functionality of a single
+        // input / output callback and that utilizes FS.createDevice
+        // and instead require a unique set of stream ops
+  
+        // by default, we symlink the standard streams to the
+        // default tty devices. however, if the standard streams
+        // have been overwritten we create a unique device for
+        // them instead.
+        if (Module['stdin']) {
+          FS.createDevice('/dev', 'stdin', Module['stdin']);
+        } else {
+          FS.symlink('/dev/tty', '/dev/stdin');
+        }
+        if (Module['stdout']) {
+          FS.createDevice('/dev', 'stdout', null, Module['stdout']);
+        } else {
+          FS.symlink('/dev/tty', '/dev/stdout');
+        }
+        if (Module['stderr']) {
+          FS.createDevice('/dev', 'stderr', null, Module['stderr']);
+        } else {
+          FS.symlink('/dev/tty1', '/dev/stderr');
+        }
+  
+        // open default streams for the stdin, stdout and stderr devices
+        var stdin = FS.open('/dev/stdin', 0);
+        var stdout = FS.open('/dev/stdout', 1);
+        var stderr = FS.open('/dev/stderr', 1);
+        assert(stdin.fd === 0, 'invalid handle for stdin (' + stdin.fd + ')');
+        assert(stdout.fd === 1, 'invalid handle for stdout (' + stdout.fd + ')');
+        assert(stderr.fd === 2, 'invalid handle for stderr (' + stderr.fd + ')');
+      },ensureErrnoError:() => {
+        if (FS.ErrnoError) return;
+        FS.ErrnoError = /** @this{Object} */ function ErrnoError(errno, node) {
+          this.node = node;
+          this.setErrno = /** @this{Object} */ function(errno) {
+            this.errno = errno;
+            for (var key in ERRNO_CODES) {
+              if (ERRNO_CODES[key] === errno) {
+                this.code = key;
+                break;
+              }
+            }
+          };
+          this.setErrno(errno);
+          this.message = ERRNO_MESSAGES[errno];
+  
+          // Try to get a maximally helpful stack trace. On Node.js, getting Error.stack
+          // now ensures it shows what we want.
+          if (this.stack) {
+            // Define the stack property for Node.js 4, which otherwise errors on the next line.
+            Object.defineProperty(this, "stack", { value: (new Error).stack, writable: true });
+            this.stack = demangleAll(this.stack);
+          }
+        };
+        FS.ErrnoError.prototype = new Error();
+        FS.ErrnoError.prototype.constructor = FS.ErrnoError;
+        // Some errors may happen quite a bit, to avoid overhead we reuse them (and suffer a lack of stack info)
+        [44].forEach((code) => {
+          FS.genericErrors[code] = new FS.ErrnoError(code);
+          FS.genericErrors[code].stack = '<generic error, no stack>';
+        });
+      },staticInit:() => {
+        FS.ensureErrnoError();
+  
+        FS.nameTable = new Array(4096);
+  
+        FS.mount(MEMFS, {}, '/');
+  
+        FS.createDefaultDirectories();
+        FS.createDefaultDevices();
+        FS.createSpecialDirectories();
+  
+        FS.filesystems = {
+          'MEMFS': MEMFS,
+        };
+      },init:(input, output, error) => {
+        assert(!FS.init.initialized, 'FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)');
+        FS.init.initialized = true;
+  
+        FS.ensureErrnoError();
+  
+        // Allow Module.stdin etc. to provide defaults, if none explicitly passed to us here
+        Module['stdin'] = input || Module['stdin'];
+        Module['stdout'] = output || Module['stdout'];
+        Module['stderr'] = error || Module['stderr'];
+  
+        FS.createStandardStreams();
+      },quit:() => {
+        FS.init.initialized = false;
+        // force-flush all streams, so we get musl std streams printed out
+        _fflush(0);
+        // close all of our streams
+        for (var i = 0; i < FS.streams.length; i++) {
+          var stream = FS.streams[i];
+          if (!stream) {
+            continue;
+          }
+          FS.close(stream);
+        }
+      },getMode:(canRead, canWrite) => {
+        var mode = 0;
+        if (canRead) mode |= 292 | 73;
+        if (canWrite) mode |= 146;
+        return mode;
+      },findObject:(path, dontResolveLastLink) => {
+        var ret = FS.analyzePath(path, dontResolveLastLink);
+        if (!ret.exists) {
+          return null;
+        }
+        return ret.object;
+      },analyzePath:(path, dontResolveLastLink) => {
+        // operate from within the context of the symlink's target
+        try {
+          var lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
+          path = lookup.path;
+        } catch (e) {
+        }
+        var ret = {
+          isRoot: false, exists: false, error: 0, name: null, path: null, object: null,
+          parentExists: false, parentPath: null, parentObject: null
+        };
+        try {
+          var lookup = FS.lookupPath(path, { parent: true });
+          ret.parentExists = true;
+          ret.parentPath = lookup.path;
+          ret.parentObject = lookup.node;
+          ret.name = PATH.basename(path);
+          lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
+          ret.exists = true;
+          ret.path = lookup.path;
+          ret.object = lookup.node;
+          ret.name = lookup.node.name;
+          ret.isRoot = lookup.path === '/';
+        } catch (e) {
+          ret.error = e.errno;
+        };
+        return ret;
+      },createPath:(parent, path, canRead, canWrite) => {
+        parent = typeof parent == 'string' ? parent : FS.getPath(parent);
+        var parts = path.split('/').reverse();
+        while (parts.length) {
+          var part = parts.pop();
+          if (!part) continue;
+          var current = PATH.join2(parent, part);
+          try {
+            FS.mkdir(current);
+          } catch (e) {
+            // ignore EEXIST
+          }
+          parent = current;
+        }
+        return current;
+      },createFile:(parent, name, properties, canRead, canWrite) => {
+        var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
+        var mode = FS.getMode(canRead, canWrite);
+        return FS.create(path, mode);
+      },createDataFile:(parent, name, data, canRead, canWrite, canOwn) => {
+        var path = name;
+        if (parent) {
+          parent = typeof parent == 'string' ? parent : FS.getPath(parent);
+          path = name ? PATH.join2(parent, name) : parent;
+        }
+        var mode = FS.getMode(canRead, canWrite);
+        var node = FS.create(path, mode);
+        if (data) {
+          if (typeof data == 'string') {
+            var arr = new Array(data.length);
+            for (var i = 0, len = data.length; i < len; ++i) arr[i] = data.charCodeAt(i);
+            data = arr;
+          }
+          // make sure we can write to the file
+          FS.chmod(node, mode | 146);
+          var stream = FS.open(node, 577);
+          FS.write(stream, data, 0, data.length, 0, canOwn);
+          FS.close(stream);
+          FS.chmod(node, mode);
+        }
+        return node;
+      },createDevice:(parent, name, input, output) => {
+        var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
+        var mode = FS.getMode(!!input, !!output);
+        if (!FS.createDevice.major) FS.createDevice.major = 64;
+        var dev = FS.makedev(FS.createDevice.major++, 0);
+        // Create a fake device that a set of stream ops to emulate
+        // the old behavior.
+        FS.registerDevice(dev, {
+          open: (stream) => {
+            stream.seekable = false;
+          },
+          close: (stream) => {
+            // flush any pending line data
+            if (output && output.buffer && output.buffer.length) {
+              output(10);
+            }
+          },
+          read: (stream, buffer, offset, length, pos /* ignored */) => {
+            var bytesRead = 0;
+            for (var i = 0; i < length; i++) {
+              var result;
+              try {
+                result = input();
+              } catch (e) {
+                throw new FS.ErrnoError(29);
+              }
+              if (result === undefined && bytesRead === 0) {
+                throw new FS.ErrnoError(6);
+              }
+              if (result === null || result === undefined) break;
+              bytesRead++;
+              buffer[offset+i] = result;
+            }
+            if (bytesRead) {
+              stream.node.timestamp = Date.now();
+            }
+            return bytesRead;
+          },
+          write: (stream, buffer, offset, length, pos) => {
+            for (var i = 0; i < length; i++) {
+              try {
+                output(buffer[offset+i]);
+              } catch (e) {
+                throw new FS.ErrnoError(29);
+              }
+            }
+            if (length) {
+              stream.node.timestamp = Date.now();
+            }
+            return i;
+          }
+        });
+        return FS.mkdev(path, mode, dev);
+      },forceLoadFile:(obj) => {
+        if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
+        if (typeof XMLHttpRequest != 'undefined') {
+          throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
+        } else if (read_) {
+          // Command-line.
+          try {
+            // WARNING: Can't read binary files in V8's d8 or tracemonkey's js, as
+            //          read() will try to parse UTF8.
+            obj.contents = intArrayFromString(read_(obj.url), true);
+            obj.usedBytes = obj.contents.length;
+          } catch (e) {
+            throw new FS.ErrnoError(29);
+          }
+        } else {
+          throw new Error('Cannot load without read() or XMLHttpRequest.');
+        }
+      },createLazyFile:(parent, name, url, canRead, canWrite) => {
+        // Lazy chunked Uint8Array (implements get and length from Uint8Array). Actual getting is abstracted away for eventual reuse.
+        /** @constructor */
+        function LazyUint8Array() {
+          this.lengthKnown = false;
+          this.chunks = []; // Loaded chunks. Index is the chunk number
+        }
+        LazyUint8Array.prototype.get = /** @this{Object} */ function LazyUint8Array_get(idx) {
+          if (idx > this.length-1 || idx < 0) {
+            return undefined;
+          }
+          var chunkOffset = idx % this.chunkSize;
+          var chunkNum = (idx / this.chunkSize)|0;
+          return this.getter(chunkNum)[chunkOffset];
+        };
+        LazyUint8Array.prototype.setDataGetter = function LazyUint8Array_setDataGetter(getter) {
+          this.getter = getter;
+        };
+        LazyUint8Array.prototype.cacheLength = function LazyUint8Array_cacheLength() {
+          // Find length
+          var xhr = new XMLHttpRequest();
+          xhr.open('HEAD', url, false);
+          xhr.send(null);
+          if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
+          var datalength = Number(xhr.getResponseHeader("Content-length"));
+          var header;
+          var hasByteServing = (header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
+          var usesGzip = (header = xhr.getResponseHeader("Content-Encoding")) && header === "gzip";
+  
+          var chunkSize = 1024*1024; // Chunk size in bytes
+  
+          if (!hasByteServing) chunkSize = datalength;
+  
+          // Function to get a range from the remote URL.
+          var doXHR = (from, to) => {
+            if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
+            if (to > datalength-1) throw new Error("only " + datalength + " bytes available! programmer error!");
+  
+            // TODO: Use mozResponseArrayBuffer, responseStream, etc. if available.
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, false);
+            if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
+  
+            // Some hints to the browser that we want binary data.
+            xhr.responseType = 'arraybuffer';
+            if (xhr.overrideMimeType) {
+              xhr.overrideMimeType('text/plain; charset=x-user-defined');
+            }
+  
+            xhr.send(null);
+            if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
+            if (xhr.response !== undefined) {
+              return new Uint8Array(/** @type{Array<number>} */(xhr.response || []));
+            }
+            return intArrayFromString(xhr.responseText || '', true);
+          };
+          var lazyArray = this;
+          lazyArray.setDataGetter((chunkNum) => {
+            var start = chunkNum * chunkSize;
+            var end = (chunkNum+1) * chunkSize - 1; // including this byte
+            end = Math.min(end, datalength-1); // if datalength-1 is selected, this is the last block
+            if (typeof lazyArray.chunks[chunkNum] == 'undefined') {
+              lazyArray.chunks[chunkNum] = doXHR(start, end);
+            }
+            if (typeof lazyArray.chunks[chunkNum] == 'undefined') throw new Error('doXHR failed!');
+            return lazyArray.chunks[chunkNum];
+          });
+  
+          if (usesGzip || !datalength) {
+            // if the server uses gzip or doesn't supply the length, we have to download the whole file to get the (uncompressed) length
+            chunkSize = datalength = 1; // this will force getter(0)/doXHR do download the whole file
+            datalength = this.getter(0).length;
+            chunkSize = datalength;
+            out("LazyFiles on gzip forces download of the whole file when length is accessed");
+          }
+  
+          this._length = datalength;
+          this._chunkSize = chunkSize;
+          this.lengthKnown = true;
+        };
+        if (typeof XMLHttpRequest != 'undefined') {
+          if (!ENVIRONMENT_IS_WORKER) throw 'Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc';
+          var lazyArray = new LazyUint8Array();
+          Object.defineProperties(lazyArray, {
+            length: {
+              get: /** @this{Object} */ function() {
+                if (!this.lengthKnown) {
+                  this.cacheLength();
+                }
+                return this._length;
+              }
+            },
+            chunkSize: {
+              get: /** @this{Object} */ function() {
+                if (!this.lengthKnown) {
+                  this.cacheLength();
+                }
+                return this._chunkSize;
+              }
+            }
+          });
+  
+          var properties = { isDevice: false, contents: lazyArray };
+        } else {
+          var properties = { isDevice: false, url: url };
+        }
+  
+        var node = FS.createFile(parent, name, properties, canRead, canWrite);
+        // This is a total hack, but I want to get this lazy file code out of the
+        // core of MEMFS. If we want to keep this lazy file concept I feel it should
+        // be its own thin LAZYFS proxying calls to MEMFS.
+        if (properties.contents) {
+          node.contents = properties.contents;
+        } else if (properties.url) {
+          node.contents = null;
+          node.url = properties.url;
+        }
+        // Add a function that defers querying the file size until it is asked the first time.
+        Object.defineProperties(node, {
+          usedBytes: {
+            get: /** @this {FSNode} */ function() { return this.contents.length; }
+          }
+        });
+        // override each stream op with one that tries to force load the lazy file first
+        var stream_ops = {};
+        var keys = Object.keys(node.stream_ops);
+        keys.forEach((key) => {
+          var fn = node.stream_ops[key];
+          stream_ops[key] = function forceLoadLazyFile() {
+            FS.forceLoadFile(node);
+            return fn.apply(null, arguments);
+          };
+        });
+        function writeChunks(stream, buffer, offset, length, position) {
+          var contents = stream.node.contents;
+          if (position >= contents.length)
+            return 0;
+          var size = Math.min(contents.length - position, length);
+          assert(size >= 0);
+          if (contents.slice) { // normal array
+            for (var i = 0; i < size; i++) {
+              buffer[offset + i] = contents[position + i];
+            }
+          } else {
+            for (var i = 0; i < size; i++) { // LazyUint8Array from sync binary XHR
+              buffer[offset + i] = contents.get(position + i);
+            }
+          }
+          return size;
+        }
+        // use a custom read function
+        stream_ops.read = (stream, buffer, offset, length, position) => {
+          FS.forceLoadFile(node);
+          return writeChunks(stream, buffer, offset, length, position)
+        };
+        // use a custom mmap function
+        stream_ops.mmap = (stream, length, position, prot, flags) => {
+          FS.forceLoadFile(node);
+          var ptr = mmapAlloc(length);
+          if (!ptr) {
+            throw new FS.ErrnoError(48);
+          }
+          writeChunks(stream, HEAP8, ptr, length, position);
+          return { ptr: ptr, allocated: true };
+        };
+        node.stream_ops = stream_ops;
+        return node;
+      },createPreloadedFile:(parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) => {
+        // TODO we should allow people to just pass in a complete filename instead
+        // of parent and name being that we just join them anyways
+        var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
+        var dep = getUniqueRunDependency('cp ' + fullname); // might have several active requests for the same fullname
+        function processData(byteArray) {
+          function finish(byteArray) {
+            if (preFinish) preFinish();
+            if (!dontCreateFile) {
+              FS.createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
+            }
+            if (onload) onload();
+            removeRunDependency(dep);
+          }
+          if (Browser.handledByPreloadPlugin(byteArray, fullname, finish, () => {
+            if (onerror) onerror();
+            removeRunDependency(dep);
+          })) {
+            return;
+          }
+          finish(byteArray);
+        }
+        addRunDependency(dep);
+        if (typeof url == 'string') {
+          asyncLoad(url, (byteArray) => processData(byteArray), onerror);
+        } else {
+          processData(url);
+        }
+      },indexedDB:() => {
+        return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+      },DB_NAME:() => {
+        return 'EM_FS_' + window.location.pathname;
+      },DB_VERSION:20,DB_STORE_NAME:"FILE_DATA",saveFilesToDB:(paths, onload, onerror) => {
+        onload = onload || (() => {});
+        onerror = onerror || (() => {});
+        var indexedDB = FS.indexedDB();
+        try {
+          var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
+        } catch (e) {
+          return onerror(e);
+        }
+        openRequest.onupgradeneeded = () => {
+          out('creating db');
+          var db = openRequest.result;
+          db.createObjectStore(FS.DB_STORE_NAME);
+        };
+        openRequest.onsuccess = () => {
+          var db = openRequest.result;
+          var transaction = db.transaction([FS.DB_STORE_NAME], 'readwrite');
+          var files = transaction.objectStore(FS.DB_STORE_NAME);
+          var ok = 0, fail = 0, total = paths.length;
+          function finish() {
+            if (fail == 0) onload(); else onerror();
+          }
+          paths.forEach((path) => {
+            var putRequest = files.put(FS.analyzePath(path).object.contents, path);
+            putRequest.onsuccess = () => { ok++; if (ok + fail == total) finish() };
+            putRequest.onerror = () => { fail++; if (ok + fail == total) finish() };
+          });
+          transaction.onerror = onerror;
+        };
+        openRequest.onerror = onerror;
+      },loadFilesFromDB:(paths, onload, onerror) => {
+        onload = onload || (() => {});
+        onerror = onerror || (() => {});
+        var indexedDB = FS.indexedDB();
+        try {
+          var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
+        } catch (e) {
+          return onerror(e);
+        }
+        openRequest.onupgradeneeded = onerror; // no database to load from
+        openRequest.onsuccess = () => {
+          var db = openRequest.result;
+          try {
+            var transaction = db.transaction([FS.DB_STORE_NAME], 'readonly');
+          } catch(e) {
+            onerror(e);
+            return;
+          }
+          var files = transaction.objectStore(FS.DB_STORE_NAME);
+          var ok = 0, fail = 0, total = paths.length;
+          function finish() {
+            if (fail == 0) onload(); else onerror();
+          }
+          paths.forEach((path) => {
+            var getRequest = files.get(path);
+            getRequest.onsuccess = () => {
+              if (FS.analyzePath(path).exists) {
+                FS.unlink(path);
+              }
+              FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
+              ok++;
+              if (ok + fail == total) finish();
+            };
+            getRequest.onerror = () => { fail++; if (ok + fail == total) finish() };
+          });
+          transaction.onerror = onerror;
+        };
+        openRequest.onerror = onerror;
+      },absolutePath:() => {
+        abort('FS.absolutePath has been removed; use PATH_FS.resolve instead');
+      },createFolder:() => {
+        abort('FS.createFolder has been removed; use FS.mkdir instead');
+      },createLink:() => {
+        abort('FS.createLink has been removed; use FS.symlink instead');
+      },joinPath:() => {
+        abort('FS.joinPath has been removed; use PATH.join instead');
+      },mmapAlloc:() => {
+        abort('FS.mmapAlloc has been replaced by the top level function mmapAlloc');
+      },standardizePath:() => {
+        abort('FS.standardizePath has been removed; use PATH.normalize instead');
+      }};
+  var SYSCALLS = {DEFAULT_POLLMASK:5,calculateAt:function(dirfd, path, allowEmpty) {
+        if (PATH.isAbs(path)) {
+          return path;
+        }
+        // relative path
+        var dir;
+        if (dirfd === -100) {
+          dir = FS.cwd();
+        } else {
+          var dirstream = SYSCALLS.getStreamFromFD(dirfd);
+          dir = dirstream.path;
+        }
+        if (path.length == 0) {
+          if (!allowEmpty) {
+            throw new FS.ErrnoError(44);;
+          }
+          return dir;
+        }
+        return PATH.join2(dir, path);
+      },doStat:function(func, path, buf) {
+        try {
+          var stat = func(path);
+        } catch (e) {
+          if (e && e.node && PATH.normalize(path) !== PATH.normalize(FS.getPath(e.node))) {
+            // an error occurred while trying to look up the path; we should just report ENOTDIR
+            return -54;
+          }
+          throw e;
+        }
+        HEAP32[((buf)>>2)] = stat.dev;
+        HEAP32[(((buf)+(8))>>2)] = stat.ino;
+        HEAP32[(((buf)+(12))>>2)] = stat.mode;
+        HEAPU32[(((buf)+(16))>>2)] = stat.nlink;
+        HEAP32[(((buf)+(20))>>2)] = stat.uid;
+        HEAP32[(((buf)+(24))>>2)] = stat.gid;
+        HEAP32[(((buf)+(28))>>2)] = stat.rdev;
+        (tempI64 = [stat.size>>>0,(tempDouble=stat.size,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(40))>>2)] = tempI64[0],HEAP32[(((buf)+(44))>>2)] = tempI64[1]);
+        HEAP32[(((buf)+(48))>>2)] = 4096;
+        HEAP32[(((buf)+(52))>>2)] = stat.blocks;
+        (tempI64 = [Math.floor(stat.atime.getTime() / 1000)>>>0,(tempDouble=Math.floor(stat.atime.getTime() / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(56))>>2)] = tempI64[0],HEAP32[(((buf)+(60))>>2)] = tempI64[1]);
+        HEAPU32[(((buf)+(64))>>2)] = 0;
+        (tempI64 = [Math.floor(stat.mtime.getTime() / 1000)>>>0,(tempDouble=Math.floor(stat.mtime.getTime() / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(72))>>2)] = tempI64[0],HEAP32[(((buf)+(76))>>2)] = tempI64[1]);
+        HEAPU32[(((buf)+(80))>>2)] = 0;
+        (tempI64 = [Math.floor(stat.ctime.getTime() / 1000)>>>0,(tempDouble=Math.floor(stat.ctime.getTime() / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(88))>>2)] = tempI64[0],HEAP32[(((buf)+(92))>>2)] = tempI64[1]);
+        HEAPU32[(((buf)+(96))>>2)] = 0;
+        (tempI64 = [stat.ino>>>0,(tempDouble=stat.ino,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(104))>>2)] = tempI64[0],HEAP32[(((buf)+(108))>>2)] = tempI64[1]);
+        return 0;
+      },doMsync:function(addr, stream, len, flags, offset) {
+        if (!FS.isFile(stream.node.mode)) {
+          throw new FS.ErrnoError(43);
+        }
+        if (flags & 2) {
+          // MAP_PRIVATE calls need not to be synced back to underlying fs
+          return 0;
+        }
+        var buffer = HEAPU8.slice(addr, addr + len);
+        FS.msync(stream, buffer, offset, len, flags);
+      },varargs:undefined,get:function() {
+        assert(SYSCALLS.varargs != undefined);
+        SYSCALLS.varargs += 4;
+        var ret = HEAP32[(((SYSCALLS.varargs)-(4))>>2)];
+        return ret;
+      },getStr:function(ptr) {
+        var ret = UTF8ToString(ptr);
+        return ret;
+      },getStreamFromFD:function(fd) {
+        var stream = FS.getStream(fd);
+        if (!stream) throw new FS.ErrnoError(8);
+        return stream;
+      }};
+  function ___syscall_openat(dirfd, path, flags, varargs) {
+  SYSCALLS.varargs = varargs;
+  try {
+  
+      path = SYSCALLS.getStr(path);
+      path = SYSCALLS.calculateAt(dirfd, path);
+      var mode = varargs ? SYSCALLS.get() : 0;
+      return FS.open(path, flags, mode).fd;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e instanceof FS.ErrnoError)) throw e;
+    return -e.errno;
+  }
+  }
+
+  function __embind_register_bigint(primitiveType, name, size, minRange, maxRange) {}
+
+  function getShiftFromSize(size) {
+      switch (size) {
+          case 1: return 0;
+          case 2: return 1;
+          case 4: return 2;
+          case 8: return 3;
+          default:
+              throw new TypeError('Unknown type size: ' + size);
+      }
+    }
+  
+  function embind_init_charCodes() {
+      var codes = new Array(256);
+      for (var i = 0; i < 256; ++i) {
+          codes[i] = String.fromCharCode(i);
+      }
+      embind_charCodes = codes;
+    }
+  var embind_charCodes = undefined;
+  function readLatin1String(ptr) {
+      var ret = "";
+      var c = ptr;
+      while (HEAPU8[c]) {
+          ret += embind_charCodes[HEAPU8[c++]];
+      }
+      return ret;
+    }
+  
+  var awaitingDependencies = {};
+  
+  var registeredTypes = {};
+  
+  var typeDependencies = {};
+  
+  var char_0 = 48;
+  
+  var char_9 = 57;
+  function makeLegalFunctionName(name) {
+      if (undefined === name) {
+        return '_unknown';
+      }
+      name = name.replace(/[^a-zA-Z0-9_]/g, '$');
+      var f = name.charCodeAt(0);
+      if (f >= char_0 && f <= char_9) {
+        return '_' + name;
+      }
+      return name;
+    }
+  function createNamedFunction(name, body) {
+      name = makeLegalFunctionName(name);
+      /*jshint evil:true*/
+      return new Function(
+          "body",
+          "return function " + name + "() {\n" +
+          "    \"use strict\";" +
+          "    return body.apply(this, arguments);\n" +
+          "};\n"
+      )(body);
+    }
+  function extendError(baseErrorType, errorName) {
+      var errorClass = createNamedFunction(errorName, function(message) {
+        this.name = errorName;
+        this.message = message;
+  
+        var stack = (new Error(message)).stack;
+        if (stack !== undefined) {
+          this.stack = this.toString() + '\n' +
+              stack.replace(/^Error(:[^\n]*)?\n/, '');
+        }
+      });
+      errorClass.prototype = Object.create(baseErrorType.prototype);
+      errorClass.prototype.constructor = errorClass;
+      errorClass.prototype.toString = function() {
+        if (this.message === undefined) {
+          return this.name;
+        } else {
+          return this.name + ': ' + this.message;
+        }
+      };
+  
+      return errorClass;
+    }
+  var BindingError = undefined;
+  function throwBindingError(message) {
+      throw new BindingError(message);
+    }
+  
+  var InternalError = undefined;
+  function throwInternalError(message) {
+      throw new InternalError(message);
+    }
+  function whenDependentTypesAreResolved(myTypes, dependentTypes, getTypeConverters) {
+      myTypes.forEach(function(type) {
+          typeDependencies[type] = dependentTypes;
+      });
+  
+      function onComplete(typeConverters) {
+          var myTypeConverters = getTypeConverters(typeConverters);
+          if (myTypeConverters.length !== myTypes.length) {
+              throwInternalError('Mismatched type converter count');
+          }
+          for (var i = 0; i < myTypes.length; ++i) {
+              registerType(myTypes[i], myTypeConverters[i]);
+          }
+      }
+  
+      var typeConverters = new Array(dependentTypes.length);
+      var unregisteredTypes = [];
+      var registered = 0;
+      dependentTypes.forEach((dt, i) => {
+        if (registeredTypes.hasOwnProperty(dt)) {
+          typeConverters[i] = registeredTypes[dt];
+        } else {
+          unregisteredTypes.push(dt);
+          if (!awaitingDependencies.hasOwnProperty(dt)) {
+            awaitingDependencies[dt] = [];
+          }
+          awaitingDependencies[dt].push(() => {
+            typeConverters[i] = registeredTypes[dt];
+            ++registered;
+            if (registered === unregisteredTypes.length) {
+              onComplete(typeConverters);
+            }
+          });
+        }
+      });
+      if (0 === unregisteredTypes.length) {
+        onComplete(typeConverters);
+      }
+    }
+  /** @param {Object=} options */
+  function registerType(rawType, registeredInstance, options = {}) {
+      if (!('argPackAdvance' in registeredInstance)) {
+          throw new TypeError('registerType registeredInstance requires argPackAdvance');
+      }
+  
+      var name = registeredInstance.name;
+      if (!rawType) {
+          throwBindingError('type "' + name + '" must have a positive integer typeid pointer');
+      }
+      if (registeredTypes.hasOwnProperty(rawType)) {
+          if (options.ignoreDuplicateRegistrations) {
+              return;
+          } else {
+              throwBindingError("Cannot register type '" + name + "' twice");
+          }
+      }
+  
+      registeredTypes[rawType] = registeredInstance;
+      delete typeDependencies[rawType];
+  
+      if (awaitingDependencies.hasOwnProperty(rawType)) {
+        var callbacks = awaitingDependencies[rawType];
+        delete awaitingDependencies[rawType];
+        callbacks.forEach((cb) => cb());
+      }
+    }
+  function __embind_register_bool(rawType, name, size, trueValue, falseValue) {
+      var shift = getShiftFromSize(size);
+  
+      name = readLatin1String(name);
+      registerType(rawType, {
+          name: name,
+          'fromWireType': function(wt) {
+              // ambiguous emscripten ABI: sometimes return values are
+              // true or false, and sometimes integers (0 or 1)
+              return !!wt;
+          },
+          'toWireType': function(destructors, o) {
+              return o ? trueValue : falseValue;
+          },
+          'argPackAdvance': 8,
+          'readValueFromPointer': function(pointer) {
+              // TODO: if heap is fixed (like in asm.js) this could be executed outside
+              var heap;
+              if (size === 1) {
+                  heap = HEAP8;
+              } else if (size === 2) {
+                  heap = HEAP16;
+              } else if (size === 4) {
+                  heap = HEAP32;
+              } else {
+                  throw new TypeError("Unknown boolean type size: " + name);
+              }
+              return this['fromWireType'](heap[pointer >> shift]);
+          },
+          destructorFunction: null, // This type does not need a destructor
+      });
+    }
+
+  var emval_free_list = [];
+  
+  var emval_handle_array = [{},{value:undefined},{value:null},{value:true},{value:false}];
+  function __emval_decref(handle) {
+      if (handle > 4 && 0 === --emval_handle_array[handle].refcount) {
+        emval_handle_array[handle] = undefined;
+        emval_free_list.push(handle);
+      }
+    }
+  
+  function count_emval_handles() {
+      var count = 0;
+      for (var i = 5; i < emval_handle_array.length; ++i) {
+        if (emval_handle_array[i] !== undefined) {
+          ++count;
+        }
+      }
+      return count;
+    }
+  
+  function get_first_emval() {
+      for (var i = 5; i < emval_handle_array.length; ++i) {
+        if (emval_handle_array[i] !== undefined) {
+          return emval_handle_array[i];
+        }
+      }
+      return null;
+    }
+  function init_emval() {
+      Module['count_emval_handles'] = count_emval_handles;
+      Module['get_first_emval'] = get_first_emval;
+    }
+  var Emval = {toValue:(handle) => {
+        if (!handle) {
+            throwBindingError('Cannot use deleted val. handle = ' + handle);
+        }
+        return emval_handle_array[handle].value;
+      },toHandle:(value) => {
+        switch (value) {
+          case undefined: return 1;
+          case null: return 2;
+          case true: return 3;
+          case false: return 4;
+          default:{
+            var handle = emval_free_list.length ?
+                emval_free_list.pop() :
+                emval_handle_array.length;
+  
+            emval_handle_array[handle] = {refcount: 1, value: value};
+            return handle;
+          }
+        }
+      }};
+  
+  function simpleReadValueFromPointer(pointer) {
+      return this['fromWireType'](HEAP32[((pointer)>>2)]);
+    }
+  function __embind_register_emval(rawType, name) {
+      name = readLatin1String(name);
+      registerType(rawType, {
+        name: name,
+        'fromWireType': function(handle) {
+          var rv = Emval.toValue(handle);
+          __emval_decref(handle);
+          return rv;
+        },
+        'toWireType': function(destructors, value) {
+          return Emval.toHandle(value);
+        },
+        'argPackAdvance': 8,
+        'readValueFromPointer': simpleReadValueFromPointer,
+        destructorFunction: null, // This type does not need a destructor
+  
+        // TODO: do we need a deleteObject here?  write a test where
+        // emval is passed into JS via an interface
+      });
+    }
+
+  function embindRepr(v) {
+      if (v === null) {
+          return 'null';
+      }
+      var t = typeof v;
+      if (t === 'object' || t === 'array' || t === 'function') {
+          return v.toString();
+      } else {
+          return '' + v;
+      }
+    }
+  
+  function floatReadValueFromPointer(name, shift) {
+      switch (shift) {
+          case 2: return function(pointer) {
+              return this['fromWireType'](HEAPF32[pointer >> 2]);
+          };
+          case 3: return function(pointer) {
+              return this['fromWireType'](HEAPF64[pointer >> 3]);
+          };
+          default:
+              throw new TypeError("Unknown float type: " + name);
+      }
+    }
+  function __embind_register_float(rawType, name, size) {
+      var shift = getShiftFromSize(size);
+      name = readLatin1String(name);
+      registerType(rawType, {
+        name: name,
+        'fromWireType': function(value) {
+           return value;
+        },
+        'toWireType': function(destructors, value) {
+          if (typeof value != "number" && typeof value != "boolean") {
+            throw new TypeError('Cannot convert "' + embindRepr(value) + '" to ' + this.name);
+          }
+          // The VM will perform JS to Wasm value conversion, according to the spec:
+          // https://www.w3.org/TR/wasm-js-api-1/#towebassemblyvalue
+          return value;
+        },
+        'argPackAdvance': 8,
+        'readValueFromPointer': floatReadValueFromPointer(name, shift),
+        destructorFunction: null, // This type does not need a destructor
+      });
+    }
+
+  function new_(constructor, argumentList) {
+      if (!(constructor instanceof Function)) {
+        throw new TypeError('new_ called with constructor type ' + typeof(constructor) + " which is not a function");
+      }
+      /*
+       * Previously, the following line was just:
+       *   function dummy() {};
+       * Unfortunately, Chrome was preserving 'dummy' as the object's name, even
+       * though at creation, the 'dummy' has the correct constructor name.  Thus,
+       * objects created with IMVU.new would show up in the debugger as 'dummy',
+       * which isn't very helpful.  Using IMVU.createNamedFunction addresses the
+       * issue.  Doublely-unfortunately, there's no way to write a test for this
+       * behavior.  -NRD 2013.02.22
+       */
+      var dummy = createNamedFunction(constructor.name || 'unknownFunctionName', function(){});
+      dummy.prototype = constructor.prototype;
+      var obj = new dummy;
+  
+      var r = constructor.apply(obj, argumentList);
+      return (r instanceof Object) ? r : obj;
+    }
+  
+  function runDestructors(destructors) {
+      while (destructors.length) {
+        var ptr = destructors.pop();
+        var del = destructors.pop();
+        del(ptr);
+      }
+    }
+  function craftInvokerFunction(humanName, argTypes, classType, cppInvokerFunc, cppTargetFunc) {
+      // humanName: a human-readable string name for the function to be generated.
+      // argTypes: An array that contains the embind type objects for all types in the function signature.
+      //    argTypes[0] is the type object for the function return value.
+      //    argTypes[1] is the type object for function this object/class type, or null if not crafting an invoker for a class method.
+      //    argTypes[2...] are the actual function parameters.
+      // classType: The embind type object for the class to be bound, or null if this is not a method of a class.
+      // cppInvokerFunc: JS Function object to the C++-side function that interops into C++ code.
+      // cppTargetFunc: Function pointer (an integer to FUNCTION_TABLE) to the target C++ function the cppInvokerFunc will end up calling.
+      var argCount = argTypes.length;
+  
+      if (argCount < 2) {
+        throwBindingError("argTypes array size mismatch! Must at least get return value and 'this' types!");
+      }
+  
+      var isClassMethodFunc = (argTypes[1] !== null && classType !== null);
+  
+      // Free functions with signature "void function()" do not need an invoker that marshalls between wire types.
+  // TODO: This omits argument count check - enable only at -O3 or similar.
+  //    if (ENABLE_UNSAFE_OPTS && argCount == 2 && argTypes[0].name == "void" && !isClassMethodFunc) {
+  //       return FUNCTION_TABLE[fn];
+  //    }
+  
+      // Determine if we need to use a dynamic stack to store the destructors for the function parameters.
+      // TODO: Remove this completely once all function invokers are being dynamically generated.
+      var needsDestructorStack = false;
+  
+      for (var i = 1; i < argTypes.length; ++i) { // Skip return value at index 0 - it's not deleted here.
+        if (argTypes[i] !== null && argTypes[i].destructorFunction === undefined) { // The type does not define a destructor function - must use dynamic stack
+          needsDestructorStack = true;
+          break;
+        }
+      }
+  
+      var returns = (argTypes[0].name !== "void");
+  
+      var argsList = "";
+      var argsListWired = "";
+      for (var i = 0; i < argCount - 2; ++i) {
+        argsList += (i!==0?", ":"")+"arg"+i;
+        argsListWired += (i!==0?", ":"")+"arg"+i+"Wired";
+      }
+  
+      var invokerFnBody =
+          "return function "+makeLegalFunctionName(humanName)+"("+argsList+") {\n" +
+          "if (arguments.length !== "+(argCount - 2)+") {\n" +
+              "throwBindingError('function "+humanName+" called with ' + arguments.length + ' arguments, expected "+(argCount - 2)+" args!');\n" +
+          "}\n";
+  
+      if (needsDestructorStack) {
+        invokerFnBody += "var destructors = [];\n";
+      }
+  
+      var dtorStack = needsDestructorStack ? "destructors" : "null";
+      var args1 = ["throwBindingError", "invoker", "fn", "runDestructors", "retType", "classParam"];
+      var args2 = [throwBindingError, cppInvokerFunc, cppTargetFunc, runDestructors, argTypes[0], argTypes[1]];
+  
+      if (isClassMethodFunc) {
+        invokerFnBody += "var thisWired = classParam.toWireType("+dtorStack+", this);\n";
+      }
+  
+      for (var i = 0; i < argCount - 2; ++i) {
+        invokerFnBody += "var arg"+i+"Wired = argType"+i+".toWireType("+dtorStack+", arg"+i+"); // "+argTypes[i+2].name+"\n";
+        args1.push("argType"+i);
+        args2.push(argTypes[i+2]);
+      }
+  
+      if (isClassMethodFunc) {
+        argsListWired = "thisWired" + (argsListWired.length > 0 ? ", " : "") + argsListWired;
+      }
+  
+      invokerFnBody +=
+          (returns?"var rv = ":"") + "invoker(fn"+(argsListWired.length>0?", ":"")+argsListWired+");\n";
+  
+      if (needsDestructorStack) {
+        invokerFnBody += "runDestructors(destructors);\n";
+      } else {
+        for (var i = isClassMethodFunc?1:2; i < argTypes.length; ++i) { // Skip return value at index 0 - it's not deleted here. Also skip class type if not a method.
+          var paramName = (i === 1 ? "thisWired" : ("arg"+(i - 2)+"Wired"));
+          if (argTypes[i].destructorFunction !== null) {
+            invokerFnBody += paramName+"_dtor("+paramName+"); // "+argTypes[i].name+"\n";
+            args1.push(paramName+"_dtor");
+            args2.push(argTypes[i].destructorFunction);
+          }
+        }
+      }
+  
+      if (returns) {
+        invokerFnBody += "var ret = retType.fromWireType(rv);\n" +
+                         "return ret;\n";
+      } else {
+      }
+  
+      invokerFnBody += "}\n";
+  
+      args1.push(invokerFnBody);
+  
+      var invokerFunction = new_(Function, args1).apply(null, args2);
+      return invokerFunction;
+    }
+  
+  function ensureOverloadTable(proto, methodName, humanName) {
+      if (undefined === proto[methodName].overloadTable) {
+        var prevFunc = proto[methodName];
+        // Inject an overload resolver function that routes to the appropriate overload based on the number of arguments.
+        proto[methodName] = function() {
+          // TODO This check can be removed in -O3 level "unsafe" optimizations.
+          if (!proto[methodName].overloadTable.hasOwnProperty(arguments.length)) {
+              throwBindingError("Function '" + humanName + "' called with an invalid number of arguments (" + arguments.length + ") - expects one of (" + proto[methodName].overloadTable + ")!");
+          }
+          return proto[methodName].overloadTable[arguments.length].apply(this, arguments);
+        };
+        // Move the previous function into the overload table.
+        proto[methodName].overloadTable = [];
+        proto[methodName].overloadTable[prevFunc.argCount] = prevFunc;
+      }
+    }
+  /** @param {number=} numArguments */
+  function exposePublicSymbol(name, value, numArguments) {
+      if (Module.hasOwnProperty(name)) {
+        if (undefined === numArguments || (undefined !== Module[name].overloadTable && undefined !== Module[name].overloadTable[numArguments])) {
+          throwBindingError("Cannot register public name '" + name + "' twice");
+        }
+  
+        // We are exposing a function with the same name as an existing function. Create an overload table and a function selector
+        // that routes between the two.
+        ensureOverloadTable(Module, name, name);
+        if (Module.hasOwnProperty(numArguments)) {
+            throwBindingError("Cannot register multiple overloads of a function with the same number of arguments (" + numArguments + ")!");
+        }
+        // Add the new function into the overload table.
+        Module[name].overloadTable[numArguments] = value;
+      }
+      else {
+        Module[name] = value;
+        if (undefined !== numArguments) {
+          Module[name].numArguments = numArguments;
+        }
+      }
+    }
+  
+  function heap32VectorToArray(count, firstElement) {
+      var array = [];
+      for (var i = 0; i < count; i++) {
+          // TODO(https://github.com/emscripten-core/emscripten/issues/17310):
+          // Find a way to hoist the `>> 2` or `>> 3` out of this loop.
+          array.push(HEAPU32[(((firstElement)+(i * 4))>>2)]);
+      }
+      return array;
+    }
+  
+  /** @param {number=} numArguments */
+  function replacePublicSymbol(name, value, numArguments) {
+      if (!Module.hasOwnProperty(name)) {
+        throwInternalError('Replacing nonexistant public symbol');
+      }
+      // If there's an overload table for this symbol, replace the symbol in the overload table instead.
+      if (undefined !== Module[name].overloadTable && undefined !== numArguments) {
+        Module[name].overloadTable[numArguments] = value;
+      }
+      else {
+        Module[name] = value;
+        Module[name].argCount = numArguments;
+      }
+    }
+  
+  function dynCallLegacy(sig, ptr, args) {
+      assert(('dynCall_' + sig) in Module, 'bad function pointer type - dynCall function not found for sig \'' + sig + '\'');
+      if (args && args.length) {
+        // j (64-bit integer) must be passed in as two numbers [low 32, high 32].
+        assert(args.length === sig.substring(1).replace(/j/g, '--').length);
+      } else {
+        assert(sig.length == 1);
+      }
+      var f = Module['dynCall_' + sig];
+      return args && args.length ? f.apply(null, [ptr].concat(args)) : f.call(null, ptr);
+    }
+  /** @param {Object=} args */
+  function dynCall(sig, ptr, args) {
+      // Without WASM_BIGINT support we cannot directly call function with i64 as
+      // part of thier signature, so we rely the dynCall functions generated by
+      // wasm-emscripten-finalize
+      if (sig.includes('j')) {
+        return dynCallLegacy(sig, ptr, args);
+      }
+      assert(getWasmTableEntry(ptr), 'missing table entry in dynCall: ' + ptr);
+      var rtn = getWasmTableEntry(ptr).apply(null, args);
+      return rtn;
+    }
+  function getDynCaller(sig, ptr) {
+      assert(sig.includes('j') || sig.includes('p'), 'getDynCaller should only be called with i64 sigs')
+      var argCache = [];
+      return function() {
+        argCache.length = 0;
+        Object.assign(argCache, arguments);
+        return dynCall(sig, ptr, argCache);
+      };
+    }
+  function embind__requireFunction(signature, rawFunction) {
+      signature = readLatin1String(signature);
+  
+      function makeDynCaller() {
+        if (signature.includes('j')) {
+          return getDynCaller(signature, rawFunction);
+        }
+        return getWasmTableEntry(rawFunction);
+      }
+  
+      var fp = makeDynCaller();
+      if (typeof fp != "function") {
+          throwBindingError("unknown function pointer with signature " + signature + ": " + rawFunction);
+      }
+      return fp;
+    }
+  
+  var UnboundTypeError = undefined;
+  
+  function getTypeName(type) {
+      var ptr = ___getTypeName(type);
+      var rv = readLatin1String(ptr);
+      _free(ptr);
+      return rv;
+    }
+  function throwUnboundTypeError(message, types) {
+      var unboundTypes = [];
+      var seen = {};
+      function visit(type) {
+        if (seen[type]) {
+          return;
+        }
+        if (registeredTypes[type]) {
+          return;
+        }
+        if (typeDependencies[type]) {
+          typeDependencies[type].forEach(visit);
+          return;
+        }
+        unboundTypes.push(type);
+        seen[type] = true;
+      }
+      types.forEach(visit);
+  
+      throw new UnboundTypeError(message + ': ' + unboundTypes.map(getTypeName).join([', ']));
+    }
+  function __embind_register_function(name, argCount, rawArgTypesAddr, signature, rawInvoker, fn) {
+      var argTypes = heap32VectorToArray(argCount, rawArgTypesAddr);
+      name = readLatin1String(name);
+  
+      rawInvoker = embind__requireFunction(signature, rawInvoker);
+  
+      exposePublicSymbol(name, function() {
+        throwUnboundTypeError('Cannot call ' + name + ' due to unbound types', argTypes);
+      }, argCount - 1);
+  
+      whenDependentTypesAreResolved([], argTypes, function(argTypes) {
+        var invokerArgsArray = [argTypes[0] /* return value */, null /* no class 'this'*/].concat(argTypes.slice(1) /* actual params */);
+        replacePublicSymbol(name, craftInvokerFunction(name, invokerArgsArray, null /* no class 'this'*/, rawInvoker, fn), argCount - 1);
+        return [];
+      });
+    }
+
+  function integerReadValueFromPointer(name, shift, signed) {
+      // integers are quite common, so generate very specialized functions
+      switch (shift) {
+          case 0: return signed ?
+              function readS8FromPointer(pointer) { return HEAP8[pointer]; } :
+              function readU8FromPointer(pointer) { return HEAPU8[pointer]; };
+          case 1: return signed ?
+              function readS16FromPointer(pointer) { return HEAP16[pointer >> 1]; } :
+              function readU16FromPointer(pointer) { return HEAPU16[pointer >> 1]; };
+          case 2: return signed ?
+              function readS32FromPointer(pointer) { return HEAP32[pointer >> 2]; } :
+              function readU32FromPointer(pointer) { return HEAPU32[pointer >> 2]; };
+          default:
+              throw new TypeError("Unknown integer type: " + name);
+      }
+    }
+  function __embind_register_integer(primitiveType, name, size, minRange, maxRange) {
+      name = readLatin1String(name);
+      // LLVM doesn't have signed and unsigned 32-bit types, so u32 literals come
+      // out as 'i32 -1'. Always treat those as max u32.
+      if (maxRange === -1) {
+          maxRange = 4294967295;
+      }
+  
+      var shift = getShiftFromSize(size);
+  
+      var fromWireType = (value) => value;
+  
+      if (minRange === 0) {
+          var bitshift = 32 - 8*size;
+          fromWireType = (value) => (value << bitshift) >>> bitshift;
+      }
+  
+      var isUnsignedType = (name.includes('unsigned'));
+      var checkAssertions = (value, toTypeName) => {
+        if (typeof value != "number" && typeof value != "boolean") {
+          throw new TypeError('Cannot convert "' + embindRepr(value) + '" to ' + toTypeName);
+        }
+        if (value < minRange || value > maxRange) {
+          throw new TypeError('Passing a number "' + embindRepr(value) + '" from JS side to C/C++ side to an argument of type "' + name + '", which is outside the valid range [' + minRange + ', ' + maxRange + ']!');
+        }
+      }
+      var toWireType;
+      if (isUnsignedType) {
+        toWireType = function(destructors, value) {
+          checkAssertions(value, this.name);
+          return value >>> 0;
+        }
+      } else {
+        toWireType = function(destructors, value) {
+          checkAssertions(value, this.name);
+          // The VM will perform JS to Wasm value conversion, according to the spec:
+          // https://www.w3.org/TR/wasm-js-api-1/#towebassemblyvalue
+          return value;
+        }
+      }
+      registerType(primitiveType, {
+        name: name,
+        'fromWireType': fromWireType,
+        'toWireType': toWireType,
+        'argPackAdvance': 8,
+        'readValueFromPointer': integerReadValueFromPointer(name, shift, minRange !== 0),
+        destructorFunction: null, // This type does not need a destructor
+      });
+    }
+
+  function __embind_register_memory_view(rawType, dataTypeIndex, name) {
+      var typeMapping = [
+        Int8Array,
+        Uint8Array,
+        Int16Array,
+        Uint16Array,
+        Int32Array,
+        Uint32Array,
+        Float32Array,
+        Float64Array,
+      ];
+  
+      var TA = typeMapping[dataTypeIndex];
+  
+      function decodeMemoryView(handle) {
+        handle = handle >> 2;
+        var heap = HEAPU32;
+        var size = heap[handle]; // in elements
+        var data = heap[handle + 1]; // byte offset into emscripten heap
+        return new TA(buffer, data, size);
+      }
+  
+      name = readLatin1String(name);
+      registerType(rawType, {
+        name: name,
+        'fromWireType': decodeMemoryView,
+        'argPackAdvance': 8,
+        'readValueFromPointer': decodeMemoryView,
+      }, {
+        ignoreDuplicateRegistrations: true,
+      });
+    }
+
+  function __embind_register_std_string(rawType, name) {
+      name = readLatin1String(name);
+      var stdStringIsUTF8
+      //process only std::string bindings with UTF8 support, in contrast to e.g. std::basic_string<unsigned char>
+      = (name === "std::string");
+  
+      registerType(rawType, {
+        name: name,
+        'fromWireType': function(value) {
+          var length = HEAPU32[((value)>>2)];
+          var payload = value + 4;
+  
+          var str;
+          if (stdStringIsUTF8) {
+            var decodeStartPtr = payload;
+            // Looping here to support possible embedded '0' bytes
+            for (var i = 0; i <= length; ++i) {
+              var currentBytePtr = payload + i;
+              if (i == length || HEAPU8[currentBytePtr] == 0) {
+                var maxRead = currentBytePtr - decodeStartPtr;
+                var stringSegment = UTF8ToString(decodeStartPtr, maxRead);
+                if (str === undefined) {
+                  str = stringSegment;
+                } else {
+                  str += String.fromCharCode(0);
+                  str += stringSegment;
+                }
+                decodeStartPtr = currentBytePtr + 1;
+              }
+            }
+          } else {
+            var a = new Array(length);
+            for (var i = 0; i < length; ++i) {
+              a[i] = String.fromCharCode(HEAPU8[payload + i]);
+            }
+            str = a.join('');
+          }
+  
+          _free(value);
+  
+          return str;
+        },
+        'toWireType': function(destructors, value) {
+          if (value instanceof ArrayBuffer) {
+            value = new Uint8Array(value);
+          }
+  
+          var length;
+          var valueIsOfTypeString = (typeof value == 'string');
+  
+          if (!(valueIsOfTypeString || value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Int8Array)) {
+            throwBindingError('Cannot pass non-string to std::string');
+          }
+          if (stdStringIsUTF8 && valueIsOfTypeString) {
+            length = lengthBytesUTF8(value);
+          } else {
+            length = value.length;
+          }
+  
+          // assumes 4-byte alignment
+          var base = _malloc(4 + length + 1);
+          var ptr = base + 4;
+          HEAPU32[((base)>>2)] = length;
+          if (stdStringIsUTF8 && valueIsOfTypeString) {
+            stringToUTF8(value, ptr, length + 1);
+          } else {
+            if (valueIsOfTypeString) {
+              for (var i = 0; i < length; ++i) {
+                var charCode = value.charCodeAt(i);
+                if (charCode > 255) {
+                  _free(ptr);
+                  throwBindingError('String has UTF-16 code units that do not fit in 8 bits');
+                }
+                HEAPU8[ptr + i] = charCode;
+              }
+            } else {
+              for (var i = 0; i < length; ++i) {
+                HEAPU8[ptr + i] = value[i];
+              }
+            }
+          }
+  
+          if (destructors !== null) {
+            destructors.push(_free, base);
+          }
+          return base;
+        },
+        'argPackAdvance': 8,
+        'readValueFromPointer': simpleReadValueFromPointer,
+        destructorFunction: function(ptr) { _free(ptr); },
+      });
+    }
+
+  var UTF16Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf-16le') : undefined;;
+  function UTF16ToString(ptr, maxBytesToRead) {
+      assert(ptr % 2 == 0, 'Pointer passed to UTF16ToString must be aligned to two bytes!');
+      var endPtr = ptr;
+      // TextDecoder needs to know the byte length in advance, it doesn't stop on
+      // null terminator by itself.
+      // Also, use the length info to avoid running tiny strings through
+      // TextDecoder, since .subarray() allocates garbage.
+      var idx = endPtr >> 1;
+      var maxIdx = idx + maxBytesToRead / 2;
+      // If maxBytesToRead is not passed explicitly, it will be undefined, and this
+      // will always evaluate to true. This saves on code size.
+      while (!(idx >= maxIdx) && HEAPU16[idx]) ++idx;
+      endPtr = idx << 1;
+  
+      if (endPtr - ptr > 32 && UTF16Decoder)
+        return UTF16Decoder.decode(HEAPU8.subarray(ptr, endPtr));
+  
+      // Fallback: decode without UTF16Decoder
+      var str = '';
+  
+      // If maxBytesToRead is not passed explicitly, it will be undefined, and the
+      // for-loop's condition will always evaluate to true. The loop is then
+      // terminated on the first null char.
+      for (var i = 0; !(i >= maxBytesToRead / 2); ++i) {
+        var codeUnit = HEAP16[(((ptr)+(i*2))>>1)];
+        if (codeUnit == 0) break;
+        // fromCharCode constructs a character from a UTF-16 code unit, so we can
+        // pass the UTF16 string right through.
+        str += String.fromCharCode(codeUnit);
+      }
+  
+      return str;
+    }
+  
+  function stringToUTF16(str, outPtr, maxBytesToWrite) {
+      assert(outPtr % 2 == 0, 'Pointer passed to stringToUTF16 must be aligned to two bytes!');
+      assert(typeof maxBytesToWrite == 'number', 'stringToUTF16(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
+      // Backwards compatibility: if max bytes is not specified, assume unsafe unbounded write is allowed.
+      if (maxBytesToWrite === undefined) {
+        maxBytesToWrite = 0x7FFFFFFF;
+      }
+      if (maxBytesToWrite < 2) return 0;
+      maxBytesToWrite -= 2; // Null terminator.
+      var startPtr = outPtr;
+      var numCharsToWrite = (maxBytesToWrite < str.length*2) ? (maxBytesToWrite / 2) : str.length;
+      for (var i = 0; i < numCharsToWrite; ++i) {
+        // charCodeAt returns a UTF-16 encoded code unit, so it can be directly written to the HEAP.
+        var codeUnit = str.charCodeAt(i); // possibly a lead surrogate
+        HEAP16[((outPtr)>>1)] = codeUnit;
+        outPtr += 2;
+      }
+      // Null-terminate the pointer to the HEAP.
+      HEAP16[((outPtr)>>1)] = 0;
+      return outPtr - startPtr;
+    }
+  
+  function lengthBytesUTF16(str) {
+      return str.length*2;
+    }
+  
+  function UTF32ToString(ptr, maxBytesToRead) {
+      assert(ptr % 4 == 0, 'Pointer passed to UTF32ToString must be aligned to four bytes!');
+      var i = 0;
+  
+      var str = '';
+      // If maxBytesToRead is not passed explicitly, it will be undefined, and this
+      // will always evaluate to true. This saves on code size.
+      while (!(i >= maxBytesToRead / 4)) {
+        var utf32 = HEAP32[(((ptr)+(i*4))>>2)];
+        if (utf32 == 0) break;
+        ++i;
+        // Gotcha: fromCharCode constructs a character from a UTF-16 encoded code (pair), not from a Unicode code point! So encode the code point to UTF-16 for constructing.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        if (utf32 >= 0x10000) {
+          var ch = utf32 - 0x10000;
+          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+        } else {
+          str += String.fromCharCode(utf32);
+        }
+      }
+      return str;
+    }
+  
+  function stringToUTF32(str, outPtr, maxBytesToWrite) {
+      assert(outPtr % 4 == 0, 'Pointer passed to stringToUTF32 must be aligned to four bytes!');
+      assert(typeof maxBytesToWrite == 'number', 'stringToUTF32(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
+      // Backwards compatibility: if max bytes is not specified, assume unsafe unbounded write is allowed.
+      if (maxBytesToWrite === undefined) {
+        maxBytesToWrite = 0x7FFFFFFF;
+      }
+      if (maxBytesToWrite < 4) return 0;
+      var startPtr = outPtr;
+      var endPtr = startPtr + maxBytesToWrite - 4;
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code unit, not a Unicode code point of the character! We must decode the string to UTF-32 to the heap.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        var codeUnit = str.charCodeAt(i); // possibly a lead surrogate
+        if (codeUnit >= 0xD800 && codeUnit <= 0xDFFF) {
+          var trailSurrogate = str.charCodeAt(++i);
+          codeUnit = 0x10000 + ((codeUnit & 0x3FF) << 10) | (trailSurrogate & 0x3FF);
+        }
+        HEAP32[((outPtr)>>2)] = codeUnit;
+        outPtr += 4;
+        if (outPtr + 4 > endPtr) break;
+      }
+      // Null-terminate the pointer to the HEAP.
+      HEAP32[((outPtr)>>2)] = 0;
+      return outPtr - startPtr;
+    }
+  
+  function lengthBytesUTF32(str) {
+      var len = 0;
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code unit, not a Unicode code point of the character! We must decode the string to UTF-32 to the heap.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        var codeUnit = str.charCodeAt(i);
+        if (codeUnit >= 0xD800 && codeUnit <= 0xDFFF) ++i; // possibly a lead surrogate, so skip over the tail surrogate.
+        len += 4;
+      }
+  
+      return len;
+    }
+  function __embind_register_std_wstring(rawType, charSize, name) {
+      name = readLatin1String(name);
+      var decodeString, encodeString, getHeap, lengthBytesUTF, shift;
+      if (charSize === 2) {
+        decodeString = UTF16ToString;
+        encodeString = stringToUTF16;
+        lengthBytesUTF = lengthBytesUTF16;
+        getHeap = () => HEAPU16;
+        shift = 1;
+      } else if (charSize === 4) {
+        decodeString = UTF32ToString;
+        encodeString = stringToUTF32;
+        lengthBytesUTF = lengthBytesUTF32;
+        getHeap = () => HEAPU32;
+        shift = 2;
+      }
+      registerType(rawType, {
+        name: name,
+        'fromWireType': function(value) {
+          // Code mostly taken from _embind_register_std_string fromWireType
+          var length = HEAPU32[value >> 2];
+          var HEAP = getHeap();
+          var str;
+  
+          var decodeStartPtr = value + 4;
+          // Looping here to support possible embedded '0' bytes
+          for (var i = 0; i <= length; ++i) {
+            var currentBytePtr = value + 4 + i * charSize;
+            if (i == length || HEAP[currentBytePtr >> shift] == 0) {
+              var maxReadBytes = currentBytePtr - decodeStartPtr;
+              var stringSegment = decodeString(decodeStartPtr, maxReadBytes);
+              if (str === undefined) {
+                str = stringSegment;
+              } else {
+                str += String.fromCharCode(0);
+                str += stringSegment;
+              }
+              decodeStartPtr = currentBytePtr + charSize;
+            }
+          }
+  
+          _free(value);
+  
+          return str;
+        },
+        'toWireType': function(destructors, value) {
+          if (!(typeof value == 'string')) {
+            throwBindingError('Cannot pass non-string to C++ string type ' + name);
+          }
+  
+          // assumes 4-byte alignment
+          var length = lengthBytesUTF(value);
+          var ptr = _malloc(4 + length + charSize);
+          HEAPU32[ptr >> 2] = length >> shift;
+  
+          encodeString(value, ptr + 4, length + charSize);
+  
+          if (destructors !== null) {
+            destructors.push(_free, ptr);
+          }
+          return ptr;
+        },
+        'argPackAdvance': 8,
+        'readValueFromPointer': simpleReadValueFromPointer,
+        destructorFunction: function(ptr) { _free(ptr); },
+      });
+    }
+
+  function __embind_register_void(rawType, name) {
+      name = readLatin1String(name);
+      registerType(rawType, {
+          isVoid: true, // void return values can be optimized out sometimes
+          name: name,
+          'argPackAdvance': 0,
+          'fromWireType': function() {
+              return undefined;
+          },
+          'toWireType': function(destructors, o) {
+              // TODO: assert if anything else is given?
+              return undefined;
+          },
+      });
+    }
+
+  function __emscripten_get_progname(str, len) {
+      assert(typeof str == 'number');
+      assert(typeof len == 'number');
+      stringToUTF8(thisProgram, str, len);
+    }
+
+  function readI53FromI64(ptr) {
+      return HEAPU32[ptr>>2] + HEAP32[ptr+4>>2] * 4294967296;
+    }
+  function __gmtime_js(time, tmPtr) {
+      var date = new Date(readI53FromI64(time)*1000);
+      HEAP32[((tmPtr)>>2)] = date.getUTCSeconds();
+      HEAP32[(((tmPtr)+(4))>>2)] = date.getUTCMinutes();
+      HEAP32[(((tmPtr)+(8))>>2)] = date.getUTCHours();
+      HEAP32[(((tmPtr)+(12))>>2)] = date.getUTCDate();
+      HEAP32[(((tmPtr)+(16))>>2)] = date.getUTCMonth();
+      HEAP32[(((tmPtr)+(20))>>2)] = date.getUTCFullYear()-1900;
+      HEAP32[(((tmPtr)+(24))>>2)] = date.getUTCDay();
+      var start = Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
+      var yday = ((date.getTime() - start) / (1000 * 60 * 60 * 24))|0;
+      HEAP32[(((tmPtr)+(28))>>2)] = yday;
+    }
+
+  function __mktime_js(tmPtr) {
+      var date = new Date(HEAP32[(((tmPtr)+(20))>>2)] + 1900,
+                          HEAP32[(((tmPtr)+(16))>>2)],
+                          HEAP32[(((tmPtr)+(12))>>2)],
+                          HEAP32[(((tmPtr)+(8))>>2)],
+                          HEAP32[(((tmPtr)+(4))>>2)],
+                          HEAP32[((tmPtr)>>2)],
+                          0);
+  
+      // There's an ambiguous hour when the time goes back; the tm_isdst field is
+      // used to disambiguate it.  Date() basically guesses, so we fix it up if it
+      // guessed wrong, or fill in tm_isdst with the guess if it's -1.
+      var dst = HEAP32[(((tmPtr)+(32))>>2)];
+      var guessedOffset = date.getTimezoneOffset();
+      var start = new Date(date.getFullYear(), 0, 1);
+      var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+      var winterOffset = start.getTimezoneOffset();
+      var dstOffset = Math.min(winterOffset, summerOffset); // DST is in December in South
+      if (dst < 0) {
+        // Attention: some regions don't have DST at all.
+        HEAP32[(((tmPtr)+(32))>>2)] = Number(summerOffset != winterOffset && dstOffset == guessedOffset);
+      } else if ((dst > 0) != (dstOffset == guessedOffset)) {
+        var nonDstOffset = Math.max(winterOffset, summerOffset);
+        var trueOffset = dst > 0 ? dstOffset : nonDstOffset;
+        // Don't try setMinutes(date.getMinutes() + ...) -- it's messed up.
+        date.setTime(date.getTime() + (trueOffset - guessedOffset)*60000);
+      }
+  
+      HEAP32[(((tmPtr)+(24))>>2)] = date.getDay();
+      var yday = ((date.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))|0;
+      HEAP32[(((tmPtr)+(28))>>2)] = yday;
+      // To match expected behavior, update fields from date
+      HEAP32[((tmPtr)>>2)] = date.getSeconds();
+      HEAP32[(((tmPtr)+(4))>>2)] = date.getMinutes();
+      HEAP32[(((tmPtr)+(8))>>2)] = date.getHours();
+      HEAP32[(((tmPtr)+(12))>>2)] = date.getDate();
+      HEAP32[(((tmPtr)+(16))>>2)] = date.getMonth();
+      HEAP32[(((tmPtr)+(20))>>2)] = date.getYear();
+  
+      return (date.getTime() / 1000)|0;
+    }
+
+  function allocateUTF8(str) {
+      var size = lengthBytesUTF8(str) + 1;
+      var ret = _malloc(size);
+      if (ret) stringToUTF8Array(str, HEAP8, ret, size);
+      return ret;
+    }
+  function _tzset_impl(timezone, daylight, tzname) {
+      var currentYear = new Date().getFullYear();
+      var winter = new Date(currentYear, 0, 1);
+      var summer = new Date(currentYear, 6, 1);
+      var winterOffset = winter.getTimezoneOffset();
+      var summerOffset = summer.getTimezoneOffset();
+  
+      // Local standard timezone offset. Local standard time is not adjusted for daylight savings.
+      // This code uses the fact that getTimezoneOffset returns a greater value during Standard Time versus Daylight Saving Time (DST).
+      // Thus it determines the expected output during Standard Time, and it compares whether the output of the given date the same (Standard) or less (DST).
+      var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
+  
+      // timezone is specified as seconds west of UTC ("The external variable
+      // `timezone` shall be set to the difference, in seconds, between
+      // Coordinated Universal Time (UTC) and local standard time."), the same
+      // as returned by stdTimezoneOffset.
+      // See http://pubs.opengroup.org/onlinepubs/009695399/functions/tzset.html
+      HEAP32[((timezone)>>2)] = stdTimezoneOffset * 60;
+  
+      HEAP32[((daylight)>>2)] = Number(winterOffset != summerOffset);
+  
+      function extractZone(date) {
+        var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
+        return match ? match[1] : "GMT";
+      };
+      var winterName = extractZone(winter);
+      var summerName = extractZone(summer);
+      var winterNamePtr = allocateUTF8(winterName);
+      var summerNamePtr = allocateUTF8(summerName);
+      if (summerOffset < winterOffset) {
+        // Northern hemisphere
+        HEAPU32[((tzname)>>2)] = winterNamePtr;
+        HEAPU32[(((tzname)+(4))>>2)] = summerNamePtr;
+      } else {
+        HEAPU32[((tzname)>>2)] = summerNamePtr;
+        HEAPU32[(((tzname)+(4))>>2)] = winterNamePtr;
+      }
+    }
+  function __tzset_js(timezone, daylight, tzname) {
+      // TODO: Use (malleable) environment variables instead of system settings.
+      if (__tzset_js.called) return;
+      __tzset_js.called = true;
+      _tzset_impl(timezone, daylight, tzname);
+    }
+
+  function _abort() {
+      abort('native code called abort()');
+    }
+
+  var readAsmConstArgsArray = [];
+  function readAsmConstArgs(sigPtr, buf) {
+      // Nobody should have mutated _readAsmConstArgsArray underneath us to be something else than an array.
+      assert(Array.isArray(readAsmConstArgsArray));
+      // The input buffer is allocated on the stack, so it must be stack-aligned.
+      assert(buf % 16 == 0);
+      readAsmConstArgsArray.length = 0;
+      var ch;
+      // Most arguments are i32s, so shift the buffer pointer so it is a plain
+      // index into HEAP32.
+      buf >>= 2;
+      while (ch = HEAPU8[sigPtr++]) {
+        var chr = String.fromCharCode(ch);
+        var validChars = ['d', 'f', 'i'];
+        assert(validChars.includes(chr), 'Invalid character ' + ch + '("' + chr + '") in readAsmConstArgs! Use only [' + validChars + '], and do not specify "v" for void return argument.');
+        // Floats are always passed as doubles, and doubles and int64s take up 8
+        // bytes (two 32-bit slots) in memory, align reads to these:
+        buf += (ch != 105/*i*/) & buf;
+        readAsmConstArgsArray.push(
+          ch == 105/*i*/ ? HEAP32[buf] :
+         HEAPF64[buf++ >> 1]
+        );
+        ++buf;
+      }
+      return readAsmConstArgsArray;
+    }
+  function _emscripten_asm_const_int(code, sigPtr, argbuf) {
+      var args = readAsmConstArgs(sigPtr, argbuf);
+      if (!ASM_CONSTS.hasOwnProperty(code)) abort('No EM_ASM constant found at address ' + code);
+      return ASM_CONSTS[code].apply(null, args);
+    }
+
+  function _emscripten_date_now() {
+      return Date.now();
+    }
+
+  function _emscripten_memcpy_big(dest, src, num) {
+      HEAPU8.copyWithin(dest, src, src + num);
+    }
+
+  function getHeapMax() {
+      // Stay one Wasm page short of 4GB: while e.g. Chrome is able to allocate
+      // full 4GB Wasm memories, the size will wrap back to 0 bytes in Wasm side
+      // for any code that deals with heap sizes, which would require special
+      // casing all heap size related code to treat 0 specially.
+      return 2147483648;
+    }
+  
+  var _emscripten_get_now;if (ENVIRONMENT_IS_NODE) {
+    _emscripten_get_now = () => {
+      var t = process['hrtime']();
+      return t[0] * 1e3 + t[1] / 1e6;
+    };
+  } else _emscripten_get_now = () => performance.now();
+  ;
+  
+  function emscripten_realloc_buffer(size) {
+      try {
+        // round size grow request up to wasm page size (fixed 64KB per spec)
+        wasmMemory.grow((size - buffer.byteLength + 65535) >>> 16); // .grow() takes a delta compared to the previous size
+        updateGlobalBufferAndViews(wasmMemory.buffer);
+        return 1 /*success*/;
+      } catch(e) {
+        err('emscripten_realloc_buffer: Attempted to grow heap from ' + buffer.byteLength  + ' bytes to ' + size + ' bytes, but got error: ' + e);
+      }
+      // implicit 0 return to save code size (caller will cast "undefined" into 0
+      // anyhow)
+    }
+  function _emscripten_resize_heap(requestedSize) {
+      var oldSize = HEAPU8.length;
+      requestedSize = requestedSize >>> 0;
+      // With multithreaded builds, races can happen (another thread might increase the size
+      // in between), so return a failure, and let the caller retry.
+      assert(requestedSize > oldSize);
+  
+      // Memory resize rules:
+      // 1.  Always increase heap size to at least the requested size, rounded up
+      //     to next page multiple.
+      // 2a. If MEMORY_GROWTH_LINEAR_STEP == -1, excessively resize the heap
+      //     geometrically: increase the heap size according to
+      //     MEMORY_GROWTH_GEOMETRIC_STEP factor (default +20%), At most
+      //     overreserve by MEMORY_GROWTH_GEOMETRIC_CAP bytes (default 96MB).
+      // 2b. If MEMORY_GROWTH_LINEAR_STEP != -1, excessively resize the heap
+      //     linearly: increase the heap size by at least
+      //     MEMORY_GROWTH_LINEAR_STEP bytes.
+      // 3.  Max size for the heap is capped at 2048MB-WASM_PAGE_SIZE, or by
+      //     MAXIMUM_MEMORY, or by ASAN limit, depending on which is smallest
+      // 4.  If we were unable to allocate as much memory, it may be due to
+      //     over-eager decision to excessively reserve due to (3) above.
+      //     Hence if an allocation fails, cut down on the amount of excess
+      //     growth, in an attempt to succeed to perform a smaller allocation.
+  
+      // A limit is set for how much we can grow. We should not exceed that
+      // (the wasm binary specifies it, so if we tried, we'd fail anyhow).
+      var maxHeapSize = getHeapMax();
+      if (requestedSize > maxHeapSize) {
+        err('Cannot enlarge memory, asked to go up to ' + requestedSize + ' bytes, but the limit is ' + maxHeapSize + ' bytes!');
+        return false;
+      }
+  
+      let alignUp = (x, multiple) => x + (multiple - x % multiple) % multiple;
+  
+      // Loop through potential heap size increases. If we attempt a too eager
+      // reservation that fails, cut down on the attempted size and reserve a
+      // smaller bump instead. (max 3 times, chosen somewhat arbitrarily)
+      for (var cutDown = 1; cutDown <= 4; cutDown *= 2) {
+        var overGrownHeapSize = oldSize * (1 + 0.2 / cutDown); // ensure geometric growth
+        // but limit overreserving (default to capping at +96MB overgrowth at most)
+        overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296 );
+  
+        var newSize = Math.min(maxHeapSize, alignUp(Math.max(requestedSize, overGrownHeapSize), 65536));
+  
+        var t0 = _emscripten_get_now();
+        var replacement = emscripten_realloc_buffer(newSize);
+        var t1 = _emscripten_get_now();
+        out('Heap resize call from ' + oldSize + ' to ' + newSize + ' took ' + (t1 - t0) + ' msecs. Success: ' + !!replacement);
+        if (replacement) {
+  
+          return true;
+        }
+      }
+      err('Failed to grow the heap from ' + oldSize + ' bytes to ' + newSize + ' bytes, not enough memory!');
+      return false;
+    }
+
+  var ENV = {};
+  
+  function getExecutableName() {
+      return thisProgram || './this.program';
+    }
+  function getEnvStrings() {
+      if (!getEnvStrings.strings) {
+        // Default values.
+        // Browser language detection #8751
+        var lang = ((typeof navigator == 'object' && navigator.languages && navigator.languages[0]) || 'C').replace('-', '_') + '.UTF-8';
+        var env = {
+          'USER': 'web_user',
+          'LOGNAME': 'web_user',
+          'PATH': '/',
+          'PWD': '/',
+          'HOME': '/home/web_user',
+          'LANG': lang,
+          '_': getExecutableName()
+        };
+        // Apply the user-provided values, if any.
+        for (var x in ENV) {
+          // x is a key in ENV; if ENV[x] is undefined, that means it was
+          // explicitly set to be so. We allow user code to do that to
+          // force variables with default values to remain unset.
+          if (ENV[x] === undefined) delete env[x];
+          else env[x] = ENV[x];
+        }
+        var strings = [];
+        for (var x in env) {
+          strings.push(x + '=' + env[x]);
+        }
+        getEnvStrings.strings = strings;
+      }
+      return getEnvStrings.strings;
+    }
+  
+  /** @param {boolean=} dontAddNull */
+  function writeAsciiToMemory(str, buffer, dontAddNull) {
+      for (var i = 0; i < str.length; ++i) {
+        assert(str.charCodeAt(i) === (str.charCodeAt(i) & 0xff));
+        HEAP8[((buffer++)>>0)] = str.charCodeAt(i);
+      }
+      // Null-terminate the pointer to the HEAP.
+      if (!dontAddNull) HEAP8[((buffer)>>0)] = 0;
+    }
+  function _environ_get(__environ, environ_buf) {
+      var bufSize = 0;
+      getEnvStrings().forEach(function(string, i) {
+        var ptr = environ_buf + bufSize;
+        HEAPU32[(((__environ)+(i*4))>>2)] = ptr;
+        writeAsciiToMemory(string, ptr);
+        bufSize += string.length + 1;
+      });
+      return 0;
+    }
+
+  function _environ_sizes_get(penviron_count, penviron_buf_size) {
+      var strings = getEnvStrings();
+      HEAPU32[((penviron_count)>>2)] = strings.length;
+      var bufSize = 0;
+      strings.forEach(function(string) {
+        bufSize += string.length + 1;
+      });
+      HEAPU32[((penviron_buf_size)>>2)] = bufSize;
+      return 0;
+    }
+
+  function _proc_exit(code) {
+      EXITSTATUS = code;
+      if (!keepRuntimeAlive()) {
+        if (Module['onExit']) Module['onExit'](code);
+        ABORT = true;
+      }
+      quit_(code, new ExitStatus(code));
+    }
+  /** @param {boolean|number=} implicit */
+  function exitJS(status, implicit) {
+      EXITSTATUS = status;
+  
+      checkUnflushedContent();
+  
+      // if exit() was called explicitly, warn the user if the runtime isn't actually being shut down
+      if (keepRuntimeAlive() && !implicit) {
+        var msg = 'program exited (with status: ' + status + '), but EXIT_RUNTIME is not set, so halting execution but not exiting the runtime or preventing further async execution (build with EXIT_RUNTIME=1, if you want a true shutdown)';
+        readyPromiseReject(msg);
+        err(msg);
+      }
+  
+      _proc_exit(status);
+    }
+  var _exit = exitJS;
+
+  function _fd_close(fd) {
+  try {
+  
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      FS.close(stream);
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e instanceof FS.ErrnoError)) throw e;
+    return e.errno;
+  }
+  }
+
+  /** @param {number=} offset */
+  function doReadv(stream, iov, iovcnt, offset) {
+      var ret = 0;
+      for (var i = 0; i < iovcnt; i++) {
+        var ptr = HEAPU32[((iov)>>2)];
+        var len = HEAPU32[(((iov)+(4))>>2)];
+        iov += 8;
+        var curr = FS.read(stream, HEAP8,ptr, len, offset);
+        if (curr < 0) return -1;
+        ret += curr;
+        if (curr < len) break; // nothing more to read
+      }
+      return ret;
+    }
+  function _fd_read(fd, iov, iovcnt, pnum) {
+  try {
+  
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      var num = doReadv(stream, iov, iovcnt);
+      HEAPU32[((pnum)>>2)] = num;
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e instanceof FS.ErrnoError)) throw e;
+    return e.errno;
+  }
+  }
+
+  function convertI32PairToI53Checked(lo, hi) {
+      assert(lo == (lo >>> 0) || lo == (lo|0)); // lo should either be a i32 or a u32
+      assert(hi === (hi|0));                    // hi should be a i32
+      return ((hi + 0x200000) >>> 0 < 0x400001 - !!lo) ? (lo >>> 0) + hi * 4294967296 : NaN;
+    }
+  function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {
+  try {
+  
+      var offset = convertI32PairToI53Checked(offset_low, offset_high); if (isNaN(offset)) return 61;
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      FS.llseek(stream, offset, whence);
+      (tempI64 = [stream.position>>>0,(tempDouble=stream.position,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[((newOffset)>>2)] = tempI64[0],HEAP32[(((newOffset)+(4))>>2)] = tempI64[1]);
+      if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null; // reset readdir state
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e instanceof FS.ErrnoError)) throw e;
+    return e.errno;
+  }
+  }
+
+  /** @param {number=} offset */
+  function doWritev(stream, iov, iovcnt, offset) {
+      var ret = 0;
+      for (var i = 0; i < iovcnt; i++) {
+        var ptr = HEAPU32[((iov)>>2)];
+        var len = HEAPU32[(((iov)+(4))>>2)];
+        iov += 8;
+        var curr = FS.write(stream, HEAP8,ptr, len, offset);
+        if (curr < 0) return -1;
+        ret += curr;
+      }
+      return ret;
+    }
+  function _fd_write(fd, iov, iovcnt, pnum) {
+  try {
+  
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      var num = doWritev(stream, iov, iovcnt);
+      HEAPU32[((pnum)>>2)] = num;
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e instanceof FS.ErrnoError)) throw e;
+    return e.errno;
+  }
+  }
+
+  function __isLeapYear(year) {
+        return year%4 === 0 && (year%100 !== 0 || year%400 === 0);
+    }
+  
+  function __arraySum(array, index) {
+      var sum = 0;
+      for (var i = 0; i <= index; sum += array[i++]) {
+        // no-op
+      }
+      return sum;
+    }
+  
+  var __MONTH_DAYS_LEAP = [31,29,31,30,31,30,31,31,30,31,30,31];
+  
+  var __MONTH_DAYS_REGULAR = [31,28,31,30,31,30,31,31,30,31,30,31];
+  function __addDays(date, days) {
+      var newDate = new Date(date.getTime());
+      while (days > 0) {
+        var leap = __isLeapYear(newDate.getFullYear());
+        var currentMonth = newDate.getMonth();
+        var daysInCurrentMonth = (leap ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR)[currentMonth];
+  
+        if (days > daysInCurrentMonth-newDate.getDate()) {
+          // we spill over to next month
+          days -= (daysInCurrentMonth-newDate.getDate()+1);
+          newDate.setDate(1);
+          if (currentMonth < 11) {
+            newDate.setMonth(currentMonth+1)
+          } else {
+            newDate.setMonth(0);
+            newDate.setFullYear(newDate.getFullYear()+1);
+          }
+        } else {
+          // we stay in current month
+          newDate.setDate(newDate.getDate()+days);
+          return newDate;
+        }
+      }
+  
+      return newDate;
+    }
+  
+  function writeArrayToMemory(array, buffer) {
+      assert(array.length >= 0, 'writeArrayToMemory array must have a length (should be an array or typed array)')
+      HEAP8.set(array, buffer);
+    }
+  function _strftime(s, maxsize, format, tm) {
+      // size_t strftime(char *restrict s, size_t maxsize, const char *restrict format, const struct tm *restrict timeptr);
+      // http://pubs.opengroup.org/onlinepubs/009695399/functions/strftime.html
+  
+      var tm_zone = HEAP32[(((tm)+(40))>>2)];
+  
+      var date = {
+        tm_sec: HEAP32[((tm)>>2)],
+        tm_min: HEAP32[(((tm)+(4))>>2)],
+        tm_hour: HEAP32[(((tm)+(8))>>2)],
+        tm_mday: HEAP32[(((tm)+(12))>>2)],
+        tm_mon: HEAP32[(((tm)+(16))>>2)],
+        tm_year: HEAP32[(((tm)+(20))>>2)],
+        tm_wday: HEAP32[(((tm)+(24))>>2)],
+        tm_yday: HEAP32[(((tm)+(28))>>2)],
+        tm_isdst: HEAP32[(((tm)+(32))>>2)],
+        tm_gmtoff: HEAP32[(((tm)+(36))>>2)],
+        tm_zone: tm_zone ? UTF8ToString(tm_zone) : ''
+      };
+  
+      var pattern = UTF8ToString(format);
+  
+      // expand format
+      var EXPANSION_RULES_1 = {
+        '%c': '%a %b %d %H:%M:%S %Y',     // Replaced by the locale's appropriate date and time representation - e.g., Mon Aug  3 14:02:01 2013
+        '%D': '%m/%d/%y',                 // Equivalent to %m / %d / %y
+        '%F': '%Y-%m-%d',                 // Equivalent to %Y - %m - %d
+        '%h': '%b',                       // Equivalent to %b
+        '%r': '%I:%M:%S %p',              // Replaced by the time in a.m. and p.m. notation
+        '%R': '%H:%M',                    // Replaced by the time in 24-hour notation
+        '%T': '%H:%M:%S',                 // Replaced by the time
+        '%x': '%m/%d/%y',                 // Replaced by the locale's appropriate date representation
+        '%X': '%H:%M:%S',                 // Replaced by the locale's appropriate time representation
+        // Modified Conversion Specifiers
+        '%Ec': '%c',                      // Replaced by the locale's alternative appropriate date and time representation.
+        '%EC': '%C',                      // Replaced by the name of the base year (period) in the locale's alternative representation.
+        '%Ex': '%m/%d/%y',                // Replaced by the locale's alternative date representation.
+        '%EX': '%H:%M:%S',                // Replaced by the locale's alternative time representation.
+        '%Ey': '%y',                      // Replaced by the offset from %EC (year only) in the locale's alternative representation.
+        '%EY': '%Y',                      // Replaced by the full alternative year representation.
+        '%Od': '%d',                      // Replaced by the day of the month, using the locale's alternative numeric symbols, filled as needed with leading zeros if there is any alternative symbol for zero; otherwise, with leading <space> characters.
+        '%Oe': '%e',                      // Replaced by the day of the month, using the locale's alternative numeric symbols, filled as needed with leading <space> characters.
+        '%OH': '%H',                      // Replaced by the hour (24-hour clock) using the locale's alternative numeric symbols.
+        '%OI': '%I',                      // Replaced by the hour (12-hour clock) using the locale's alternative numeric symbols.
+        '%Om': '%m',                      // Replaced by the month using the locale's alternative numeric symbols.
+        '%OM': '%M',                      // Replaced by the minutes using the locale's alternative numeric symbols.
+        '%OS': '%S',                      // Replaced by the seconds using the locale's alternative numeric symbols.
+        '%Ou': '%u',                      // Replaced by the weekday as a number in the locale's alternative representation (Monday=1).
+        '%OU': '%U',                      // Replaced by the week number of the year (Sunday as the first day of the week, rules corresponding to %U ) using the locale's alternative numeric symbols.
+        '%OV': '%V',                      // Replaced by the week number of the year (Monday as the first day of the week, rules corresponding to %V ) using the locale's alternative numeric symbols.
+        '%Ow': '%w',                      // Replaced by the number of the weekday (Sunday=0) using the locale's alternative numeric symbols.
+        '%OW': '%W',                      // Replaced by the week number of the year (Monday as the first day of the week) using the locale's alternative numeric symbols.
+        '%Oy': '%y',                      // Replaced by the year (offset from %C ) using the locale's alternative numeric symbols.
+      };
+      for (var rule in EXPANSION_RULES_1) {
+        pattern = pattern.replace(new RegExp(rule, 'g'), EXPANSION_RULES_1[rule]);
+      }
+  
+      var WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+      function leadingSomething(value, digits, character) {
+        var str = typeof value == 'number' ? value.toString() : (value || '');
+        while (str.length < digits) {
+          str = character[0]+str;
+        }
+        return str;
+      }
+  
+      function leadingNulls(value, digits) {
+        return leadingSomething(value, digits, '0');
+      }
+  
+      function compareByDay(date1, date2) {
+        function sgn(value) {
+          return value < 0 ? -1 : (value > 0 ? 1 : 0);
+        }
+  
+        var compare;
+        if ((compare = sgn(date1.getFullYear()-date2.getFullYear())) === 0) {
+          if ((compare = sgn(date1.getMonth()-date2.getMonth())) === 0) {
+            compare = sgn(date1.getDate()-date2.getDate());
+          }
+        }
+        return compare;
+      }
+  
+      function getFirstWeekStartDate(janFourth) {
+          switch (janFourth.getDay()) {
+            case 0: // Sunday
+              return new Date(janFourth.getFullYear()-1, 11, 29);
+            case 1: // Monday
+              return janFourth;
+            case 2: // Tuesday
+              return new Date(janFourth.getFullYear(), 0, 3);
+            case 3: // Wednesday
+              return new Date(janFourth.getFullYear(), 0, 2);
+            case 4: // Thursday
+              return new Date(janFourth.getFullYear(), 0, 1);
+            case 5: // Friday
+              return new Date(janFourth.getFullYear()-1, 11, 31);
+            case 6: // Saturday
+              return new Date(janFourth.getFullYear()-1, 11, 30);
+          }
+      }
+  
+      function getWeekBasedYear(date) {
+          var thisDate = __addDays(new Date(date.tm_year+1900, 0, 1), date.tm_yday);
+  
+          var janFourthThisYear = new Date(thisDate.getFullYear(), 0, 4);
+          var janFourthNextYear = new Date(thisDate.getFullYear()+1, 0, 4);
+  
+          var firstWeekStartThisYear = getFirstWeekStartDate(janFourthThisYear);
+          var firstWeekStartNextYear = getFirstWeekStartDate(janFourthNextYear);
+  
+          if (compareByDay(firstWeekStartThisYear, thisDate) <= 0) {
+            // this date is after the start of the first week of this year
+            if (compareByDay(firstWeekStartNextYear, thisDate) <= 0) {
+              return thisDate.getFullYear()+1;
+            }
+            return thisDate.getFullYear();
+          }
+          return thisDate.getFullYear()-1;
+      }
+  
+      var EXPANSION_RULES_2 = {
+        '%a': function(date) {
+          return WEEKDAYS[date.tm_wday].substring(0,3);
+        },
+        '%A': function(date) {
+          return WEEKDAYS[date.tm_wday];
+        },
+        '%b': function(date) {
+          return MONTHS[date.tm_mon].substring(0,3);
+        },
+        '%B': function(date) {
+          return MONTHS[date.tm_mon];
+        },
+        '%C': function(date) {
+          var year = date.tm_year+1900;
+          return leadingNulls((year/100)|0,2);
+        },
+        '%d': function(date) {
+          return leadingNulls(date.tm_mday, 2);
+        },
+        '%e': function(date) {
+          return leadingSomething(date.tm_mday, 2, ' ');
+        },
+        '%g': function(date) {
+          // %g, %G, and %V give values according to the ISO 8601:2000 standard week-based year.
+          // In this system, weeks begin on a Monday and week 1 of the year is the week that includes
+          // January 4th, which is also the week that includes the first Thursday of the year, and
+          // is also the first week that contains at least four days in the year.
+          // If the first Monday of January is the 2nd, 3rd, or 4th, the preceding days are part of
+          // the last week of the preceding year; thus, for Saturday 2nd January 1999,
+          // %G is replaced by 1998 and %V is replaced by 53. If December 29th, 30th,
+          // or 31st is a Monday, it and any following days are part of week 1 of the following year.
+          // Thus, for Tuesday 30th December 1997, %G is replaced by 1998 and %V is replaced by 01.
+  
+          return getWeekBasedYear(date).toString().substring(2);
+        },
+        '%G': function(date) {
+          return getWeekBasedYear(date);
+        },
+        '%H': function(date) {
+          return leadingNulls(date.tm_hour, 2);
+        },
+        '%I': function(date) {
+          var twelveHour = date.tm_hour;
+          if (twelveHour == 0) twelveHour = 12;
+          else if (twelveHour > 12) twelveHour -= 12;
+          return leadingNulls(twelveHour, 2);
+        },
+        '%j': function(date) {
+          // Day of the year (001-366)
+          return leadingNulls(date.tm_mday+__arraySum(__isLeapYear(date.tm_year+1900) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, date.tm_mon-1), 3);
+        },
+        '%m': function(date) {
+          return leadingNulls(date.tm_mon+1, 2);
+        },
+        '%M': function(date) {
+          return leadingNulls(date.tm_min, 2);
+        },
+        '%n': function() {
+          return '\n';
+        },
+        '%p': function(date) {
+          if (date.tm_hour >= 0 && date.tm_hour < 12) {
+            return 'AM';
+          }
+          return 'PM';
+        },
+        '%S': function(date) {
+          return leadingNulls(date.tm_sec, 2);
+        },
+        '%t': function() {
+          return '\t';
+        },
+        '%u': function(date) {
+          return date.tm_wday || 7;
+        },
+        '%U': function(date) {
+          var days = date.tm_yday + 7 - date.tm_wday;
+          return leadingNulls(Math.floor(days / 7), 2);
+        },
+        '%V': function(date) {
+          // Replaced by the week number of the year (Monday as the first day of the week)
+          // as a decimal number [01,53]. If the week containing 1 January has four
+          // or more days in the new year, then it is considered week 1.
+          // Otherwise, it is the last week of the previous year, and the next week is week 1.
+          // Both January 4th and the first Thursday of January are always in week 1. [ tm_year, tm_wday, tm_yday]
+          var val = Math.floor((date.tm_yday + 7 - (date.tm_wday + 6) % 7 ) / 7);
+          // If 1 Jan is just 1-3 days past Monday, the previous week
+          // is also in this year.
+          if ((date.tm_wday + 371 - date.tm_yday - 2) % 7 <= 2) {
+            val++;
+          }
+          if (!val) {
+            val = 52;
+            // If 31 December of prev year a Thursday, or Friday of a
+            // leap year, then the prev year has 53 weeks.
+            var dec31 = (date.tm_wday + 7 - date.tm_yday - 1) % 7;
+            if (dec31 == 4 || (dec31 == 5 && __isLeapYear(date.tm_year%400-1))) {
+              val++;
+            }
+          } else if (val == 53) {
+            // If 1 January is not a Thursday, and not a Wednesday of a
+            // leap year, then this year has only 52 weeks.
+            var jan1 = (date.tm_wday + 371 - date.tm_yday) % 7;
+            if (jan1 != 4 && (jan1 != 3 || !__isLeapYear(date.tm_year)))
+              val = 1;
+          }
+          return leadingNulls(val, 2);
+        },
+        '%w': function(date) {
+          return date.tm_wday;
+        },
+        '%W': function(date) {
+          var days = date.tm_yday + 7 - ((date.tm_wday + 6) % 7);
+          return leadingNulls(Math.floor(days / 7), 2);
+        },
+        '%y': function(date) {
+          // Replaced by the last two digits of the year as a decimal number [00,99]. [ tm_year]
+          return (date.tm_year+1900).toString().substring(2);
+        },
+        '%Y': function(date) {
+          // Replaced by the year as a decimal number (for example, 1997). [ tm_year]
+          return date.tm_year+1900;
+        },
+        '%z': function(date) {
+          // Replaced by the offset from UTC in the ISO 8601:2000 standard format ( +hhmm or -hhmm ).
+          // For example, "-0430" means 4 hours 30 minutes behind UTC (west of Greenwich).
+          var off = date.tm_gmtoff;
+          var ahead = off >= 0;
+          off = Math.abs(off) / 60;
+          // convert from minutes into hhmm format (which means 60 minutes = 100 units)
+          off = (off / 60)*100 + (off % 60);
+          return (ahead ? '+' : '-') + String("0000" + off).slice(-4);
+        },
+        '%Z': function(date) {
+          return date.tm_zone;
+        },
+        '%%': function() {
+          return '%';
+        }
+      };
+  
+      // Replace %% with a pair of NULLs (which cannot occur in a C string), then
+      // re-inject them after processing.
+      pattern = pattern.replace(/%%/g, '\0\0')
+      for (var rule in EXPANSION_RULES_2) {
+        if (pattern.includes(rule)) {
+          pattern = pattern.replace(new RegExp(rule, 'g'), EXPANSION_RULES_2[rule](date));
+        }
+      }
+      pattern = pattern.replace(/\0\0/g, '%')
+  
+      var bytes = intArrayFromString(pattern, false);
+      if (bytes.length > maxsize) {
+        return 0;
+      }
+  
+      writeArrayToMemory(bytes, s);
+      return bytes.length-1;
+    }
+  function _strftime_l(s, maxsize, format, tm, loc) {
+      return _strftime(s, maxsize, format, tm); // no locale support yet
+    }
+
+
+  function handleException(e) {
+      // Certain exception types we do not treat as errors since they are used for
+      // internal control flow.
+      // 1. ExitStatus, which is thrown by exit()
+      // 2. "unwind", which is thrown by emscripten_unwind_to_js_event_loop() and others
+      //    that wish to return to JS event loop.
+      if (e instanceof ExitStatus || e == 'unwind') {
+        return EXITSTATUS;
+      }
+      quit_(1, e);
+    }
+
+
+  var FSNode = /** @constructor */ function(parent, name, mode, rdev) {
+    if (!parent) {
+      parent = this;  // root node sets parent to itself
+    }
+    this.parent = parent;
+    this.mount = parent.mount;
+    this.mounted = null;
+    this.id = FS.nextInode++;
+    this.name = name;
+    this.mode = mode;
+    this.node_ops = {};
+    this.stream_ops = {};
+    this.rdev = rdev;
+  };
+  var readMode = 292/*292*/ | 73/*73*/;
+  var writeMode = 146/*146*/;
+  Object.defineProperties(FSNode.prototype, {
+   read: {
+    get: /** @this{FSNode} */function() {
+     return (this.mode & readMode) === readMode;
+    },
+    set: /** @this{FSNode} */function(val) {
+     val ? this.mode |= readMode : this.mode &= ~readMode;
+    }
+   },
+   write: {
+    get: /** @this{FSNode} */function() {
+     return (this.mode & writeMode) === writeMode;
+    },
+    set: /** @this{FSNode} */function(val) {
+     val ? this.mode |= writeMode : this.mode &= ~writeMode;
+    }
+   },
+   isFolder: {
+    get: /** @this{FSNode} */function() {
+     return FS.isDir(this.mode);
+    }
+   },
+   isDevice: {
+    get: /** @this{FSNode} */function() {
+     return FS.isChrdev(this.mode);
+    }
+   }
+  });
+  FS.FSNode = FSNode;
+  FS.staticInit();;
+ERRNO_CODES = {
+      'EPERM': 63,
+      'ENOENT': 44,
+      'ESRCH': 71,
+      'EINTR': 27,
+      'EIO': 29,
+      'ENXIO': 60,
+      'E2BIG': 1,
+      'ENOEXEC': 45,
+      'EBADF': 8,
+      'ECHILD': 12,
+      'EAGAIN': 6,
+      'EWOULDBLOCK': 6,
+      'ENOMEM': 48,
+      'EACCES': 2,
+      'EFAULT': 21,
+      'ENOTBLK': 105,
+      'EBUSY': 10,
+      'EEXIST': 20,
+      'EXDEV': 75,
+      'ENODEV': 43,
+      'ENOTDIR': 54,
+      'EISDIR': 31,
+      'EINVAL': 28,
+      'ENFILE': 41,
+      'EMFILE': 33,
+      'ENOTTY': 59,
+      'ETXTBSY': 74,
+      'EFBIG': 22,
+      'ENOSPC': 51,
+      'ESPIPE': 70,
+      'EROFS': 69,
+      'EMLINK': 34,
+      'EPIPE': 64,
+      'EDOM': 18,
+      'ERANGE': 68,
+      'ENOMSG': 49,
+      'EIDRM': 24,
+      'ECHRNG': 106,
+      'EL2NSYNC': 156,
+      'EL3HLT': 107,
+      'EL3RST': 108,
+      'ELNRNG': 109,
+      'EUNATCH': 110,
+      'ENOCSI': 111,
+      'EL2HLT': 112,
+      'EDEADLK': 16,
+      'ENOLCK': 46,
+      'EBADE': 113,
+      'EBADR': 114,
+      'EXFULL': 115,
+      'ENOANO': 104,
+      'EBADRQC': 103,
+      'EBADSLT': 102,
+      'EDEADLOCK': 16,
+      'EBFONT': 101,
+      'ENOSTR': 100,
+      'ENODATA': 116,
+      'ETIME': 117,
+      'ENOSR': 118,
+      'ENONET': 119,
+      'ENOPKG': 120,
+      'EREMOTE': 121,
+      'ENOLINK': 47,
+      'EADV': 122,
+      'ESRMNT': 123,
+      'ECOMM': 124,
+      'EPROTO': 65,
+      'EMULTIHOP': 36,
+      'EDOTDOT': 125,
+      'EBADMSG': 9,
+      'ENOTUNIQ': 126,
+      'EBADFD': 127,
+      'EREMCHG': 128,
+      'ELIBACC': 129,
+      'ELIBBAD': 130,
+      'ELIBSCN': 131,
+      'ELIBMAX': 132,
+      'ELIBEXEC': 133,
+      'ENOSYS': 52,
+      'ENOTEMPTY': 55,
+      'ENAMETOOLONG': 37,
+      'ELOOP': 32,
+      'EOPNOTSUPP': 138,
+      'EPFNOSUPPORT': 139,
+      'ECONNRESET': 15,
+      'ENOBUFS': 42,
+      'EAFNOSUPPORT': 5,
+      'EPROTOTYPE': 67,
+      'ENOTSOCK': 57,
+      'ENOPROTOOPT': 50,
+      'ESHUTDOWN': 140,
+      'ECONNREFUSED': 14,
+      'EADDRINUSE': 3,
+      'ECONNABORTED': 13,
+      'ENETUNREACH': 40,
+      'ENETDOWN': 38,
+      'ETIMEDOUT': 73,
+      'EHOSTDOWN': 142,
+      'EHOSTUNREACH': 23,
+      'EINPROGRESS': 26,
+      'EALREADY': 7,
+      'EDESTADDRREQ': 17,
+      'EMSGSIZE': 35,
+      'EPROTONOSUPPORT': 66,
+      'ESOCKTNOSUPPORT': 137,
+      'EADDRNOTAVAIL': 4,
+      'ENETRESET': 39,
+      'EISCONN': 30,
+      'ENOTCONN': 53,
+      'ETOOMANYREFS': 141,
+      'EUSERS': 136,
+      'EDQUOT': 19,
+      'ESTALE': 72,
+      'ENOTSUP': 138,
+      'ENOMEDIUM': 148,
+      'EILSEQ': 25,
+      'EOVERFLOW': 61,
+      'ECANCELED': 11,
+      'ENOTRECOVERABLE': 56,
+      'EOWNERDEAD': 62,
+      'ESTRPIPE': 135,
+    };;
+embind_init_charCodes();
+BindingError = Module['BindingError'] = extendError(Error, 'BindingError');;
+InternalError = Module['InternalError'] = extendError(Error, 'InternalError');;
+init_emval();;
+UnboundTypeError = Module['UnboundTypeError'] = extendError(Error, 'UnboundTypeError');;
+var ASSERTIONS = true;
+
+function checkIncomingModuleAPI() {
+  ignoredModuleProp('fetchSettings');
+}
+var asmLibraryArg = {
+  "__assert_fail": ___assert_fail,
+  "__cxa_allocate_exception": ___cxa_allocate_exception,
+  "__cxa_begin_catch": ___cxa_begin_catch,
+  "__cxa_end_catch": ___cxa_end_catch,
+  "__cxa_find_matching_catch_2": ___cxa_find_matching_catch_2,
+  "__cxa_find_matching_catch_3": ___cxa_find_matching_catch_3,
+  "__cxa_free_exception": ___cxa_free_exception,
+  "__cxa_rethrow": ___cxa_rethrow,
+  "__cxa_throw": ___cxa_throw,
+  "__cxa_uncaught_exceptions": ___cxa_uncaught_exceptions,
+  "__handle_stack_overflow": ___handle_stack_overflow,
+  "__resumeException": ___resumeException,
+  "__syscall_openat": ___syscall_openat,
+  "_embind_register_bigint": __embind_register_bigint,
+  "_embind_register_bool": __embind_register_bool,
+  "_embind_register_emval": __embind_register_emval,
+  "_embind_register_float": __embind_register_float,
+  "_embind_register_function": __embind_register_function,
+  "_embind_register_integer": __embind_register_integer,
+  "_embind_register_memory_view": __embind_register_memory_view,
+  "_embind_register_std_string": __embind_register_std_string,
+  "_embind_register_std_wstring": __embind_register_std_wstring,
+  "_embind_register_void": __embind_register_void,
+  "_emscripten_get_progname": __emscripten_get_progname,
+  "_gmtime_js": __gmtime_js,
+  "_mktime_js": __mktime_js,
+  "_tzset_js": __tzset_js,
+  "abort": _abort,
+  "emscripten_asm_const_int": _emscripten_asm_const_int,
+  "emscripten_date_now": _emscripten_date_now,
+  "emscripten_memcpy_big": _emscripten_memcpy_big,
+  "emscripten_resize_heap": _emscripten_resize_heap,
+  "environ_get": _environ_get,
+  "environ_sizes_get": _environ_sizes_get,
+  "exit": _exit,
+  "fd_close": _fd_close,
+  "fd_read": _fd_read,
+  "fd_seek": _fd_seek,
+  "fd_write": _fd_write,
+  "invoke_i": invoke_i,
+  "invoke_ii": invoke_ii,
+  "invoke_iii": invoke_iii,
+  "invoke_iiii": invoke_iiii,
+  "invoke_iiiii": invoke_iiiii,
+  "invoke_iiiiii": invoke_iiiiii,
+  "invoke_iiiiiii": invoke_iiiiiii,
+  "invoke_iiiiiiii": invoke_iiiiiiii,
+  "invoke_iiiiiiiiiiii": invoke_iiiiiiiiiiii,
+  "invoke_iiiiij": invoke_iiiiij,
+  "invoke_iiij": invoke_iiij,
+  "invoke_jiiii": invoke_jiiii,
+  "invoke_v": invoke_v,
+  "invoke_vi": invoke_vi,
+  "invoke_vii": invoke_vii,
+  "invoke_viii": invoke_viii,
+  "invoke_viiii": invoke_viiii,
+  "invoke_viiiiii": invoke_viiiiii,
+  "invoke_viiiiiii": invoke_viiiiiii,
+  "invoke_viiiiiiiiii": invoke_viiiiiiiiii,
+  "invoke_viiiiiiiiiiiiiii": invoke_viiiiiiiiiiiiiii,
+  "strftime_l": _strftime_l
+};
+var asm = createWasm();
+/** @type {function(...*):?} */
+var ___wasm_call_ctors = Module["___wasm_call_ctors"] = createExportWrapper("__wasm_call_ctors");
+
+/** @type {function(...*):?} */
+var _malloc = Module["_malloc"] = createExportWrapper("malloc");
+
+/** @type {function(...*):?} */
+var _main = Module["_main"] = createExportWrapper("main");
+
+/** @type {function(...*):?} */
+var ___errno_location = Module["___errno_location"] = createExportWrapper("__errno_location");
+
+/** @type {function(...*):?} */
+var _free = Module["_free"] = createExportWrapper("free");
+
+/** @type {function(...*):?} */
+var ___getTypeName = Module["___getTypeName"] = createExportWrapper("__getTypeName");
+
+/** @type {function(...*):?} */
+var __embind_initialize_bindings = Module["__embind_initialize_bindings"] = createExportWrapper("_embind_initialize_bindings");
+
+/** @type {function(...*):?} */
+var _fflush = Module["_fflush"] = createExportWrapper("fflush");
+
+/** @type {function(...*):?} */
+var _setThrew = Module["_setThrew"] = createExportWrapper("setThrew");
+
+/** @type {function(...*):?} */
+var setTempRet0 = Module["setTempRet0"] = createExportWrapper("setTempRet0");
+
+/** @type {function(...*):?} */
+var getTempRet0 = Module["getTempRet0"] = createExportWrapper("getTempRet0");
+
+/** @type {function(...*):?} */
+var _emscripten_stack_init = Module["_emscripten_stack_init"] = function() {
+  return (_emscripten_stack_init = Module["_emscripten_stack_init"] = Module["asm"]["emscripten_stack_init"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _emscripten_stack_get_free = Module["_emscripten_stack_get_free"] = function() {
+  return (_emscripten_stack_get_free = Module["_emscripten_stack_get_free"] = Module["asm"]["emscripten_stack_get_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _emscripten_stack_get_base = Module["_emscripten_stack_get_base"] = function() {
+  return (_emscripten_stack_get_base = Module["_emscripten_stack_get_base"] = Module["asm"]["emscripten_stack_get_base"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _emscripten_stack_get_end = Module["_emscripten_stack_get_end"] = function() {
+  return (_emscripten_stack_get_end = Module["_emscripten_stack_get_end"] = Module["asm"]["emscripten_stack_get_end"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var stackSave = Module["stackSave"] = createExportWrapper("stackSave");
+
+/** @type {function(...*):?} */
+var stackRestore = Module["stackRestore"] = createExportWrapper("stackRestore");
+
+/** @type {function(...*):?} */
+var stackAlloc = Module["stackAlloc"] = createExportWrapper("stackAlloc");
+
+/** @type {function(...*):?} */
+var ___cxa_demangle = Module["___cxa_demangle"] = createExportWrapper("__cxa_demangle");
+
+/** @type {function(...*):?} */
+var ___cxa_can_catch = Module["___cxa_can_catch"] = createExportWrapper("__cxa_can_catch");
+
+/** @type {function(...*):?} */
+var ___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = createExportWrapper("__cxa_is_pointer_type");
+
+/** @type {function(...*):?} */
+var ___set_stack_limits = Module["___set_stack_limits"] = createExportWrapper("__set_stack_limits");
+
+/** @type {function(...*):?} */
+var dynCall_iij = Module["dynCall_iij"] = createExportWrapper("dynCall_iij");
+
+/** @type {function(...*):?} */
+var dynCall_iiiij = Module["dynCall_iiiij"] = createExportWrapper("dynCall_iiiij");
+
+/** @type {function(...*):?} */
+var dynCall_iiiiij = Module["dynCall_iiiiij"] = createExportWrapper("dynCall_iiiiij");
+
+/** @type {function(...*):?} */
+var dynCall_iiij = Module["dynCall_iiij"] = createExportWrapper("dynCall_iiij");
+
+/** @type {function(...*):?} */
+var dynCall_jiiii = Module["dynCall_jiiii"] = createExportWrapper("dynCall_jiiii");
+
+/** @type {function(...*):?} */
+var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
+
+/** @type {function(...*):?} */
+var dynCall_viijii = Module["dynCall_viijii"] = createExportWrapper("dynCall_viijii");
+
+/** @type {function(...*):?} */
+var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = createExportWrapper("dynCall_iiiiijj");
+
+/** @type {function(...*):?} */
+var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = createExportWrapper("dynCall_iiiiiijj");
+
+
+function invoke_ii(index,a1) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_vii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_vi(index,a1) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_v(index) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)();
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiii(index,a1,a2,a3,a4,a5,a6) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiii(index,a1,a2,a3,a4,a5) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiii(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiiii(index,a1,a2,a3,a4,a5,a6,a7) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiii(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viii(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiiii(index,a1,a2,a3,a4,a5,a6,a7) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiii(index,a1,a2,a3,a4,a5,a6) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_i(index) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)();
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiii(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiij(index,a1,a2,a3,a4,a5,a6) {
+  var sp = stackSave();
+  try {
+    return dynCall_iiiiij(index,a1,a2,a3,a4,a5,a6);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiij(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    return dynCall_iiij(index,a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_jiiii(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    return dynCall_jiiii(index,a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (e !== e+0) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+
+
+
+// === Auto-generated postamble setup entry stuff ===
+
+Module["UTF8ToString"] = UTF8ToString;
+Module["stringToUTF8"] = stringToUTF8;
+var unexportedRuntimeSymbols = [
+  'run',
+  'UTF8ArrayToString',
+  'stringToUTF8Array',
+  'lengthBytesUTF8',
+  'addOnPreRun',
+  'addOnInit',
+  'addOnPreMain',
+  'addOnExit',
+  'addOnPostRun',
+  'addRunDependency',
+  'removeRunDependency',
+  'FS_createFolder',
+  'FS_createPath',
+  'FS_createDataFile',
+  'FS_createPreloadedFile',
+  'FS_createLazyFile',
+  'FS_createLink',
+  'FS_createDevice',
+  'FS_unlink',
+  'getLEB',
+  'getFunctionTables',
+  'alignFunctionTables',
+  'registerFunctions',
+  'prettyPrint',
+  'getCompilerSetting',
+  'print',
+  'printErr',
+  'callMain',
+  'abort',
+  'keepRuntimeAlive',
+  'wasmMemory',
+  'stackAlloc',
+  'stackSave',
+  'stackRestore',
+  'getTempRet0',
+  'setTempRet0',
+  'writeStackCookie',
+  'checkStackCookie',
+  'ptrToString',
+  'zeroMemory',
+  'stringToNewUTF8',
+  'exitJS',
+  'getHeapMax',
+  'emscripten_realloc_buffer',
+  'ENV',
+  'ERRNO_CODES',
+  'ERRNO_MESSAGES',
+  'setErrNo',
+  'inetPton4',
+  'inetNtop4',
+  'inetPton6',
+  'inetNtop6',
+  'readSockaddr',
+  'writeSockaddr',
+  'DNS',
+  'getHostByName',
+  'Protocols',
+  'Sockets',
+  'getRandomDevice',
+  'warnOnce',
+  'traverseStack',
+  'UNWIND_CACHE',
+  'convertPCtoSourceLocation',
+  'readAsmConstArgsArray',
+  'readAsmConstArgs',
+  'mainThreadEM_ASM',
+  'jstoi_q',
+  'jstoi_s',
+  'getExecutableName',
+  'listenOnce',
+  'autoResumeAudioContext',
+  'dynCallLegacy',
+  'getDynCaller',
+  'dynCall',
+  'handleException',
+  'runtimeKeepalivePush',
+  'runtimeKeepalivePop',
+  'callUserCallback',
+  'maybeExit',
+  'safeSetTimeout',
+  'asmjsMangle',
+  'asyncLoad',
+  'alignMemory',
+  'mmapAlloc',
+  'writeI53ToI64',
+  'writeI53ToI64Clamped',
+  'writeI53ToI64Signaling',
+  'writeI53ToU64Clamped',
+  'writeI53ToU64Signaling',
+  'readI53FromI64',
+  'readI53FromU64',
+  'convertI32PairToI53',
+  'convertI32PairToI53Checked',
+  'convertU32PairToI53',
+  'getCFunc',
+  'ccall',
+  'cwrap',
+  'uleb128Encode',
+  'sigToWasmTypes',
+  'generateFuncType',
+  'convertJsFunctionToWasm',
+  'freeTableIndexes',
+  'functionsInTableMap',
+  'getEmptyTableSlot',
+  'updateTableMap',
+  'addFunction',
+  'removeFunction',
+  'reallyNegative',
+  'unSign',
+  'strLen',
+  'reSign',
+  'formatString',
+  'setValue',
+  'getValue',
+  'PATH',
+  'PATH_FS',
+  'intArrayFromString',
+  'intArrayToString',
+  'AsciiToString',
+  'stringToAscii',
+  'UTF16Decoder',
+  'UTF16ToString',
+  'stringToUTF16',
+  'lengthBytesUTF16',
+  'UTF32ToString',
+  'stringToUTF32',
+  'lengthBytesUTF32',
+  'allocateUTF8',
+  'allocateUTF8OnStack',
+  'writeStringToMemory',
+  'writeArrayToMemory',
+  'writeAsciiToMemory',
+  'SYSCALLS',
+  'getSocketFromFD',
+  'getSocketAddress',
+  'JSEvents',
+  'registerKeyEventCallback',
+  'specialHTMLTargets',
+  'maybeCStringToJsString',
+  'findEventTarget',
+  'findCanvasEventTarget',
+  'getBoundingClientRect',
+  'fillMouseEventData',
+  'registerMouseEventCallback',
+  'registerWheelEventCallback',
+  'registerUiEventCallback',
+  'registerFocusEventCallback',
+  'fillDeviceOrientationEventData',
+  'registerDeviceOrientationEventCallback',
+  'fillDeviceMotionEventData',
+  'registerDeviceMotionEventCallback',
+  'screenOrientation',
+  'fillOrientationChangeEventData',
+  'registerOrientationChangeEventCallback',
+  'fillFullscreenChangeEventData',
+  'registerFullscreenChangeEventCallback',
+  'JSEvents_requestFullscreen',
+  'JSEvents_resizeCanvasForFullscreen',
+  'registerRestoreOldStyle',
+  'hideEverythingExceptGivenElement',
+  'restoreHiddenElements',
+  'setLetterbox',
+  'currentFullscreenStrategy',
+  'restoreOldWindowedStyle',
+  'softFullscreenResizeWebGLRenderTarget',
+  'doRequestFullscreen',
+  'fillPointerlockChangeEventData',
+  'registerPointerlockChangeEventCallback',
+  'registerPointerlockErrorEventCallback',
+  'requestPointerLock',
+  'fillVisibilityChangeEventData',
+  'registerVisibilityChangeEventCallback',
+  'registerTouchEventCallback',
+  'fillGamepadEventData',
+  'registerGamepadEventCallback',
+  'registerBeforeUnloadEventCallback',
+  'fillBatteryEventData',
+  'battery',
+  'registerBatteryEventCallback',
+  'setCanvasElementSize',
+  'getCanvasElementSize',
+  'demangle',
+  'demangleAll',
+  'jsStackTrace',
+  'stackTrace',
+  'ExitStatus',
+  'getEnvStrings',
+  'checkWasiClock',
+  'doReadv',
+  'doWritev',
+  'createDyncallWrapper',
+  'setImmediateWrapped',
+  'clearImmediateWrapped',
+  'polyfillSetImmediate',
+  'uncaughtExceptionCount',
+  'exceptionLast',
+  'exceptionCaught',
+  'ExceptionInfo',
+  'exception_addRef',
+  'exception_decRef',
+  'getExceptionMessageCommon',
+  'incrementExceptionRefcount',
+  'decrementExceptionRefcount',
+  'getExceptionMessage',
+  'Browser',
+  'setMainLoop',
+  'wget',
+  'FS',
+  'MEMFS',
+  'TTY',
+  'PIPEFS',
+  'SOCKFS',
+  '_setNetworkCallback',
+  'InternalError',
+  'BindingError',
+  'UnboundTypeError',
+  'PureVirtualError',
+  'init_embind',
+  'throwInternalError',
+  'throwBindingError',
+  'throwUnboundTypeError',
+  'ensureOverloadTable',
+  'exposePublicSymbol',
+  'replacePublicSymbol',
+  'extendError',
+  'createNamedFunction',
+  'embindRepr',
+  'registeredInstances',
+  'getBasestPointer',
+  'registerInheritedInstance',
+  'unregisterInheritedInstance',
+  'getInheritedInstance',
+  'getInheritedInstanceCount',
+  'getLiveInheritedInstances',
+  'registeredTypes',
+  'awaitingDependencies',
+  'typeDependencies',
+  'registeredPointers',
+  'registerType',
+  'whenDependentTypesAreResolved',
+  'embind_charCodes',
+  'embind_init_charCodes',
+  'readLatin1String',
+  'getTypeName',
+  'heap32VectorToArray',
+  'requireRegisteredType',
+  'getShiftFromSize',
+  'integerReadValueFromPointer',
+  'enumReadValueFromPointer',
+  'floatReadValueFromPointer',
+  'simpleReadValueFromPointer',
+  'runDestructors',
+  'new_',
+  'craftInvokerFunction',
+  'embind__requireFunction',
+  'tupleRegistrations',
+  'structRegistrations',
+  'genericPointerToWireType',
+  'constNoSmartPtrRawPointerToWireType',
+  'nonConstNoSmartPtrRawPointerToWireType',
+  'init_RegisteredPointer',
+  'RegisteredPointer',
+  'RegisteredPointer_getPointee',
+  'RegisteredPointer_destructor',
+  'RegisteredPointer_deleteObject',
+  'RegisteredPointer_fromWireType',
+  'runDestructor',
+  'releaseClassHandle',
+  'finalizationRegistry',
+  'detachFinalizer_deps',
+  'detachFinalizer',
+  'attachFinalizer',
+  'makeClassHandle',
+  'init_ClassHandle',
+  'ClassHandle',
+  'ClassHandle_isAliasOf',
+  'throwInstanceAlreadyDeleted',
+  'ClassHandle_clone',
+  'ClassHandle_delete',
+  'deletionQueue',
+  'ClassHandle_isDeleted',
+  'ClassHandle_deleteLater',
+  'flushPendingDeletes',
+  'delayFunction',
+  'setDelayFunction',
+  'RegisteredClass',
+  'shallowCopyInternalPointer',
+  'downcastPointer',
+  'upcastPointer',
+  'validateThis',
+  'char_0',
+  'char_9',
+  'makeLegalFunctionName',
+  'emval_handle_array',
+  'emval_free_list',
+  'emval_symbols',
+  'init_emval',
+  'count_emval_handles',
+  'get_first_emval',
+  'getStringOrSymbol',
+  'Emval',
+  'emval_newers',
+  'craftEmvalAllocator',
+  'emval_get_global',
+  'emval_lookupTypes',
+  'emval_allocateDestructors',
+  'emval_methodCallers',
+  'emval_addMethodCaller',
+  'emval_registeredMethods',
+];
+unexportedRuntimeSymbols.forEach(unexportedRuntimeSymbol);
+var missingLibrarySymbols = [
+  'ptrToString',
+  'stringToNewUTF8',
+  'setErrNo',
+  'inetPton4',
+  'inetNtop4',
+  'inetPton6',
+  'inetNtop6',
+  'readSockaddr',
+  'writeSockaddr',
+  'getHostByName',
+  'traverseStack',
+  'convertPCtoSourceLocation',
+  'mainThreadEM_ASM',
+  'jstoi_q',
+  'jstoi_s',
+  'listenOnce',
+  'autoResumeAudioContext',
+  'runtimeKeepalivePush',
+  'runtimeKeepalivePop',
+  'callUserCallback',
+  'maybeExit',
+  'safeSetTimeout',
+  'asmjsMangle',
+  'writeI53ToI64',
+  'writeI53ToI64Clamped',
+  'writeI53ToI64Signaling',
+  'writeI53ToU64Clamped',
+  'writeI53ToU64Signaling',
+  'readI53FromU64',
+  'convertI32PairToI53',
+  'convertU32PairToI53',
+  'getCFunc',
+  'ccall',
+  'cwrap',
+  'uleb128Encode',
+  'sigToWasmTypes',
+  'generateFuncType',
+  'convertJsFunctionToWasm',
+  'getEmptyTableSlot',
+  'updateTableMap',
+  'addFunction',
+  'removeFunction',
+  'reallyNegative',
+  'unSign',
+  'strLen',
+  'reSign',
+  'formatString',
+  'intArrayToString',
+  'AsciiToString',
+  'stringToAscii',
+  'allocateUTF8OnStack',
+  'writeStringToMemory',
+  'getSocketFromFD',
+  'getSocketAddress',
+  'registerKeyEventCallback',
+  'maybeCStringToJsString',
+  'findEventTarget',
+  'findCanvasEventTarget',
+  'getBoundingClientRect',
+  'fillMouseEventData',
+  'registerMouseEventCallback',
+  'registerWheelEventCallback',
+  'registerUiEventCallback',
+  'registerFocusEventCallback',
+  'fillDeviceOrientationEventData',
+  'registerDeviceOrientationEventCallback',
+  'fillDeviceMotionEventData',
+  'registerDeviceMotionEventCallback',
+  'screenOrientation',
+  'fillOrientationChangeEventData',
+  'registerOrientationChangeEventCallback',
+  'fillFullscreenChangeEventData',
+  'registerFullscreenChangeEventCallback',
+  'JSEvents_requestFullscreen',
+  'JSEvents_resizeCanvasForFullscreen',
+  'registerRestoreOldStyle',
+  'hideEverythingExceptGivenElement',
+  'restoreHiddenElements',
+  'setLetterbox',
+  'softFullscreenResizeWebGLRenderTarget',
+  'doRequestFullscreen',
+  'fillPointerlockChangeEventData',
+  'registerPointerlockChangeEventCallback',
+  'registerPointerlockErrorEventCallback',
+  'requestPointerLock',
+  'fillVisibilityChangeEventData',
+  'registerVisibilityChangeEventCallback',
+  'registerTouchEventCallback',
+  'fillGamepadEventData',
+  'registerGamepadEventCallback',
+  'registerBeforeUnloadEventCallback',
+  'fillBatteryEventData',
+  'battery',
+  'registerBatteryEventCallback',
+  'setCanvasElementSize',
+  'getCanvasElementSize',
+  'checkWasiClock',
+  'createDyncallWrapper',
+  'setImmediateWrapped',
+  'clearImmediateWrapped',
+  'polyfillSetImmediate',
+  'getExceptionMessageCommon',
+  'incrementExceptionRefcount',
+  'decrementExceptionRefcount',
+  'getExceptionMessage',
+  'setMainLoop',
+  '_setNetworkCallback',
+  'init_embind',
+  'getBasestPointer',
+  'registerInheritedInstance',
+  'unregisterInheritedInstance',
+  'getInheritedInstance',
+  'getInheritedInstanceCount',
+  'getLiveInheritedInstances',
+  'requireRegisteredType',
+  'enumReadValueFromPointer',
+  'genericPointerToWireType',
+  'constNoSmartPtrRawPointerToWireType',
+  'nonConstNoSmartPtrRawPointerToWireType',
+  'init_RegisteredPointer',
+  'RegisteredPointer',
+  'RegisteredPointer_getPointee',
+  'RegisteredPointer_destructor',
+  'RegisteredPointer_deleteObject',
+  'RegisteredPointer_fromWireType',
+  'runDestructor',
+  'releaseClassHandle',
+  'detachFinalizer',
+  'attachFinalizer',
+  'makeClassHandle',
+  'init_ClassHandle',
+  'ClassHandle',
+  'ClassHandle_isAliasOf',
+  'throwInstanceAlreadyDeleted',
+  'ClassHandle_clone',
+  'ClassHandle_delete',
+  'ClassHandle_isDeleted',
+  'ClassHandle_deleteLater',
+  'flushPendingDeletes',
+  'setDelayFunction',
+  'RegisteredClass',
+  'shallowCopyInternalPointer',
+  'downcastPointer',
+  'upcastPointer',
+  'validateThis',
+  'getStringOrSymbol',
+  'craftEmvalAllocator',
+  'emval_get_global',
+  'emval_lookupTypes',
+  'emval_allocateDestructors',
+  'emval_addMethodCaller',
+];
+missingLibrarySymbols.forEach(missingLibrarySymbol)
+
+
+var calledRun;
+
+dependenciesFulfilled = function runCaller() {
+  // If run has never been called, and we should call run (INVOKE_RUN is true, and Module.noInitialRun is not false)
+  if (!calledRun) run();
+  if (!calledRun) dependenciesFulfilled = runCaller; // try this again later, after new deps are fulfilled
+};
+
+function callMain(args) {
+  assert(runDependencies == 0, 'cannot call main when async dependencies remain! (listen on Module["onRuntimeInitialized"])');
+  assert(__ATPRERUN__.length == 0, 'cannot call main when preRun functions remain to be called');
+
+  var entryFunction = Module['_main'];
+
+  var argc = 0;
+  var argv = 0;
+
+  try {
+
+    var ret = entryFunction(argc, argv);
+
+    // In PROXY_TO_PTHREAD builds, we should never exit the runtime below, as
+    // execution is asynchronously handed off to a pthread.
+    // if we're not running an evented main loop, it's time to exit
+    exitJS(ret, /* implicit = */ true);
+    return ret;
+  }
+  catch (e) {
+    return handleException(e);
+  }
+}
+
+function stackCheckInit() {
+  // This is normally called automatically during __wasm_call_ctors but need to
+  // get these values before even running any of the ctors so we call it redundantly
+  // here.
+  _emscripten_stack_init();
+  // TODO(sbc): Move writeStackCookie to native to to avoid this.
+  writeStackCookie();
+}
+
+/** @type {function(Array=)} */
+function run(args) {
+  args = args || arguments_;
+
+  if (runDependencies > 0) {
+    return;
+  }
+
+    stackCheckInit();
+
+  preRun();
+
+  // a preRun added a dependency, run will be called later
+  if (runDependencies > 0) {
+    return;
+  }
+
+  function doRun() {
+    // run may have just been called through dependencies being fulfilled just in this very frame,
+    // or while the async setStatus time below was happening
+    if (calledRun) return;
+    calledRun = true;
+    Module['calledRun'] = true;
+
+    if (ABORT) return;
+
+    initRuntime();
+
+    preMain();
+
+    readyPromiseResolve(Module);
+    if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
+
+    if (shouldRunNow) callMain(args);
+
+    postRun();
+  }
+
+  if (Module['setStatus']) {
+    Module['setStatus']('Running...');
+    setTimeout(function() {
+      setTimeout(function() {
+        Module['setStatus']('');
+      }, 1);
+      doRun();
+    }, 1);
+  } else
+  {
+    doRun();
+  }
+  checkStackCookie();
+}
+
+function checkUnflushedContent() {
+  // Compiler settings do not allow exiting the runtime, so flushing
+  // the streams is not possible. but in ASSERTIONS mode we check
+  // if there was something to flush, and if so tell the user they
+  // should request that the runtime be exitable.
+  // Normally we would not even include flush() at all, but in ASSERTIONS
+  // builds we do so just for this check, and here we see if there is any
+  // content to flush, that is, we check if there would have been
+  // something a non-ASSERTIONS build would have not seen.
+  // How we flush the streams depends on whether we are in SYSCALLS_REQUIRE_FILESYSTEM=0
+  // mode (which has its own special function for this; otherwise, all
+  // the code is inside libc)
+  var oldOut = out;
+  var oldErr = err;
+  var has = false;
+  out = err = (x) => {
+    has = true;
+  }
+  try { // it doesn't matter if it fails
+    _fflush(0);
+    // also flush in the JS FS layer
+    ['stdout', 'stderr'].forEach(function(name) {
+      var info = FS.analyzePath('/dev/' + name);
+      if (!info) return;
+      var stream = info.object;
+      var rdev = stream.rdev;
+      var tty = TTY.ttys[rdev];
+      if (tty && tty.output && tty.output.length) {
+        has = true;
+      }
+    });
+  } catch(e) {}
+  out = oldOut;
+  err = oldErr;
+  if (has) {
+    warnOnce('stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the FAQ), or make sure to emit a newline when you printf etc.');
+  }
+}
+
+if (Module['preInit']) {
+  if (typeof Module['preInit'] == 'function') Module['preInit'] = [Module['preInit']];
+  while (Module['preInit'].length > 0) {
+    Module['preInit'].pop()();
+  }
+}
+
+// shouldRunNow refers to calling main(), not run().
+var shouldRunNow = true;
+
+if (Module['noInitialRun']) shouldRunNow = false;
+
+run();
+
+
+
+
+
+
+
+  return MyMoneroClient.ready
 }
 );
 })();
 if (typeof exports === 'object' && typeof module === 'object')
-      module.exports = MyMoneroClient;
-    else if (typeof define === 'function' && define['amd'])
-      define([], function() { return MyMoneroClient; });
-    else if (typeof exports === 'object')
-      exports["MyMoneroClient"] = MyMoneroClient;
-    
+  module.exports = MyMoneroClient;
+else if (typeof define === 'function' && define['amd'])
+  define([], function() { return MyMoneroClient; });
+else if (typeof exports === 'object')
+  exports["MyMoneroClient"] = MyMoneroClient;

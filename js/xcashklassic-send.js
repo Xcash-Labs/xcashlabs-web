@@ -116,13 +116,14 @@ const MoneroSend = (function () {
 
   // ── Send transaction ──────────────────────────────────────────────
 
-  async function send (walletKeys, toAddress, xckAmount, priority, paymentId, preview) {
+  async function send (walletKeys, toAddress, xckAmount, priority, paymentId, preview, privacy) {
     try {
       await MoneroCore.load();
     } catch (e) {
       throw new Error('Transaction signing requires a component that could not load. Try disabling ad blockers or use a different browser.');
     }
 
+    var txPrivacy = (privacy === 'public') ? 'public' : 'private';
     var amountAtomic = BigInt(xckToAtomic(xckAmount));
 
     // 1. Always fetch fresh unspent outputs (never use cached preview —
@@ -259,6 +260,7 @@ const MoneroSend = (function () {
       mix_outs: mixResp.amount_outs,
       unlock_time: '0',
       nettype_string: 'MAINNET',
+      tx_privacy_settings: txPrivacy,
     };
     if (paymentId) step2Params.payment_id_string = paymentId;
 

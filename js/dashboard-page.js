@@ -111,17 +111,39 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ─── Dashboard initialiser ──────────────────────────────────────────
-  function initDashboard() {
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    // Preload WASM in background so it's ready for key_image verification
-    // and send. Don't await — let it load while the dashboard connects.
-    if (typeof MoneroCore !== 'undefined') {
-      MoneroCore.load().catch(function () {}); // fire-and-forget
-    }
-    populateWallet();
-    installIdleListeners();
+// ─── Dashboard initialiser ──────────────────────────────────────────
+function initDashboard() {
+  console.log("[Dashboard] initDashboard()");
+
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+
+  if (typeof MoneroCore !== 'undefined') {
+    console.log("[WASM] MoneroCore object found");
+
+    const start = performance.now();
+
+    MoneroCore.load()
+      .then(function () {
+        console.log(
+          "[WASM] MoneroCore loaded successfully in",
+          Math.round(performance.now() - start),
+          "ms"
+        );
+      })
+      .catch(function (err) {
+        console.error("[WASM] MoneroCore.load() failed:", err);
+      });
+  } else {
+    console.error("[WASM] MoneroCore is undefined");
   }
+
+  console.log("[Dashboard] populateWallet()");
+  populateWallet();
+
+  console.log("[Dashboard] installIdleListeners()");
+  installIdleListeners();
+}
 
   async function populateWallet() {
 

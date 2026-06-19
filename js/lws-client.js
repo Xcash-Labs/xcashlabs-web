@@ -45,6 +45,23 @@ const LwsClient = (function () {
     return MOCK;
   }
 
+  async function fetchWithTimeout(url, options, timeoutMs) {
+    const controller = new AbortController();
+
+    const timer = setTimeout(() => {
+      controller.abort();
+    }, timeoutMs || 15000);
+
+    try {
+      return await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   async function post(path, body) {
     if (MOCK) return mockResponse(path, body);
 
@@ -53,14 +70,32 @@ const LwsClient = (function () {
     let response;
 
     try {
-      response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      console.error('[lws-client] POST start', url);
+
+      response = await fetchWithTimeout(
+        url,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
         },
-        body: JSON.stringify(body),
-      });
+        15000
+      );
+
+      console.error('[lws-client] POST response', url, response.status);
     } catch (e) {
+      if (e && e.name === 'AbortError') {
+        console.error('[lws-client] POST timeout', url);
+
+        throw new LwsError(
+          'timeout',
+          'Light-wallet server request timed out: ' + path,
+          e
+        );
+      }
+
       throw new LwsError(
         'network',
         'Could not reach light-wallet server: ' + e.message,

@@ -45,95 +45,46 @@ const LwsClient = (function () {
     return MOCK;
   }
 
-  async function fetchWithTimeout(url, options, timeoutMs) {
-    const controller = new AbortController();
-
-    const timer = setTimeout(() => {
-      controller.abort();
-    }, timeoutMs || 15000);
-
-    try {
-      return await fetch(url, {
-        ...options,
-        signal: controller.signal,
-      });
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-
   async function post(path, body) {
-    if (MOCK) return mockResponse(path, body);
+    if (MOCK) {
+      console.error('[lws-client] MOCK POST', path, body);
+      return mockResponse(path, body || {});
+    }
 
     const url = BASE_URL + path;
+    console.error('[lws-client] POST start', url, body);
 
-    let response;
-
-    try {
-      console.error('[lws-client] POST start', url);
-
-      response = await fetchWithTimeout(
-        url,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        },
-        15000
-      );
-
-      console.error('[lws-client] POST response', url, response.status);
-    } catch (e) {
-      if (e && e.name === 'AbortError') {
-        console.error('[lws-client] POST timeout', url);
-
-        throw new LwsError(
-          'timeout',
-          'Light-wallet server request timed out: ' + path,
-          e
-        );
-      }
-
-      throw new LwsError(
-        'network',
-        'Could not reach light-wallet server: ' + e.message,
-        e
-      );
-    }
-
-    let data;
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      console.error('[lws-client] POST abort timeout', url);
+      controller.abort();
+    }, 10000);
 
     try {
-      data = await response.json();
+      console.error('[lws-client] before fetch');
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body || {}),
+        signal: controller.signal,
+      });
+
+      console.error('[lws-client] after fetch', res.status);
+
+      const text = await res.text();
+      console.error('[lws-client] response text', text);
+
+      if (!res.ok) throw new Error('LWS HTTP ' + res.status + ': ' + text);
+
+      return text ? JSON.parse(text) : {};
     } catch (e) {
-      if (!response.ok) {
-        throw new LwsError(
-          'server',
-          'Server error (HTTP ' + response.status + ')',
-          e,
-          response.status
-        );
-      }
-
-      throw new LwsError(
-        'decode',
-        'Light-wallet server returned invalid JSON',
-        e
-      );
+      console.error('[lws-client] POST failed', e.name, e.message);
+      throw e;
+    } finally {
+      clearTimeout(timer);
+      console.error('[lws-client] POST finished', url);
     }
-
-    if (!response.ok) {
-      throw new LwsError(
-        'server',
-        data && data.error ? data.error : 'HTTP ' + response.status,
-        null,
-        response.status
-      );
-    }
-
-    return data;
   }
 
   async function login(address, viewKey, opts) {

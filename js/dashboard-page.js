@@ -707,7 +707,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   document.getElementById('bridge-start').addEventListener('click', () => {
-    window.open('https://bridge.xcashlabs.org', '_blank');
+    alert('The XCash Klassic Bridge is currently under development and will be available soon.');
   });
 
   // ─── SEND MODAL ───

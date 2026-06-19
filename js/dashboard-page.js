@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       );
 
       hideUnlock();
-//      initDashboard();
+      initDashboard();
 
     } catch (e) {
       overlayErr.textContent =

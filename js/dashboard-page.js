@@ -83,8 +83,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('loading-state').style.display = 'none';
   document.getElementById('dashboard').style.display = 'none';
 
+console.log('[dash] after showUnlock jed');
+
   showUnlock('Enter your wallet password to unlock this wallet.');
-  return;
 
   // ─── Auto-lock plumbing ─────────────────────────────────────────────
   function resetIdleTimer() {

@@ -726,11 +726,25 @@ function updateBridgeDescription() {
 
 document.getElementById('bridge-polygon').addEventListener('click', () => {
   bridgeNetwork = 'Polygon';
+
+  document.getElementById('bridge-polygon')
+    .classList.add('bridge-network-selected');
+
+  document.getElementById('bridge-base')
+    .classList.remove('bridge-network-selected');
+
   updateBridgeDescription();
 });
 
 document.getElementById('bridge-base').addEventListener('click', () => {
   bridgeNetwork = 'Base';
+
+  document.getElementById('bridge-base')
+    .classList.add('bridge-network-selected');
+
+  document.getElementById('bridge-polygon')
+    .classList.remove('bridge-network-selected');
+
   updateBridgeDescription();
 });
 

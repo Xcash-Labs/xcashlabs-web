@@ -706,49 +706,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
-  let bridgeNetwork = 'none';
-  let bridgeDirection = 'XCK_TO_WXCK';
+let bridgeNetwork = 'none';
+let bridgeDirection = 'XCK_TO_WXCK';
 
-  function updateBridgeDescription() {
-    const desc = document.getElementById('bridge-description');
+function updateBridgeDescription() {
+  const desc = document.getElementById('bridge-description');
 
-    if (bridgeNetwork === 'none') {
-      desc.textContent = 'Select Polygon or Base to continue';
-      return;
-    }
-
-    if (bridgeDirection === 'XCK_TO_WXCK') {
-      desc.textContent = `Wrap XCK to ${bridgeNetwork}`;
-    } else {
-      desc.textContent = `Unwrap WXCK from ${bridgeNetwork}`;
-    }
+  if (bridgeNetwork === 'none') {
+    desc.textContent = 'Select Polygon or Base to continue';
+    return;
   }
 
-  document.getElementById('bridge-polygon').addEventListener('click', () => {
-    bridgeNetwork = 'Polygon';
-    updateBridgeDescription();
-  });
+  if (bridgeDirection === 'XCK_TO_WXCK') {
+    desc.textContent = `Wrap XCK to ${bridgeNetwork}`;
+  } else {
+    desc.textContent = `Unwrap WXCK from ${bridgeNetwork}`;
+  }
+}
 
-  document.getElementById('bridge-base').addEventListener('click', () => {
-    bridgeNetwork = 'Base';
-    updateBridgeDescription();
-  });
+document.getElementById('bridge-polygon').addEventListener('click', () => {
+  bridgeNetwork = 'Polygon';
+  updateBridgeDescription();
+});
 
-  document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
-    const arrow = document.getElementById('bridge-arrow');
+document.getElementById('bridge-base').addEventListener('click', () => {
+  bridgeNetwork = 'Base';
+  updateBridgeDescription();
+});
 
-    if (bridgeDirection === 'XCK_TO_WXCK') {
-      bridgeDirection = 'WXCK_TO_XCK';
-      arrow.textContent = '←';
-    } else {
-      bridgeDirection = 'XCK_TO_WXCK';
-      arrow.textContent = '→';
-    }
+document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
+  const arrow = document.getElementById('bridge-arrow');
 
-    updateBridgeDescription();
-  });
+  if (bridgeDirection === 'XCK_TO_WXCK') {
+    bridgeDirection = 'WXCK_TO_XCK';
+    arrow.textContent = '⟵';
+  } else {
+    bridgeDirection = 'XCK_TO_WXCK';
+    arrow.textContent = '⟶';
+  }
 
   updateBridgeDescription();
+});
+
+updateBridgeDescription();
 
 
 

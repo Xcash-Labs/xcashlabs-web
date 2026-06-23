@@ -844,9 +844,6 @@ document.getElementById('bridge-start').addEventListener('click', connectMetaMas
 
 
 
-  document.getElementById('bridge-start').addEventListener('click', () => {
-    alert('The XCash Klassic Bridge is currently under development and will be available soon.');
-  });
 
   // ─── SEND MODAL ───
   // Multi-step: form → confirm → result. All three steps live inside

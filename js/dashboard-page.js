@@ -767,6 +767,8 @@ updateBridgeDescription();
 
 
 
+
+
 const BRIDGE_CHAINS = {
   Polygon: {
     chainId: '0x89', // 137
@@ -840,6 +842,8 @@ async function connectMetaMaskForBridge() {
 }
 
 document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
+
+
 
 
 

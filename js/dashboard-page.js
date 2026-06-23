@@ -767,7 +767,79 @@ updateBridgeDescription();
 
 
 
+const BRIDGE_CHAINS = {
+  Polygon: {
+    chainId: '0x89', // 137
+    chainName: 'Polygon Mainnet',
+    nativeCurrency: {
+      name: 'POL',
+      symbol: 'POL',
+      decimals: 18
+    },
+    rpcUrls: ['https://polygon-rpc.com'],
+    blockExplorerUrls: ['https://polygonscan.com']
+  },
 
+  Base: {
+    chainId: '0x2105', // 8453
+    chainName: 'Base',
+    nativeCurrency: {
+      name: 'Ether',
+      symbol: 'ETH',
+      decimals: 18
+    },
+    rpcUrls: ['https://mainnet.base.org'],
+    blockExplorerUrls: ['https://basescan.org']
+  }
+};
+
+async function connectMetaMaskForBridge() {
+  if (!window.ethereum) {
+    alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
+    return;
+  }
+
+  if (bridgeNetwork === 'none') {
+    alert('Please select Polygon or Base first.');
+    return;
+  }
+
+  const chain = BRIDGE_CHAINS[bridgeNetwork];
+
+  try {
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    });
+
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: chain.chainId }]
+    });
+
+    console.log('Connected wallet:', accounts[0]);
+    console.log('Bridge network:', bridgeNetwork);
+    console.log('Bridge direction:', bridgeDirection);
+
+    alert(`Connected to ${bridgeNetwork}. Bridge direction: ${bridgeDirection}`);
+  } catch (err) {
+    if (err.code === 4902) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [chain]
+        });
+      } catch (addErr) {
+        console.error(addErr);
+        alert(`Could not add ${bridgeNetwork} to MetaMask.`);
+      }
+    } else {
+      console.error(err);
+      alert('MetaMask connection or network switch was cancelled.');
+    }
+  }
+}
+
+document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
 
 

@@ -708,17 +708,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let bridgeDirection = 'XCK_TO_WXCK';
 
-  document.getElementById('bridge-swap-direction').addEventListener('click', () => {
-    const from = document.getElementById('bridge-from');
-    const to = document.getElementById('bridge-to');
+  document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
+    const arrow = document.getElementById('bridge-arrow');
 
-    [from.textContent, to.textContent] =
-      [to.textContent, from.textContent];
-
-    bridgeDirection =
-      bridgeDirection === 'XCK_TO_WXCK'
-        ? 'WXCK_TO_XCK'
-        : 'XCK_TO_WXCK';
+    if (bridgeDirection === 'XCK_TO_WXCK') {
+      bridgeDirection = 'WXCK_TO_XCK';
+      arrow.textContent = '←';
+    } else {
+      bridgeDirection = 'XCK_TO_WXCK';
+      arrow.textContent = '→';
+    }
   });
 
   document.getElementById('bridge-polygon').addEventListener('click', () => {

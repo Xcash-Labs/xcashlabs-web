@@ -196,7 +196,7 @@
       </div>
 
       <p style="font-size:.7rem;color:var(--text-dim);margin-bottom:12px">
-        Select the network you want to bridge with v1:
+        Select the network you want to bridge with v2:
       </p>
 
       <button class="btn-outline" id="bridge-polygon">
@@ -208,15 +208,11 @@
       </button>
 
       <div class="bridge-direction">
-        <div class="bridge-token" id="bridge-from">
-          XCK
-        </div>
-        <button class="bridge-swap-btn" id="bridge-swap-direction">
-          ⇄
+        <span class="bridge-token">XCK</span>
+        <button class="bridge-arrow-btn" id="bridge-direction-toggle">
+          <span id="bridge-arrow">→</span>
         </button>
-        <div class="bridge-token" id="bridge-to">
-          WXCK
-        </div>
+        <span class="bridge-token">WXCK</span>
       </div>
 
       <div class="modal-body" style="text-align:center">

@@ -706,8 +706,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
-  document.getElementById('bridge-start').addEventListener('click', () => {
-    alert('The XCash Klassic Bridge is currently under development and will be available soon.');
+  let bridgeDirection = 'XCK_TO_WXCK';
+
+  document.getElementById('bridge-swap-direction').addEventListener('click', () => {
+    const from = document.getElementById('bridge-from');
+    const to = document.getElementById('bridge-to');
+
+    [from.textContent, to.textContent] =
+      [to.textContent, from.textContent];
+
+    bridgeDirection =
+      bridgeDirection === 'XCK_TO_WXCK'
+        ? 'WXCK_TO_XCK'
+        : 'XCK_TO_WXCK';
   });
 
   document.getElementById('bridge-polygon').addEventListener('click', () => {
@@ -716,6 +727,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('bridge-base').addEventListener('click', () => {
     alert('Base bridge coming soon');
+  });
+
+  document.getElementById('bridge-start').addEventListener('click', () => {
+    alert('The XCash Klassic Bridge is currently under development and will be available soon.');
   });
 
   // ─── SEND MODAL ───

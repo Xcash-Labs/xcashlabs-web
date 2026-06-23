@@ -706,7 +706,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
+  let bridgeNetwork = 'none';
   let bridgeDirection = 'XCK_TO_WXCK';
+
+  function updateBridgeDescription() {
+    const desc = document.getElementById('bridge-description');
+
+    if (bridgeNetwork === 'none') {
+      desc.textContent = 'Select Polygon or Base to continue';
+      return;
+    }
+
+    if (bridgeDirection === 'XCK_TO_WXCK') {
+      desc.textContent = `Wrap XCK to ${bridgeNetwork}`;
+    } else {
+      desc.textContent = `Unwrap WXCK from ${bridgeNetwork}`;
+    }
+  }
+
+  document.getElementById('bridge-polygon').addEventListener('click', () => {
+    bridgeNetwork = 'Polygon';
+    updateBridgeDescription();
+  });
+
+  document.getElementById('bridge-base').addEventListener('click', () => {
+    bridgeNetwork = 'Base';
+    updateBridgeDescription();
+  });
 
   document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
     const arrow = document.getElementById('bridge-arrow');
@@ -718,15 +744,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       bridgeDirection = 'XCK_TO_WXCK';
       arrow.textContent = '→';
     }
+
+    updateBridgeDescription();
   });
 
-  document.getElementById('bridge-polygon').addEventListener('click', () => {
-    alert('Polygon bridge coming soon');
-  });
+  updateBridgeDescription();
 
-  document.getElementById('bridge-base').addEventListener('click', () => {
-    alert('Base bridge coming soon');
-  });
+
+
+
+
+
+
+
 
   document.getElementById('bridge-start').addEventListener('click', () => {
     alert('The XCash Klassic Bridge is currently under development and will be available soon.');

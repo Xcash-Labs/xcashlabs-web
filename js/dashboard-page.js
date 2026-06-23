@@ -710,6 +710,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     alert('The XCash Klassic Bridge is currently under development and will be available soon.');
   });
 
+  document.getElementById('bridge-polygon').addEventListener('click', () => {
+    alert('Polygon bridge coming soon');
+  });
+
+  document.getElementById('bridge-base').addEventListener('click', () => {
+    alert('Base bridge coming soon');
+  });
+
   // ─── SEND MODAL ───
   // Multi-step: form → confirm → result. All three steps live inside
   // #send-modal; we toggle their visibility on transition.

@@ -1046,13 +1046,24 @@ footer {
 }
 
 .bridge-arrow-btn {
-  background: none;
-  border: none;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
   color: var(--text);
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  padding: 0;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.bridge-arrow-btn:hover {
+  background: var(--surface-3);
+  transform: scale(1.05);
 }
 
 /* ─── Modals ─── */

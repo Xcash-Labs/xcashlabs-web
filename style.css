@@ -1073,6 +1073,12 @@ footer {
   margin-top: 8px;
 }
 
+.bridge-network-selected {
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.1) !important;
+}
+
 /* ─── Modals ─── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}

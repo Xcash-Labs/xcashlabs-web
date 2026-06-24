@@ -1085,7 +1085,7 @@ footer {
 
 .wallet-label {
   font-weight: 600;
-  color: var(--text);
+  color: var(--card-text);
   margin-bottom: 4px;
 }
 

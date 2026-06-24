@@ -50,7 +50,7 @@
           <div class="empty-wallets">Loading saved wallets...</div>
         </div>
           <div class="wallet-manager-actions">
-            <button id="btn-exit-wallet-manager" class="button secondary full-width" type="button">
+            <button id="btn-exit-wallet-manager" class="disconnect-btn" type="button">              
               Exit
             </button>
           </div>
@@ -120,6 +120,7 @@
       const unlockBtn = entry.querySelector('.unlock-btn');
       const deleteBtn = entry.querySelector('.delete-btn');
       const renameBtn = entry.querySelector('.rename-btn');
+      const labelElement = entry.querySelector('.wallet-label');
       const addressElement = entry.querySelector('.copy-address');
 
       addressElement.addEventListener('click', async function (e) {
@@ -185,6 +186,13 @@
       });
 
     return entry;
+  }
+
+  const exitBtn = document.getElementById('btn-exit-wallet-manager');
+  if (exitBtn) {
+    exitBtn.addEventListener('click', function () {
+      window.location.href = '/';
+    });
   }
 
   function renderWallets() {

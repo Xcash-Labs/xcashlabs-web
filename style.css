@@ -1097,7 +1097,7 @@ footer {
 .wallet-name {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text);
+  color: var(--dark);
   margin-bottom: 6px;
   text-align: center;
 }

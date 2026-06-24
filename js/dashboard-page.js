@@ -822,7 +822,6 @@ async function connectMetaMaskForBridge() {
     console.log('Bridge network:', bridgeNetwork);
     console.log('Bridge direction:', bridgeDirection);
 
-    alert(`Connected to ${bridgeNetwork}. Bridge direction: ${bridgeDirection}`);
   } catch (err) {
     if (err.code === 4902) {
       try {

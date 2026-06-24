@@ -100,18 +100,21 @@
     const entry = document.createElement('div');
     entry.className = 'wallet-entry';
     entry.innerHTML =
-      '<div>' +
+      '<div class="wallet-info">' +
+        '<div class="wallet-label">' + escapeHtml(label) + '</div>' +
         '<div class="wallet-address copy-address" title="Click to copy full address">' +
           escapeHtml(shortAddress(address)) +
         '</div>' +
       '</div>' +
       '<div class="wallet-actions">' +
         '<button class="button primary unlock-btn" type="button">Unlock</button>' +
+        '<button class="button secondary rename-btn" type="button">Rename</button>' +
         '<button class="button secondary delete-btn" type="button">Remove</button>' +
       '</div>';
 
       const unlockBtn = entry.querySelector('.unlock-btn');
       const deleteBtn = entry.querySelector('.delete-btn');
+      const renameBtn = entry.querySelector('.rename-btn');
       const addressElement = entry.querySelector('.copy-address');
 
       addressElement.addEventListener('click', async function (e) {
@@ -136,6 +139,25 @@
         e.stopPropagation();
         sessionStorage.setItem('xck-active-wallet', address);
         window.location.href = '/dashboard';
+      });
+
+      renameBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        const currentLabel = labelElement.textContent || '';
+        const newLabel = prompt('Enter a name for this wallet:', currentLabel);
+
+        if (newLabel === null) return;
+
+        const cleanLabel = newLabel.trim();
+
+        if (!cleanLabel) {
+          alert('Wallet name cannot be empty.');
+          return;
+        }
+
+        WalletVault.updateLabel(address, cleanLabel);
+        labelElement.textContent = cleanLabel;
       });
 
       deleteBtn.addEventListener('click', function (e) {

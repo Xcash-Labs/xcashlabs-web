@@ -333,6 +333,10 @@ document.addEventListener('DOMContentLoaded', () => {
       openBlock.innerHTML =
         '<div class="session-box">' +
           '<label class="session-label">' +
+          'Wallet Name <span>(optional)</span>' +
+          '</label>' +
+          '<input id="wallet-label" class="session-password" type="text" maxlength="50" placeholder="e.g. Main Wallet, Savings, Mining">' +
+          '<label class="session-label">' +
           'Wallet Password <span>(required · unlocks this wallet on this browser)</span>' +
           '</label>' +
           '<input id="session-pw" class="session-password" type="password" required autocomplete="new-password" placeholder="Choose a wallet password">' +
@@ -344,6 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('results').appendChild(openBlock);
       document.getElementById('btn-open-wallet').addEventListener('click', async () => {
         if (!window._derivedKeys) return;
+        const walletLabel = document.getElementById('wallet-label').value.trim();
         const k = window._derivedKeys;
         const pw = $val('session-pw');
         const pwError = document.getElementById('wallet-pw-error');
@@ -362,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var vaultData = {
           address: k.address,
           network: k.network,
+          label: walletLabel || 'My Wallet',
           privateSpendKeyHex: k.privateSpendKeyHex,
           privateViewKeyHex:  k.privateViewKeyHex,
           publicSpendKeyHex:  k.publicSpendKeyHex,

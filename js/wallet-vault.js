@@ -161,6 +161,19 @@ const WalletVault = (function () {
     return JSON.parse(new TextDecoder().decode(plain));
   }
 
+  function updateLabel(address, label) {
+    if (!address) return;
+
+    const wallets = readAll();
+
+    if (!wallets[address]) return;
+
+    wallets[address].label = String(label || '').trim() || wallets[address].address.slice(0, 10) + '...';
+    wallets[address].updatedAt = new Date().toISOString();
+
+    writeAll(wallets);
+  }
+
   function remove(address) {
     if (!address) return;
 
@@ -180,7 +193,8 @@ const WalletVault = (function () {
     getBlob,
     unlock,
     remove,
-    clear
+    clear,
+    updateLabel
   };
 })();
 

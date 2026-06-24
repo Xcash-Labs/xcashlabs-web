@@ -72,17 +72,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  const activeAddress = sessionStorage.getItem('xck-active-wallet');
-
-  if (!activeAddress || !WalletVault.getBlob(activeAddress)) {
-    sessionStorage.removeItem('xck-active-wallet');
-    window.location.href = '/wallet-mgr.html';
-    return;
-  }
-
   const wallet = WalletVault.list().find(
     w => w.address === activeAddress
   );
+
+  const walletNameElement = document.getElementById('wallet-name');
+
+  if (wallet && walletNameElement) {
+    walletNameElement.textContent =
+      wallet.label || 'My Wallet';
+  }
 
   if (wallet) {
     document.getElementById('wallet-name').textContent =

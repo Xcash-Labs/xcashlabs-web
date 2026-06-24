@@ -404,4 +404,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const exitBtn = document.getElementById('btn-exit-verify');
+  if (exitBtn) {
+    exitBtn.addEventListener('click', function () {
+      window.location.href = '/';
+    });
+  }
+
 });

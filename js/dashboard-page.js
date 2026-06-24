@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   overlayBtn.addEventListener('click', tryUnlock);
   overlayPw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+  const activeAddress = sessionStorage.getItem('xck-active-wallet');
 
   async function tryUnlock() {
     overlayErr.style.display = 'none';
@@ -47,9 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     overlayBtn.textContent = 'Unlocking…';
 
     try {
-      const activeAddress =
-        sessionStorage.getItem('xck-active-wallet');
-
       if (!activeAddress) {
         throw new Error('No wallet selected');
       }
@@ -79,13 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const walletNameElement = document.getElementById('wallet-name');
 
   if (wallet && walletNameElement) {
-    walletNameElement.textContent =
-      wallet.label || 'My Wallet';
-  }
-
-  if (wallet) {
-    document.getElementById('wallet-name').textContent =
-      wallet.label || 'My Wallet';
+    walletNameElement.textContent = wallet.label || 'My Wallet';
   }
 
   document.getElementById('loading-state').style.display = 'none';

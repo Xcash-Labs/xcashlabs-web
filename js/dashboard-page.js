@@ -80,6 +80,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  const wallet = WalletVault.list().find(
+    w => w.address === activeAddress
+  );
+
+  if (wallet) {
+    document.getElementById('wallet-name').textContent =
+      wallet.label || 'My Wallet';
+  }
+
   document.getElementById('loading-state').style.display = 'none';
   document.getElementById('dashboard').style.display = 'none';
   showUnlock('Enter your wallet password to unlock this wallet.');

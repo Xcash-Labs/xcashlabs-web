@@ -1,4 +1,5 @@
 :root {
+    --xmr:#ff6600;
     --text: #f8fafc;
     --muted: #cbd5e1;
     --dim: #94a3b8;
@@ -642,7 +643,7 @@ footer {
     font-weight: 750;
 }
 
-.xmr-symbol {
+.xck-symbol {
     color: var(--accent);
     font-size: 1rem;
 }
@@ -882,7 +883,7 @@ footer {
     letter-spacing: -0.03em;
 }
 
-.balance-value .xmr-symbol {
+.balance-value .xck-symbol {
     color: var(--accent);
     font-size: 1rem;
     font-weight: 500;

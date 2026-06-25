@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   var _keyImageCache = {}; // tx_pub_key:out_index → real key_image
 
   async function startBalancePolling () {
-    const balEl  = document.getElementById('balance-xmr');
+    const balEl  = document.getElementById('balance-xck');
     const noteEl = document.getElementById('balance-note');
 
     // Mark as scanning while we wait for the first response
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function pollBalanceOnce () {
     if (!lwsRegistered) return;
-    const balEl  = document.getElementById('balance-xmr');
+    const balEl  = document.getElementById('balance-xck');
     const noteEl = document.getElementById('balance-note');
     try {
       const info = await LwsClient.getAddressInfo(walletKeys.address, walletKeys.privateViewKeyHex);
@@ -878,7 +878,7 @@ document.getElementById('bridge-start').addEventListener('click', connectMetaMas
     sendResetForm();
     document.getElementById('send-modal').classList.add('show');
     // Update "Available" from the latest LWS poll
-    const balText = document.getElementById('balance-xmr').textContent;
+    const balText = document.getElementById('balance-xck').textContent;
     const availEl = document.getElementById('send-available');
     if (availEl) availEl.textContent = balText;
   });
@@ -959,7 +959,7 @@ document.getElementById('bridge-start').addEventListener('click', connectMetaMas
 
   // Send max — fills amount with the current balance
   document.getElementById('send-max').addEventListener('click', () => {
-    const bal = document.getElementById('balance-xmr').textContent;
+    const bal = document.getElementById('balance-xck').textContent;
     if (bal && bal !== '—') {
       sendAmountEl.value = bal;
       refreshSendReviewState();

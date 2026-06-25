@@ -861,6 +861,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
+
+
+
+
+
   // ─── SEND MODAL ───
   // Multi-step: form → confirm → result. All three steps live inside
   // #send-modal; we toggle their visibility on transition.
@@ -896,10 +901,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (availEl) availEl.textContent = balText;
   });
 
-  document.getElementById('send-close').addEventListener('click', () => {
-    document.getElementById('send-modal').classList.remove('show');
-  });
-
   document.getElementById('send-modal').addEventListener('click', (e) => {
     if (e.target.id === 'send-modal') e.target.classList.remove('show');
   });
@@ -928,6 +929,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sendToHintEl = document.getElementById('send-to-hint');
   const sendAmountEl = document.getElementById('send-amount');
   const sendReviewBtn = document.getElementById('send-review');
+
+  document.getElementById('send-close').addEventListener('click', () => {
+    document.getElementById('send-modal').classList.remove('show');
+    sendAmountEl.value = "";
+  });
 
   function refreshSendReviewState() {
     const addr = (sendToEl.value || '').trim();

@@ -700,153 +700,149 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── BRIDGE MODAL ───
   document.getElementById('btn-bridge').addEventListener('click', () => {
     document.getElementById('bridge-modal').classList.add('show');
+    // Update "Available" from the latest LWS poll
+    const balTextBr = document.getElementById('balance-xck').textContent;
+    const availElBr = document.getElementById('send-bridge-available');
+    if (availElBr) availElBr.textContent = balTextBr;
   });
 
   document.getElementById('bridge-close').addEventListener('click', () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
-let bridgeNetwork = 'none';
-let bridgeDirection = 'XCK_TO_WXCK';
-
-function updateBridgeDescription() {
-  const desc = document.getElementById('bridge-description');
-
-  if (bridgeNetwork === 'none') {
-    desc.textContent = 'Select Polygon or Base to continue';
-    return;
-  }
-
-  if (bridgeDirection === 'XCK_TO_WXCK') {
-    desc.textContent = `Wrap XCK to ${bridgeNetwork}`;
-  } else {
-    desc.textContent = `Unwrap WXCK from ${bridgeNetwork}`;
-  }
-}
-
-document.getElementById('bridge-polygon').addEventListener('click', () => {
-  bridgeNetwork = 'Polygon';
-
-  document.getElementById('bridge-polygon')
-    .classList.add('bridge-network-selected');
-
-  document.getElementById('bridge-base')
-    .classList.remove('bridge-network-selected');
-
-  updateBridgeDescription();
-});
-
-document.getElementById('bridge-base').addEventListener('click', () => {
-  bridgeNetwork = 'Base';
-
-  document.getElementById('bridge-base')
-    .classList.add('bridge-network-selected');
-
-  document.getElementById('bridge-polygon')
-    .classList.remove('bridge-network-selected');
-
-  updateBridgeDescription();
-});
-
-document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
-  const arrow = document.getElementById('bridge-arrow');
-
-  if (bridgeDirection === 'XCK_TO_WXCK') {
-    bridgeDirection = 'WXCK_TO_XCK';
-    arrow.textContent = '⟵';
-  } else {
-    bridgeDirection = 'XCK_TO_WXCK';
-    arrow.textContent = '⟶';
-  }
-
-  updateBridgeDescription();
-});
-
-updateBridgeDescription();
 
 
 
+  let bridgeNetwork = 'none';
+  let bridgeDirection = 'XCK_TO_WXCK';
 
+  function updateBridgeDescription() {
+    const desc = document.getElementById('bridge-description');
 
+    if (bridgeNetwork === 'none') {
+      desc.textContent = 'Select Polygon or Base to continue';
+      return;
+    }
 
-const BRIDGE_CHAINS = {
-  Polygon: {
-    chainId: '0x89', // 137
-    chainName: 'Polygon Mainnet',
-    nativeCurrency: {
-      name: 'POL',
-      symbol: 'POL',
-      decimals: 18
-    },
-    rpcUrls: ['https://polygon-rpc.com'],
-    blockExplorerUrls: ['https://polygonscan.com']
-  },
-
-  Base: {
-    chainId: '0x2105', // 8453
-    chainName: 'Base',
-    nativeCurrency: {
-      name: 'Ether',
-      symbol: 'ETH',
-      decimals: 18
-    },
-    rpcUrls: ['https://mainnet.base.org'],
-    blockExplorerUrls: ['https://basescan.org']
-  }
-};
-
-async function connectMetaMaskForBridge() {
-  if (!window.ethereum) {
-    alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
-    return;
-  }
-
-  if (bridgeNetwork === 'none') {
-    alert('Please select Polygon or Base first.');
-    return;
-  }
-
-  const chain = BRIDGE_CHAINS[bridgeNetwork];
-
-  try {
-    const accounts = await window.ethereum.request({
-      method: 'eth_requestAccounts'
-    });
-
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: chain.chainId }]
-    });
-
-    console.log('Connected wallet:', accounts[0]);
-    console.log('Bridge network:', bridgeNetwork);
-    console.log('Bridge direction:', bridgeDirection);
-
-  } catch (err) {
-    if (err.code === 4902) {
-      try {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [chain]
-        });
-      } catch (addErr) {
-        console.error(addErr);
-        alert(`Could not add ${bridgeNetwork} to MetaMask.`);
-      }
+    if (bridgeDirection === 'XCK_TO_WXCK') {
+      desc.textContent = `Wrap XCK to ${bridgeNetwork}`;
     } else {
-      console.error(err);
-      alert('MetaMask connection or network switch was cancelled.');
+      desc.textContent = `Unwrap WXCK from ${bridgeNetwork}`;
     }
   }
-}
 
-document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
+  document.getElementById('bridge-polygon').addEventListener('click', () => {
+    bridgeNetwork = 'Polygon';
 
+    document.getElementById('bridge-polygon')
+      .classList.add('bridge-network-selected');
 
+    document.getElementById('bridge-base')
+      .classList.remove('bridge-network-selected');
 
+    updateBridgeDescription();
+  });
 
+  document.getElementById('bridge-base').addEventListener('click', () => {
+    bridgeNetwork = 'Base';
 
+    document.getElementById('bridge-base')
+      .classList.add('bridge-network-selected');
 
+    document.getElementById('bridge-polygon')
+      .classList.remove('bridge-network-selected');
+
+    updateBridgeDescription();
+  });
+
+  document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
+    const arrow = document.getElementById('bridge-arrow');
+
+    if (bridgeDirection === 'XCK_TO_WXCK') {
+      bridgeDirection = 'WXCK_TO_XCK';
+      arrow.textContent = '⟵';
+    } else {
+      bridgeDirection = 'XCK_TO_WXCK';
+      arrow.textContent = '⟶';
+    }
+
+    updateBridgeDescription();
+  });
+
+  updateBridgeDescription();
+
+  const BRIDGE_CHAINS = {
+    Polygon: {
+      chainId: '0x89', // 137
+      chainName: 'Polygon Mainnet',
+      nativeCurrency: {
+        name: 'POL',
+        symbol: 'POL',
+        decimals: 18
+      },
+      rpcUrls: ['https://polygon-rpc.com'],
+      blockExplorerUrls: ['https://polygonscan.com']
+    },
+
+    Base: {
+      chainId: '0x2105', // 8453
+      chainName: 'Base',
+      nativeCurrency: {
+        name: 'Ether',
+        symbol: 'ETH',
+        decimals: 18
+      },
+      rpcUrls: ['https://mainnet.base.org'],
+      blockExplorerUrls: ['https://basescan.org']
+    }
+  };
+
+  async function connectMetaMaskForBridge() {
+    if (!window.ethereum) {
+      alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
+      return;
+    }
+
+    if (bridgeNetwork === 'none') {
+      alert('Please select Polygon or Base first.');
+      return;
+    }
+
+    const chain = BRIDGE_CHAINS[bridgeNetwork];
+
+    try {
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chain.chainId }]
+      });
+
+      console.log('Connected wallet:', accounts[0]);
+      console.log('Bridge network:', bridgeNetwork);
+      console.log('Bridge direction:', bridgeDirection);
+
+    } catch (err) {
+      if (err.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [chain]
+          });
+        } catch (addErr) {
+          console.error(addErr);
+          alert(`Could not add ${bridgeNetwork} to MetaMask.`);
+        }
+      } else {
+        console.error(err);
+        alert('MetaMask connection or network switch was cancelled.');
+      }
+    }
+  }
+
+  document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
   // ─── SEND MODAL ───
   // Multi-step: form → confirm → result. All three steps live inside

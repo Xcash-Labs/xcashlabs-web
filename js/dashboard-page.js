@@ -715,11 +715,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (availElBr) availElBr.textContent = balTextBr;
   });
 
+  const sendBridgeAmountEl = document.getElementById('send-bridge-amount');
+
   document.getElementById('bridge-close').addEventListener('click', () => {
     document.getElementById('bridge-modal').classList.remove('show');
+    sendBridgeAmountEl.value = "";
   });
-
-  const sendBridgeAmountEl = document.getElementById('send-bridge-amount');
 
   // Send max — fills amount with the current balance
   document.getElementById('send-bridge-max').addEventListener('click', () => {

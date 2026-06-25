@@ -671,6 +671,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'ratelimit-modal') e.target.classList.remove('show');
   });
 
+
+
+
+
+
   // ─── RECEIVE MODAL ───
   document.getElementById('btn-receive').addEventListener('click', () => {
     document.getElementById('receive-modal').classList.add('show');
@@ -697,6 +702,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'receive-modal') e.target.classList.remove('show');
   });
 
+
+
+
+
   // ─── BRIDGE MODAL ───
   document.getElementById('btn-bridge').addEventListener('click', () => {
     document.getElementById('bridge-modal').classList.add('show');
@@ -710,11 +719,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
+  const sendBridgeAmountEl = document.getElementById('send-bridge-amount');
+
   // Send max — fills amount with the current balance
   document.getElementById('send-bridge-max').addEventListener('click', () => {
     const bal = document.getElementById('balance-xck').textContent;
     if (bal && bal !== '—') {
-      sendAmountEl.value = bal;
+      sendBridgeAmountEl.value = bal;
     }
   });
 

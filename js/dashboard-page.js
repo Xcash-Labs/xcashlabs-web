@@ -710,8 +710,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.remove('show');
   });
 
-
-
+  // Send max — fills amount with the current balance
+  document.getElementById('send-bridge-max').addEventListener('click', () => {
+    const bal = document.getElementById('balance-xck').textContent;
+    if (bal && bal !== '—') {
+      sendAmountEl.value = bal;
+    }
+  });
 
   let bridgeNetwork = 'none';
   let bridgeDirection = 'XCK_TO_WXCK';

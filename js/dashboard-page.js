@@ -838,9 +838,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Convert to atomic units (6 decimals)
     const atomicAmount = BigInt(Math.round(amount * 1_000_000));
 
-    console.log(amount);        // e.g. 12.345678
-    console.log(atomicAmount);  // 12345678n
-
     if (!window.ethereum) {
       alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
       return;
@@ -866,6 +863,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('Connected wallet:', accounts[0]);
       console.log('Bridge network:', bridgeNetwork);
       console.log('Bridge direction:', bridgeDirection);
+      console.log('Atomic amount:', atomicAmount.toString());
+      
+      const bridgeRequest = {
+        evm_address: accounts[0],
+        network: bridgeNetwork,
+        direction: bridgeDirection,
+        amount_atomic: atomicAmount.toString(),
+        amount_xck: amountText,
+        status: 'initiated'
+      };
+
+      const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bridgeRequest)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to create bridge request.');
+      }
+
+      console.log('Bridge request created:', result);
 
     } catch (err) {
       if (err.code === 4902) {

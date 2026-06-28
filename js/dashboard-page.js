@@ -869,8 +869,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         evm_address: accounts[0],
         network: bridgeNetwork,
         direction: bridgeDirection,
-        amount_atomic: atomicAmount.toString(),
-        amount_xck: amountText,
+        amount_xck_atomic: atomicAmount.toString(),
         status: 'initiated'
       };
 

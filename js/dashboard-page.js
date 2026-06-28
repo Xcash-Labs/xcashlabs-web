@@ -815,6 +815,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   async function connectMetaMaskForBridge() {
+    const amount = parseFloat(
+      document.getElementById('send-bridge-amount').value.trim()
+    );
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      alert('Please enter an amount greater than 0 XCK.');
+      document.getElementById('send-bridge-amount').focus();
+      return;
+    }
+
+    const available = parseFloat(
+      document.getElementById('send-bridge-available').textContent.replace(/,/g, '')
+    );
+
+    if (Number.isFinite(available) && amount > available) {
+      alert('The amount exceeds your available XCK balance.');
+      document.getElementById('send-bridge-amount').focus();
+      return;
+    }
+
     if (!window.ethereum) {
       alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
       return;

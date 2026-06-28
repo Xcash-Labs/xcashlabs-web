@@ -835,6 +835,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
+    // Convert to atomic units (6 decimals)
+    const atomicAmount = BigInt(Math.round(amount * 1_000_000));
+
+    console.log(amount);        // e.g. 12.345678
+    console.log(atomicAmount);  // 12345678n
+
     if (!window.ethereum) {
       alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
       return;

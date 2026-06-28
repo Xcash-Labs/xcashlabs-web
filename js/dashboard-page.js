@@ -864,7 +864,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('Bridge network:', bridgeNetwork);
       console.log('Bridge direction:', bridgeDirection);
       console.log('Atomic amount:', atomicAmount.toString());
-      
+
       const bridgeRequest = {
         evm_address: accounts[0],
         network: bridgeNetwork,
@@ -874,21 +874,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         status: 'initiated'
       };
 
-      const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bridgeRequest)
-      });
+      try {
+        const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            evm_address: accounts[0],
+            network: bridgeNetwork,
+            direction: bridgeDirection,
+            amount_atomic: atomicAmount.toString()
+          })
+        });
 
-      const result = await response.json();
+        const text = await response.text();
+        console.log('Bridge server raw response:', text);
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to create bridge request.');
+        let result;
+        try {
+          result = JSON.parse(text);
+        } catch {
+          throw new Error('Bridge server did not return valid JSON.');
+        }
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Bridge request failed.');
+        }
+
+        console.log('Bridge request created:', result);
+
+      } catch (err) {
+        console.error('Bridge request error:', err);
+        alert(err.message || 'Bridge request failed.');
       }
-
-      console.log('Bridge request created:', result);
 
     } catch (err) {
       if (err.code === 4902) {

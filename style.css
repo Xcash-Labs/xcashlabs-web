@@ -1157,6 +1157,18 @@ footer {
   color: #9ca3af;
 }
 
+.bridge-status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.bridge-refresh-btn {
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
 /* ─── Modals ─── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}

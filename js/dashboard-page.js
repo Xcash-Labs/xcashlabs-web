@@ -860,12 +860,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         params: [{ chainId: chain.chainId }]
       });
 
-      console.log('Connected wallet:', accounts[0]);
+      console.log('Connected xck wallet:', walletKeys.address);
+      console.log('Connected evm wallet:', accounts[0]);
       console.log('Bridge network:', bridgeNetwork);
       console.log('Bridge direction:', bridgeDirection);
       console.log('Atomic amount:', atomicAmount.toString());
 
       const bridgeRequest = {
+        xck_address: walletKeys.address,
         evm_address: accounts[0],
         network: bridgeNetwork,
         direction: bridgeDirection,

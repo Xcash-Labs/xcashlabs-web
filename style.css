@@ -1140,6 +1140,23 @@ footer {
   color: #22c55e;
 }
 
+.bridge-status {
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.bridge-status-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ddd;
+  margin-bottom: 4px;
+}
+
+#bridge-status-text {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
 /* ─── Modals ─── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}

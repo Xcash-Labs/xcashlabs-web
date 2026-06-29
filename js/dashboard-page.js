@@ -747,7 +747,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const statusText = {
+    idle: 'Ready to create a new bridge request.',
+    initiated: 'Waiting for your deposit.',
+    pending: 'Waiting for confirmations.',
+    verifying: 'Verifying transaction.',
+    minting: 'Minting.',
+    completed: 'Bridge completed successfully.',
+    failed: 'Bridge failed.'
+  };
+
+  document.getElementById('bridge-status-text').textContent =
+    statusText[request.status] || statusText.idle;
+
   function updateBridgeFromRequest(request) {
+
     const statusToProgress = {
       initiated: 'request',
       pending: 'waiting',
@@ -757,7 +771,36 @@ document.addEventListener('DOMContentLoaded', async () => {
       failed: 'idle'
     };
 
+    // Progress bar
     setBridgeProgress(statusToProgress[request.status] || 'idle');
+
+    // Restore amount (convert from atomic)
+    document.getElementById('send-bridge-amount').value =
+      (Number(request.amount_atomic) / 1_000_000).toFixed(6).replace(/\.?0+$/, '');
+
+    // Restore selected network
+    bridgeNetwork = request.network;
+
+    document.getElementById('bridge-polygon')
+      .classList.toggle(
+        'bridge-network-selected',
+        request.network.toLowerCase() === 'polygon'
+      );
+
+    document.getElementById('bridge-base')
+      .classList.toggle(
+        'bridge-network-selected',
+        request.network.toLowerCase() === 'base'
+      );
+
+    // Restore direction
+    bridgeDirection = request.direction;
+
+    const arrow = document.getElementById('bridge-arrow');
+    arrow.textContent =
+      bridgeDirection === 'XCK_TO_WXCK' ? '⟶' : '⟵';
+
+    updateBridgeDescription();
   }
 
   async function checkActiveBridgeRequest() {
@@ -791,6 +834,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('btn-bridge').addEventListener('click', async () => {
     setBridgeProgress('idle');
+    document.getElementById('bridge-status-text').textContent = statusText.idle;
     document.getElementById('bridge-modal').classList.add('show');
     const balTextBr = document.getElementById('balance-xck').textContent;
     const availElBr = document.getElementById('send-bridge-available');

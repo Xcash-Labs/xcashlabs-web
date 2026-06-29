@@ -757,9 +757,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     failed: 'Bridge failed.'
   };
 
-  document.getElementById('bridge-status-text').textContent =
-    statusText[request.status] || statusText.idle;
-
   function updateBridgeFromRequest(request) {
 
     const statusToProgress = {
@@ -773,6 +770,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Progress bar
     setBridgeProgress(statusToProgress[request.status] || 'idle');
+
+    document.getElementById('bridge-status-text').textContent = statusText[request.status] || statusText.idle;
 
     // Restore amount (convert from atomic)
     document.getElementById('send-bridge-amount').value =
@@ -838,7 +837,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-modal').classList.add('show');
     const balTextBr = document.getElementById('balance-xck').textContent;
     const availElBr = document.getElementById('send-bridge-available');
-    if (availElBr) availElBr.textContent = balTextBr;
+    if (availElBr) {
+      availElBr.textContent = balTextBr;
+    }
     await checkActiveBridgeRequest();
   });
 
@@ -1032,6 +1033,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         console.log('Bridge request created:', result);
         setBridgeProgress('request');
+        document.getElementById('bridge-status-text').textContent = statusText.initiated;
 
 //setBridgeProgress('idle');        
 //setTimeout(() => setBridgeProgress('waiting'), 1000);

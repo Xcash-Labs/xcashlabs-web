@@ -707,7 +707,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // ─── BRIDGE MODAL ───
+
+  function setBridgeProgress(step) {
+    const steps = [
+      'step-request',
+      'step-waiting',
+      'step-confirmed',
+      'step-complete'
+    ];
+
+    const fill = document.getElementById('bridge-progress-fill');
+
+    const progressMap = {
+      idle: 0,
+      request: 10,
+      waiting: 40,
+      confirmed: 70,
+      complete: 100
+    };
+
+    const stepMap = {
+      idle: -1,
+      request: 0,
+      waiting: 1,
+      confirmed: 2,
+      complete: 3
+    };
+
+    const currentIndex = stepMap[step];
+
+    fill.style.width = progressMap[step] + '%';
+
+    steps.forEach((id, index) => {
+      const el = document.getElementById(id);
+      el.classList.remove('active', 'done');
+
+      if (index < currentIndex) {
+        el.classList.add('done');
+      }
+
+      if (index === currentIndex) {
+        el.classList.add('active');
+      }
+    });
+  }
+
+
+
   document.getElementById('btn-bridge').addEventListener('click', () => {
+    setBridgeProgress('idle');
     document.getElementById('bridge-modal').classList.add('show');
     // Update "Available" from the latest LWS poll
     const balTextBr = document.getElementById('balance-xck').textContent;
@@ -904,6 +952,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         console.log('Bridge request created:', result);
+        setBridgeProgress('request');
+
+//setBridgeProgress('idle');        
+//setTimeout(() => setBridgeProgress('waiting'), 1000);
+//setTimeout(() => setBridgeProgress('confirmed'), 2500);
+//setTimeout(() => setBridgeProgress('complete'), 4000);
+
 
       } catch (err) {
         console.error('Bridge request error:', err);

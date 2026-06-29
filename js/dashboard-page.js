@@ -671,11 +671,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'ratelimit-modal') e.target.classList.remove('show');
   });
 
-
-
-
-
-
   // ─── RECEIVE MODAL ───
   document.getElementById('btn-receive').addEventListener('click', () => {
     document.getElementById('receive-modal').classList.add('show');
@@ -752,15 +747,55 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  function updateBridgeFromRequest(request) {
+    const statusToProgress = {
+      initiated: 'request',
+      pending: 'waiting',
+      verifying: 'confirmed',
+      minting: 'confirmed',
+      completed: 'complete',
+      failed: 'idle'
+    };
 
+    setBridgeProgress(statusToProgress[request.status] || 'idle');
+  }
 
-  document.getElementById('btn-bridge').addEventListener('click', () => {
+  async function checkActiveBridgeRequest() {
+    const xckAddress = walletKeys.address;
+
+    const response = await fetch(
+      `https://bridge.xcashlabs.org/api/bridge/active?xck_address=${encodeURIComponent(xckAddress)}`
+    );
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      alert(data.error || 'Unable to check bridge status.');
+      return false;
+    }
+
+    if (data.has_active_request) {
+      alert('You already have a bridge request in progress. Please wait until it is complete before starting another one.');
+
+      updateBridgeFromRequest(data.request);
+      document.getElementById('bridge-start').disabled = true;
+
+      return true;
+    }
+
+    setBridgeProgress('idle');
+    document.getElementById('bridge-start').disabled = false;
+
+    return false;
+  }
+
+  document.getElementById('btn-bridge').addEventListener('click', async () => {
     setBridgeProgress('idle');
     document.getElementById('bridge-modal').classList.add('show');
-    // Update "Available" from the latest LWS poll
     const balTextBr = document.getElementById('balance-xck').textContent;
     const availElBr = document.getElementById('send-bridge-available');
     if (availElBr) availElBr.textContent = balTextBr;
+    await checkActiveBridgeRequest();
   });
 
   const sendBridgeAmountEl = document.getElementById('send-bridge-amount');
@@ -807,8 +842,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     updateBridgeDescription();
   });
-
-
 
   document.getElementById('bridge-base').addEventListener('click', () => {
       alert('The Base bridge is coming soon.');
@@ -917,6 +950,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('Bridge network:', bridgeNetwork);
       console.log('Bridge direction:', bridgeDirection);
       console.log('Atomic amount:', atomicAmount.toString());
+
+      const hasActiveRequest = await checkActiveBridgeRequest();
+
+      if (hasActiveRequest) {
+        return;
+      }
 
       try {
         const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {

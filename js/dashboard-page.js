@@ -703,6 +703,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ─── BRIDGE MODAL ───
 
+  document.getElementById('bridge-refresh').addEventListener('click', async () => {
+    const btn = document.getElementById('bridge-refresh');
+
+    btn.disabled = true;
+    btn.textContent = 'Refreshing...';
+
+    try {
+      await checkActiveBridgeRequest();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '↻ Refresh';
+    }
+  });
+
   function setBridgeProgress(step) {
     const steps = [
       'step-request',

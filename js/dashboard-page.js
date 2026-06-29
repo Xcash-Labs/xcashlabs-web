@@ -808,16 +808,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeDescription();
   });
 
+
+
   document.getElementById('bridge-base').addEventListener('click', () => {
-    bridgeNetwork = 'Base';
+      alert('The Base bridge is coming soon.');
 
-    document.getElementById('bridge-base')
-      .classList.add('bridge-network-selected');
+//    bridgeNetwork = 'Base';
 
-    document.getElementById('bridge-polygon')
-      .classList.remove('bridge-network-selected');
+//    document.getElementById('bridge-base')
+//      .classList.add('bridge-network-selected');
 
-    updateBridgeDescription();
+//    document.getElementById('bridge-polygon')
+//      .classList.remove('bridge-network-selected');
+
+//    updateBridgeDescription();
   });
 
   document.getElementById('bridge-direction-toggle').addEventListener('click', () => {

@@ -914,15 +914,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('Bridge direction:', bridgeDirection);
       console.log('Atomic amount:', atomicAmount.toString());
 
-      const bridgeRequest = {
-        xck_address: walletKeys.address,
-        evm_address: accounts[0],
-        network: bridgeNetwork,
-        direction: bridgeDirection,
-        amount_xck_atomic: atomicAmount.toString(),
-        status: 'initiated'
-      };
-
       try {
         const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
           method: 'POST',
@@ -930,6 +921,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            xck_address: walletKeys.address,
             evm_address: accounts[0],
             network: bridgeNetwork,
             direction: bridgeDirection,

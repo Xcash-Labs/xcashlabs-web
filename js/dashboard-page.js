@@ -710,7 +710,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     btn.textContent = 'Refreshing...';
 
     try {
-      await checkActiveBridgeRequest();
+      await checkActiveBridgeRequest(false);
     } finally {
       btn.disabled = false;
       btn.textContent = '↻ Refresh';
@@ -816,7 +816,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeDescription();
   }
 
-  async function checkActiveBridgeRequest() {
+  async function checkActiveBridgeRequest(showAlert = true) {
     const xckAddress = walletKeys.address;
 
     const response = await fetch(
@@ -831,7 +831,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (data.has_active_request) {
+
+    if (showAlert) {
       alert('You already have a bridge request in progress. Please wait until it is complete before starting another one.');
+    }
 
       updateBridgeFromRequest(data.request);
       document.getElementById('bridge-start').disabled = true;

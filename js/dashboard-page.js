@@ -1048,15 +1048,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           throw new Error(result.error || 'Bridge request failed.');
         }
 
-        console.log('Bridge request created:', result);
         setBridgeProgress('request');
         document.getElementById('bridge-status-text').textContent = statusText.initiated;
 
-//setBridgeProgress('idle');        
-//setTimeout(() => setBridgeProgress('waiting'), 1000);
-//setTimeout(() => setBridgeProgress('confirmed'), 2500);
-//setTimeout(() => setBridgeProgress('complete'), 4000);
-
+        openSendModalForBridge({
+          bridgeId: result.bridge_id,
+          amountXck: amount.toString()
+        });
 
       } catch (err) {
         console.error('Bridge request error:', err);
@@ -1095,6 +1093,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   let sendPrivacy = 'private';
   let sendPriority = 2;
 
+  // Bridge send state
+  let bridgeSendContext = null;
+  const BRIDGE_XCK_DEPOSIT_ADDRESS = 'XCK1QnoyBeAVBuXHYJB1rcYj8EPjadaB45iTPP6ypK6r1VHjXjrnt4zRCcDf6X1PwD4EBz9b9PzJq3dKJfLiHJBD6aNNzaMCQQ';
+
   function sendShowStep (step) {
     ['form', 'confirm', 'result'].forEach(s => {
       const el = document.getElementById('send-step-' + s);
@@ -1112,6 +1114,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     const errEl = document.getElementById('send-error');
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
     sendShowStep('form');
+  }
+
+  function openSendModalForBridge({ bridgeId, amountXck }) {
+    bridgeSendContext = { bridgeId };
+
+    sendResetForm();
+
+    sendToEl.value = BRIDGE_XCK_DEPOSIT_ADDRESS;
+    sendAmountEl.value = amountXck;
+
+    sendPrivacy = 'public';
+
+    document.querySelectorAll('.send-priv-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.privacy === 'public');
+    });
+
+    refreshSendReviewState();
+
+    document.getElementById('bridge-modal').classList.remove('show');
+    document.getElementById('send-modal').classList.add('show');
+
+    sendReviewBtn.click();
   }
 
   document.getElementById('btn-send').addEventListener('click', () => {
@@ -1252,15 +1276,58 @@ document.addEventListener('DOMContentLoaded', async () => {
       const xckAmount = (sendAmountEl.value || '').trim();
       const paymentId = (document.getElementById('send-pid').value || '').trim();
       const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview, sendPrivacy);
+
       document.getElementById('send-result-hash').textContent = result.tx_hash;
+
+      if (bridgeSendContext) {
+        try {
+          const res = await fetch(
+            `https://bridge.xcashlabs.org/api/bridge/request/${bridgeSendContext.bridgeId}/tx`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                tx_hash: result.tx_hash,
+                xck_address: walletKeys.address
+              })
+            }
+          );
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || data.ok === false) {
+            throw new Error(data.error || `Bridge tx attach failed: ${res.status}`);
+          }
+
+          bridgeSendContext = null;
+        } catch (err) {
+          console.error('Bridge tx failed, manual intervention will be needed:', err);
+          // Do NOT cancel here. The XCK transaction was already sent.
+        }
+      }
+
       sendShowResultState('success');
       // Trigger a balance refresh so the new pending tx shows up
       if (typeof pollBalanceOnce === 'function') setTimeout(pollBalanceOnce, 2000);
-    } catch (e) {
-      console.error('[dashboard] send failed:', e);
-      document.getElementById('send-result-error-msg').textContent = e.message || 'Unknown error';
-      sendShowResultState('error');
-    }
+      } catch (e) {
+        console.error('[dashboard] send failed:', e);
+        if (bridgeSendContext?.bridgeId) {
+          try {
+            await fetch(
+              `https://bridge.xcashlabs.org/api/bridge/request/${bridgeSendContext.bridgeId}/cancel`,
+              { method: 'POST' }
+            );
+          } catch (cancelErr) {
+            console.error('Failed to cancel bridge request:', cancelErr);
+          }
+          bridgeSendContext = null;
+        }
+        document.getElementById('send-result-error-msg').textContent =
+          e.message || 'Unknown error';
+        sendShowResultState('error');
+      }
   });
 
   // Result: Done → close modal

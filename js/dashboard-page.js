@@ -773,12 +773,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function updateBridgeFromRequest(request) {
     // Progress bar
-
-  console.log('Bridge request:', request);
-  console.log('Bridge status:', request.status);
-
     setBridgeProgress(request.status || 'idle');
-
     document.getElementById('bridge-status-text').textContent = statusText[request.status] || statusText.idle;
 
     // Restore amount (convert from atomic)

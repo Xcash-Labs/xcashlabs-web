@@ -771,15 +771,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     failed: 'Bridge failed.'
   };
 
+// jed  
   function updateBridgeFromRequest(request) {
-
     const statusToProgress = {
-      initiated: 'request',
-      pending: 'waiting',
-      verifying: 'confirmed',
+      request: 'request',
+      processing: 'waiting',
       minting: 'confirmed',
       completed: 'complete',
-      failed: 'idle'
+      failed: 'failed',
+      cancelled: 'cancelled'
     };
 
     // Progress bar
@@ -1124,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendToEl.value = BRIDGE_XCK_DEPOSIT_ADDRESS;
     sendAmountEl.value = amountXck;
 
-    sendPrivacy = 'public';
+    sendPrivacy = 'private';
 
     document.querySelectorAll('.send-priv-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.privacy === 'public');
@@ -1301,7 +1301,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(data.error || `Bridge tx attach failed: ${res.status}`);
           }
 
-          bridgeSendContext = null;
         } catch (err) {
           console.error('Bridge tx failed, manual intervention will be needed:', err);
           // Do NOT cancel here. The XCK transaction was already sent.
@@ -1336,6 +1335,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendResetForm();
     sendToEl.value = '';
     sendAmountEl.value = '';
+
+    if (bridgeSendContext) {
+      document.getElementById('bridge-modal').classList.add('show');
+    }
+
+    bridgeSendContext = null;
   });
 
   // Result: Retry → back to form with values intact

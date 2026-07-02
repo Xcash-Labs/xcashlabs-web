@@ -743,9 +743,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       complete: 3
     };
 
-    const currentIndex = stepMap[step];
-
-    fill.style.width = progressMap[step] + '%';
+    const safeStep = stepMap.hasOwnProperty(step) ? step : 'idle';
+    const currentIndex = stepMap[safeStep];
+    fill.style.width = progressMap[safeStep] + '%';
 
     steps.forEach((id, index) => {
       const el = document.getElementById(id);
@@ -763,27 +763,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const statusText = {
     idle: 'Ready to create a new bridge request.',
-    initiated: 'Waiting for your deposit.',
-    pending: 'Waiting for confirmations.',
-    verifying: 'Verifying transaction.',
-    minting: 'Minting.',
-    completed: 'Bridge completed successfully.',
-    failed: 'Bridge failed.'
+    request: 'Bridge request created.',
+    waiting: 'Waiting for your XCK deposit.',
+    confirmed: 'Deposit confirmed. Processing bridge.',
+    complete: 'Bridge completed successfully.',
+    failed: 'Bridge failed.',
+    cancelled: 'Bridge request was cancelled.'
   };
 
-// jed  
   function updateBridgeFromRequest(request) {
-    const statusToProgress = {
-      request: 'request',
-      processing: 'waiting',
-      minting: 'confirmed',
-      completed: 'complete',
-      failed: 'failed',
-      cancelled: 'cancelled'
-    };
-
     // Progress bar
-    setBridgeProgress(statusToProgress[request.status] || 'idle');
+
+  console.log('Bridge request:', request);
+  console.log('Bridge status:', request.status);
+
+    setBridgeProgress(request.status || 'idle');
 
     document.getElementById('bridge-status-text').textContent = statusText[request.status] || statusText.idle;
 
@@ -832,9 +826,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (data.has_active_request) {
 
-    if (showAlert) {
-      alert('You already have a bridge request in progress. Please wait until it is complete before starting another one.');
-    }
+      if (showAlert) {
+        alert('You already have a bridge request in progress. Please wait until it is complete before starting another one.');
+      }
 
       updateBridgeFromRequest(data.request);
       document.getElementById('bridge-start').disabled = true;

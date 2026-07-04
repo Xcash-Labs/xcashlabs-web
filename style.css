@@ -1255,12 +1255,18 @@ footer {
 }
 
 .bridge-copy-hash {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: .78rem;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: .75rem;
   cursor: pointer;
-  padding: 0;
+  padding: 4px 10px;
+  transition: background .2s ease;
+}
+
+.bridge-copy-hash:hover {
+  background: var(--surface-4);
 }
 
 .bridge-history-error {

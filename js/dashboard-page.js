@@ -878,6 +878,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       'step-request',
       'step-waiting',
       'step-confirmed',
+      'step-claim',
       'step-complete'
     ];
 
@@ -886,9 +887,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const progressMap = {
       idle: 0,
       request: 10,
-      waiting: 40,
-      confirmed: 70,
-      complete: 100
+      waiting: 35,
+      confirmed: 60,
+      ready_to_claim: 80,
+      complete: 100,
+      failed: 100,
+      cancelled: 0
     };
 
     const stepMap = {
@@ -896,15 +900,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       request: 0,
       waiting: 1,
       confirmed: 2,
-      complete: 3
+      ready_to_claim: 3,
+      complete: 4,
+      failed: -1,
+      cancelled: -1
     };
 
-    const safeStep = stepMap.hasOwnProperty(step) ? step : 'idle';
+    const safeStep = Object.prototype.hasOwnProperty.call(stepMap, step)
+      ? step
+      : 'idle';
+
     const currentIndex = stepMap[safeStep];
     fill.style.width = progressMap[safeStep] + '%';
 
     steps.forEach((id, index) => {
       const el = document.getElementById(id);
+      if (!el) return;
+
       el.classList.remove('active', 'done');
 
       if (index < currentIndex) {
@@ -921,11 +933,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     idle: 'Ready to create a new bridge request.',
     request: 'Bridge request created.',
     waiting: 'Waiting for your XCK deposit.',
-    confirmed: 'Deposit confirmed. Processing bridge.',
+    confirmed: 'Deposit confirmed.',
+    ready_to_claim: 'Deposit confirmed. Claim your wXCK to complete the bridge.',
     complete: 'Bridge completed successfully.',
     failed: 'Bridge failed.',
     cancelled: 'Bridge request was cancelled.'
   };
+
+  function updateBridgeClaimSection(request) {
+    const claimSection = document.getElementById('bridge-claim-section');
+    const claimButton = document.getElementById('bridge-claim');
+
+    if (!claimSection || !claimButton) return;
+
+    const showClaim = request && request.status === 'ready_to_claim';
+
+    claimSection.style.display = showClaim ? 'block' : 'none';
+    claimButton.disabled = !showClaim;
+    claimButton.textContent = 'Claim wXCK';
+  }
 
   function updateBridgeFromRequest(request) {
     // Progress bar
@@ -959,6 +985,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       bridgeDirection === 'XCK_TO_WXCK' ? '⟶' : '⟵';
 
     updateBridgeDescription();
+    updateBridgeClaimSection(request);
   }
 
   async function checkActiveBridgeRequest(showAlert = true) {
@@ -988,6 +1015,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     setBridgeProgress('idle');
+    updateBridgeClaimSection(null);
     document.getElementById('bridge-start').disabled = false;
 
     return false;
@@ -1194,7 +1222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         setBridgeProgress('request');
-        document.getElementById('bridge-status-text').textContent = statusText.initiated;
+        document.getElementById('bridge-status-text').textContent = statusText.request;
 
         openSendModalForBridge({
           bridgeId: result.bridge_id,
@@ -1234,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-  
+
 
 
   // ─── SEND MODAL ───

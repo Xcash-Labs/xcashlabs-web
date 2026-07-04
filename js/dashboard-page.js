@@ -697,8 +697,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (e.target.id === 'receive-modal') e.target.classList.remove('show');
   });
 
+  
+  // ─── BRIDGE HISTORY MODAL ───
 
+  document.getElementById('btn-bridge-history').addEventListener('click', async () => {
+    await loadBridgeHistory();
+  });
 
+  async function loadBridgeHistory(days = 30) {
+    const xckAddress = walletKeys.address;
+
+    try {
+      const response = await fetch(
+        `https://bridge.xcashlabs.org/api/bridge/requests?xck_address=${encodeURIComponent(xckAddress)}&days=${days}`
+      );
+
+      const data = await response.json();
+
+      if (!data.ok) {
+        alert(data.error || 'Unable to load bridge history.');
+        return;
+      }
+
+      showBridgeHistory(data.requests || []);
+    } catch (err) {
+      alert(err.message || 'Unable to load bridge history.');
+    }
+  }
 
 
   // ─── BRIDGE MODAL ───

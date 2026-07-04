@@ -1169,6 +1169,116 @@ footer {
   padding: 2px 8px;
 }
 
+.bridge-history-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.bridge-history-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.bridge-history-amount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.bridge-history-subtitle {
+  font-size: .78rem;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.bridge-history-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: .78rem;
+  padding: 6px 0;
+  border-top: 1px solid var(--border);
+}
+
+.bridge-history-row span {
+  color: var(--text-dim);
+}
+
+.bridge-history-row strong {
+  color: var(--text);
+  text-align: right;
+  font-weight: 500;
+}
+
+.bridge-status {
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.bridge-status-request {
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+}
+
+.bridge-status-waiting {
+  background: rgba(255, 170, 0, .15);
+  color: #ffaa00;
+}
+
+.bridge-status-confirmed {
+  background: rgba(0, 140, 255, .15);
+  color: #4da6ff;
+}
+
+.bridge-status-complete {
+  background: rgba(0, 200, 120, .15);
+  color: #00c878;
+}
+
+.bridge-status-failed {
+  background: rgba(255, 70, 70, .15);
+  color: #ff4646;
+}
+
+.bridge-status-cancelled {
+  background: rgba(160, 160, 160, .15);
+  color: #aaa;
+}
+
+.bridge-copy-hash {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: .78rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bridge-history-error {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 70, 70, .12);
+  color: #ff7777;
+  font-size: .76rem;
+}
+
+.bridge-history-empty {
+  color: var(--text-dim);
+  text-align: center;
+  padding: 20px 0;
+  font-size: .85rem;
+}
+
 /* ─── Modals ─── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}

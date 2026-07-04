@@ -731,7 +731,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     list.innerHTML = '';
 
     if (!requests.length) {
-      list.innerHTML = '<p>No bridge requests found.</p>';
+      list.innerHTML = `
+        <div class="bridge-history-empty">
+          No bridge requests found.
+        </div>
+      `;
     } else {
       requests.forEach((request) => {
         const amount = (Number(request.amount_atomic) / 1_000_000)
@@ -742,25 +746,106 @@ document.addEventListener('DOMContentLoaded', async () => {
           ? new Date(request.created_at).toLocaleString()
           : '';
 
+        const statusLabel = formatBridgeStatus(request.status);
+        const directionLabel = formatBridgeDirection(request.direction);
+        const networkLabel = formatBridgeNetwork(request.network);
+
         const item = document.createElement('div');
-        item.className = 'bridge-history-item';
+        item.className = 'bridge-history-card';
 
         item.innerHTML = `
-          <div><strong>${amount} XCK</strong></div>
-          <div>Status: ${request.status}</div>
-          <div>Network: ${request.network}</div>
-          <div>Direction: ${request.direction}</div>
-          <div>Date: ${date}</div>
-          ${request.tx_hash ? `<div>XCK TX: ${shortHash(request.tx_hash)}</div>` : ''}
-          ${request.evm_tx_hash ? `<div>EVM TX: ${shortHash(request.evm_tx_hash)}</div>` : ''}
-          ${request.error ? `<div class="bridge-error">${request.error}</div>` : ''}
+          <div class="bridge-history-card-top">
+            <div class="bridge-history-amount">${amount} XCK</div>
+            <div class="bridge-status bridge-status-${request.status}">
+              ${statusLabel}
+            </div>
+          </div>
+
+          <div class="bridge-history-subtitle">
+            ${networkLabel} • ${directionLabel}
+          </div>
+
+          <div class="bridge-history-row">
+            <span>Created</span>
+            <strong>${date}</strong>
+          </div>
+
+          ${
+            request.tx_hash
+              ? `
+                <div class="bridge-history-row">
+                  <span>XCK TX</span>
+                  <button class="bridge-copy-hash" data-copy="${request.tx_hash}">
+                    ${shortHash(request.tx_hash)}
+                  </button>
+                </div>
+              `
+              : ''
+          }
+
+          ${
+            request.evm_tx_hash
+              ? `
+                <div class="bridge-history-row">
+                  <span>EVM TX</span>
+                  <button class="bridge-copy-hash" data-copy="${request.evm_tx_hash}">
+                    ${shortHash(request.evm_tx_hash)}
+                  </button>
+                </div>
+              `
+              : ''
+          }
+
+          ${
+            request.error
+              ? `
+                <div class="bridge-history-error">
+                  Bridge could not be completed.
+                </div>
+              `
+              : ''
+          }
         `;
 
         list.appendChild(item);
       });
     }
 
+    document.querySelectorAll('.bridge-copy-hash').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        btn.textContent = 'Copied';
+        setTimeout(() => {
+          btn.textContent = shortHash(btn.dataset.copy);
+        }, 1200);
+      });
+    });
+
     document.getElementById('bridge-history-modal').classList.add('show');
+  }
+
+  function formatBridgeStatus(status) {
+    const labels = {
+      request: 'Request',
+      waiting: 'Waiting',
+      confirmed: 'Confirmed',
+      complete: 'Complete',
+      failed: 'Failed',
+      cancelled: 'Cancelled'
+    };
+
+    return labels[status] || status || 'Unknown';
+  }
+
+  function formatBridgeDirection(direction) {
+    if (direction === 'XCK_TO_WXCK') return 'XCK → wXCK';
+    if (direction === 'WXCK_TO_XCK') return 'wXCK → XCK';
+    return direction || '';
+  }
+
+  function formatBridgeNetwork(network) {
+    if (!network) return '';
+    return network.charAt(0).toUpperCase() + network.slice(1);
   }
 
   function shortHash(value) {
@@ -1144,6 +1229,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
+
+
+
+
+
+  
 
 
   // ─── SEND MODAL ───

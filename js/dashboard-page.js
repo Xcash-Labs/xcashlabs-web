@@ -725,6 +725,52 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  function showBridgeHistory(requests) {
+    const list = document.getElementById('bridge-history-list');
+
+    list.innerHTML = '';
+
+    if (!requests.length) {
+      list.innerHTML = '<p>No bridge requests found.</p>';
+    } else {
+      requests.forEach((request) => {
+        const amount = (Number(request.amount_atomic) / 1_000_000)
+          .toFixed(6)
+          .replace(/\.?0+$/, '');
+
+        const date = request.created_at
+          ? new Date(request.created_at).toLocaleString()
+          : '';
+
+        const item = document.createElement('div');
+        item.className = 'bridge-history-item';
+
+        item.innerHTML = `
+          <div><strong>${amount} XCK</strong></div>
+          <div>Status: ${request.status}</div>
+          <div>Network: ${request.network}</div>
+          <div>Direction: ${request.direction}</div>
+          <div>Date: ${date}</div>
+          ${request.tx_hash ? `<div>XCK TX: ${shortHash(request.tx_hash)}</div>` : ''}
+          ${request.evm_tx_hash ? `<div>EVM TX: ${shortHash(request.evm_tx_hash)}</div>` : ''}
+          ${request.error ? `<div class="bridge-error">${request.error}</div>` : ''}
+        `;
+
+        list.appendChild(item);
+      });
+    }
+
+    document.getElementById('bridge-history-modal').classList.add('show');
+  }
+
+  function shortHash(value) {
+    if (!value || value.length <= 16) return value;
+    return `${value.slice(0, 8)}...${value.slice(-8)}`;
+  }
+  
+  document.getElementById('bridge-history-close').addEventListener('click', () => {
+    document.getElementById('bridge-history-modal').classList.remove('show');
+  });
 
   // ─── BRIDGE MODAL ───
 

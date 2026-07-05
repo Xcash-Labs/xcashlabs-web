@@ -828,6 +828,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const labels = {
       request: 'Request',
       waiting: 'Waiting',
+      ready_to_claim: 'Ready to Claim',
       confirmed: 'Confirmed',
       complete: 'Complete',
       failed: 'Failed',
@@ -1023,6 +1024,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('btn-bridge').addEventListener('click', async () => {
     setBridgeProgress('idle');
+    updateBridgeClaimSection(null);
     document.getElementById('bridge-status-text').textContent = statusText.idle;
     document.getElementById('bridge-modal').classList.add('show');
     const balTextBr = document.getElementById('balance-xck').textContent;
@@ -1254,7 +1256,108 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
+  document.getElementById('bridge-claim').addEventListener('click', async () => {
+    const claimButton = document.getElementById('bridge-claim');
 
+    try {
+      claimButton.disabled = true;
+      claimButton.textContent = 'Claiming...';
+
+      const active = await fetch(
+        `https://bridge.xcashlabs.org/api/bridge/active?xck_address=${encodeURIComponent(walletKeys.address)}`
+      ).then(r => r.json());
+
+      if (!active.ok || !active.has_active_request) {
+        throw new Error(active.error || 'No active bridge request found.');
+      }
+
+      const request = active.request;
+
+      if (request.status !== 'ready_to_claim') {
+        throw new Error('Bridge request is not ready to claim.');
+      }
+
+      const claimResponse = await fetch(
+        `https://bridge.xcashlabs.org/api/bridge/request/${request._id}/claim`,
+        { method: 'POST' }
+      );
+
+      const claimData = await claimResponse.json();
+
+      if (!claimResponse.ok || !claimData.ok) {
+        throw new Error(claimData.error || 'Unable to create claim.');
+      }
+
+      const claim = claimData.claim;
+
+      if (!window.ethereum) {
+        throw new Error('MetaMask is not installed.');
+      }
+
+      const chain = BRIDGE_CHAINS[formatBridgeNetwork(request.network)];
+
+      await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chain.chainId }]
+      });
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const abi = [
+        'function claim(bytes32 bridgeId, uint256 amount, uint256 deadline, bytes signature)'
+      ];
+
+      const contract = new ethers.Contract(
+        claim.contractAddress,
+        abi,
+        signer
+      );
+
+      const tx = await contract.claim(
+        claim.bridgeId,
+        claim.amount,
+        claim.deadline,
+        claim.signature
+      );
+
+      const receipt = await tx.wait();
+
+      const completeResponse = await fetch(
+        `https://bridge.xcashlabs.org/api/bridge/request/${request._id}/complete`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            evm_tx_hash: receipt.hash
+          })
+        }
+      );
+
+      const completeData = await completeResponse.json();
+
+      if (!completeResponse.ok || !completeData.ok) {
+        throw new Error(completeData.error || 'Claim succeeded, but bridge status was not updated.');
+      }
+
+      await checkActiveBridgeRequest(false);
+
+      alert('wXCK claimed successfully.');
+
+    } catch (err) {
+      console.error('Claim error:', err);
+      alert(err.message || 'Claim failed.');
+    } finally {
+      claimButton.disabled = false;
+      claimButton.textContent = 'Claim wXCK';
+    }
+  });
 
 
 

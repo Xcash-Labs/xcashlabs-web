@@ -1006,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (data.has_active_request) {
 
       if (showAlert) {
-        alert('You already have a bridge request in progress. Please wait until it is complete before starting another one.');
+        alert('You already have a bridge request in progress. Click OK to view its status.');
       }
 
       updateBridgeFromRequest(data.request);

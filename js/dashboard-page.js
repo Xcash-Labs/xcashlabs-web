@@ -1179,7 +1179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: chain.chainId }]
+        params: [{ chainId: ethers.toBeHex(Number(claim.chainId)) }]
       });
 
       console.log('Connected xck wallet:', walletKeys.address);

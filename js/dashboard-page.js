@@ -1327,6 +1327,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         signer
       );
 
+console.log('Expected EVM address:', request.evm_address);
+console.log('Connected MetaMask address:', await signer.getAddress());
+console.log('Claim contract:', claim.contractAddress);
+console.log('Claim chainId:', claim.chainId);
+
       const tx = await contract.claim(
         claim.bridgeId,
         claim.amount,
@@ -1335,6 +1340,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       );
 
       const receipt = await tx.wait();
+
+console.log('Claim tx hash:', tx.hash);
+console.log('Claim receipt hash:', receipt.hash);
+console.log('Claim receipt status:', receipt.status);
 
       const completeResponse = await fetch(
         `https://bridge.xcashlabs.org/api/bridge/request/${request._id}/complete`,

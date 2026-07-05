@@ -1173,7 +1173,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const chain = BRIDGE_CHAINS[bridgeNetwork];
 
     try {
-      const accounts = await window.ethereum.request({
+      await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
 
@@ -1296,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const chain = BRIDGE_CHAINS[formatBridgeNetwork(request.network)];
 
-      await window.ethereum.request({
+      const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
 
@@ -1307,6 +1307,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
+
+      const connectedAddress = (await signer.getAddress()).toLowerCase();
+      const expectedAddress = request.evm_address.toLowerCase();
+
+      if (connectedAddress !== expectedAddress) {
+        throw new Error(
+          `Wrong MetaMask account. Please switch MetaMask to ${request.evm_address} and try again.`
+        );
+      }
 
       const abi = [
         'function claim(bytes32 bridgeId, uint256 amount, uint256 deadline, bytes signature)'

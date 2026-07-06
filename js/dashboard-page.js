@@ -1293,17 +1293,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!window.ethereum) {
         throw new Error('MetaMask is not installed.');
       }
+      
+await window.ethereum.request({
+  method: 'eth_requestAccounts'
+});
 
-      const chain = BRIDGE_CHAINS[formatBridgeNetwork(request.network)];
+const targetChainId = ethers.toBeHex(Number(claim.chainId));
 
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts'
-      });
+console.log('Claim chainId:', claim.chainId);
+console.log('Switching MetaMask to:', targetChainId);
 
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: chain.chainId }]
-      });
+await window.ethereum.request({
+  method: 'wallet_switchEthereumChain',
+  params: [{ chainId: targetChainId }]
+});
+
+const actualChainId = await window.ethereum.request({
+  method: 'eth_chainId'
+});
+
+console.log('Actual MetaMask chain:', actualChainId);
+
+if (actualChainId.toLowerCase() !== targetChainId.toLowerCase()) {
+  throw new Error(
+    `MetaMask did not switch networks. Expected ${targetChainId}, got ${actualChainId}`
+  );
+}
 
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();

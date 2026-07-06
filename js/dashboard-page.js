@@ -1382,8 +1382,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         await checkActiveBridgeRequest(false);
-
         alert('wXCK claimed successfully.');
+
+        document.getElementById('send-bridge-amount').value = '';
+        document.getElementById('bridge-status-text').textContent = '';
+        setBridgeProgress('idle');
+        document.getElementById('bridge-claim').style.display = 'none';
+        await checkActiveBridgeRequest(false);
+        
+        if (typeof pollBalanceOnce === 'function') {
+          await pollBalanceOnce();
+        }
 
       } catch (err) {
         console.error('Claim error:', err);

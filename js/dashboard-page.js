@@ -1278,6 +1278,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
+
+
+
+  
     document.getElementById('bridge-claim').addEventListener('click', async () => {
     const claimButton = document.getElementById('bridge-claim');
 

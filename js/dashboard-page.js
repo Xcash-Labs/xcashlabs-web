@@ -1207,12 +1207,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           );
         }
 
-        console.log('Connected xck wallet:', walletKeys.address);
-        console.log('Connected evm wallet:', evmAddress);
-        console.log('Bridge network:', bridgeNetwork);
-        console.log('Bridge direction:', bridgeDirection);
-        console.log('Atomic amount:', atomicAmount.toString());
-
         const hasActiveRequest = await checkActiveBridgeRequest();
 
         if (hasActiveRequest) {
@@ -1234,7 +1228,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const text = await response.text();
-        console.log('Bridge server raw response:', text);
 
         let result;
         try {
@@ -1323,9 +1316,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const targetChainId = ethers.toQuantity(Number(claim.chainId));
 
-        console.log('claim.chainId =', claim.chainId, typeof claim.chainId);
-        console.log('Switching MetaMask to:', targetChainId);
-
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: targetChainId }]
@@ -1334,8 +1324,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const actualChainId = await window.ethereum.request({
           method: 'eth_chainId'
         });
-
-        console.log('Actual MetaMask chain:', actualChainId);
 
         if (actualChainId.toLowerCase() !== targetChainId.toLowerCase()) {
           throw new Error(
@@ -1365,22 +1353,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
-        console.log('Expected signed recipient:', claim.recipient);
-        console.log('Connected MetaMask address:', await signer.getAddress());
-        console.log('Claim contract:', claim.contractAddress);
-        console.log('Claim chainId:', claim.chainId);
-
-console.log('Claim fields being submitted:', {
-  bridgeId: claim.bridgeId,
-  recipient: claim.recipient,
-  connectedAddress,
-  amount: claim.amount,
-  deadline: claim.deadline,
-  contractAddress: claim.contractAddress,
-  chainId: claim.chainId,
-  signature: claim.signature
-});
-
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
@@ -1389,10 +1361,6 @@ console.log('Claim fields being submitted:', {
         );
 
         const receipt = await tx.wait();
-
-        console.log('Claim tx hash:', tx.hash);
-        console.log('Claim receipt hash:', receipt.hash);
-        console.log('Claim receipt status:', receipt.status);
 
         const completeResponse = await fetch(
           `https://bridge.xcashlabs.org/api/bridge/request/${request._id}/complete`,
@@ -1419,7 +1387,7 @@ console.log('Claim fields being submitted:', {
 
       } catch (err) {
         console.error('Claim error:', err);
-        alert(err.message || 'Claim failed.');
+        alert('Claim failed.');
       } finally {
         claimButton.disabled = false;
         claimButton.textContent = 'Claim wXCK';

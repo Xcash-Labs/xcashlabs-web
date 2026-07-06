@@ -1293,12 +1293,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!window.ethereum) {
         throw new Error('MetaMask is not installed.');
       }
-      
+
 await window.ethereum.request({
   method: 'eth_requestAccounts'
 });
 
-const targetChainId = ethers.toBeHex(Number(claim.chainId));
+const targetChainId = `0x${Number(claim.chainId).toString(16)}`;
 
 console.log('Claim chainId:', claim.chainId);
 console.log('Switching MetaMask to:', targetChainId);

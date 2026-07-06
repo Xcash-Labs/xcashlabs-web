@@ -1300,7 +1300,7 @@ await window.ethereum.request({
 
 const targetChainId = `0x${Number(claim.chainId).toString(16)}`;
 
-console.log('Claim chainId:', claim.chainId);
+console.log('claim.chainId =', claim.chainId, typeof claim.chainId);
 console.log('Switching MetaMask to:', targetChainId);
 
 await window.ethereum.request({

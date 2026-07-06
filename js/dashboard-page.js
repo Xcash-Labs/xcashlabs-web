@@ -1084,13 +1084,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert('The Base bridge is coming soon.');
 
 //    bridgeNetwork = 'Base';
-
 //    document.getElementById('bridge-base')
 //      .classList.add('bridge-network-selected');
-
 //    document.getElementById('bridge-polygon')
 //      .classList.remove('bridge-network-selected');
-
 //    updateBridgeDescription();
   });
 
@@ -1111,16 +1108,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateBridgeDescription();
 
   const BRIDGE_CHAINS = {
+ //   Polygon: {
+ //     chainId: '0x89', // 137
+ //     chainName: 'Polygon Mainnet',
+ //     nativeCurrency: {
+ //       name: 'POL',
+ //       symbol: 'POL',
+ //       decimals: 18
+ //     },
+ //     rpcUrls: ['https://polygon-rpc.com'],
+ //     blockExplorerUrls: ['https://polygonscan.com']
+ //   },
     Polygon: {
-      chainId: '0x89', // 137
-      chainName: 'Polygon Mainnet',
+      chainId: '0x13882', // 80002
+      chainName: 'Polygon Amoy',
       nativeCurrency: {
         name: 'POL',
         symbol: 'POL',
         decimals: 18
       },
-      rpcUrls: ['https://polygon-rpc.com'],
-      blockExplorerUrls: ['https://polygonscan.com']
+      rpcUrls: ['https://rpc-amoy.polygon.technology'],
+      blockExplorerUrls: ['https://amoy.polygonscan.com']
     },
 
     Base: {
@@ -1157,7 +1165,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Convert to atomic units (6 decimals)
     const atomicAmount = BigInt(Math.round(amount * 1_000_000));
 
     if (!window.ethereum) {
@@ -1172,18 +1179,39 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const chain = BRIDGE_CHAINS[bridgeNetwork];
 
+    if (!chain) {
+      alert(`Unsupported bridge network: ${bridgeNetwork}`);
+      return;
+    }
+
     try {
-      await window.ethereum.request({
+      const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
 
+      const evmAddress = accounts?.[0];
+
+      if (!evmAddress) {
+        throw new Error('No MetaMask account connected.');
+      }
+
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: ethers.toBeHex(Number(claim.chainId)) }]
+        params: [{ chainId: chain.chainId }]
       });
 
+      const actualChainId = await window.ethereum.request({
+        method: 'eth_chainId'
+      });
+
+      if (actualChainId.toLowerCase() !== chain.chainId.toLowerCase()) {
+        throw new Error(
+          `MetaMask did not switch networks. Expected ${chain.chainId}, got ${actualChainId}`
+        );
+      }
+
       console.log('Connected xck wallet:', walletKeys.address);
-      console.log('Connected evm wallet:', accounts[0]);
+      console.log('Connected evm wallet:', evmAddress);
       console.log('Bridge network:', bridgeNetwork);
       console.log('Bridge direction:', bridgeDirection);
       console.log('Atomic amount:', atomicAmount.toString());
@@ -1194,47 +1222,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
+      const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          xck_address: walletKeys.address,
+          evm_address: evmAddress,
+          network: bridgeNetwork,
+          direction: bridgeDirection,
+          amount_atomic: atomicAmount.toString()
+        })
+      });
+
+      const text = await response.text();
+      console.log('Bridge server raw response:', text);
+
+      let result;
       try {
-        const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            xck_address: walletKeys.address,
-            evm_address: accounts[0],
-            network: bridgeNetwork,
-            direction: bridgeDirection,
-            amount_atomic: atomicAmount.toString()
-          })
-        });
-
-        const text = await response.text();
-        console.log('Bridge server raw response:', text);
-
-        let result;
-        try {
-          result = JSON.parse(text);
-        } catch {
-          throw new Error('Bridge server did not return valid JSON.');
-        }
-
-        if (!response.ok) {
-          throw new Error(result.error || 'Bridge request failed.');
-        }
-
-        setBridgeProgress('request');
-        document.getElementById('bridge-status-text').textContent = statusText.request;
-
-        openSendModalForBridge({
-          bridgeId: result.bridge_id,
-          amountXck: amount.toString()
-        });
-
-      } catch (err) {
-        console.error('Bridge request error:', err);
-        alert(err.message || 'Bridge request failed.');
+        result = JSON.parse(text);
+      } catch {
+        throw new Error('Bridge server did not return valid JSON.');
       }
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Bridge request failed.');
+      }
+
+      setBridgeProgress('request');
+      document.getElementById('bridge-status-text').textContent = statusText.request;
+
+      openSendModalForBridge({
+        bridgeId: result.bridge_id,
+        amountXck: amount.toString()
+      });
 
     } catch (err) {
       if (err.code === 4902) {
@@ -1249,14 +1271,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       } else {
         console.error(err);
-        alert('MetaMask connection or network switch was cancelled.');
+        alert(err.message || 'MetaMask connection or network switch was cancelled.');
       }
     }
   }
 
   document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
-  document.getElementById('bridge-claim').addEventListener('click', async () => {
+    document.getElementById('bridge-claim').addEventListener('click', async () => {
     const claimButton = document.getElementById('bridge-claim');
 
     try {
@@ -1294,31 +1316,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         throw new Error('MetaMask is not installed.');
       }
 
-await window.ethereum.request({
-  method: 'eth_requestAccounts'
-});
+      await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
 
-const targetChainId = `0x${Number(claim.chainId).toString(16)}`;
+      const targetChainId = ethers.toQuantity(Number(claim.chainId));
 
-console.log('claim.chainId =', claim.chainId, typeof claim.chainId);
-console.log('Switching MetaMask to:', targetChainId);
+      console.log('claim.chainId =', claim.chainId, typeof claim.chainId);
+      console.log('Switching MetaMask to:', targetChainId);
 
-await window.ethereum.request({
-  method: 'wallet_switchEthereumChain',
-  params: [{ chainId: targetChainId }]
-});
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: targetChainId }]
+      });
 
-const actualChainId = await window.ethereum.request({
-  method: 'eth_chainId'
-});
+      const actualChainId = await window.ethereum.request({
+        method: 'eth_chainId'
+      });
 
-console.log('Actual MetaMask chain:', actualChainId);
+      console.log('Actual MetaMask chain:', actualChainId);
 
-if (actualChainId.toLowerCase() !== targetChainId.toLowerCase()) {
-  throw new Error(
-    `MetaMask did not switch networks. Expected ${targetChainId}, got ${actualChainId}`
-  );
-}
+      if (actualChainId.toLowerCase() !== targetChainId.toLowerCase()) {
+        throw new Error(
+          `MetaMask did not switch networks. Expected ${targetChainId}, got ${actualChainId}`
+        );
+      }
 
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();

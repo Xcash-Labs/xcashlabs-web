@@ -857,6 +857,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ─── BRIDGE MODAL ───
 
+    function updateBridgeProgressLabels() {
+      document.getElementById('step-claim').textContent =
+        bridgeDirection === 'XCK_TO_WXCK'
+          ? 'Claim wXCK'
+          : 'Send XCK';
+    }
+
     document.getElementById('bridge-refresh').addEventListener('click', async () => {
       const btn = document.getElementById('bridge-refresh');
 
@@ -994,6 +1001,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         bridgeDirection === 'XCK_TO_WXCK' ? '⟶' : '⟵';
 
       updateBridgeDescription();
+      updateBridgeProgressLabels();
       updateBridgeClaimSection(request);
     }
 
@@ -1086,6 +1094,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         .classList.remove('bridge-network-selected');
 
       updateBridgeDescription();
+      updateBridgeProgressLabels();
     });
 
     document.getElementById('bridge-base').addEventListener('click', () => {
@@ -1097,6 +1106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       //    document.getElementById('bridge-polygon')
       //      .classList.remove('bridge-network-selected');
       //    updateBridgeDescription();
+      //    updateBridgeProgressLabels();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
@@ -1111,6 +1121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       updateBridgeDescription();
+      updateBridgeProgressLabels();
     });
 
     updateBridgeDescription();

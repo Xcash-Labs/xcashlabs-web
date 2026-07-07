@@ -1440,15 +1440,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // jed    
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
-
       const chain = BRIDGE_CHAINS[bridgeNetwork];
 
-      if (!chain.contractAddress) {
+      if (!chain || !chain.contractAddress) {
         throw new Error(`Bridge contract is not configured for ${bridgeNetwork}.`);
       }
 
       const provider = new ethers.BrowserProvider(window.ethereum);
-      const contract = new ethers.Contract(chain.contractAddress, abi, signer);
       const signer = await provider.getSigner();
 
       const abi = [
@@ -1456,7 +1454,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       ];
 
       const contract = new ethers.Contract(
-        BRIDGE_CHAINS[bridgeNetwork].contractAddress,
+        chain.contractAddress,
         abi,
         signer
       );

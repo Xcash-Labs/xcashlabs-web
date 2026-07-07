@@ -1125,6 +1125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     updateBridgeDescription();
+    updateBridgeProgressLabels();
 
     const BRIDGE_CHAINS = {
       //   Polygon: {

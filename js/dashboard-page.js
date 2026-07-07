@@ -1038,7 +1038,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       return false;
     }
 
+    let bridgeNetwork = 'none';
+    let bridgeDirection = 'XCK_TO_WXCK';
+
     document.getElementById('btn-bridge').addEventListener('click', async () => {
+      bridgeNetwork = "none"
+      bridgeDirection = 'XCK_TO_WXCK';
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);
       document.getElementById('bridge-status-text').textContent = statusText.idle;
@@ -1065,9 +1070,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         sendBridgeAmountEl.value = bal;
       }
     });
-
-    let bridgeNetwork = 'none';
-    let bridgeDirection = 'XCK_TO_WXCK';
 
     function updateBridgeDescription() {
       const desc = document.getElementById('bridge-description');
@@ -1279,13 +1281,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             amountXck: amount.toString()
           });
         } else {
-          await burnWxckForBridge({
-            bridgeId: result.bridge_id,
-            amountAtomic: atomicAmount.toString(),
-            xckAddress: walletKeys.address
-          });
-        }
+          try {
+            await burnWxckForBridge({
+              bridgeId: result.bridge_id,
+              amountAtomic: atomicAmount.toString(),
+              xckAddress: walletKeys.address
+            });
+          } catch (burnErr) {
 
+            const endpoint =
+              burnErr.code === 4001
+                ? 'cancel'
+                : 'failed';
+
+            await fetch(
+              `https://bridge.xcashlabs.org/api/bridge/request/${result.bridge_id}/${endpoint}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  error: burnErr.message || 'wXCK burn failed'
+                })
+              }
+            );
+
+            throw burnErr;
+          }
+        }
       } catch (err) {
         if (err.code === 4902) {
           try {
@@ -1436,7 +1460,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         claimButton.textContent = 'Claim wXCK';
       }
     });
-
 
 // jed    
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {

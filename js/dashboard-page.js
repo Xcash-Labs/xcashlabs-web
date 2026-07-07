@@ -1165,6 +1165,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     async function connectMetaMaskForBridge() {
+
+      if (bridgeNetwork === 'none') {
+        alert('Please select Polygon or Base first.');
+        return;
+      }
+
       const amount = parseFloat(
         document.getElementById('send-bridge-amount').value.trim()
       );
@@ -1175,25 +1181,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      const available = parseFloat(
-        document.getElementById('send-bridge-available').textContent.replace(/,/g, '')
-      );
+      if (bridgeDirection === 'XCK_TO_WXCK') {
 
-      if (Number.isFinite(available) && amount > available) {
-        alert('The amount exceeds your available XCK balance.');
-        document.getElementById('send-bridge-amount').focus();
-        return;
+        const available = parseFloat(
+          document.getElementById('send-bridge-available').textContent.replace(/,/g, '')
+        );
+
+        if (Number.isFinite(available) && amount > available) {
+          alert('The amount exceeds your available XCK balance.');
+          document.getElementById('send-bridge-amount').focus();
+          return;
+        }
       }
 
       const atomicAmount = BigInt(Math.round(amount * 1_000_000));
 
       if (!window.ethereum) {
         alert('MetaMask is not installed. Please install MetaMask to use the bridge.');
-        return;
-      }
-
-      if (bridgeNetwork === 'none') {
-        alert('Please select Polygon or Base first.');
         return;
       }
 

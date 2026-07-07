@@ -871,7 +871,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    function setBridgeProgress(step) {
+    function setBridgeProgress(step, direction = bridgeDirection) {
+      const claimStepEl = document.getElementById('step-claim');
+
+      if (claimStepEl) {
+        claimStepEl.textContent =
+          direction === 'WXCK_TO_XCK'
+            ? 'Send XCK'
+            : 'Claim wXCK';
+      }
+
       const steps = [
         'step-request',
         'step-waiting',
@@ -888,6 +897,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         waiting: 35,
         confirmed: 60,
         ready_to_claim: 80,
+        sending: 80,
         complete: 100,
         failed: 100,
         cancelled: 0
@@ -899,6 +909,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         waiting: 1,
         confirmed: 2,
         ready_to_claim: 3,
+        sending: 3,
         complete: 4,
         failed: -1,
         cancelled: -1
@@ -953,7 +964,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function updateBridgeFromRequest(request) {
       // Progress bar
-      setBridgeProgress(request.status || 'idle');
+      setBridgeProgress(request.status || 'idle', request.direction);
       document.getElementById('bridge-status-text').textContent = statusText[request.status] || statusText.idle;
 
       // Restore amount (convert from atomic)
@@ -1268,10 +1279,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
-
-
-
-
     document.getElementById('bridge-claim').addEventListener('click', async () => {
       const claimButton = document.getElementById('bridge-claim');
 
@@ -1389,7 +1396,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setBridgeProgress('idle');
         document.getElementById('bridge-claim').style.display = 'none';
         await checkActiveBridgeRequest(false);
-        
+
         if (typeof pollBalanceOnce === 'function') {
           await pollBalanceOnce();
         }

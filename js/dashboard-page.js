@@ -1137,7 +1137,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       //       decimals: 18
       //     },
       //     rpcUrls: ['https://polygon-rpc.com'],
-      //     blockExplorerUrls: ['https://polygonscan.com']
+      //     blockExplorerUrls: ['https://polygonscan.com'],
+      //     contractAddress: '0x9bfba185C858CDbF61271D31CE187D41085b8933'
       //   },
       Polygon: {
         chainId: '0x13882', // 80002
@@ -1148,7 +1149,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           decimals: 18
         },
         rpcUrls: ['https://rpc-amoy.polygon.technology'],
-        blockExplorerUrls: ['https://amoy.polygonscan.com']
+        blockExplorerUrls: ['https://amoy.polygonscan.com'],
+        contractAddress: '0x1DFE62e4212530F45a4522d0d46068fEc7C401e7'
       },
 
       Base: {
@@ -1160,7 +1162,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           decimals: 18
         },
         rpcUrls: ['https://mainnet.base.org'],
-        blockExplorerUrls: ['https://basescan.org']
+        blockExplorerUrls: ['https://basescan.org'],
+        contractAddress: 'update-later'
       }
     };
 
@@ -1270,10 +1273,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         setBridgeProgress('request');
         document.getElementById('bridge-status-text').textContent = statusText.request;
 
-        openSendModalForBridge({
-          bridgeId: result.bridge_id,
-          amountXck: amount.toString()
-        });
+        if (bridgeDirection === 'XCK_TO_WXCK') {
+          openSendModalForBridge({
+            bridgeId: result.bridge_id,
+            amountXck: amount.toString()
+          });
+        } else {
+          await burnWxckForBridge({
+            bridgeId: result.bridge_id,
+            amountAtomic: atomicAmount.toString(),
+            xckAddress: walletKeys.address
+          });
+        }
 
       } catch (err) {
         if (err.code === 4902) {
@@ -1427,10 +1438,75 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
 
+// jed    
+    async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
+
+      const chain = BRIDGE_CHAINS[bridgeNetwork];
+
+      if (!chain.contractAddress) {
+        throw new Error(`Bridge contract is not configured for ${bridgeNetwork}.`);
+      }
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const contract = new ethers.Contract(chain.contractAddress, abi, signer);
+      const signer = await provider.getSigner();
+
+      const abi = [
+        "function bridgeBurn(bytes32 bridgeId, uint256 amount, string calldata xckAddress)"
+      ];
+
+      const contract = new ethers.Contract(
+        BRIDGE_CHAINS[bridgeNetwork].contractAddress,
+        abi,
+        signer
+      );
+
+      const bridgeIdBytes32 = ethers.keccak256(
+        ethers.toUtf8Bytes(String(bridgeId))
+      );
+
+      console.log("Bridge ID:", bridgeId);
+      console.log("Bridge ID (bytes32):", bridgeIdBytes32);
+      console.log("Amount:", amountAtomic);
+      console.log("XCK Address:", xckAddress);
+
+      const tx = await contract.bridgeBurn(
+        bridgeIdBytes32,
+        amountAtomic,
+        xckAddress
+      );
+
+      const receipt = await tx.wait();
+
+      console.log("Burn tx hash:", receipt.hash);
+
+      const response = await fetch(
+        `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/tx`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            tx_hash: receipt.hash,
+            xck_address: xckAddress
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Unable to submit burn transaction.");
+      }
+
+      return result;
+    }
 
 
 
 
+    
 
 
 

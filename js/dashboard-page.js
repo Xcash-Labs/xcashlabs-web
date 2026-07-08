@@ -1045,7 +1045,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       bridgeNetwork = 'none';
 
       document.querySelectorAll('.bridge-network-option').forEach((el) => {
-        el.classList.remove('is-selected', 'selected', 'active', 'has-background-success', 'has-text-white');
+        el.classList.remove('bridge-network-selected');
       });
     }
 

@@ -1049,6 +1049,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
 
+    function getBridgeAssetSymbol() {
+      return bridgeDirection === 'WXCK_TO_XCK' ? 'wXCK' : 'XCK';
+    }
+
+    function updateBridgeAmountUi() {
+      const symbol = getBridgeAssetSymbol();
+
+      const amountLabel = document.getElementById('send-bridge-amount-label');
+      const availableEl = document.getElementById('send-bridge-available');
+
+      if (amountLabel) {
+        amountLabel.textContent = `Amount (${symbol})`;
+      }
+
+      if (availableEl) {
+        if (bridgeDirection === 'WXCK_TO_XCK') {
+          availableEl.textContent = `${bridgeWxckBalanceFormatted || '0'} ${symbol}`;
+        } else {
+          const balText = document.getElementById('balance-xck')?.textContent || `0 ${symbol}`;
+          availableEl.textContent = balText;
+        }
+      }
+    }
+
+
+
+
+    // jed
+
+
+
     document.getElementById('btn-bridge').addEventListener('click', async () => {
       resetBridgeNetworkSelection();
       bridgeDirection = 'XCK_TO_WXCK';

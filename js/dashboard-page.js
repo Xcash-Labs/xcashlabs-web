@@ -1003,7 +1003,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeDescription();
       updateBridgeProgressLabels();
       updateBridgeClaimSection(request);
-      updateBridgeAmountSection();
     }
 
     async function checkActiveBridgeRequest(showAlert = true) {
@@ -1045,33 +1044,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     function resetBridgeNetworkSelection() {
       bridgeNetwork = 'none';
       document.getElementById('bridge-polygon') .classList.remove('bridge-network-selected');
-      document.getElementById('bridge-base') .classList.remove('bridge-network-selected');
-    }
-
-    function getBridgeAssetSymbol() {
-      return bridgeDirection === 'WXCK_TO_XCK' ? 'wXCK' : 'XCK';
-    }
-
-    function getBridgeAvailableAmount() {
-      if (bridgeDirection === 'WXCK_TO_XCK') {
-        return bridgeWxckBalanceFormatted || '0.0';
-      }
-
-      const balance = document.getElementById('balance-xck')?.textContent || '0 XCK';
-      return balance.replace(/\s*XCK$/i, '').trim();
-    }
-
-    function updateBridgeAmountSection() {
-      const availableEl = document.getElementById('send-bridge-available');
-
-      if (availableEl) {
-        availableEl.textContent =
-          `Available: ${getBridgeAvailableAmount()} ${getBridgeAssetSymbol()}`;
-      }
+      document.getElementById('bridge-base').classList.remove('bridge-network-selected');
     }
 
 
     // jed
+
+
 
     document.getElementById('btn-bridge').addEventListener('click', async () => {
       resetBridgeNetworkSelection();
@@ -1097,8 +1076,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Send max — fills amount with the current balance
     document.getElementById('send-bridge-max').addEventListener('click', () => {
-      document.getElementById('send-bridge-amount').value =
-        getBridgeAvailableAmount();
+      const bal = document.getElementById('balance-xck').textContent;
+      if (bal && bal !== '—') {
+        sendBridgeAmountEl.value = bal;
+      }
     });
 
     function updateBridgeDescription() {
@@ -1127,7 +1108,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       updateBridgeDescription();
       updateBridgeProgressLabels();
-      updateBridgeAmountSection();
     });
 
     document.getElementById('bridge-base').addEventListener('click', () => {
@@ -1140,7 +1120,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       //      .classList.remove('bridge-network-selected');
       //    updateBridgeDescription();
       //    updateBridgeProgressLabels();
-      //    updateBridgeAmountSection();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
@@ -1160,7 +1139,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     updateBridgeDescription();
     updateBridgeProgressLabels();
-    updateBridgeAmountSection();
 
     const BRIDGE_CHAINS = {
       //   Polygon: {

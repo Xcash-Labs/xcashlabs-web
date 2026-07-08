@@ -1003,6 +1003,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeDescription();
       updateBridgeProgressLabels();
       updateBridgeClaimSection(request);
+      updateBridgeAmountSection();
     }
 
     async function checkActiveBridgeRequest(showAlert = true) {
@@ -1033,6 +1034,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);
+      updateBridgeAmountSection();
       document.getElementById('bridge-start').disabled = false;
 
       return false;
@@ -1043,48 +1045,41 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function resetBridgeNetworkSelection() {
       bridgeNetwork = 'none';
-      document.getElementById('bridge-polygon')
-        .classList.remove('bridge-network-selected');
-      document.getElementById('bridge-base')
-        .classList.remove('bridge-network-selected');
+      document.getElementById('bridge-polygon') .classList.remove('bridge-network-selected');
+      document.getElementById('bridge-base') .classList.remove('bridge-network-selected');
     }
 
     function getBridgeAssetSymbol() {
       return bridgeDirection === 'WXCK_TO_XCK' ? 'wXCK' : 'XCK';
     }
 
-    function updateBridgeAmountUi() {
-      const symbol = getBridgeAssetSymbol();
-
-      const amountLabel = document.getElementById('send-bridge-amount-label');
-      const availableEl = document.getElementById('send-bridge-available');
-
-      if (amountLabel) {
-        amountLabel.textContent = `Amount (${symbol})`;
+    function getBridgeAvailableAmount() {
+      if (bridgeDirection === 'WXCK_TO_XCK') {
+        return bridgeWxckBalanceFormatted || '0.0';
       }
 
+      const balance = document.getElementById('balance-xck')?.textContent || '0 XCK';
+      return balance.replace(/\s*XCK$/i, '').trim();
+    }
+
+    function updateBridgeAmountSection() {
+      const availableEl = document.getElementById('send-bridge-available');
+
       if (availableEl) {
-        if (bridgeDirection === 'WXCK_TO_XCK') {
-          availableEl.textContent = `${bridgeWxckBalanceFormatted || '0'} ${symbol}`;
-        } else {
-          const balText = document.getElementById('balance-xck')?.textContent || `0 ${symbol}`;
-          availableEl.textContent = balText;
-        }
+        availableEl.textContent =
+          `Available: ${getBridgeAvailableAmount()} ${getBridgeAssetSymbol()}`;
       }
     }
 
 
-
-
     // jed
-
-
 
     document.getElementById('btn-bridge').addEventListener('click', async () => {
       resetBridgeNetworkSelection();
       bridgeDirection = 'XCK_TO_WXCK';
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);
+      updateBridgeAmountSection();
       document.getElementById('bridge-status-text').textContent = statusText.idle;
       document.getElementById('bridge-modal').classList.add('show');
       const balTextBr = document.getElementById('balance-xck').textContent;
@@ -1104,10 +1099,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Send max — fills amount with the current balance
     document.getElementById('send-bridge-max').addEventListener('click', () => {
-      const bal = document.getElementById('balance-xck').textContent;
-      if (bal && bal !== '—') {
-        sendBridgeAmountEl.value = bal;
-      }
+      document.getElementById('send-bridge-amount').value =
+        getBridgeAvailableAmount();
     });
 
     function updateBridgeDescription() {
@@ -1450,11 +1443,23 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
+        const feeData = await provider.getFeeData();
+        const overrides = {};
+
+        if (feeData.maxFeePerGas) {
+          overrides.maxFeePerGas = feeData.maxFeePerGas * 2n;
+        }
+
+        if (feeData.maxPriorityFeePerGas) {
+          overrides.maxPriorityFeePerGas = feeData.maxPriorityFeePerGas * 2n;
+        }
+
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
           BigInt(claim.deadline),
-          claim.signature
+          claim.signature,
+          overrides
         );
 
         const receipt = await tx.wait();
@@ -1525,15 +1530,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         ethers.toUtf8Bytes(String(bridgeId))
       );
 
-      console.log("Bridge ID:", bridgeId);
-      console.log("Bridge ID (bytes32):", bridgeIdBytes32);
-      console.log("Amount:", amountAtomic);
-      console.log("XCK Address:", xckAddress);
+      const feeData = await provider.getFeeData();
+      const overrides = {};
+
+      if (feeData.maxFeePerGas) {
+        overrides.maxFeePerGas = feeData.maxFeePerGas * 2n;
+      }
+
+      if (feeData.maxPriorityFeePerGas) {
+        overrides.maxPriorityFeePerGas = feeData.maxPriorityFeePerGas * 2n;
+      }
 
       const tx = await contract.bridgeBurn(
         bridgeIdBytes32,
         amountAtomic,
-        xckAddress
+        xckAddress,
+        overrides
       );
 
       const receipt = await tx.wait();

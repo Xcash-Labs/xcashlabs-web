@@ -1043,10 +1043,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function resetBridgeNetworkSelection() {
       bridgeNetwork = 'none';
-
-      document.querySelectorAll('.bridge-network-option').forEach((el) => {
-        el.classList.remove('bridge-network-selected');
-      });
+      document.getElementById('bridge-polygon')
+        .classList.remove('bridge-network-selected');
+      document.getElementById('bridge-base')
+        .classList.remove('bridge-network-selected');
     }
 
     function getBridgeAssetSymbol() {

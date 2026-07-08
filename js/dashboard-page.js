@@ -1041,8 +1041,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     let bridgeNetwork = 'none';
     let bridgeDirection = 'XCK_TO_WXCK';
 
+    function resetBridgeNetworkSelection() {
+      bridgeNetwork = 'none';
+
+      document.querySelectorAll('.bridge-network-option').forEach((el) => {
+        el.classList.remove('is-selected', 'selected', 'active', 'has-background-success', 'has-text-white');
+      });
+    }
+
     document.getElementById('btn-bridge').addEventListener('click', async () => {
-      bridgeNetwork = "none"
+      resetBridgeNetworkSelection();
       bridgeDirection = 'XCK_TO_WXCK';
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);

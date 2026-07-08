@@ -1034,7 +1034,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);
-      updateBridgeAmountSection();
       document.getElementById('bridge-start').disabled = false;
 
       return false;
@@ -1079,7 +1078,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       bridgeDirection = 'XCK_TO_WXCK';
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);
-      updateBridgeAmountSection();
       document.getElementById('bridge-status-text').textContent = statusText.idle;
       document.getElementById('bridge-modal').classList.add('show');
       const balTextBr = document.getElementById('balance-xck').textContent;
@@ -1129,6 +1127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       updateBridgeDescription();
       updateBridgeProgressLabels();
+      updateBridgeAmountSection();
     });
 
     document.getElementById('bridge-base').addEventListener('click', () => {
@@ -1141,6 +1140,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       //      .classList.remove('bridge-network-selected');
       //    updateBridgeDescription();
       //    updateBridgeProgressLabels();
+      //    updateBridgeAmountSection();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
@@ -1160,6 +1160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     updateBridgeDescription();
     updateBridgeProgressLabels();
+    updateBridgeAmountSection();
 
     const BRIDGE_CHAINS = {
       //   Polygon: {

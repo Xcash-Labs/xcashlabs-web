@@ -1000,6 +1000,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       arrow.textContent =
         bridgeDirection === 'XCK_TO_WXCK' ? '⟶' : '⟵';
 
+      balanceRow.hidden = bridgeDirection !== 'XCK_TO_WXCK'
       updateBridgeDescription();
       updateBridgeProgressLabels();
       updateBridgeClaimSection(request);

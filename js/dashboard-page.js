@@ -862,6 +862,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         bridgeDirection === 'XCK_TO_WXCK'
           ? 'Claim wXCK'
           : 'Send XCK';
+
+      const balanceRow = document.getElementById('balanceRow');
+      if (!balanceRow) return;
+      balanceRow.style.display =
+        bridgeDirection === 'XCK_TO_WXCK' ? 'flex' : 'none';
     }
 
     document.getElementById('bridge-refresh').addEventListener('click', async () => {
@@ -1000,10 +1005,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       arrow.textContent =
         bridgeDirection === 'XCK_TO_WXCK' ? '⟶' : '⟵';
 
-      balanceRow.hidden = bridgeDirection !== 'XCK_TO_WXCK'
       updateBridgeDescription();
       updateBridgeProgressLabels();
       updateBridgeClaimSection(request);
+      jed
     }
 
     async function checkActiveBridgeRequest(showAlert = true) {

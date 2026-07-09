@@ -868,7 +868,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         isXckToWxck ? 'Claim wXCK' : 'Send XCK';
       const displayXck = document.getElementById('display-xck');
       if (displayXck) {
-        displayXck.style.display = isXckToWxck ? 'block' : 'none';
+        displayXck.style.visibility = isXckToWxck ? 'visible' : 'hidden';
       }
     }
 

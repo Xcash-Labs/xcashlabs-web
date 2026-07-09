@@ -863,9 +863,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           ? 'Claim wXCK'
           : 'Send XCK';
 
+      document.getElementById('step-claim').textContent =
+        isXckToWxck ? 'Claim wXCK' : 'Send XCK';
       const displayXck = document.getElementById('display-xck');
       if (displayXck) {
-        displayXck.style.display = bridgeDirection ? 'block' : 'none';
+        displayXck.style.display = isXckToWxck ? 'block' : 'none';
       }
     }
 

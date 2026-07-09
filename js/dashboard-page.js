@@ -875,9 +875,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('bridge-refresh').addEventListener('click', async () => {
       const btn = document.getElementById('bridge-refresh');
 
+      document.getElementById('bridge-status-text').textContent = statusText.idle;
       btn.disabled = true;
       btn.textContent = 'Refreshing...';
-
       try {
         await checkActiveBridgeRequest(false);
       } finally {
@@ -1011,7 +1011,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeDescription();
       updateBridgeProgressLabels();
       updateBridgeClaimSection(request);
-      jed
     }
 
     async function checkActiveBridgeRequest(showAlert = true) {
@@ -1600,7 +1599,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       refreshSendReviewState();
-
       document.getElementById('bridge-modal').classList.remove('show');
       document.getElementById('send-modal').classList.add('show');
 

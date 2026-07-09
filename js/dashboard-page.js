@@ -1431,23 +1431,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
-        const feeData = await provider.getFeeData();
-        const overrides = {};
-
-        if (feeData.maxFeePerGas) {
-          overrides.maxFeePerGas = feeData.maxFeePerGas * 2n;
-        }
-
-        if (feeData.maxPriorityFeePerGas) {
-          overrides.maxPriorityFeePerGas = feeData.maxPriorityFeePerGas * 2n;
-        }
-
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
           BigInt(claim.deadline),
           claim.signature,
-          overrides
+          {
+            maxPriorityFeePerGas: 25_000_000_000n,
+            maxFeePerGas: 60_000_000_000n
+          }
         );
 
         const receipt = await tx.wait();
@@ -1518,22 +1510,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         ethers.toUtf8Bytes(String(bridgeId))
       );
 
-      const feeData = await provider.getFeeData();
-      const overrides = {};
-
-      if (feeData.maxFeePerGas) {
-        overrides.maxFeePerGas = feeData.maxFeePerGas * 2n;
-      }
-
-      if (feeData.maxPriorityFeePerGas) {
-        overrides.maxPriorityFeePerGas = feeData.maxPriorityFeePerGas * 2n;
-      }
-
       const tx = await contract.bridgeBurn(
         bridgeIdBytes32,
         amountAtomic,
         xckAddress,
-        overrides
+        {
+          maxPriorityFeePerGas: 25_000_000_000n,
+          maxFeePerGas: 60_000_000_000n
+        }
       );
 
       const receipt = await tx.wait();

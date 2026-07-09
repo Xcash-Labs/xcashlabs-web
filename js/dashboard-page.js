@@ -863,10 +863,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           ? 'Claim wXCK'
           : 'Send XCK';
 
-      const balanceRow = document.getElementById('balanceRow');
-      if (!balanceRow) return;
-      balanceRow.style.display =
-        bridgeDirection === 'XCK_TO_WXCK' ? 'flex' : 'none';
+      const displayXck = document.getElementById('display-xck');
+      if (displayXck) {
+        displayXck.style.display = isXckToWxck ? 'block' : 'none';
+      }
     }
 
     document.getElementById('bridge-refresh').addEventListener('click', async () => {

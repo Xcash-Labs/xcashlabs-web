@@ -857,17 +857,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ─── BRIDGE MODAL ───
 
-function updateBridgeProgressLabels() {
-  const isXckToWxck = bridgeDirection === 'XCK_TO_WXCK';
+    function updateBridgeProgressLabels() {
+      document.getElementById('step-claim').textContent =
+        bridgeDirection === 'XCK_TO_WXCK'
+          ? 'Claim wXCK'
+          : 'Send XCK';
 
-  document.getElementById('step-claim').textContent =
-    isXckToWxck ? 'Claim wXCK' : 'Send XCK';
-
-  const displayXck = document.getElementById('display-xck');
-  if (displayXck) {
-    displayXck.style.display = isXckToWxck ? 'block' : 'none';
-  }
-}
+      const isXckToWxck = bridgeDirection === 'XCK_TO_WXCK';
+      document.getElementById('step-claim').textContent =
+        isXckToWxck ? 'Claim wXCK' : 'Send XCK';
+      const displayXck = document.getElementById('display-xck');
+      if (displayXck) {
+        displayXck.style.display = isXckToWxck ? 'block' : 'none';
+      }
+    }
 
     document.getElementById('bridge-refresh').addEventListener('click', async () => {
       const btn = document.getElementById('bridge-refresh');

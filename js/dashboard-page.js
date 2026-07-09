@@ -865,7 +865,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const displayXck = document.getElementById('display-xck');
       if (displayXck) {
-        displayXck.style.display = isXckToWxck ? 'block' : 'none';
+        displayXck.style.display = bridgeDirection ? 'block' : 'none';
       }
     }
 

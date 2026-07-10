@@ -1477,7 +1477,13 @@ console.log('Claim transaction submitted:', tx.hash);
 
       } catch (err) {
         console.error('Claim error:', err);
-        alert('Claim failed.');
+        const message =
+          err?.shortMessage ||
+          err?.reason ||
+          err?.message ||
+          'Claim failed.';
+
+        alert(message);
       } finally {
         claimButton.disabled = false;
         claimButton.textContent = 'Claim wXCK';

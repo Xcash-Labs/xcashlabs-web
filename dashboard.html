@@ -221,20 +221,32 @@
 
       <div class="modal-body">
 
-      <button class="btn-outline" id="bridge-polygon">
-        Bridge XCK on Polygon
-      </button>
+<div class="bridge-network-options">
+  <button
+    type="button"
+    class="btn-outline bridge-network-btn"
+    id="bridge-polygon"
+    data-network="Polygon"
+  >
+    Bridge XCK on Polygon
+  </button>
 
-      <button class="btn-outline" id="bridge-base">
-        Bridge XCK on Base
-      </button>
+  <button
+    type="button"
+    class="btn-outline bridge-network-btn"
+    id="bridge-base"
+    data-network="Base"
+  >
+    Bridge XCK on Base
+  </button>
+</div>
 
       <div class="bridge-direction">
         <span>XCK</span>
         <button id="bridge-direction-toggle">
           <span id="bridge-arrow">→</span>
         </button>
-        <span>WXCK</span>
+        <span>wXCK</span>
       </div>
 
       <div id="bridge-description" class="bridge-description">
@@ -266,7 +278,6 @@
           Make sure you are using the correct network before bridging
         </div>
       </div>
-
 
       <div class="bridge-status">
         <div class="bridge-status-header">

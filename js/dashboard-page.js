@@ -1096,7 +1096,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (bridgeDirection === 'XCK_TO_WXCK') {
         desc.textContent = `Wrap XCK to ${bridgeNetwork}`;
       } else {
-        desc.textContent = `Unwrap WXCK from ${bridgeNetwork}`;
+        desc.textContent = `Unwrap wXCK from ${bridgeNetwork}`;
       }
     }
 

@@ -1051,7 +1051,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function resetBridgeNetworkSelection() {
       bridgeNetwork = 'none';
-      document.getElementById('bridge-polygon') .classList.remove('bridge-network-selected');
+      document.getElementById('bridge-polygon').classList.remove('bridge-network-selected');
       document.getElementById('bridge-base').classList.remove('bridge-network-selected');
     }
 
@@ -1101,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     document.getElementById('bridge-polygon').addEventListener('click', () => {
-      bridgeNetwork = 'Polygon';
+      bridgeNetwork = 'polygon';
       document.getElementById('bridge-polygon')
         .classList.add('bridge-network-selected');
       document.getElementById('bridge-base')
@@ -1110,14 +1110,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeProgressLabels();
     });
 
-    document.getElementById('bridge-base').addEventListener('click', () => {;
-          bridgeNetwork = 'Base';
-          document.getElementById('bridge-base')
-            .classList.add('bridge-network-selected');
-          document.getElementById('bridge-polygon')
-            .classList.remove('bridge-network-selected');
-          updateBridgeDescription();
-          updateBridgeProgressLabels();
+    document.getElementById('bridge-base').addEventListener('click', () => {
+      bridgeNetwork = 'base';
+      document.getElementById('bridge-base')
+        .classList.add('bridge-network-selected');
+      document.getElementById('bridge-polygon')
+        .classList.remove('bridge-network-selected');
+      updateBridgeDescription();
+      updateBridgeProgressLabels();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
@@ -1139,18 +1139,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeProgressLabels();
 
     const BRIDGE_CHAINS = {
-      //   Polygon: {
-      //     chainId: '0x89', // 137
-      //     chainName: 'Polygon Mainnet',
-      //     nativeCurrency: {
-      //       name: 'POL',
-      //       symbol: 'POL',
-      //       decimals: 18
-      //     },
-      //     rpcUrls: ['https://polygon-rpc.com'],
-      //     blockExplorerUrls: ['https://polygonscan.com'],
-      //     contractAddress: '0x9bfba185C858CDbF61271D31CE187D41085b8933'
-      //   },
       Polygon: {
         chainId: '0x13882', // 80002
         chainName: 'Polygon Amoy',
@@ -1173,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           decimals: 18
         },
         rpcUrls: ['https://sepolia.base.org'],
-        blockExplorerUrls: ['https://basescan.org'],
+        blockExplorerUrls: ['https://sepolia-explorer.base.org'],
         contractAddress: '0x30EC1031D9f42656e52514E61f4e34e51a2Ac886'
       }
     };
@@ -1287,7 +1275,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (bridgeDirection === 'XCK_TO_WXCK') {
           openSendModalForBridge({
             bridgeId: result.bridge_id,
-            amountXck: amount.toString()
+            amountXck: amount.toString(),
+            network: bridgeNetwork
           });
         } else {
           try {
@@ -1326,14 +1315,28 @@ document.addEventListener('DOMContentLoaded', async () => {
               method: 'wallet_addEthereumChain',
               params: [chain]
             });
+
+            return await connectMetaMaskForBridge();
           } catch (addErr) {
-            console.error(addErr);
-            alert(`Could not add ${bridgeNetwork} to MetaMask.`);
+            console.error('Failed to add network:', addErr);
+
+            alert(
+              addErr?.message ||
+              `Could not add ${bridgeNetwork} to MetaMask.`
+            );
           }
-        } else {
-          console.error(err);
-          alert(err.message || 'MetaMask connection or network switch was cancelled.');
+
+          return;
         }
+
+        console.error('Bridge start error:', err);
+
+        alert(
+          err?.shortMessage ||
+          err?.reason ||
+          err?.message ||
+          'MetaMask connection or network switch was cancelled.'
+        );
       }
     }
 
@@ -1420,13 +1423,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
-console.log('Claim data:', claim);
-console.log('Target chain ID:', targetChainId);
-console.log('Actual chain ID:', actualChainId);
-console.log('Connected address:', connectedAddress);
-console.log('Expected address:', expectedAddress);
-console.log('Contract address:', claim.contractAddress);
-console.log('About to submit claim transaction');
+        console.log('Claim data:', claim);
+        console.log('Target chain ID:', targetChainId);
+        console.log('Actual chain ID:', actualChainId);
+        console.log('Connected address:', connectedAddress);
+        console.log('Expected address:', expectedAddress);
+        console.log('Contract address:', claim.contractAddress);
+        console.log('About to submit claim transaction');
 
         const tx = await contract.claim(
           claim.bridgeId,
@@ -1439,7 +1442,7 @@ console.log('About to submit claim transaction');
           }
         );
 
-console.log('Claim transaction submitted:', tx.hash);
+        console.log('Claim transaction submitted:', tx.hash);
 
         const receipt = await tx.wait();
 
@@ -1490,7 +1493,7 @@ console.log('Claim transaction submitted:', tx.hash);
       }
     });
 
-// jed    
+    // jed    
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
       const chain = BRIDGE_CHAINS[bridgeNetwork];
 
@@ -1555,7 +1558,7 @@ console.log('Claim transaction submitted:', tx.hash);
 
 
 
-    
+
 
 
 
@@ -1569,7 +1572,12 @@ console.log('Claim transaction submitted:', tx.hash);
 
     // Bridge send state
     let bridgeSendContext = null;
-    const BRIDGE_XCK_DEPOSIT_ADDRESS = 'XCK1QnoyBeAVBuXHYJB1rcYj8EPjadaB45iTPP6ypK6r1VHjXjrnt4zRCcDf6X1PwD4EBz9b9PzJq3dKJfLiHJBD6aNNzaMCQQ';
+    const BRIDGE_XCK_DEPOSIT_ADDRESSES = {
+      Polygon:
+        'XCK1QnoyBeAVBuXHYJB1rcYj8EPjadaB45iTPP6ypK6r1VHjXjrnt4zRCcDf6X1PwD4EBz9b9PzJq3dKJfLiHJBD6aNNzaMCQQ',
+      Base:
+        'XCK1fL5wznJNTPQm9VYfQ1MyM6woYuw39Ce7WScmLddaHLPfxGwjBNiBTELmFA4GzbYFrZQoRtaXLa21gjmq1ANH53kr7Nf5wC'
+    };
 
     function sendShowStep(step) {
       ['form', 'confirm', 'result'].forEach(s => {
@@ -1590,12 +1598,28 @@ console.log('Claim transaction submitted:', tx.hash);
       sendShowStep('form');
     }
 
-    function openSendModalForBridge({ bridgeId, amountXck }) {
-      bridgeSendContext = { bridgeId };
+    function openSendModalForBridge({
+      bridgeId,
+      amountXck,
+      network
+    }) {
+      const depositAddress =
+        BRIDGE_XCK_DEPOSIT_ADDRESSES[network];
+
+      if (!depositAddress) {
+        throw new Error(
+          `No XCK bridge deposit address configured for ${network}.`
+        );
+      }
+
+      bridgeSendContext = {
+        bridgeId,
+        network
+      };
 
       sendResetForm();
 
-      sendToEl.value = BRIDGE_XCK_DEPOSIT_ADDRESS;
+      sendToEl.value = depositAddress;
       sendAmountEl.value = amountXck;
 
       sendPrivacy = 'private';

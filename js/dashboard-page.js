@@ -857,15 +857,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ─── BRIDGE MODAL ───
 
-    function normalizeBridgeNetwork(network) {
-      const value = String(network || '').toLowerCase();
-
-      if (value === 'polygon') return 'Polygon';
-      if (value === 'base') return 'Base';
-
-      return 'none';
-    }
-
     function updateBridgeProgressLabels() {
       document.getElementById('step-claim').textContent =
         bridgeDirection === 'XCK_TO_WXCK'
@@ -996,18 +987,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         (Number(request.amount_atomic) / 1_000_000).toFixed(6).replace(/\.?0+$/, '');
 
       // Restore selected network
-      bridgeNetwork = normalizeBridgeNetwork(request.network);
+      bridgeNetwork = request.network;
 
       document.getElementById('bridge-polygon')
         .classList.toggle(
           'bridge-network-selected',
-          request.network.toLowerCase() === 'Polygon'
+          request.network.toLowerCase() === 'polygon'
         );
 
       document.getElementById('bridge-base')
         .classList.toggle(
           'bridge-network-selected',
-          request.network.toLowerCase() === 'Base'
+          request.network.toLowerCase() === 'base'
         );
 
       // Restore direction
@@ -1169,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           decimals: 18
         },
         rpcUrls: ['https://sepolia.base.org'],
-        blockExplorerUrls: ['https://sepolia.basescan.org'],
+        blockExplorerUrls: ['https://basescan.org'],
         contractAddress: '0x30EC1031D9f42656e52514E61f4e34e51a2Ac886'
       }
     };

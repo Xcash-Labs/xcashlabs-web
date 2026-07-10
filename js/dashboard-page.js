@@ -1420,19 +1420,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
-
-
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
           BigInt(claim.deadline),
-          claim.signature,S
+          claim.signature,
           {
             maxPriorityFeePerGas: 25_000_000_000n,
             maxFeePerGas: 60_000_000_000n
           }
         );
-
 
         const receipt = await tx.wait();
 

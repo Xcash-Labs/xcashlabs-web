@@ -855,27 +855,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('bridge-history-modal').classList.remove('show');
     });
 
-    function updateBridgeWalletStatus(account = null, network = null) {
-      const status = document.getElementById('bridge-wallet-status');
-
-      if (!status) {
-        return;
-      }
-
-      if (!account || !network) {
-        status.style.display = 'none';
-        status.textContent = '';
-        return;
-      }
-
-      status.style.display = 'block';
-
-      status.innerHTML =
-        `<strong>Connected Wallet</strong><br>` +
-        `${account}<br>` +
-        `<strong>Network</strong>: ${network}`;
-    }
-
     // ─── BRIDGE MODAL ───
 
     function updateBridgeProgressLabels() {

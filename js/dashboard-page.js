@@ -1139,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeProgressLabels();
 
     const BRIDGE_CHAINS = {
-      Polygon: {
+      polygon: {
         chainId: '0x13882', // 80002
         chainName: 'Polygon Amoy',
         nativeCurrency: {
@@ -1152,7 +1152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         contractAddress: '0x1DFE62e4212530F45a4522d0d46068fEc7C401e7'
       },
 
-      Base: {
+      base: {
         chainId: '0x14A34', // 84532
         chainName: 'Base Sepolia Testnet',
         nativeCurrency: {
@@ -1573,9 +1573,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Bridge send state
     let bridgeSendContext = null;
     const BRIDGE_XCK_DEPOSIT_ADDRESSES = {
-      Polygon:
+      polygon:
         'XCK1QnoyBeAVBuXHYJB1rcYj8EPjadaB45iTPP6ypK6r1VHjXjrnt4zRCcDf6X1PwD4EBz9b9PzJq3dKJfLiHJBD6aNNzaMCQQ',
-      Base:
+      base:
         'XCK1fL5wznJNTPQm9VYfQ1MyM6woYuw39Ce7WScmLddaHLPfxGwjBNiBTELmFA4GzbYFrZQoRtaXLa21gjmq1ANH53kr7Nf5wC'
     };
 

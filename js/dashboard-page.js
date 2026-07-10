@@ -1420,6 +1420,14 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
+console.log('Claim data:', claim);
+console.log('Target chain ID:', targetChainId);
+console.log('Actual chain ID:', actualChainId);
+console.log('Connected address:', connectedAddress);
+console.log('Expected address:', expectedAddress);
+console.log('Contract address:', claim.contractAddress);
+console.log('About to submit claim transaction');
+
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
@@ -1430,6 +1438,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             maxFeePerGas: 60_000_000_000n
           }
         );
+
+console.log('Claim transaction submitted:', tx.hash);
 
         const receipt = await tx.wait();
 

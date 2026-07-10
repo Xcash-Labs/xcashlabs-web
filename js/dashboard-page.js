@@ -1139,6 +1139,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeProgressLabels();
 
     const BRIDGE_CHAINS = {
+      //   Polygon: {
+      //     chainId: '0x89', // 137
+      //     chainName: 'Polygon Mainnet',
+      //     nativeCurrency: {
+      //       name: 'POL',
+      //       symbol: 'POL',
+      //       decimals: 18
+      //     },
+      //     rpcUrls: ['https://polygon-rpc.com'],
+      //     blockExplorerUrls: ['https://polygonscan.com'],
+      //     contractAddress: '0x9bfba185C858CDbF61271D31CE187D41085b8933'
+      //   },
       Polygon: {
         chainId: '0x13882', // 80002
         chainName: 'Polygon Amoy',
@@ -1151,6 +1163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         blockExplorerUrls: ['https://amoy.polygonscan.com'],
         contractAddress: '0x1DFE62e4212530F45a4522d0d46068fEc7C401e7'
       },
+
       Base: {
         chainId: '0x14A34', // 84532
         chainName: 'Base Sepolia Testnet',
@@ -1407,16 +1420,26 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
+console.log('Claim data:', claim);
+console.log('Target chain ID:', targetChainId);
+console.log('Actual chain ID:', actualChainId);
+console.log('Connected address:', connectedAddress);
+console.log('Expected address:', expectedAddress);
+console.log('Contract address:', claim.contractAddress);
+console.log('About to submit claim transaction');
+
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
           BigInt(claim.deadline),
-          claim.signature,
+          claim.signature,S
           {
             maxPriorityFeePerGas: 25_000_000_000n,
             maxFeePerGas: 60_000_000_000n
           }
         );
+
+console.log('Claim transaction submitted:', tx.hash);
 
         const receipt = await tx.wait();
 

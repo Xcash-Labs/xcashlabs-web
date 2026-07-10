@@ -1055,11 +1055,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('bridge-base').classList.remove('bridge-network-selected');
     }
 
-
-    // jed
-
-
-
     document.getElementById('btn-bridge').addEventListener('click', async () => {
       resetBridgeNetworkSelection();
       bridgeDirection = 'XCK_TO_WXCK';
@@ -1107,27 +1102,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('bridge-polygon').addEventListener('click', () => {
       bridgeNetwork = 'Polygon';
-
       document.getElementById('bridge-polygon')
         .classList.add('bridge-network-selected');
-
       document.getElementById('bridge-base')
         .classList.remove('bridge-network-selected');
-
       updateBridgeDescription();
       updateBridgeProgressLabels();
     });
 
-    document.getElementById('bridge-base').addEventListener('click', () => {
-      alert('The Base bridge is coming soon.');
-
-      //    bridgeNetwork = 'Base';
-      //    document.getElementById('bridge-base')
-      //      .classList.add('bridge-network-selected');
-      //    document.getElementById('bridge-polygon')
-      //      .classList.remove('bridge-network-selected');
-      //    updateBridgeDescription();
-      //    updateBridgeProgressLabels();
+    document.getElementById('bridge-base').addEventListener('click', () => {;
+          bridgeNetwork = 'Base';
+          document.getElementById('bridge-base')
+            .classList.add('bridge-network-selected');
+          document.getElementById('bridge-polygon')
+            .classList.remove('bridge-network-selected');
+          updateBridgeDescription();
+          updateBridgeProgressLabels();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {

@@ -857,6 +857,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ─── BRIDGE MODAL ───
 
+    function normalizeBridgeNetwork(network) {
+      const value = String(network || '').toLowerCase();
+
+      if (value === 'polygon') return 'Polygon';
+      if (value === 'base') return 'Base';
+
+      return 'none';
+    }
+
     function updateBridgeProgressLabels() {
       document.getElementById('step-claim').textContent =
         bridgeDirection === 'XCK_TO_WXCK'
@@ -987,18 +996,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         (Number(request.amount_atomic) / 1_000_000).toFixed(6).replace(/\.?0+$/, '');
 
       // Restore selected network
-      bridgeNetwork = request.network;
+      bridgeNetwork = normalizeBridgeNetwork(request.network);
 
       document.getElementById('bridge-polygon')
         .classList.toggle(
           'bridge-network-selected',
-          request.network.toLowerCase() === 'polygon'
+          request.network.toLowerCase() === 'Polygon'
         );
 
       document.getElementById('bridge-base')
         .classList.toggle(
           'bridge-network-selected',
-          request.network.toLowerCase() === 'base'
+          request.network.toLowerCase() === 'Base'
         );
 
       // Restore direction
@@ -1051,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function resetBridgeNetworkSelection() {
       bridgeNetwork = 'none';
-      document.getElementById('bridge-polygon') .classList.remove('bridge-network-selected');
+      document.getElementById('bridge-polygon').classList.remove('bridge-network-selected');
       document.getElementById('bridge-base').classList.remove('bridge-network-selected');
     }
 
@@ -1110,14 +1119,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeProgressLabels();
     });
 
-    document.getElementById('bridge-base').addEventListener('click', () => {;
-          bridgeNetwork = 'Base';
-          document.getElementById('bridge-base')
-            .classList.add('bridge-network-selected');
-          document.getElementById('bridge-polygon')
-            .classList.remove('bridge-network-selected');
-          updateBridgeDescription();
-          updateBridgeProgressLabels();
+    document.getElementById('bridge-base').addEventListener('click', () => {
+      bridgeNetwork = 'Base';
+      document.getElementById('bridge-base')
+        .classList.add('bridge-network-selected');
+      document.getElementById('bridge-polygon')
+        .classList.remove('bridge-network-selected');
+      updateBridgeDescription();
+      updateBridgeProgressLabels();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
@@ -1139,18 +1148,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeProgressLabels();
 
     const BRIDGE_CHAINS = {
-      //   Polygon: {
-      //     chainId: '0x89', // 137
-      //     chainName: 'Polygon Mainnet',
-      //     nativeCurrency: {
-      //       name: 'POL',
-      //       symbol: 'POL',
-      //       decimals: 18
-      //     },
-      //     rpcUrls: ['https://polygon-rpc.com'],
-      //     blockExplorerUrls: ['https://polygonscan.com'],
-      //     contractAddress: '0x9bfba185C858CDbF61271D31CE187D41085b8933'
-      //   },
       Polygon: {
         chainId: '0x13882', // 80002
         chainName: 'Polygon Amoy',
@@ -1163,18 +1160,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         blockExplorerUrls: ['https://amoy.polygonscan.com'],
         contractAddress: '0x1DFE62e4212530F45a4522d0d46068fEc7C401e7'
       },
-
       Base: {
-        chainId: '0x2105', // 8453
-        chainName: 'Base',
+        chainId: '0x14A34', // 84532
+        chainName: 'Base Sepolia Testnet',
         nativeCurrency: {
           name: 'Ether',
           symbol: 'ETH',
           decimals: 18
         },
-        rpcUrls: ['https://mainnet.base.org'],
-        blockExplorerUrls: ['https://basescan.org'],
-        contractAddress: 'update-later'
+        rpcUrls: ['https://sepolia.base.org'],
+        blockExplorerUrls: ['https://sepolia.basescan.org'],
+        contractAddress: '0x30EC1031D9f42656e52514E61f4e34e51a2Ac886'
       }
     };
 
@@ -1324,15 +1320,46 @@ document.addEventListener('DOMContentLoaded', async () => {
           try {
             await window.ethereum.request({
               method: 'wallet_addEthereumChain',
-              params: [chain]
+              params: [{
+                chainId: chain.chainId,
+                chainName: chain.chainName,
+                nativeCurrency: chain.nativeCurrency,
+                rpcUrls: chain.rpcUrls,
+                blockExplorerUrls: chain.blockExplorerUrls
+              }]
             });
+
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{
+                chainId: chain.chainId
+              }]
+            });
+
+            // Restart the bridge flow now that the network exists.
+            await connectMetaMaskForBridge();
+
           } catch (addErr) {
-            console.error(addErr);
-            alert(`Could not add ${bridgeNetwork} to MetaMask.`);
+            console.error('Could not add or switch network:', addErr);
+
+            alert(
+              addErr.message ||
+              `Could not add ${chain.chainName} to MetaMask.`
+            );
           }
+
+          return;
+        }
+
+        console.error('Bridge error:', err);
+
+        if (err.code === 4001) {
+          alert('The MetaMask request was cancelled.');
         } else {
-          console.error(err);
-          alert(err.message || 'MetaMask connection or network switch was cancelled.');
+          alert(
+            err.message ||
+            'MetaMask connection or network switch failed.'
+          );
         }
       }
     }
@@ -1425,10 +1452,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           BigInt(claim.amount),
           BigInt(claim.deadline),
           claim.signature,
-          {
-            maxPriorityFeePerGas: 25_000_000_000n,
-            maxFeePerGas: 60_000_000_000n
-          }
         );
 
         const receipt = await tx.wait();
@@ -1474,7 +1497,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-// jed    
+    // jed    
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
       const chain = BRIDGE_CHAINS[bridgeNetwork];
 
@@ -1502,11 +1525,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tx = await contract.bridgeBurn(
         bridgeIdBytes32,
         amountAtomic,
-        xckAddress,
-        {
-          maxPriorityFeePerGas: 25_000_000_000n,
-          maxFeePerGas: 60_000_000_000n
-        }
+        xckAddress
       );
 
       const receipt = await tx.wait();
@@ -1516,12 +1535,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       const response = await fetch(
         `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/tx`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            tx_hash: receipt.hash,
+            evm_tx_hash: receipt.hash,
             xck_address: xckAddress
           })
         }
@@ -1535,14 +1554,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       return result;
     }
-
-
-
-
-    
-
-
-
 
     // ─── SEND MODAL ───
     // Multi-step: form → confirm → result. All three steps live inside

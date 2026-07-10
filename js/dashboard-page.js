@@ -1139,6 +1139,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateBridgeProgressLabels();
 
     const BRIDGE_CHAINS = {
+      //   Polygon: {
+      //     chainId: '0x89', // 137
+      //     chainName: 'Polygon Mainnet',
+      //     nativeCurrency: {
+      //       name: 'POL',
+      //       symbol: 'POL',
+      //       decimals: 18
+      //     },
+      //     rpcUrls: ['https://polygon-rpc.com'],
+      //     blockExplorerUrls: ['https://polygonscan.com'],
+      //     contractAddress: '0x9bfba185C858CDbF61271D31CE187D41085b8933'
+      //   },
       Polygon: {
         chainId: '0x13882', // 80002
         chainName: 'Polygon Amoy',

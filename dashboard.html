@@ -221,52 +221,29 @@
 
       <div class="modal-body">
 
-<div class="bridge-network-options">
-  <button
-    type="button"
-    class="btn-outline bridge-network-btn"
-    id="bridge-polygon"
-    data-network="Polygon"
-  >
-    Bridge XCK on Polygon
-  </button>
+      <button class="btn-outline" id="bridge-polygon">
+        Bridge XCK on Polygon
+      </button>
 
-  <button
-    type="button"
-    class="btn-outline bridge-network-btn"
-    id="bridge-base"
-    data-network="Base"
-  >
-    Bridge XCK on Base
-  </button>
-</div>
+      <button class="btn-outline" id="bridge-base">
+        Bridge XCK on Base
+      </button>
 
       <div class="bridge-direction">
         <span>XCK</span>
         <button id="bridge-direction-toggle">
           <span id="bridge-arrow">→</span>
         </button>
-        <span>wXCK</span>
+        <span>WXCK</span>
       </div>
 
       <div id="bridge-description" class="bridge-description">
         Select Polygon or Base to continue
       </div>
 
-      <div id="bridge-selected-network" style="display:none;font-size:.7rem;color:var(--text-dim);text-align:center;margin-top:6px"></div>
       <div style="margin-bottom:14px" class="mt-16">
         <label style="display:block;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Amount</label>
-<input
-  id="send-bridge-amount"
-  type="text"
-  inputmode="decimal"
-  pattern="^\d+([.,]\d{0,6})?$"
-  placeholder="0.0"
-  autocomplete="off"
-  aria-describedby="bridge-amount-hint"
-  style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.95rem;outline:none"
->
-
+        <input id="send-bridge-amount" type="text" inputmode="decimal" placeholder="0.0" autocomplete="off" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.95rem;outline:none">
         <div id="display-xck">
           <div style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--text-dim);margin-top:6px">
             <span>Available: <span id="send-bridge-available">—</span> XCK</span>
@@ -289,6 +266,7 @@
           Make sure you are using the correct network before bridging
         </div>
       </div>
+
 
       <div class="bridge-status">
         <div class="bridge-status-header">

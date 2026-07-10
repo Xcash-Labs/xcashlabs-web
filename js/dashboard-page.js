@@ -1060,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function resetBridgeNetworkSelection() {
       bridgeNetwork = 'none';
-      document.getElementById('bridge-polygon').classList.remove('bridge-network-selected');
+      document.getElementById('bridge-polygon') .classList.remove('bridge-network-selected');
       document.getElementById('bridge-base').classList.remove('bridge-network-selected');
     }
 
@@ -1119,14 +1119,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeProgressLabels();
     });
 
-    document.getElementById('bridge-base').addEventListener('click', () => {
-      bridgeNetwork = 'Base';
-      document.getElementById('bridge-base')
-        .classList.add('bridge-network-selected');
-      document.getElementById('bridge-polygon')
-        .classList.remove('bridge-network-selected');
-      updateBridgeDescription();
-      updateBridgeProgressLabels();
+    document.getElementById('bridge-base').addEventListener('click', () => {;
+          bridgeNetwork = 'Base';
+          document.getElementById('bridge-base')
+            .classList.add('bridge-network-selected');
+          document.getElementById('bridge-polygon')
+            .classList.remove('bridge-network-selected');
+          updateBridgeDescription();
+          updateBridgeProgressLabels();
     });
 
     document.getElementById('bridge-direction-toggle').addEventListener('click', () => {
@@ -1320,46 +1320,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           try {
             await window.ethereum.request({
               method: 'wallet_addEthereumChain',
-              params: [{
-                chainId: chain.chainId,
-                chainName: chain.chainName,
-                nativeCurrency: chain.nativeCurrency,
-                rpcUrls: chain.rpcUrls,
-                blockExplorerUrls: chain.blockExplorerUrls
-              }]
+              params: [chain]
             });
-
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{
-                chainId: chain.chainId
-              }]
-            });
-
-            // Restart the bridge flow now that the network exists.
-            await connectMetaMaskForBridge();
-
           } catch (addErr) {
-            console.error('Could not add or switch network:', addErr);
-
-            alert(
-              addErr.message ||
-              `Could not add ${chain.chainName} to MetaMask.`
-            );
+            console.error(addErr);
+            alert(`Could not add ${bridgeNetwork} to MetaMask.`);
           }
-
-          return;
-        }
-
-        console.error('Bridge error:', err);
-
-        if (err.code === 4001) {
-          alert('The MetaMask request was cancelled.');
         } else {
-          alert(
-            err.message ||
-            'MetaMask connection or network switch failed.'
-          );
+          console.error(err);
+          alert(err.message || 'MetaMask connection or network switch was cancelled.');
         }
       }
     }
@@ -1452,6 +1421,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           BigInt(claim.amount),
           BigInt(claim.deadline),
           claim.signature,
+          {
+            maxPriorityFeePerGas: 25_000_000_000n,
+            maxFeePerGas: 60_000_000_000n
+          }
         );
 
         const receipt = await tx.wait();
@@ -1497,7 +1470,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    // jed    
+// jed    
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
       const chain = BRIDGE_CHAINS[bridgeNetwork];
 
@@ -1525,7 +1498,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tx = await contract.bridgeBurn(
         bridgeIdBytes32,
         amountAtomic,
-        xckAddress
+        xckAddress,
+        {
+          maxPriorityFeePerGas: 25_000_000_000n,
+          maxFeePerGas: 60_000_000_000n
+        }
       );
 
       const receipt = await tx.wait();
@@ -1535,12 +1512,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       const response = await fetch(
         `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/tx`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            evm_tx_hash: receipt.hash,
+            tx_hash: receipt.hash,
             xck_address: xckAddress
           })
         }
@@ -1554,6 +1531,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       return result;
     }
+
+
+
+
+    
+
+
+
 
     // ─── SEND MODAL ───
     // Multi-step: form → confirm → result. All three steps live inside

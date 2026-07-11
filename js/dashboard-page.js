@@ -1243,7 +1243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           );
         }
 
-       const hasActiveRequest = await checkActiveBridgeRequest(false, false);
+        const hasActiveRequest = await checkActiveBridgeRequest(false, false);
 
         if (hasActiveRequest) {
           return;
@@ -1344,6 +1344,28 @@ document.addEventListener('DOMContentLoaded', async () => {
           err?.message ||
           'MetaMask connection or network switch was cancelled.'
         );
+      }
+    }
+
+    async function watchWxckToken(chain) {
+      if (!window.ethereum) {
+        return;
+      }
+
+      try {
+        await window.ethereum.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: chain.contractAddress,
+              symbol: 'wXCK',
+              decimals: 6
+            }
+          }
+        });
+      } catch (err) {
+        console.warn('Unable to add token:', err);
       }
     }
 
@@ -1465,6 +1487,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         await checkActiveBridgeRequest(false);
         alert('wXCK claimed successfully.');
 
+        await watchWxckToken({
+          contractAddress: claim.contractAddress
+        });
+
         document.getElementById('send-bridge-amount').value = '';
         document.getElementById('bridge-status-text').textContent = '';
         setBridgeProgress('idle');
@@ -1489,7 +1515,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         claimButton.textContent = 'Claim wXCK';
       }
     });
-  
+
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
       const chain = BRIDGE_CHAINS[bridgeNetwork];
 

@@ -1347,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    async function watchWxckToken(chain) {
+    async function addWxckToMetaMask(contractAddress) {
       if (!window.ethereum) {
         return;
       }
@@ -1358,14 +1358,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           params: {
             type: 'ERC20',
             options: {
-              address: chain.contractAddress,
+              address: contractAddress,
               symbol: 'wXCK',
               decimals: 6
             }
           }
         });
       } catch (err) {
-        console.warn('Unable to add token:', err);
+        // Adding the token is optional and must not affect the completed claim.
+        console.warn('Unable to add wXCK to MetaMask:', err);
       }
     }
 
@@ -1485,11 +1486,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         await checkActiveBridgeRequest(false);
-        alert('wXCK claimed successfully.');
+        const addToken = confirm(
+          'wXCK claimed successfully.\n\n' +
+          'Would you like to add wXCK to MetaMask?\n\n' +
+          'You only need to do this once per wallet.'
+        );
 
-        await watchWxckToken({
-          contractAddress: claim.contractAddress
-        });
+        if (addToken) {
+          await addWxckToMetaMask(claim.contractAddress);
+        }
 
         document.getElementById('send-bridge-amount').value = '';
         document.getElementById('bridge-status-text').textContent = '';
@@ -1503,13 +1508,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       } catch (err) {
         console.error('Claim error:', err);
-        const message =
+
+        let message =
           err?.shortMessage ||
           err?.reason ||
           err?.message ||
           'Claim failed.';
 
+        if (
+          message.includes('unknown custom error') ||
+          message.includes('execution reverted')
+        ) {
+          message =
+            'The claim was rejected by the smart contract.\n\n' +
+            'Possible reasons include:\n' +
+            '• This bridge request has already been claimed.\n' +
+            '• The claim has expired.\n' +
+            '• The claim signature is invalid.\n' +
+            '• The claim amount is invalid.\n' +
+            '• The wXCK contract is currently paused.'
+        }
+
         alert(message);
+
       } finally {
         claimButton.disabled = false;
         claimButton.textContent = 'Claim wXCK';

@@ -1031,7 +1031,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeProgressLabels();
     }
 
-    async function checkActiveBridgeRequest(showAlert = true) {
+    async function checkActiveBridgeRequest(showAlert = true, resetIfNone = true) {
       const xckAddress = walletKeys.address;
 
       const response = await fetch(
@@ -1057,7 +1057,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return true;
       }
 
-      resetBridgeNetworkSelection();
+      if (resetIfNone) {
+        resetBridgeNetworkSelection();
+      }
+
+      document.getElementById('bridge-start').disabled = false;
 
       return false;
     }
@@ -1239,7 +1243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           );
         }
 
-        const hasActiveRequest = await checkActiveBridgeRequest();
+       const hasActiveRequest = await checkActiveBridgeRequest(false, false);
 
         if (hasActiveRequest) {
           return;
@@ -1274,7 +1278,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         setBridgeProgress('request');
         document.getElementById('bridge-status-text').textContent = statusText.request;
-jed
+        jed
         if (bridgeDirection === 'XCK_TO_WXCK') {
           openSendModalForBridge({
             bridgeId: result.bridge_id,

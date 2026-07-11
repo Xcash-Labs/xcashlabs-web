@@ -1278,7 +1278,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         setBridgeProgress('request');
         document.getElementById('bridge-status-text').textContent = statusText.request;
-        jed
+
         if (bridgeDirection === 'XCK_TO_WXCK') {
           openSendModalForBridge({
             bridgeId: result.bridge_id,
@@ -1489,8 +1489,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         claimButton.textContent = 'Claim wXCK';
       }
     });
-
-    // jed    
+  
     async function burnWxckForBridge({ bridgeId, amountAtomic, xckAddress }) {
       const chain = BRIDGE_CHAINS[bridgeNetwork];
 

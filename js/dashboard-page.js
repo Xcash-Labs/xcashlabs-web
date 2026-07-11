@@ -1274,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         setBridgeProgress('request');
         document.getElementById('bridge-status-text').textContent = statusText.request;
-
+jed
         if (bridgeDirection === 'XCK_TO_WXCK') {
           openSendModalForBridge({
             bridgeId: result.bridge_id,
@@ -1565,6 +1565,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Bridge send state
     let bridgeSendContext = null;
+    let bridgeSendSubmitted = false;
     const BRIDGE_XCK_DEPOSIT_ADDRESSES = {
       polygon:
         'XCK1QnoyBeAVBuXHYJB1rcYj8EPjadaB45iTPP6ypK6r1VHjXjrnt4zRCcDf6X1PwD4EBz9b9PzJq3dKJfLiHJBD6aNNzaMCQQ',
@@ -1591,6 +1592,48 @@ document.addEventListener('DOMContentLoaded', async () => {
       sendShowStep('form');
     }
 
+    async function cancelPendingBridgeSend(reason) {
+      if (
+        !bridgeSendContext?.bridgeId ||
+        bridgeSendSubmitted
+      ) {
+        return;
+      }
+
+      const bridgeId = bridgeSendContext.bridgeId;
+
+      try {
+        const response = await fetch(
+          `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/cancel`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              error: reason || 'Bridge request cancelled by user'
+            })
+          }
+        );
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || result.ok === false) {
+          throw new Error(
+            result.error || 'Unable to cancel bridge request'
+          );
+        }
+      } catch (err) {
+        console.error(
+          'Failed to cancel bridge request:',
+          err
+        );
+      } finally {
+        bridgeSendContext = null;
+        bridgeSendSubmitted = false;
+      }
+    }
+
     function openSendModalForBridge({
       bridgeId,
       amountXck,
@@ -1610,6 +1653,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         network
       };
 
+      bridgeSendSubmitted = false;
       sendResetForm();
 
       sendToEl.value = depositAddress;
@@ -1666,7 +1710,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sendAmountEl = document.getElementById('send-amount');
     const sendReviewBtn = document.getElementById('send-review');
 
-    document.getElementById('send-close').addEventListener('click', () => {
+    document.getElementById('send-close').addEventListener('click', async () => {
+      await cancelPendingBridgeSend('Bridge request cancelled before XCK was sent');
       document.getElementById('send-modal').classList.remove('show');
       sendAmountEl.value = "";
     });
@@ -1722,7 +1767,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Cancel
-    document.getElementById('send-cancel').addEventListener('click', () => {
+    document.getElementById('send-cancel').addEventListener('click', async () => {
+      await cancelPendingBridgeSend('Bridge request cancelled before XCK was sent');
       document.getElementById('send-modal').classList.remove('show');
     });
 
@@ -1766,6 +1812,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const xckAmount = (sendAmountEl.value || '').trim();
         const paymentId = (document.getElementById('send-pid').value || '').trim();
         const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview, sendPrivacy);
+
+        if (bridgeSendContext) {
+          bridgeSendSubmitted = true;
+        }
 
         document.getElementById('send-result-hash').textContent = result.tx_hash;
 

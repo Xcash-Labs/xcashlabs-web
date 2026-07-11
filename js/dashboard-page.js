@@ -794,6 +794,22 @@ document.addEventListener('DOMContentLoaded', async () => {
               : ''
             }
 
+            ${request.status === 'complete' &&
+              request.direction === 'XCK_TO_WXCK'
+              ? `
+                  <div class="bridge-history-row">
+                    <span>wXCK Token</span>
+                    <button
+                      class="bridge-add-token"
+                      data-network="${request.network}"
+                    >
+                      Add to MetaMask
+                    </button>
+                  </div>
+                `
+              : ''
+            }
+
           ${request.error
               ? `
                 <div class="bridge-history-error">
@@ -815,6 +831,37 @@ document.addEventListener('DOMContentLoaded', async () => {
           setTimeout(() => {
             btn.textContent = shortHash(btn.dataset.copy);
           }, 1200);
+        });
+      });
+
+      document.querySelectorAll('.bridge-add-token').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const originalText = btn.textContent;
+
+          try {
+            btn.disabled = true;
+            btn.textContent = 'Opening MetaMask...';
+
+            const added = await addWxckToMetaMask(
+              btn.dataset.network
+            );
+
+            btn.textContent = added
+              ? 'Added'
+              : originalText;
+
+          } catch (err) {
+            console.error('Add wXCK token error:', err);
+
+            alert(
+              err.message ||
+              'Unable to add wXCK to MetaMask.'
+            );
+
+            btn.textContent = originalText;
+          } finally {
+            btn.disabled = false;
+          }
         });
       });
 
@@ -849,6 +896,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     function shortHash(value) {
       if (!value || value.length <= 16) return value;
       return `${value.slice(0, 8)}...${value.slice(-8)}`;
+    }
+
+    async function addWxckToMetaMask(network) {
+      if (!window.ethereum) {
+        throw new Error('MetaMask is not installed.');
+      }
+
+      const normalizedNetwork = String(network || '')
+        .trim()
+        .toLowerCase();
+
+      const chain = BRIDGE_CHAINS[normalizedNetwork];
+
+      if (!chain) {
+        throw new Error(
+          `Unsupported bridge network: ${normalizedNetwork}`
+        );
+      }
+
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{
+            chainId: chain.chainId
+          }]
+        });
+      } catch (err) {
+        if (err.code !== 4902) {
+          throw err;
+        }
+
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [chain]
+        });
+
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{
+            chainId: chain.chainId
+          }]
+        });
+      }
+
+      return await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: chain.contractAddress,
+            symbol: 'wXCK',
+            decimals: 6
+          }
+        }
+      });
     }
 
     document.getElementById('bridge-history-close').addEventListener('click', () => {
@@ -1597,14 +1699,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       return result;
     }
-
-
-
-
-
-
-
-
 
     // ─── SEND MODAL ───
     // Multi-step: form → confirm → result. All three steps live inside

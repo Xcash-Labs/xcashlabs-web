@@ -1013,6 +1013,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateBridgeClaimSection(request);
     }
 
+    let bridgeNetwork = 'none';
+    let bridgeDirection = 'XCK_TO_WXCK';
+
+    function resetBridgeNetworkSelection() {
+      bridgeNetwork = 'none';
+      bridgeDirection = 'XCK_TO_WXCK';
+      document.getElementById('bridge-polygon').classList.remove('bridge-network-selected');
+      document.getElementById('bridge-base').classList.remove('bridge-network-selected');
+      document.getElementById('bridge-arrow').textContent = '⟶';
+      document.getElementById('send-bridge-amount').value = '';
+      document.getElementById('bridge-status-text').textContent = statusText.idle;
+      document.getElementById('bridge-start').disabled = false;
+      setBridgeProgress('idle');
+      updateBridgeClaimSection(null);
+      updateBridgeDescription();
+      updateBridgeProgressLabels();
+    }
+
     async function checkActiveBridgeRequest(showAlert = true) {
       const xckAddress = walletKeys.address;
 
@@ -1039,28 +1057,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         return true;
       }
 
-      setBridgeProgress('idle');
-      updateBridgeClaimSection(null);
-      document.getElementById('bridge-start').disabled = false;
+      resetBridgeNetworkSelection();
 
       return false;
     }
 
-    let bridgeNetwork = 'none';
-    let bridgeDirection = 'XCK_TO_WXCK';
-
-    function resetBridgeNetworkSelection() {
-      bridgeNetwork = 'none';
-      document.getElementById('bridge-polygon').classList.remove('bridge-network-selected');
-      document.getElementById('bridge-base').classList.remove('bridge-network-selected');
-    }
-
     document.getElementById('btn-bridge').addEventListener('click', async () => {
       resetBridgeNetworkSelection();
-      bridgeDirection = 'XCK_TO_WXCK';
-      setBridgeProgress('idle');
-      updateBridgeClaimSection(null);
-      document.getElementById('bridge-status-text').textContent = statusText.idle;
       document.getElementById('bridge-modal').classList.add('show');
       const balTextBr = document.getElementById('balance-xck').textContent;
       const availElBr = document.getElementById('send-bridge-available');
@@ -1423,14 +1426,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           signer
         );
 
-        console.log('Claim data:', claim);
-        console.log('Target chain ID:', targetChainId);
-        console.log('Actual chain ID:', actualChainId);
-        console.log('Connected address:', connectedAddress);
-        console.log('Expected address:', expectedAddress);
-        console.log('Contract address:', claim.contractAddress);
-        console.log('About to submit claim transaction');
-
         const tx = await contract.claim(
           claim.bridgeId,
           BigInt(claim.amount),
@@ -1441,8 +1436,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             maxFeePerGas: 60_000_000_000n
           }
         );
-
-        console.log('Claim transaction submitted:', tx.hash);
 
         const receipt = await tx.wait();
 

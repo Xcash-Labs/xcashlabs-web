@@ -842,7 +842,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.disabled = true;
             btn.textContent = 'Opening MetaMask...';
 
-            const added = await addWxckToMetaMask(
+            const added = await addWxckToMetaMaskHistory(
               btn.dataset.network
             );
 
@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return `${value.slice(0, 8)}...${value.slice(-8)}`;
     }
 
-    async function addWxckToMetaMask(network) {
+    async function addWxckToMetaMaskHistory(network) {
       if (!window.ethereum) {
         throw new Error('MetaMask is not installed.');
       }

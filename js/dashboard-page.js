@@ -1586,8 +1586,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         await checkActiveBridgeRequest(false);
         const addToken = confirm(
           'wXCK claimed successfully.\n\n' +
-          'Would you like to add wXCK to MetaMask?\n\n' +
-          'You only need to do this once per wallet.'
+          'Add wXCK to MetaMask?\n\n' +
+          '(OK = Add Token, Cancel = Skip. This only needs to be done once per wallet.)'
         );
 
         if (addToken) {

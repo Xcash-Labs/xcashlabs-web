@@ -1559,11 +1559,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           claim.bridgeId,
           BigInt(claim.amount),
           BigInt(claim.deadline),
-          claim.signature,
-          {
-            maxPriorityFeePerGas: 25_000_000_000n,
-            maxFeePerGas: 60_000_000_000n
-          }
+          claim.signature
         );
 
         const receipt = await tx.wait();
@@ -1666,11 +1662,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tx = await contract.bridgeBurn(
         bridgeIdBytes32,
         amountAtomic,
-        xckAddress,
-        {
-          maxPriorityFeePerGas: 25_000_000_000n,
-          maxFeePerGas: 60_000_000_000n
-        }
+        xckAddress
       );
 
       const receipt = await tx.wait();

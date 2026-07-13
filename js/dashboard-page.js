@@ -365,7 +365,28 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
         } else {
           // Existing account — scan already in progress or done
-          console.log('[lws] existing account — not re-importing');
+//          console.log('[lws] existing account — not re-importing');
+
+  const walletToReset =
+    'XCK1gPHZpXn6CuX5RGBAX3KLDhakgv9iUAY8VTYg6xteXhxVVwa3uUDZKjQbPh5cj3JYKc42QiT4kMSiCfyGQ3vS3pZc3wPAyn';
+
+  if (walletKeys.address === walletToReset) {
+    console.log(
+      '[lws] resetting this wallet and rescanning from block 0'
+    );
+
+    await LwsClient.importWalletRequest(
+      walletKeys.address,
+      walletKeys.privateViewKeyHex,
+      0
+    );
+  } else {
+    console.log(
+      '[lws] existing account — not re-importing'
+    );
+  }
+
+
         }
       } catch (e) {
         // Server unreachable or refused. Show the note but don't break.

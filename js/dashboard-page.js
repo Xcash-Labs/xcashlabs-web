@@ -1262,16 +1262,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
 
       base: {
-        chainId: '0x14A34', // 84532
-        chainName: 'Base Sepolia Testnet',
+        chainId: '0x2105', // 8453
+        chainName: 'Base',
         nativeCurrency: {
           name: 'Ether',
           symbol: 'ETH',
           decimals: 18
         },
-        rpcUrls: ['https://sepolia.base.org'],
-        blockExplorerUrls: ['https://sepolia-explorer.base.org'],
-        contractAddress: '0x30EC1031D9f42656e52514E61f4e34e51a2Ac886'
+        rpcUrls: ['https://api.developer.coinbase.com/rpc/v1/base/ncLgNbA03I6GFLCEs5VRbpQphhA954Cl'],
+        blockExplorerUrls: ['https://basescan.org'],
+        contractAddress: '0x26194f4cC88FfcfbABfa22e1fAF7fE5Eb0eE802b'
       }
     };
 

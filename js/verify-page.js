@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (restoreHeightEl) restoreHeightEl.value = String(height);
       if (selectedLabel) {
         if (age === 'unknown') {
-          selectedLabel.textContent = 'Will scan from genesis — finds everything, may take 1-3 hours for old wallets';
+          selectedLabel.textContent = 'Will scan from genesis — finds everything, may take a while for old wallets';
           selectedLabel.style.color = 'var(--text-dim)';
         } else {
           selectedLabel.textContent = 'Restore point set to ~block ' + height.toLocaleString() + ' — full scan required to find historical transactions';

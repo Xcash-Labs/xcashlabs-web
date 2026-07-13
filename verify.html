@@ -99,8 +99,6 @@
             </div>
           </div>
 
-
-
           <button class="button primary full-width" id="btn-derive-seed" type="button" disabled>
             Restore & Continue
           </button>
@@ -122,24 +120,21 @@
               autocomplete="off" maxlength="64">
           </div>
 
-        <div class="input-group mt-16" id="restore-height-group">
-          <label>When was this wallet created?</label>
+          <div class="input-group mt-16" id="restore-height-group">
+            <label for="restore-height">Restore Block Height (Optional)</label>
 
-          <div id="wallet-age-buttons" class="wallet-age-buttons">
-            <button type="button" class="wallet-age-btn" data-age="month">Recent</button>
-            <button type="button" class="wallet-age-btn" data-age="year">~1 year</button>
-            <button type="button" class="wallet-age-btn" data-age="2years">~2 years</button>
-            <button type="button" class="wallet-age-btn" data-age="unknown">I don't know</button>
-          </div>
-
-          <div id="restore-height-selected" class="form-note" style="display:none"></div>
-
-          <details class="mt-16">
-            <summary>Advanced: enter exact block height</summary>
-            <input type="text" id="restore-height" inputmode="numeric" placeholder="e.g. 3500000" autocomplete="off"
+            <input
+              type="text"
+              id="restore-height"
+              value="0"
+              inputmode="numeric"
+              autocomplete="off"
               spellcheck="false">
-          </details>
-        </div>
+
+            <div class="form-note">
+              Approximate block when this wallet was created. Leave at <strong>0</strong> to scan the entire blockchain.
+            </div>
+          </div>
 
           <button class="button primary full-width" id="btn-derive-key" type="button" disabled>
             Restore & Continue

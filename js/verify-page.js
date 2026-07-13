@@ -117,114 +117,78 @@ document.addEventListener('DOMContentLoaded', () => {
   const wordCounter = document.getElementById('word-counter');
   const seedFormat = document.getElementById('seed-format');
   const btnSeed = document.getElementById('btn-derive-seed');
+  const restoreHeightEl = document.getElementById('restore-height');
 
   function refreshDeriveBtn() {
-    var words = seedInput.value.trim().split(/\s+/).filter(function(w) { return w.length > 0; });
-    var count = words.length;
+    const words = seedInput.value
+      .trim()
+      .split(/\s+/)
+      .filter(function(word) {
+        return word.length > 0;
+      });
+
+    const count = words.length;
+
     wcNum.textContent = count;
     wordCounter.classList.remove('valid');
     seedFormat.style.display = 'none';
     seedFormat.className = 'seed-format-badge';
     btnSeed.disabled = true;
 
-    var fmt = formats[count];
+    const fmt = formats[count];
+
     if (fmt) {
       wordCounter.classList.add('valid');
       seedFormat.style.display = 'inline-block';
       seedFormat.classList.add(fmt.cls);
       seedFormat.textContent = fmt.icon + ' ' + fmt.name;
-      // Polyseed (16 words) has embedded birthday — no age selection needed.
-      // For all other formats, require a wallet-age button click first.
-      if (count === 16 || walletAgeSelected) {
+
+      if (count === 16) {
+        // Polyseed contains its own birthday.
         btnSeed.disabled = false;
+      } else {
+        const restoreHeight = restoreHeightEl
+          ? restoreHeightEl.value.trim()
+          : '0';
+
+        btnSeed.disabled = !/^\d+$/.test(restoreHeight);
       }
     }
-    // BIP-39 passphrase row only shown for 12-word seeds
+
     document.getElementById('bip39-pass-group').style.display =
-      (count === 12) ? 'block' : 'none';
+      count === 12 ? 'block' : 'none';
   }
+
   seedInput.addEventListener('input', refreshDeriveBtn);
 
-  // ─── WALLET AGE BUTTONS → restore height ───
-  // XCash Klassic targets ~60 second blocks.
-  // Use a recent known checkpoint to account for real-world drift.
-  const CHECKPOINT_HEIGHT = 211636;
-  const CHECKPOINT_TS = Date.now() / 1000; // Current known height at page update time
-  const SECS_PER_BLOCK = 60;
-  const BLOCKS_PER_DAY = 1440;
+  if (restoreHeightEl) {
+    restoreHeightEl.addEventListener('input', function() {
+      restoreHeightEl.value =
+        restoreHeightEl.value.replace(/[^0-9]/g, '');
 
-  function estimatedCurrentHeight() {
-    var secsSinceCheckpoint = Date.now() / 1000 - CHECKPOINT_TS;
-    return Math.max(
-      CHECKPOINT_HEIGHT,
-      CHECKPOINT_HEIGHT + Math.floor(secsSinceCheckpoint / SECS_PER_BLOCK)
-    );
-  }
-
-  function ageToHeight(age) {
-    var tip = estimatedCurrentHeight();
-
-    switch (age) {
-      case 'week':
-        return Math.max(0, tip - 7 * BLOCKS_PER_DAY);
-      case 'month':
-        return Math.max(0, tip - 30 * BLOCKS_PER_DAY);
-      case 'year':
-        return Math.max(0, tip - 365 * BLOCKS_PER_DAY);
-      case '2years':
-      case 'unknown':
-        return 0;
-      default:
-        return 0;
-    }
-  }
-
-  var restoreHeightEl = $el('restore-height');
-  var selectedLabel = $el('restore-height-selected');
-  var walletAgeSelected = false;
-
-  document.querySelectorAll('.wallet-age-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      walletAgeSelected = true;
-      // Remove active state from all buttons
-      document.querySelectorAll('.wallet-age-btn').forEach(function(b) {
-        b.style.background = 'var(--surface)';
-        b.style.borderColor = 'var(--border)';
-        b.style.color = 'var(--text)';
-      });
-      // Highlight the clicked button
-      btn.style.background = 'var(--xmr-dim)';
-      btn.style.borderColor = 'rgba(255,102,0,0.4)';
-      btn.style.color = 'var(--xmr)';
-      // Re-evaluate derive button state
       refreshDeriveBtn();
-
-      var age = btn.dataset.age;
-      var height = ageToHeight(age);
-      if (restoreHeightEl) restoreHeightEl.value = String(height);
-      if (selectedLabel) {
-        if (age === 'unknown') {
-          selectedLabel.textContent = 'Will scan from genesis — finds everything, may take a while for old wallets';
-          selectedLabel.style.color = 'var(--text-dim)';
-        } else {
-          selectedLabel.textContent = 'Restore point set to ~block ' + height.toLocaleString() + ' — full scan required to find historical transactions';
-          selectedLabel.style.color = 'var(--success)';
-        }
-        selectedLabel.style.display = 'block';
-      }
     });
-  });
+  }
 
-  // Auto-hide the wallet-age section for polyseed (birthday is embedded)
-  // and show it for all other formats. Also hide for BIP-39 passphrase row.
+  // Initialize the page state
+  refreshDeriveBtn();
+
+  // Hide manual restore height for Polyseed because its birthday is embedded.
+  // Show it for all other seed formats.
   seedInput.addEventListener('input', function() {
-    var words = seedInput.value.trim().split(/\s+/).filter(function(w) { return w.length > 0; });
-    var count = words.length;
-    var rhGroup = $el('restore-height-group');
-    if (rhGroup) {
-      // Polyseed (16 words) has an embedded birthday — no need to ask.
-      // For 12/13/25/other, show the age picker.
-      rhGroup.style.display = (count === 16) ? 'none' : 'block';
+    const words = seedInput.value
+      .trim()
+      .split(/\s+/)
+      .filter(function(word) {
+        return word.length > 0;
+      });
+
+    const count = words.length;
+    const restoreHeightGroup = $el('restore-height-group');
+
+    if (restoreHeightGroup) {
+      restoreHeightGroup.style.display =
+        count === 16 ? 'none' : 'block';
     }
   });
 
@@ -254,19 +218,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const network    = $val('network-select') || 'mainnet';
         const passphrase = $val('bip39-pass');
         const keys = await MoneroKeys.deriveFromAnyMnemonic(mnemonic, null, network, passphrase);
-        // Attach the user-supplied restore height (if any) so the dashboard
-        // can pass it to the LWS to avoid scanning from genesis.
-        const rhVal = $val('restore-height').replace(/[^0-9]/g, '');
-        if (rhVal.length > 0) {
-          keys.restoreHeight = parseInt(rhVal, 10);
+
+        // Polyseed contains an embedded birthday. Do not overwrite its
+        // derived restore information with the manual field.
+        if (keys.seedFormat !== 'polyseed') {
+          const restoreHeight = parseInt(
+            $val('restore-height'),
+            10
+          );
+
+          keys.restoreHeight =
+            Number.isSafeInteger(restoreHeight) &&
+            restoreHeight >= 0
+              ? restoreHeight
+              : 0;
         }
+
         showResults(keys);
       } catch(e) {
         errorEl.textContent = 'Error: ' + e.message;
         errorEl.classList.add('show');
       }
       btnSeed.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Derive Keys';
-      btnSeed.disabled = false;
+      refreshDeriveBtn();
     }, 100);
   });
 

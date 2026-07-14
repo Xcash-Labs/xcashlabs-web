@@ -1564,9 +1564,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const receipt = await tx.wait();
 
-console.log('tx.hash:', tx.hash);
-console.log('receipt.hash:', receipt.hash);
-
         const completeResponse = await fetch(
           `https://bridge.xcashlabs.org/api/bridge/request/${request._id}/complete`,
           {
@@ -1590,7 +1587,7 @@ console.log('receipt.hash:', receipt.hash);
         const addToken = confirm(
           'wXCK claimed successfully.\n\n' +
           'Add wXCK to MetaMask?\n\n' +
-          '(OK = Add Token, Cancel = Skip. This only needs to be done once per wallet.)'
+          '(OK = Add Token, Cancel = Continue. This only needs to be done once per wallet.)'
         );
 
         if (addToken) {
@@ -1669,8 +1666,6 @@ console.log('receipt.hash:', receipt.hash);
       );
 
       const receipt = await tx.wait();
-
-      console.log("Burn tx hash:", receipt.hash);
 
       const response = await fetch(
         `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/tx`,

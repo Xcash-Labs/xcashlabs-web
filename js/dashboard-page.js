@@ -1564,6 +1564,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const receipt = await tx.wait();
 
+console.log('tx.hash:', tx.hash);
+console.log('receipt.hash:', receipt.hash);
+
         const completeResponse = await fetch(
           `https://bridge.xcashlabs.org/api/bridge/request/${request._id}/complete`,
           {

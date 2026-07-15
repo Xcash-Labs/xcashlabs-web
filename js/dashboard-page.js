@@ -1111,6 +1111,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       cancelled: 'Bridge request was cancelled.'
     };
 
+    function formatElapsed(createdAt) {
+      const seconds = Math.floor(
+        (Date.now() - new Date(createdAt).getTime()) / 1000
+      );
+      if (seconds < 60) {
+        return `${seconds}s ago`;
+      }
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) {
+        return `${minutes}m ago`;
+      }
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) {
+        return `${hours}h ago`;
+      }
+      const days = Math.floor(hours / 24);
+      return `${days}d ago`;
+    }
+
     function updateBridgeClaimSection(request) {
       const claimSection = document.getElementById('bridge-claim-section');
       const claimButton = document.getElementById('bridge-claim');
@@ -1128,6 +1147,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Progress bar
       setBridgeProgress(request.status || 'idle', request.direction);
       document.getElementById('bridge-status-text').textContent = statusText[request.status] || statusText.idle;
+
+      const startEl = document.getElementById('bridge-start-time');
+
+      if (startEl) {
+        if (request.created_at) {
+          startEl.textContent = ` • ${formatElapsed(request.created_at)}`;
+        } else {
+          startEl.textContent = '';
+        }
+      }
 
       // Restore amount (convert from atomic)
       document.getElementById('send-bridge-amount').value =
@@ -1171,6 +1200,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('bridge-arrow').textContent = '⟶';
       document.getElementById('send-bridge-amount').value = '';
       document.getElementById('bridge-status-text').textContent = statusText.idle;
+      const startEl = document.getElementById('bridge-start-time');
+      if (startEl) {
+        startEl.textContent = '';
+      }
       document.getElementById('bridge-start').disabled = false;
       setBridgeProgress('idle');
       updateBridgeClaimSection(null);

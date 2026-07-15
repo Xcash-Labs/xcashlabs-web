@@ -1249,16 +1249,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const BRIDGE_CHAINS = {
       polygon: {
-        chainId: '0x13882', // 80002
-        chainName: 'Polygon Amoy',
+        chainId: '0x89', // 137
+        chainName: 'Polygon',
         nativeCurrency: {
           name: 'POL',
           symbol: 'POL',
           decimals: 18
         },
-        rpcUrls: ['https://rpc-amoy.polygon.technology'],
-        blockExplorerUrls: ['https://amoy.polygonscan.com'],
-        contractAddress: '0x1DFE62e4212530F45a4522d0d46068fEc7C401e7'
+        rpcUrls: ['https://polygon.drpc.org'],
+        blockExplorerUrls: ['https://polygonscan.com'],
+        contractAddress: '0x26194f4cC88FfcfbABfa22e1fAF7fE5Eb0eE802b'
       },
 
       base: {

@@ -750,6 +750,20 @@ document.addEventListener('DOMContentLoaded', async () => {
           const directionLabel = formatBridgeDirection(request.direction);
           const networkLabel = formatBridgeNetwork(request.network);
 
+          const explorerBase =
+            BRIDGE_CHAINS[request.network]?.blockExplorerUrls?.[0] || '';
+
+          const explorerTxUrl =
+            request.evm_tx_hash && explorerBase
+              ? `${explorerBase}/tx/${request.evm_tx_hash}`
+              : '';
+
+          const explorerLabel = explorerBase
+            ? new URL(explorerBase).hostname
+                .split('.')[0]
+                .replace(/^./, c => c.toUpperCase())
+            : 'Explorer';
+
           const item = document.createElement('div');
           item.className = 'bridge-history-card';
 
@@ -782,16 +796,28 @@ document.addEventListener('DOMContentLoaded', async () => {
               : ''
             }
 
-          ${request.evm_tx_hash
-              ? `
-                <div class="bridge-history-row">
-                  <span>EVM TX</span>
-                  <button class="bridge-copy-hash" data-copy="${request.evm_tx_hash}">
-                    ${shortHash(request.evm_tx_hash)}
-                  </button>
-                </div>
-              `
-              : ''
+            ${request.evm_tx_hash
+                ? `
+                  <div class="bridge-history-row">
+                    <span>EVM TX</span>
+                    <button class="bridge-copy-hash" data-copy="${request.evm_tx_hash}">
+                      ${shortHash(request.evm_tx_hash)}
+                    </button>
+                  </div>
+
+                  <div class="bridge-history-row">
+                    <span></span>
+                    <a
+                      href="${explorerTxUrl}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="bridge-history-link"
+                    >
+                      View on ${explorerLabel} ↗
+                    </a>
+                  </div>
+                `
+                : ''
             }
 
             ${request.status === 'complete' &&

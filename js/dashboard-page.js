@@ -746,6 +746,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             ? new Date(request.created_at).toLocaleString()
             : '';
 
+          const xckExplorerTxUrl = request.tx_hash
+            ? `https://explorer.xcashlabs.org/search?value=${encodeURIComponent(request.tx_hash)}`
+            : '';
+
           const statusLabel = formatBridgeStatus(request.status);
           const directionLabel = formatBridgeDirection(request.direction);
           const networkLabel = formatBridgeNetwork(request.network);
@@ -788,17 +792,32 @@ document.addEventListener('DOMContentLoaded', async () => {
               ? `
                 <div class="bridge-history-row">
                   <span>XCK TX</span>
-                  <button class="bridge-copy-hash" data-copy="${request.tx_hash}">
-                    ${shortHash(request.tx_hash)}
-                  </button>
+
+                  <div class="bridge-history-tx">
+                    <button
+                      class="bridge-copy-hash"
+                      data-copy="${request.tx_hash}"
+                    >
+                      ${shortHash(request.tx_hash)}
+                    </button>
+
+                    <a
+                      href="${xckExplorerTxUrl}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="bridge-history-link"
+                    >
+                      View on XCK Explorer ↗
+                    </a>
+                  </div>
                 </div>
               `
               : ''
-            }
+          }
 
-            ${request.evm_tx_hash
-                ? `
-                  <div class="bridge-history-row">
+          ${request.evm_tx_hash
+              ? `
+                <div class="bridge-history-row">
                     <span>EVM TX</span>
                     <button class="bridge-copy-hash" data-copy="${request.evm_tx_hash}">
                       ${shortHash(request.evm_tx_hash)}
@@ -817,8 +836,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </a>
                   </div>
                 `
-                : ''
-            }
+              : ''
+          }
 
             ${request.status === 'complete' &&
               request.direction === 'XCK_TO_WXCK'

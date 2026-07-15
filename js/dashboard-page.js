@@ -1116,18 +1116,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         (Date.now() - new Date(createdAt).getTime()) / 1000
       );
       if (seconds < 60) {
-        return `${seconds}s ago`;
+        return `$Active for {seconds}s`;
       }
       const minutes = Math.floor(seconds / 60);
       if (minutes < 60) {
-        return `${minutes}m ago`;
+        return `Active for ${minutes}m`;
       }
       const hours = Math.floor(minutes / 60);
       if (hours < 24) {
-        return `${hours}h ago`;
+        return `Active for ${hours}h`;
       }
       const days = Math.floor(hours / 24);
-      return `${days}d ago`;
+      return `Active for ${days}d`;
     }
 
     function updateBridgeClaimSection(request) {

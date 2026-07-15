@@ -1302,6 +1302,7 @@ footer {
   color: #8b8b8b;
   font-weight: 400;
 }
+.modal-start-body{padding:10px}
 
 /* ─── Modals ─── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;align-items:center;justify-content:center;padding:20px}

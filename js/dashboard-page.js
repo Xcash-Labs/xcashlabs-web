@@ -1116,7 +1116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         (Date.now() - new Date(createdAt).getTime()) / 1000
       );
       if (seconds < 60) {
-        return `$Active for {seconds}s`;
+        return `Active for ${seconds}s`;
       }
       const minutes = Math.floor(seconds / 60);
       if (minutes < 60) {

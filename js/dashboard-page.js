@@ -1134,14 +1134,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       const claimSection = document.getElementById('bridge-claim-section');
       const claimButton = document.getElementById('bridge-claim');
 
-      if (!claimSection || !claimButton) return;
+      if (!claimSection || !claimButton) {
+        return;
+      }
 
-      const showClaim = request && request.status === 'ready_to_claim';
+      const showClaim = request?.status === 'ready_to_claim' && request?.direction === 'XCK_TO_WXCK';
 
       claimSection.style.display = showClaim ? 'block' : 'none';
+      claimButton.style.display = showClaim ? '' : 'none';
       claimButton.disabled = !showClaim;
       claimButton.textContent = 'Claim wXCK';
     }
+
 
     function updateBridgeFromRequest(request) {
       // Progress bar
@@ -1764,7 +1768,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('send-bridge-amount').value = '';
         document.getElementById('bridge-status-text').textContent = '';
         setBridgeProgress('idle');
-        document.getElementById('bridge-claim').style.display = 'none';
+        updateBridgeClaimSection(null);
         await checkActiveBridgeRequest(false);
 
         if (typeof pollBalanceOnce === 'function') {

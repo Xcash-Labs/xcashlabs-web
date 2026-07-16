@@ -1569,15 +1569,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         );
       }
 
+      const expectedChainId = chain.chainId.toLowerCase();
+
       let currentChainId = await window.ethereum.request({
         method: 'eth_chainId'
       });
 
-      // Nothing to do if MetaMask is already on the correct network.
-      if (
-        currentChainId.toLowerCase() ===
-        chain.chainId.toLowerCase()
-      ) {
+      if (currentChainId.toLowerCase() === expectedChainId) {
         return chain;
       }
 
@@ -1589,33 +1587,49 @@ document.addEventListener('DOMContentLoaded', async () => {
           }]
         });
       } catch (err) {
-        // The requested network has not been added to MetaMask.
         if (err.code === 4902) {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [chain]
           });
+
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{
+              chainId: chain.chainId
+            }]
+          });
         } else if (err.code === 4001) {
           throw new Error(
-            `Please switch MetaMask to ${chain.chainName} to claim your wXCK.`
+            `Please approve the switch to ${chain.chainName} in MetaMask.`
           );
         } else {
           throw err;
         }
       }
 
-      // Verify the network really changed.
-      currentChainId = await window.ethereum.request({
-        method: 'eth_chainId'
-      });
+      // MetaMask may resolve wallet_switchEthereumChain before every provider
+      // and extension view has fully updated. Poll until the requested chain is
+      // actually reported, or fail rather than continuing on the wrong chain.
+      let switched = false;
 
-      if (
-        currentChainId.toLowerCase() !==
-        chain.chainId.toLowerCase()
-      ) {
+      for (let attempt = 0; attempt < 15; attempt++) {
+        currentChainId = await window.ethereum.request({
+          method: 'eth_chainId'
+        });
+
+        if (currentChainId.toLowerCase() === expectedChainId) {
+          switched = true;
+          break;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+
+      if (!switched) {
         throw new Error(
-          `MetaMask is still connected to the wrong network. ` +
-          `Please select ${chain.chainName} and try again.`
+          `MetaMask did not finish switching to ${chain.chainName}. ` +
+          `Please select ${chain.chainName} manually and try again.`
         );
       }
 
@@ -1664,9 +1678,29 @@ document.addEventListener('DOMContentLoaded', async () => {
           method: 'eth_requestAccounts'
         });
 
-        await ensureBridgeNetwork(request.network);
+        const claimChain = await ensureBridgeNetwork(request.network);
 
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        // Give MetaMask a moment to finish updating its provider state.
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Create a completely fresh provider after the network switch.
+        // "any" allows ethers to handle an EIP-1193 chain change cleanly.
+        const provider = new ethers.BrowserProvider(
+          window.ethereum,
+          'any'
+        );
+
+        const providerNetwork = await provider.getNetwork();
+        const expectedChainId = BigInt(claimChain.chainId);
+
+        if (providerNetwork.chainId !== expectedChainId) {
+          throw new Error(
+            `Wallet provider is still connected to chain ` +
+            `${providerNetwork.chainId.toString()}. ` +
+            `Please switch MetaMask to ${claimChain.chainName} and try again.`
+          );
+        }
+
         const signer = await provider.getSigner();
 
         const connectedAddress = ethers.getAddress(await signer.getAddress());

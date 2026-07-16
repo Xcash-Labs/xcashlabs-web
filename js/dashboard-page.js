@@ -1699,12 +1699,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           currentChainId.toLowerCase() !==
           claimChain.chainId.toLowerCase()
         ) {
-          await ensureBridgeNetwork(request.network);
-
           alert(
-            `MetaMask has been switched to ${claimChain.chainName}.\n\n` +
-            `Confirm that MetaMask now displays ${claimChain.chainName}, ` +
-            `then click Claim wXCK again.`
+            `This claim must be completed on ${claimChain.chainName}.\n\n` +
+            `Please open MetaMask, manually switch to ${claimChain.chainName}, ` +
+            `and then click Claim wXCK again.`
           );
 
           return;

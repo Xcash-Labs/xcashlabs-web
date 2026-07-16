@@ -1552,6 +1552,76 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('bridge-start').addEventListener('click', connectMetaMaskForBridge);
 
+    async function ensureBridgeNetwork(network) {
+      if (!window.ethereum) {
+        throw new Error('MetaMask is not installed.');
+      }
+
+      const normalizedNetwork = String(network || '')
+        .trim()
+        .toLowerCase();
+
+      const chain = BRIDGE_CHAINS[normalizedNetwork];
+
+      if (!chain) {
+        throw new Error(
+          `Unsupported bridge network: ${normalizedNetwork}`
+        );
+      }
+
+      let currentChainId = await window.ethereum.request({
+        method: 'eth_chainId'
+      });
+
+      // Nothing to do if MetaMask is already on the correct network.
+      if (
+        currentChainId.toLowerCase() ===
+        chain.chainId.toLowerCase()
+      ) {
+        return chain;
+      }
+
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{
+            chainId: chain.chainId
+          }]
+        });
+      } catch (err) {
+        // The requested network has not been added to MetaMask.
+        if (err.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [chain]
+          });
+        } else if (err.code === 4001) {
+          throw new Error(
+            `Please switch MetaMask to ${chain.chainName} to claim your wXCK.`
+          );
+        } else {
+          throw err;
+        }
+      }
+
+      // Verify the network really changed.
+      currentChainId = await window.ethereum.request({
+        method: 'eth_chainId'
+      });
+
+      if (
+        currentChainId.toLowerCase() !==
+        chain.chainId.toLowerCase()
+      ) {
+        throw new Error(
+          `MetaMask is still connected to the wrong network. ` +
+          `Please select ${chain.chainName} and try again.`
+        );
+      }
+
+      return chain;
+    }
+
     document.getElementById('bridge-claim').addEventListener('click', async () => {
       const claimButton = document.getElementById('bridge-claim');
 
@@ -1594,22 +1664,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           method: 'eth_requestAccounts'
         });
 
-        const targetChainId = ethers.toQuantity(Number(claim.chainId));
-
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: targetChainId }]
-        });
-
-        const actualChainId = await window.ethereum.request({
-          method: 'eth_chainId'
-        });
-
-        if (actualChainId.toLowerCase() !== targetChainId.toLowerCase()) {
-          throw new Error(
-            `MetaMask did not switch networks. Expected ${targetChainId}, got ${actualChainId}`
-          );
-        }
+        await ensureBridgeNetwork(request.network);
 
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();

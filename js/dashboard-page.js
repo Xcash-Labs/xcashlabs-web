@@ -1612,32 +1612,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      // MetaMask may resolve wallet_switchEthereumChain before every provider
-      // and extension view has fully updated. Poll until the requested chain is
-      // actually reported, or fail rather than continuing on the wrong chain.
-      let switched = false;
+      /*
+      * Confirm that MetaMask's provider has actually changed networks.
+      * Poll for up to five seconds because the extension UI and injected
+      * provider do not always update at exactly the same moment.
+      */
+      const switchDeadline = Date.now() + 5000;
 
-      for (let attempt = 0; attempt < 15; attempt++) {
+      while (Date.now() < switchDeadline) {
         currentChainId = await window.ethereum.request({
           method: 'eth_chainId'
         });
 
         if (currentChainId.toLowerCase() === expectedChainId) {
-          switched = true;
-          break;
+          return chain;
         }
 
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 250));
       }
 
-      if (!switched) {
-        throw new Error(
-          `MetaMask did not finish switching to ${chain.chainName}. ` +
-          `Please select ${chain.chainName} manually and try again.`
-        );
-      }
-
-      return chain;
+      throw new Error(
+        `MetaMask did not finish switching to ${chain.chainName}. ` +
+        `Please switch to ${chain.chainName} manually and try again.`
+      );
     }
 
     document.getElementById('bridge-claim').addEventListener('click', async () => {
@@ -1683,9 +1680,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const claimChain = await ensureBridgeNetwork(request.network);
-
-        // Give MetaMask a moment to finish updating its provider state.
-        await new Promise(resolve => setTimeout(resolve, 500));
 
         // Create a completely fresh provider after the network switch.
         // "any" allows ethers to handle an EIP-1193 chain change cleanly.

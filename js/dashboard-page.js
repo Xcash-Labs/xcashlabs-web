@@ -1679,10 +1679,38 @@ document.addEventListener('DOMContentLoaded', async () => {
           method: 'eth_requestAccounts'
         });
 
-        const claimChain = await ensureBridgeNetwork(request.network);
+        const normalizedNetwork = String(request.network || '')
+          .trim()
+          .toLowerCase();
 
-        // Create a completely fresh provider after the network switch.
-        // "any" allows ethers to handle an EIP-1193 chain change cleanly.
+        const claimChain = BRIDGE_CHAINS[normalizedNetwork];
+
+        if (!claimChain) {
+          throw new Error(
+            `Unsupported bridge network: ${normalizedNetwork}`
+          );
+        }
+
+        const currentChainId = await window.ethereum.request({
+          method: 'eth_chainId'
+        });
+
+        if (
+          currentChainId.toLowerCase() !==
+          claimChain.chainId.toLowerCase()
+        ) {
+          await ensureBridgeNetwork(request.network);
+
+          alert(
+            `MetaMask has been switched to ${claimChain.chainName}.\n\n` +
+            `Confirm that MetaMask now displays ${claimChain.chainName}, ` +
+            `then click Claim wXCK again.`
+          );
+
+          return;
+        }
+
+        // MetaMask was already on the correct network before this click.
         const provider = new ethers.BrowserProvider(
           window.ethereum,
           'any'

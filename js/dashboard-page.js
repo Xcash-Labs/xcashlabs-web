@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                       class="bridge-add-token"
                       data-network="${request.network}"
                     >
-                      Add to MetaMask
+                      Import into MetaMask
                     </button>
                   </div>
                 `
@@ -1774,16 +1774,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           throw new Error(completeData.error || 'Claim succeeded, but bridge status was not updated.');
         }
 
-        await checkActiveBridgeRequest(false);
-        const addToken = confirm(
-          'wXCK claimed successfully.\n\n' +
-          'Add wXCK to MetaMask?\n\n' +
-          '(OK = Add Token, Cancel = Continue. This only needs to be done once per wallet.)'
+        alert(
+          'wXCK claimed successfully!\n\n' +
+          'Your tokens are now available in your connected MetaMask wallet.\n\n' +
+          'If wXCK is not visible, you can import it from Bridge History.'
         );
-
-        if (addToken) {
-          await addWxckToMetaMask(claim.contractAddress);
-        }
 
         document.getElementById('send-bridge-amount').value = '';
         document.getElementById('bridge-status-text').textContent = '';

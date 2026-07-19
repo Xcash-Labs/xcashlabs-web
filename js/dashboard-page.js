@@ -2435,9 +2435,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('bridge-modal')
           .classList.add('show');
 
-        alert(
-          'The bridge transaction was not sent. Please review and start the bridge again.'                  jed
-        );
+        alert('The bridge transaction was not sent. Please review and start the bridge again.');
 
         return;
       }

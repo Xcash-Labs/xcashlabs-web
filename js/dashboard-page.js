@@ -2365,7 +2365,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             console.log(`Bridge request ${bridgeId} cancelled because the XCK transaction was not broadcast.`);
 
+            // Clear all local bridge-send state.
+            pendingBridgeReview = null;
             bridgeSendContext = null;
+            bridgeSendSubmitted = false;
+
+            // Reset the bridge screen to a clean starting state.
+            resetBridgeNetworkSelection();
 
           } catch (cancelErr) {
             console.error(

@@ -2331,23 +2331,58 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Only cancel if the bridge request was created but
         // the XCK transaction was never successfully broadcast.
-        if (
-          bridgeSendContext?.bridgeId &&
-          !bridgeSendSubmitted
-        ) {
+        if (bridgeSendContext?.bridgeId && !bridgeSendSubmitted) {
+          const bridgeId = bridgeSendContext.bridgeId;
+
           try {
-            await fetch(
-              `https://bridge.xcashlabs.org/api/bridge/request/${bridgeSendContext.bridgeId}/cancel`,
-              { method: 'POST' }
+            const cancelResponse = await fetch(
+              `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/cancel`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  error:
+                    e?.message ||
+                    'XCK transaction failed before broadcast'
+                })
+              }
             );
+
+            const cancelResult =
+              await cancelResponse.json().catch(() => ({}));
+
+            if (
+              !cancelResponse.ok ||
+              cancelResult.ok === false
+            ) {
+              throw new Error(
+                cancelResult.error ||
+                `Unable to cancel bridge request: HTTP ${cancelResponse.status}`
+              );
+            }
+
+            console.log(`Bridge request ${bridgeId} cancelled because the XCK transaction was not broadcast.`);
+
+            bridgeSendContext = null;
+
           } catch (cancelErr) {
             console.error(
-              'Failed to cancel bridge request:',
+              `Bridge request ${bridgeId} could not be cancelled:`,
               cancelErr
             );
-          }
 
-          bridgeSendContext = null;
+            document.getElementById(
+              'send-result-error-msg'
+            ).textContent =
+              (e?.message || 'XCK transaction failed.') +
+              '\n\nThe bridge request could not be cancelled automatically. ' +
+              'Do not create another bridge request until this request is cancelled or checked manually.';
+
+            sendShowResultState('error');
+            return;
+          }
         }
 
         document.getElementById(
@@ -2401,7 +2436,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           .classList.add('show');
 
         alert(
-          'The bridge transaction was not sent. Please review and start the bridge again.'
+          'The bridge transaction was not sent. Please review and start the bridge again.'                  jed
         );
 
         return;

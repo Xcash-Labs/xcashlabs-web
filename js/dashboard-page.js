@@ -2373,6 +2373,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Reset the bridge screen to a clean starting state.
             resetBridgeNetworkSelection();
 
+            const balanceText = document.getElementById('balance-xck')?.textContent || '—';
+            const bridgeAvailable = document.getElementById('send-bridge-available');
+
+            if (bridgeAvailable) {
+              bridgeAvailable.textContent = balanceText;
+            }
+
           } catch (cancelErr) {
             console.error(
               `Bridge request ${bridgeId} could not be cancelled:`,

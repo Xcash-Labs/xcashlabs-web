@@ -658,7 +658,7 @@ footer {
     border: 1px solid var(--light-border);
     border-radius: 12px;
     background: #f8fafc;
-    color: #ffffff;
+    color: var(--card-text);
     font: inherit;
     font-weight: 650;
     cursor: pointer;

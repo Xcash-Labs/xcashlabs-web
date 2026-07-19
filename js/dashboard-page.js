@@ -1269,12 +1269,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Send max — fills amount with the current balance
-    document.getElementById('send-bridge-max').addEventListener('click', () => {
-      const bal = document.getElementById('balance-xck').textContent;
-      if (bal && bal !== '—') {
-        sendBridgeAmountEl.value = bal;
-      }
-    });
+//    document.getElementById('send-bridge-max').addEventListener('click', () => {
+//      const bal = document.getElementById('balance-xck').textContent;
+//      if (bal && bal !== '—') {
+//        sendBridgeAmountEl.value = bal;
+//      }
+//    });
 
     function updateBridgeDescription() {
       const desc = document.getElementById('bridge-description');
@@ -1433,6 +1433,22 @@ document.addEventListener('DOMContentLoaded', async () => {
           return;
         }
 
+        if (bridgeDirection === 'XCK_TO_WXCK') {
+          pendingBridgeReview = {
+            amountXck: amount.toString(),
+            amountAtomic: atomicAmount.toString(),
+            network: bridgeNetwork,
+            evmAddress
+          };
+
+          openSendModalForBridge({
+            amountXck: amount.toString(),
+            network: bridgeNetwork
+          });
+
+          return;
+        }
+
         const response = await fetch('https://bridge.xcashlabs.org/api/bridge/request', {
           method: 'POST',
           headers: {
@@ -1463,41 +1479,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         setBridgeProgress('request');
         document.getElementById('bridge-status-text').textContent = statusText.request;
 
-        if (bridgeDirection === 'XCK_TO_WXCK') {
-          openSendModalForBridge({
+        // Only the wXCK → XCK path reaches this point.
+        // XCK → wXCK returned earlier before creating a bridge request.
+        try {
+          await burnWxckForBridge({
             bridgeId: result.bridge_id,
-            amountXck: amount.toString(),
-            network: bridgeNetwork
+            amountAtomic: atomicAmount.toString(),
+            xckAddress: walletKeys.address
           });
-        } else {
-          try {
-            await burnWxckForBridge({
-              bridgeId: result.bridge_id,
-              amountAtomic: atomicAmount.toString(),
-              xckAddress: walletKeys.address
-            });
-          } catch (burnErr) {
+        } catch (burnErr) {
 
-            const endpoint =
-              burnErr.code === 4001
-                ? 'cancel'
-                : 'failed';
+          const endpoint =
+            burnErr.code === 4001
+              ? 'cancel'
+              : 'failed';
 
-            await fetch(
-              `https://bridge.xcashlabs.org/api/bridge/request/${result.bridge_id}/${endpoint}`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  error: burnErr.message || 'wXCK burn failed'
-                })
-              }
-            );
+          await fetch(
+            `https://bridge.xcashlabs.org/api/bridge/request/${result.bridge_id}/${endpoint}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                error: burnErr.message || 'wXCK burn failed'
+              })
+            }
+          );
 
-            throw burnErr;
-          }
+          throw burnErr;
         }
       } catch (err) {
         if (err.code === 4902) {
@@ -1884,8 +1894,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let sendPriority = 2;
 
     // Bridge send state
+    let pendingBridgeReview = null;
     let bridgeSendContext = null;
     let bridgeSendSubmitted = false;
+    let sendInProgress = false;
     const BRIDGE_XCK_DEPOSIT_ADDRESSES = {
       polygon:
         'XCK1QnoyBeAVBuXHYJB1rcYj8EPjadaB45iTPP6ypK6r1VHjXjrnt4zRCcDf6X1PwD4EBz9b9PzJq3dKJfLiHJBD6aNNzaMCQQ',
@@ -1908,20 +1920,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     function sendResetForm() {
       sendPreview = null;
       const errEl = document.getElementById('send-error');
+      const retryButton = document.getElementById('send-retry');
+      if (retryButton) {
+        retryButton.style.display = '';
+      }
       if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
       sendShowStep('form');
     }
 
     async function cancelPendingBridgeSend(reason) {
-      if (
-        !bridgeSendContext?.bridgeId ||
-        bridgeSendSubmitted
-      ) {
+      if (!bridgeSendContext?.bridgeId) {
+        pendingBridgeReview = null;
+        bridgeSendContext = null;
+        bridgeSendSubmitted = false;
+        return;
+      }
+
+      // The transaction was already sent. Never cancel the bridge request.
+      if (bridgeSendSubmitted) {
         return;
       }
 
       const bridgeId = bridgeSendContext.bridgeId;
-
       try {
         const response = await fetch(
           `https://bridge.xcashlabs.org/api/bridge/request/${bridgeId}/cancel`,
@@ -1955,7 +1975,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function openSendModalForBridge({
-      bridgeId,
       amountXck,
       network
     }) {
@@ -1968,11 +1987,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         );
       }
 
-      bridgeSendContext = {
-        bridgeId,
-        network
-      };
-
       bridgeSendSubmitted = false;
       sendResetForm();
 
@@ -1982,7 +1996,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       sendPrivacy = 'private';
 
       document.querySelectorAll('.send-priv-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.privacy === 'public');
+        btn.classList.toggle('active', btn.dataset.privacy === 'private');
       });
 
       refreshSendReviewState();
@@ -1993,6 +2007,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     document.getElementById('btn-send').addEventListener('click', () => {
+      pendingBridgeReview = null;
+      bridgeSendContext = null;
+      bridgeSendSubmitted = false;
+
       sendResetForm();
       document.getElementById('send-modal').classList.add('show');
       // Update "Available" from the latest LWS poll
@@ -2001,8 +2019,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (availEl) availEl.textContent = balText;
     });
 
-    document.getElementById('send-modal').addEventListener('click', (e) => {
-      if (e.target.id === 'send-modal') e.target.classList.remove('show');
+    document.getElementById('send-modal').addEventListener('click', async (e) => {
+      if (e.target.id !== 'send-modal' || sendInProgress) {
+        return;
+      }
+      await cancelPendingBridgeSend(
+        'Bridge request cancelled before XCK was sent'
+      );
+      e.target.classList.remove('show');
     });
 
     document.querySelectorAll('.send-priv-btn').forEach(btn => {
@@ -2031,6 +2055,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sendReviewBtn = document.getElementById('send-review');
 
     document.getElementById('send-close').addEventListener('click', async () => {
+      if (sendInProgress) {
+        return;
+      }
       await cancelPendingBridgeSend('Bridge request cancelled before XCK was sent');
       document.getElementById('send-modal').classList.remove('show');
       sendAmountEl.value = "";
@@ -2078,16 +2105,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendAmountEl.addEventListener('input', refreshSendReviewState);
 
     // Send max — fills amount with the current balance
-    document.getElementById('send-max').addEventListener('click', () => {
-      const bal = document.getElementById('balance-xck').textContent;
-      if (bal && bal !== '—') {
-        sendAmountEl.value = bal;
-        refreshSendReviewState();
-      }
-    });
+//    document.getElementById('send-max').addEventListener('click', () => {
+//      const bal = document.getElementById('balance-xck').textContent;
+//      if (bal && bal !== '—') {
+//        sendAmountEl.value = bal;
+//        refreshSendReviewState();
+//      }
+//    });
 
     // Cancel
     document.getElementById('send-cancel').addEventListener('click', async () => {
+      if (sendInProgress) {
+        return;
+      }
       await cancelPendingBridgeSend('Bridge request cancelled before XCK was sent');
       document.getElementById('send-modal').classList.remove('show');
     });
@@ -2102,7 +2132,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const toAddress = (sendToEl.value || '').trim();
         const xckAmount = (sendAmountEl.value || '').trim();
         sendPreview = await MoneroSend.estimateFee(walletKeys, toAddress, xckAmount, sendPriority);
-
         document.getElementById('confirm-to').textContent = toAddress;
         document.getElementById('confirm-amount').textContent = xckAmount + ' XCK';
         document.getElementById('confirm-fee').textContent = sendPreview.fee_xmr + ' XCK';
@@ -2125,12 +2154,107 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Confirm → actually send
     document.getElementById('send-confirm').addEventListener('click', async () => {
+      if (sendInProgress) {
+        return;
+      }
+      sendInProgress = true;
       sendShowStep('result');
       sendShowResultState('pending');
       try {
         const toAddress = (sendToEl.value || '').trim();
         const xckAmount = (sendAmountEl.value || '').trim();
         const paymentId = (document.getElementById('send-pid').value || '').trim();
+
+        if (pendingBridgeReview) {
+          const expectedDepositAddress =
+            BRIDGE_XCK_DEPOSIT_ADDRESSES[
+              pendingBridgeReview.network
+            ];
+
+          if (toAddress !== expectedDepositAddress) {
+            throw new Error(
+              'The bridge deposit address was changed. Please restart the bridge transaction.'
+            );
+          }
+
+          const normalizedAmount = xckAmount.replace(',', '.');
+
+          if (
+            !/^\d+(\.\d{1,6})?$/.test(normalizedAmount) ||
+            Number(normalizedAmount) <= 0
+          ) {
+            throw new Error(
+              'Enter a valid XCK amount with no more than 6 decimal places.'
+            );
+          }
+
+          const parts = normalizedAmount.split('.');
+          const whole = parts[0] || '0';
+          const fraction = (parts[1] || '')
+            .padEnd(6, '0')
+            .slice(0, 6);
+
+          pendingBridgeReview.amountXck = normalizedAmount;
+          pendingBridgeReview.amountAtomic = (
+            BigInt(whole) * 1_000_000n +
+            BigInt(fraction)
+          ).toString();
+        }
+
+        if (
+          pendingBridgeReview &&
+          !bridgeSendContext?.bridgeId
+        ) {
+          const response = await fetch(
+            'https://bridge.xcashlabs.org/api/bridge/request',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                xck_address: walletKeys.address,
+                evm_address: pendingBridgeReview.evmAddress,
+                network: pendingBridgeReview.network,
+                direction: 'XCK_TO_WXCK',
+                amount_atomic: pendingBridgeReview.amountAtomic
+              })
+            }
+          );
+
+          const text = await response.text();
+
+          let bridgeResult;
+
+          try {
+            bridgeResult = JSON.parse(text);
+          } catch {
+            throw new Error(
+              'Bridge server did not return valid JSON.'
+            );
+          }
+
+          if (!response.ok || bridgeResult.ok === false) {
+            throw new Error(
+              bridgeResult.error ||
+              'Bridge request failed.'
+            );
+          }
+
+          bridgeSendContext = {
+            bridgeId: bridgeResult.bridge_id,
+            network: pendingBridgeReview.network
+          };
+
+          pendingBridgeReview = null;
+
+          setBridgeProgress('request');
+
+          document.getElementById(
+            'bridge-status-text'
+          ).textContent = statusText.request;
+        }
+
         const result = await MoneroSend.send(walletKeys, toAddress, xckAmount, sendPriority, paymentId, sendPreview, sendPrivacy);
 
         if (bridgeSendContext) {
@@ -2138,6 +2262,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         document.getElementById('send-result-hash').textContent = result.tx_hash;
+
+        let bridgeAttachError = null;
 
         if (bridgeSendContext) {
           try {
@@ -2163,30 +2289,77 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           } catch (err) {
             console.error('Bridge tx failed, manual intervention will be needed:', err);
-            // Do NOT cancel here. The XCK transaction was already sent.
+
+            // The XCK transaction was already sent, so do not cancel
+            // the bridge request. Save the error so the user sees a warning.
+            bridgeAttachError = err?.message || 'The bridge server did not record the XCK transaction hash.';
           }
         }
 
-        sendShowResultState('success');
+        if (bridgeAttachError) {
+          document.getElementById('send-result-error-msg').textContent =
+            'Your XCK transaction was sent successfully, but the bridge server did not record the transaction hash.\n\n' +
+            'Transaction hash:\n' +
+            result.tx_hash +
+            '\n\n' +
+            'Do not send another transaction. Please contact support so this bridge request can be completed manually.\n\n' +
+            'Details: ' +
+            bridgeAttachError;
+
+          sendShowResultState('error');
+
+          const retryButton = document.getElementById('send-retry');
+          if (retryButton) {
+            retryButton.style.display = 'none';
+          }
+        } else {
+          const retryButton = document.getElementById('send-retry');
+          if (retryButton) {
+            retryButton.style.display = '';
+          }
+
+          sendShowResultState('success');
+        }
+
         // Trigger a balance refresh so the new pending tx shows up
-        if (typeof pollBalanceOnce === 'function') setTimeout(pollBalanceOnce, 2000);
+        if (typeof pollBalanceOnce === 'function') {
+          setTimeout(pollBalanceOnce, 2000);
+        }
+
       } catch (e) {
         console.error('[dashboard] send failed:', e);
-        if (bridgeSendContext?.bridgeId) {
+
+        // Only cancel if the bridge request was created but
+        // the XCK transaction was never successfully broadcast.
+        if (
+          bridgeSendContext?.bridgeId &&
+          !bridgeSendSubmitted
+        ) {
           try {
             await fetch(
               `https://bridge.xcashlabs.org/api/bridge/request/${bridgeSendContext.bridgeId}/cancel`,
               { method: 'POST' }
             );
           } catch (cancelErr) {
-            console.error('Failed to cancel bridge request:', cancelErr);
+            console.error(
+              'Failed to cancel bridge request:',
+              cancelErr
+            );
           }
+
           bridgeSendContext = null;
         }
-        document.getElementById('send-result-error-msg').textContent =
+
+        document.getElementById(
+          'send-result-error-msg'
+        ).textContent =
           e.message || 'Unknown error';
+
         sendShowResultState('error');
+      } finally {
+        sendInProgress = false;
       }
+
     });
 
     // Result: Done → close modal
@@ -2203,8 +2376,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       bridgeSendContext = null;
     });
 
-    // Result: Retry → back to form with values intact
+    // Result: Retry
     document.getElementById('send-retry').addEventListener('click', () => {
+      // A failed bridge transaction must be restarted from the Bridge screen.
+      // Never allow it to continue as a normal XCK send to the deposit address.
+      if (
+        BRIDGE_XCK_DEPOSIT_ADDRESSES.polygon ===
+          (sendToEl.value || '').trim() ||
+        BRIDGE_XCK_DEPOSIT_ADDRESSES.base ===
+          (sendToEl.value || '').trim()
+      ) {
+        pendingBridgeReview = null;
+        bridgeSendContext = null;
+        bridgeSendSubmitted = false;
+
+        document.getElementById('send-modal')
+          .classList.remove('show');
+
+        sendResetForm();
+        sendToEl.value = '';
+        sendAmountEl.value = '';
+
+        document.getElementById('bridge-modal')
+          .classList.add('show');
+
+        alert(
+          'The bridge transaction was not sent. Please review and start the bridge again.'
+        );
+
+        return;
+      }
+
       sendShowStep('form');
     });
 

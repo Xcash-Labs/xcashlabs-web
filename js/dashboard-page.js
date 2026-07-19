@@ -857,10 +857,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           ${request.error
               ? `
-                <div class="bridge-history-error">
-                  Bridge could not be completed.
-                </div>
-              `
+              <div class="bridge-history-error">
+                ${escapeHtml(request.error)}
+              </div>
+            `
               : ''
             }
         `;

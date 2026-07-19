@@ -670,6 +670,10 @@ footer {
     color: #fff;
 }
 
+.action-btn.dark {
+    color: #fff;
+}
+
 .action-btn:hover {
     background: #eef2ff;
 }

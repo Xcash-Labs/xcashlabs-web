@@ -292,26 +292,31 @@ const MoneroSend = (function () {
 
     // 6. Broadcast
     try {
-      var broadcastResp = await LwsClient.submitRawTx(step2Result.serialized_signed_tx);
+      console.log('[send] Broadcasting transaction...');
+      console.log('[send] TX hash:', step2Result.tx_hash);
+      console.log('[send] Signed TX hex length:',
+        step2Result.serialized_signed_tx.length);
+
+      var broadcastResp = await LwsClient.submitRawTx(
+        step2Result.serialized_signed_tx
+      );
+
+      console.log('[send] Broadcast response:', broadcastResp);
+
       if (!broadcastResp || broadcastResp.status !== 'OK') {
         var reason = (broadcastResp && broadcastResp.error) || 'unknown';
         throw new Error(reason);
       }
+
     } catch (bcErr) {
-      var errMsg = bcErr.message || String(bcErr);
-      if (/double.spend|already.spent/i.test(errMsg)) {
-        throw new Error('Transaction rejected — an output was already spent. Wait a few minutes for confirmations and try again.');
-      } else if (/invalid.input/i.test(errMsg)) {
-        throw new Error('Transaction rejected by the network. This can happen on some mobile browsers. Try again or use a desktop browser.');
-      } else if (/fee.too.low/i.test(errMsg)) {
-        throw new Error('Transaction fee is too low. Try a higher priority.');
-      } else if (/network|reach|timeout/i.test(errMsg)) {
-        throw new Error('Could not reach the wallet server. Check your connection and try again.');
-      } else if (/HTTP\s*500|server.error/i.test(errMsg)) {
-        throw new Error('The wallet server rejected this transaction. Wait a few minutes and try again.');
-      } else {
-        throw new Error('Broadcast failed: ' + errMsg + '. Your funds have not been sent.');
-      }
+      console.error('[send] BROADCAST FAILED');
+      console.error('[send] Original error:', bcErr);
+      console.error('[send] Error message:', bcErr.message);
+      console.error('[send] Transaction hash:', step2Result.tx_hash);
+
+      throw new Error(
+        'Broadcast failed: ' + (bcErr.message || String(bcErr))
+      );
     }
 
     return {

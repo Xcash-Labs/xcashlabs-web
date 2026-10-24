@@ -107,6 +107,60 @@ const MoneroSend = (function () {
     return fee;
   }
 
+  async function getVerifiedSpendableOutputs(outputs, walletKeys) {
+    await MoneroCore.load();
+
+    var spendableOuts = [];
+
+    for (var i = 0; i < outputs.length; i++) {
+      var o = outputs[i];
+
+      // Skip outputs without RingCT data.
+      if (!o.rct || o.rct === '') {
+        continue;
+      }
+
+      // If LWS reports no possible spent key images,
+      // this output is eligible.
+      if (!o.spend_key_images || o.spend_key_images.length === 0) {
+        spendableOuts.push(o);
+        continue;
+      }
+
+      try {
+        var realKI = MoneroCore.generateKeyImage(
+          o.tx_pub_key,
+          walletKeys.privateViewKeyHex,
+          walletKeys.publicSpendKeyHex,
+          walletKeys.privateSpendKeyHex,
+          o.index
+        );
+
+        // Only include outputs whose real key image
+        // is not in the spent-key-image list.
+        if (o.spend_key_images.indexOf(realKI) === -1) {
+          spendableOuts.push(o);
+        }
+      } catch (e) {
+        // Exclude outputs we cannot safely verify.
+        console.warn(
+          '[send] Unable to verify output:',
+          o.global_index
+        );
+      }
+    }
+
+    // Largest outputs first, matching the existing send logic.
+    spendableOuts.sort(function(a, b) {
+      var aa = BigInt(a.amount);
+      var bb = BigInt(b.amount);
+
+      return aa < bb ? 1 : aa > bb ? -1 : 0;
+    });
+
+    return spendableOuts;
+  }
+
   // Existing fee preview function
   async function estimateFee(walletKeys, toAddress, xckAmount, priority) {
 
@@ -129,17 +183,15 @@ const MoneroSend = (function () {
     var feeMask = Number(outs.fee_mask ?? 10000);
     var amountAtomic = BigInt(xckToAtomic(xckAmount));
 
-    // Use only RingCT outputs.
-    var spendableOuts = outs.outputs.filter(function (o) {
-      return o.rct && o.rct !== '';
-    });
+    // Use verified, unspent RingCT outputs.
+    var spendableOuts = await getVerifiedSpendableOutputs(
+      outs.outputs,
+      walletKeys
+    );
 
-    // Largest outputs first.
-    spendableOuts.sort(function (a, b) {
-      var aa = BigInt(a.amount);
-      var bb = BigInt(b.amount);
-      return aa < bb ? 1 : aa > bb ? -1 : 0;
-    });
+    if (spendableOuts.length === 0) {
+      throw new Error('No verified spendable outputs available');
+    }
 
     var selectedTotal = 0n;
     var selectedInputs = 0;
@@ -219,36 +271,10 @@ const MoneroSend = (function () {
     // Also skip pre-RingCT outputs (empty rct field): those were created
     // before Monero's v9 hard fork (Oct 2018) and cannot be included in
     // modern RingCT transactions regardless of their unspent status.
-    var spendableOuts = [];
-    for (var oi = 0; oi < unspentResp.outputs.length; oi++) {
-      var o = unspentResp.outputs[oi];
-
-      // Skip pre-RingCT outputs — they can't be spent in modern transactions.
-      // These have an empty or missing rct field and were received before v9.
-      if (!o.rct || o.rct === '') continue;
-
-      if (!o.spend_key_images || o.spend_key_images.length === 0) {
-        // No spend reports — definitely unspent
-        spendableOuts.push(o);
-      } else {
-        // Has spend reports — verify with key_image
-        try {
-          var realKI = MoneroCore.generateKeyImage(
-            o.tx_pub_key,
-            walletKeys.privateViewKeyHex,
-            walletKeys.publicSpendKeyHex,
-            walletKeys.privateSpendKeyHex,
-            o.index
-          );
-          // If the real key_image is NOT in the spend list, the output
-          // is unspent (the reports are false positives from ring decoys)
-          var isSpent = o.spend_key_images.indexOf(realKI) >= 0;
-          if (!isSpent) spendableOuts.push(o);
-        } catch (e) {
-          // Key_image computation failed — skip this output to be safe
-        }
-      }
-    }
+    var spendableOuts = await getVerifiedSpendableOutputs(
+      unspentResp.outputs,
+      walletKeys
+    );
 
     if (spendableOuts.length === 0) {
       throw new Error('No spendable outputs available. Your funds may still be confirming — wait a few minutes and try again.');
@@ -265,14 +291,6 @@ const MoneroSend = (function () {
     var totalAvailable = 0n;
     var selectedOuts = [];
     var feeAmount = 0n;
-
-    // Sort largest outputs first to minimize input count
-    spendableOuts.sort(function (a, b) {
-      var aa = BigInt(a.amount);
-      var bb = BigInt(b.amount);
-
-      return aa < bb ? 1 : aa > bb ? -1 : 0;
-    });
 
     // Select outputs and recalculate fee as input count increases
     for (var i = 0; i < spendableOuts.length; i++) {

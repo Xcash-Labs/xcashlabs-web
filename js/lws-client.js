@@ -52,7 +52,10 @@ const LwsClient = (function () {
     }
 
     const url = BASE_URL + path;
-    console.error('[lws-client] POST start', url, body);
+    console.error('[lws-client] POST start', url, {
+      ...body,
+      view_key: body.view_key ? '[REDACTED]' : undefined
+    });
 
     const controller = new AbortController();
     const timer = setTimeout(() => {

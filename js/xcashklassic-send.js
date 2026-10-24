@@ -81,37 +81,103 @@ const MoneroSend = (function () {
     return whole.toString() + '.' + fracStr;
   }
 
-  // ── Fee estimation ────────────────────────────────────────────────
+  // ── Fee estimation ───────────────────────────────────────
 
   var PRIO_MULT = { 1: 1, 2: 4, 3: 20, 4: 166 };
   var TYPICAL_TX_BYTES = 2000;
 
-  async function estimateFee (walletKeys, toAddress, xckAmount, priority) {
-    // mixin=0: fetch ALL outputs regardless of their historical ring size.
-    // Old RingCT outputs received in low-mixin txs (2019-2021 era) are perfectly
-    // spendable in modern transactions — LWS's mixin filter incorrectly hides them.
+  // Calculate estimated transaction fee based on input count
+  function estimateTxFee(inputCount, perByteFee, feeMask, priority) {
+    var mult = PRIO_MULT[priority] || 4;
+
+    // Preliminary estimate; calibrate against actual
+    // XCash transaction sizes and daemon fee requirements.
+    var estimatedBytes = TYPICAL_TX_BYTES + inputCount * 1500;
+
+    var fee = BigInt(
+      Math.ceil(estimatedBytes * perByteFee * mult)
+    );
+
+    var mask = BigInt(feeMask);
+
+    if (mask > 0n) {
+      fee = ((fee + mask - 1n) / mask) * mask;
+    }
+
+    return fee;
+  }
+
+  // Existing fee preview function
+  async function estimateFee(walletKeys, toAddress, xckAmount, priority) {
+
+    // Fetch all outputs, including older RingCT outputs.
     var outs = await LwsClient.getUnspentOuts(
       walletKeys.address,
       walletKeys.privateViewKeyHex,
       '0', 0, true
     );
 
-    var perKbFee = BigInt(outs.per_kb_fee || outs.per_byte_fee * 1024 || '24658');
-    var feeMask = BigInt(outs.fee_mask || '10000');
-    var mult = BigInt(PRIO_MULT[priority] || 4);
-
-    var feeAtomic = (perKbFee * BigInt(TYPICAL_TX_BYTES) * mult) / 1024n;
-    if (feeMask > 0n) {
-      feeAtomic = ((feeAtomic + feeMask - 1n) / feeMask) * feeMask;
+    if (!outs || !Array.isArray(outs.outputs)) {
+      throw new Error('Unable to retrieve wallet outputs');
     }
+
+    var perByteFee = Number(
+      outs.per_byte_fee ??
+      (Number(outs.per_kb_fee || 20480) / 1024)
+    );
+
+    var feeMask = Number(outs.fee_mask ?? 10000);
+    var amountAtomic = BigInt(xckToAtomic(xckAmount));
+
+    // Use only RingCT outputs.
+    var spendableOuts = outs.outputs.filter(function (o) {
+      return o.rct && o.rct !== '';
+    });
+
+    // Largest outputs first.
+    spendableOuts.sort(function (a, b) {
+      var aa = BigInt(a.amount);
+      var bb = BigInt(b.amount);
+      return aa < bb ? 1 : aa > bb ? -1 : 0;
+    });
+
+    var selectedTotal = 0n;
+    var selectedInputs = 0;
+    var feeAtomic = 0n;
+
+    for (var i = 0; i < spendableOuts.length; i++) {
+      selectedTotal += BigInt(spendableOuts[i].amount);
+      selectedInputs++;
+
+      feeAtomic = estimateTxFee(
+        selectedInputs,
+        perByteFee,
+        feeMask,
+        priority
+      );
+
+      if (selectedTotal >= amountAtomic + feeAtomic) {
+        break;
+      }
+    }
+
+    if (selectedTotal < amountAtomic + feeAtomic) {
+      throw new Error(
+        'Insufficient funds for amount and estimated fee'
+      );
+    }
+
+    console.log('[estimateFee] Fee preview:', {
+      selectedInputs: selectedInputs,
+      estimatedFeeXCK: atomicToXck(feeAtomic.toString())
+    });
 
     return {
       fee_atomic: feeAtomic.toString(),
       fee_xmr: LwsClient.formatXck(feeAtomic),
-      per_byte: (perKbFee / 1024n).toString(),
-      _unspentResp: outs,
+      per_byte: String(perByteFee),
+      _unspentResp: outs
     };
-
   }
 
   // ── Send transaction ──────────────────────────────────────────────
@@ -188,33 +254,65 @@ const MoneroSend = (function () {
       throw new Error('No spendable outputs available. Your funds may still be confirming — wait a few minutes and try again.');
     }
 
-    // 2. Select outputs to spend (simple: use all, let WASM compute change)
-    var perByteFee = Number(unspentResp.per_byte_fee || unspentResp.per_kb_fee / 1024 || 20);
-    var feeMask = Number(unspentResp.fee_mask || 10000);
-    var mult = PRIO_MULT[priority] || 4;
-    var estFee = Math.ceil(perByteFee * TYPICAL_TX_BYTES * mult);
-    if (feeMask > 0) estFee = Math.ceil(estFee / feeMask) * feeMask;
+    // 2. Select outputs and calculate fee dynamically
+    var perByteFee = Number(
+      unspentResp.per_byte_fee ??
+      (Number(unspentResp.per_kb_fee || 20480) / 1024)
+    );
+
+    var feeMask = Number(unspentResp.fee_mask ?? 10000);
 
     var totalAvailable = 0n;
     var selectedOuts = [];
-    // Sort by amount descending — pick fewest outputs needed
+    var feeAmount = 0n;
+
+    // Sort largest outputs first to minimize input count
     spendableOuts.sort(function (a, b) {
-      return Number(BigInt(b.amount) - BigInt(a.amount));
+      var aa = BigInt(a.amount);
+      var bb = BigInt(b.amount);
+
+      return aa < bb ? 1 : aa > bb ? -1 : 0;
     });
+
+    // Select outputs and recalculate fee as input count increases
     for (var i = 0; i < spendableOuts.length; i++) {
+
       selectedOuts.push(spendableOuts[i]);
       totalAvailable += BigInt(spendableOuts[i].amount);
-      if (totalAvailable >= amountAtomic + BigInt(estFee)) break;
+
+      feeAmount = estimateTxFee(
+        selectedOuts.length,
+        perByteFee,
+        feeMask,
+        priority
+      );
+
+      if (totalAvailable >= amountAtomic + feeAmount) {
+        break;
+      }
     }
 
-    if (totalAvailable < amountAtomic + BigInt(estFee)) {
-      throw new Error('Insufficient funds: need ' +
-        atomicToXck((amountAtomic + BigInt(estFee)).toString()) +
-        ' XCK but only have ' + atomicToXck(totalAvailable.toString()) + ' XCK');
+    // Verify sufficient funds including the estimated fee
+    if (totalAvailable < amountAtomic + feeAmount) {
+      throw new Error(
+        'Insufficient funds: need ' +
+        atomicToXck((amountAtomic + feeAmount).toString()) +
+        ' XCK but only have ' +
+        atomicToXck(totalAvailable.toString()) +
+        ' XCK'
+      );
     }
 
-    var feeAmount = BigInt(estFee);
+    // Calculate change
     var changeAmount = totalAvailable - amountAtomic - feeAmount;
+
+    // Diagnostic logging
+    console.log('[send] Fee calculation:', {
+      amountXCK: xckAmount,
+      selectedInputs: selectedOuts.length,
+      estimatedFeeXCK: atomicToXck(feeAmount.toString()),
+      changeXCK: atomicToXck(changeAmount.toString())
+    });
 
     // 3. Fetch ring decoys
     var decoyAmounts = selectedOuts.map(function () { return '0'; });
@@ -289,6 +387,15 @@ const MoneroSend = (function () {
       console.error('[send] step2 returned:', JSON.stringify(step2Result));
       throw new Error('Transaction signing failed — no signed output');
     }
+
+    console.log('[send] Signed transaction details:', {
+      selectedInputs: selectedOuts.length,
+      transactionBytes: step2Result.serialized_signed_tx.length / 2,
+      estimatedFeeXCK: atomicToXck(feeAmount.toString()),
+      effectiveFeePerByte:
+        Number(feeAmount) /
+        (step2Result.serialized_signed_tx.length / 2)
+    });
 
     // 6. Broadcast
     try {

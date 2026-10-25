@@ -569,9 +569,22 @@ document.addEventListener('DOMContentLoaded', async () => {
           return (b.height || 0) - (a.height || 0);
         });
 
-        const rows = txs.map(tx => {
+        const rows = txs.slice(0, 100).map(tx => {
+
           const received = BigInt(tx.total_received || '0');
-          const sent = BigInt(tx.total_sent || '0');
+          let sent = BigInt(tx.total_sent || '0');
+
+          // Remove false spends caused by ring decoys
+          for (const so of tx.spent_outputs || []) {
+            const cacheKey = so.tx_pub_key + ':' + so.out_index;
+            const realKeyImage = _keyImageCache[cacheKey];
+
+            if (realKeyImage && realKeyImage !== so.key_image) {
+              sent -= BigInt(so.amount || '0');
+            }
+          }
+
+          if (sent < 0n) sent = 0n;
           const net = received - sent;
           const isIn = net >= 0n;
           const display = LwsClient.formatXck(net < 0n ? -net : net);
